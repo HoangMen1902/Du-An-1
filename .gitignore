@@ -3,4 +3,5 @@
 /vendor/
 /public/Assets/Client/Styles/
 package-lock.json
-composer.json
+composer.lock
+logs/php-errors.log

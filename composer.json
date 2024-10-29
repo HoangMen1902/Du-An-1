@@ -1,0 +1,27 @@
+{
+    "name": "pc/du-an1",
+    "autoload": {
+        "psr-4": {
+            "Src\\": "Src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "7CO",
+            "email": "hoangmen9918@gmail.com"
+        }
+    ],
+    "require": {
+        "vlucas/phpdotenv": "^5.6",
+        "illuminate/database": "^11.29",
+        "illuminate/filesystem": "^11.29",
+        "robmorgan/phinx": "^0.16.5",
+        "league/plates": "^3.5"
+    },
+    "scripts": {
+        "phinx-create": "vendor/bin/phinx create",
+        "phinx-migrate": "vendor/bin/phinx migrate",
+        "phinx-rollback": "vendor/bin/phinx rollback",
+        "phinx-seed": "vendor/bin/phinx seed:run"
+    }
+}
