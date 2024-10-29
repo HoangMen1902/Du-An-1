@@ -1,0 +1,6 @@
+/.env
+/node_modules/
+/vendor/
+/public/Assets/Client/Styles/
+package-lock.json
+composer.json

@@ -1,0 +1,16 @@
+{
+  "name": "duan1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "web": "php -S localhost:8000 ",
+    "styles": "sass --watch ./public/Assets/Client/Sass/index.scss ./public/Assets/Client/Styles/main.css"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap": "^5.3.3"
+  }
+}
