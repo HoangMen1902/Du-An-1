@@ -11,6 +11,7 @@
         Đây là header
     </header>
     <h1 class="text-danger">Hello World</h1>
+    <h1><?=$Name?></h1>
 
 </body>
 </html>
