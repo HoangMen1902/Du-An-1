@@ -24,8 +24,7 @@ $dotenv->load();
 
 $dispatcher = FastRoute\simpleDispatcher(function(RouteCollector $r) {
     $r->addRoute('GET', '/home', [HomeController::class, 'show']);
-
-
+    $r->addRoute('GET', '/', [HomeController::class, 'show']);
 });
 
 
