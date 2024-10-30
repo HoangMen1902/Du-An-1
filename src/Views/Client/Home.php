@@ -1,17 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="<?=$_ENV['APP_URL']?>/public/Assets/Client/Styles/main.css">
-</head>
-<body>
-    <header class=" w-100">
-        Đây là header
-    </header>
-    <h1 class="text-danger">Hello World</h1>
-    <h1><?=$Name?></h1>
 
-</body>
-</html>
+
+<?php $this->layout('Client/Components/Header');?>
+
+<?php $this->unshift('styles') ?>
+    <link rel="stylesheet" href="style.css">
+<?php $this->end()?>
+
+<?php $this->start('main_content') ?>
+
+<div>
+    <h2 class="text-success">Đây là nội dung</h2>
+</div>
+
+
+<?php $this->stop() ?>
+
+<?php $this->push('scripts')?>
+    <script src="abc.js"></script>
+<?php $this->end() ?>
