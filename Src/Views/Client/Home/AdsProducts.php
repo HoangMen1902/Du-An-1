@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    <div class="ads-wrapper">
+    <div>
         <div class="container-fluid">
             <div class="row adsProducts_height ">
                 <div class="col-3 col-md-3 col-md-3  col-xxl-3 d-flex flex-column p-3 position-relative bdrdu-20"
