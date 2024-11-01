@@ -2,17 +2,27 @@
     width: 50px;
 }
 
-.custom-height-feedback{
-    height: 400px;
+.custom-border{
+    border: #000000b7 3px solid !important;
+    border-radius: 20px;
 }
 
-.title{
-    width: 450px;   
+@media only screen and (max-width: 1400px) {
+    .img-profile{
+        width: 100px;
+    }
+    .star{
+        width: 100px;
+        height: 20px;
+    }
 }
 
-@media (max-width: 768px) {
- 
-    .custom-height-feedback{
-        height: 850px;
+@media only screen and (max-width: 768px) {
+    .img-profile{
+        width: 100px;
+    }
+    .star{
+        width: 100px;
+        height: 20px;
     }
 }

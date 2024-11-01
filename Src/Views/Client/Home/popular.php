@@ -13,7 +13,7 @@
     </div>
 
     <!-- Hàng chứa các sản phẩm -->
-    <div class="row mt-4 ">
+    <div class="row mt-4">
         <div class="col-lg-3 col-md-6 col-sm-12">
             <div class="product-card">
                 <img src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-xlite-v4-quiccs-edition-limited-1500c-di-kem-dongle-8k-polling-rate-42018806956277.jpg?v=1729690878&width=300" alt="Sản phẩm 1" class="img-fluid">
