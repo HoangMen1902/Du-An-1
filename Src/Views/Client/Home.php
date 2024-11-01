@@ -8,6 +8,7 @@
 <?php
 $this->insert('/Client/Home/Carousel');  
 $this->insert('/Client/Home/AdsBanner');
+$this->insert('/Client/Home/AdsProducts');
 ?>
 
 <?php $this->stop() ?>
