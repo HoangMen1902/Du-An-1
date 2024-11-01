@@ -47,7 +47,6 @@
         <?= $this->section('main_content') ?>
     </div>
     <footer>
-        <footer>
             <div class="container-fluid custom-height bg-black">
                 <div class="row">
                     <div class="col-xl-3 col-md-6 mt-3">
@@ -151,7 +150,6 @@
                     <img src="<?=$_ENV['APP_URL']?>/public/Assets/Client/Images/Home/Overlay3.png" alt="">
                 </div>
             </div>
-        </footer>
     </footer>
 
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">

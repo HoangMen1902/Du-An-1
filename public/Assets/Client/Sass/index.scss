@@ -1,4 +1,6 @@
 @import '../../../../node_modules/bootstrap/scss/bootstrap.scss';
+
+
 @import './Abstracts/variables';
 @import './Abstracts/mixins';
 
@@ -8,9 +10,8 @@
 
 
 
-
+@import './Home/popular.scss';
 @import './Home/carousel';
 @import './Home/adsBanner';
 
-@import './layouts/footer';
-@import './feedback';
+@import './Home/feedback';

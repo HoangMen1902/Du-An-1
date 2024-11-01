@@ -10,7 +10,9 @@
 <?php
 $this->insert('/Client/Home/Carousel');  
 $this->insert('/Client/Home/AdsBanner');
-$this->Insert('Client/Home/feedback')
+$this->Insert("/Client/Home/popular");
+
+$this->Insert('Client/Home/feedback');
 ?>
 
 
