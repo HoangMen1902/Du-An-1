@@ -1,6 +1,8 @@
 
 
+
 <?php $this->layout('Client/Components/Layout');?>
+
 
 
 <?php $this->start('main_content') ?>
@@ -8,7 +10,9 @@
 <?php
 $this->insert('/Client/Home/Carousel');  
 $this->insert('/Client/Home/AdsBanner');
+$this->Insert('Client/Home/feedback')
 ?>
+
 
 <?php $this->stop() ?>
 
