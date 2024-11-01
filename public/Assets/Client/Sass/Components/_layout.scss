@@ -83,3 +83,51 @@ footer {
 
     max-width: 2480px;
 }
+
+
+.list-responsive {
+    color: #fff;
+    width: 25px;
+    display: none;
+}
+
+.list-responsive {
+    color: #fff;
+    width: 25px;
+    display: none;
+}
+
+@media only screen and (max-width: 768px) {
+    .list-responsive {
+
+        display: block;
+    }
+    .icon-group {
+        display: none !important;
+    }
+    header {
+        img {
+            max-width: 120px !important;
+            max-height: 85px !important;
+            object-fit: contain;
+        }
+
+        .nav-menu {
+            display: none !important;
+        }
+        gap: 40px;
+
+    }
+}
+
+
+.responsive-menu {
+    a {
+        color: black;
+        width: 100%;
+        display: block;
+        height: 50px;
+    }
+}
+
+
