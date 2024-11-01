@@ -1,1 +1,13 @@
 @import '../../../../node_modules/bootstrap/scss/bootstrap.scss';
+@import './Abstracts/variables';
+@import './Abstracts/mixins';
+
+
+@import './Components/layout';
+@import './Base/reset';
+
+
+
+
+@import './Home/carousel';
+@import './Home/adsBanner';

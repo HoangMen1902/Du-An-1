@@ -1,0 +1,110 @@
+.ads-wrapper {
+    margin: 30px 25px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+
+.ads-card, .ads-card-2, .ads-card-3, .ads-card-4 {
+    flex: 0 1 calc(50% - 10px);
+    width: 50%;
+    height: 200px;
+    max-width: 425px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    padding: 20px;
+
+    img {
+        width: 220px;
+        height: 180px;
+        right: 0;
+        bottom: 20%;
+        object-fit: contain;
+        max-width: 100%;
+    }
+    .ads-brand {
+        font-size: 14px;
+    }
+    .ads-text {
+        color: #fff;
+        display: flex;
+        flex-direction: column;
+        width: 50%;
+        height: 100%;
+        justify-content: space-evenly;
+
+        .ads-title {
+            font-size: 21px;
+        }
+
+        .ads-btn {
+            font-size: 14px;
+            width: fit-content;
+
+            button {
+                color: #fff;
+                border: 1px solid #fff;
+                border-radius: 100px;
+            }
+
+            button:hover {
+                background: #fff;
+                transition: 0.5s ease-in-out;
+                color: #000000;
+            }
+        }
+    }
+
+
+}
+
+.ads-card {
+    background: rgba($color: #000000, $alpha: 0.7);
+}
+
+.ads-card-2 {
+    background: #0F0D0D;
+}
+.ads-card-3 {
+    background: #F98300;
+}
+
+.ads-card-4 {
+    background: #8B2DDB;
+}
+@media only screen and (max-width: 1400px) {
+
+
+    .ads-card, .ads-card-2, .ads-card-3, .ads-card-4 {
+        width: 325px !important;
+        height: 200px;
+        max-width: 425px;
+        background: rgba($color: #000000, $alpha: 0.7);
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        padding: 10px;
+    }
+    img {
+        width: 180px;
+        height: 140px;
+        right: 0;
+        bottom: 20%;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+
+    .ads-wrapper {
+        margin: 30px 25px;
+        flex-direction: column;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1.5rem;
+    }
+}
