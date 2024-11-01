@@ -38,9 +38,11 @@
 
   &_image {
     width: 75%;
+    max-width: 250px;
     bottom: 10px;
     right: 10px;
     &2 {
+      max-width: 150px;
       width: 25%;
       bottom: 15px;
       right: 15px;
