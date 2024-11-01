@@ -1,0 +1,93 @@
+.border-bottom-custom {
+    display: inline-block;
+    border-bottom: 3px solid #1C61E7;
+    padding-bottom: 8px;
+}
+
+.custom-btn {
+    background-color: #1C61E7;
+    border: none;
+    color: #fff;
+    border-radius: 50px;
+    padding: 12px 20px;
+    font-size: 18px;
+    width: auto;
+    min-width: 120px; 
+    text-align: center; 
+}
+
+.custom-btn:hover {
+    background-color: #1450b8;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.custom-btn-small {
+    background-color: #1C61E7;
+    border: none;
+    color: #fff;
+    border-radius: 50px;
+    padding: 10px 16px; 
+    font-size: 14px; 
+    margin: auto 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.custom-btn-small:hover {
+    background-color: #1450b8;
+}
+
+.container {
+    padding-left: 25px !important;
+    padding-right: 25px !important;
+    max-width: 100% !important; 
+}
+.row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.product-card {
+    padding: 30px;
+    text-align: center;
+    border-radius: 8px;
+    margin: 20px;
+    flex: 1 1 350px;
+    max-width: 400px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%; 
+}
+
+.product-card img {
+    width: 100%; 
+    height: auto; 
+}
+
+.product-title, .product-price {
+    margin: 0px 0; 
+}
+
+.add-to-cart-btn {
+    padding: 12px 12px; 
+    font-size: 14px;
+    border-radius: 25px; 
+    background-color: #1C61E7; 
+    color: white; 
+    border: none; 
+    margin-top: 0; 
+    max-width: 120px; 
+    width: auto;
+    display: block; 
+    margin-left: auto; 
+    margin-right: auto; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 768px) {
+    .add-to-cart-btn {
+        max-width: 90%; /* Giới hạn chiều rộng tối đa cho nút trên màn hình nhỏ */
+        font-size: 12px; /* Giảm cỡ chữ cho màn hình nhỏ */
+    }
+}
