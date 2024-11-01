@@ -11,7 +11,9 @@
     <header class=" w-100 text-center">
         <h1 class="text-danger">Đây là header</h1>
     </header>
+    <div>
         <?= $this->section('main_content') ?>
+    </div>
     <footer>
         <h1 class="text-primary text-center">Đây là footer</h1>
     </footer>
