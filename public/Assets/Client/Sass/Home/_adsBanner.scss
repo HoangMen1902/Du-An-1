@@ -76,13 +76,14 @@
     background: #8B2DDB;
 }
 @media only screen and (max-width: 1400px) {
-
+    .ads-wrapper {
+        flex-wrap: wrap;
+    }
 
     .ads-card, .ads-card-2, .ads-card-3, .ads-card-4 {
         width: 325px !important;
         height: 200px;
         max-width: 425px;
-        background: rgba($color: #000000, $alpha: 0.7);
         border-radius: 20px;
         display: flex;
         align-items: center;
@@ -94,9 +95,10 @@
         right: 0;
         bottom: 20%;
     }
+
 }
 
-@media only screen and (max-width: 400px) {
+@media only screen and (max-width: 768px) {
 
     .ads-wrapper {
         margin: 30px 25px;
@@ -106,4 +108,12 @@
         justify-content: space-between;
         gap: 1.5rem;
     }
+    img {
+        width: 140px;
+        height: 100px;
+        right: 0;
+        bottom: 20%;
+    }
+
+
 }

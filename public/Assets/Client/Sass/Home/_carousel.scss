@@ -269,3 +269,11 @@
 
     }
 }
+
+@media only screen and (max-width: 768px) {
+    .carousel-wrapper {
+        img {
+            height: 360px !important;
+        }
+    }
+}
