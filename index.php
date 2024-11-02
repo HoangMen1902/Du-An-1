@@ -28,7 +28,7 @@ $dispatcher = FastRoute\simpleDispatcher(function(RouteCollector $r) {
     $r->addRoute('GET', '/', [HomeController::class, 'show']);
 
     $r->addRoute('GET', '/login', [AuthController::class, 'login']);
-
+    $r->addRoute('GET', '/register', [AuthController::class, 'register']);
 });
 
 
