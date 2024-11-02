@@ -7,7 +7,7 @@
                 Phổ biến nhất
             </h3>
             <div class="popular-top__button">
-                <button class="btn custom-btn-small">Xem thêm ></button>
+                <button class=" custom-btn-small">Xem thêm ></button>
             </div>
         </div>
     </div>

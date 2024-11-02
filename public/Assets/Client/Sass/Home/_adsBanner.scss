@@ -88,13 +88,14 @@
         display: flex;
         align-items: center;
         padding: 10px;
+        img {
+            width: 180px;
+            height: 140px;
+            right: 0;
+            bottom: 20%;
+        }
     }
-    img {
-        width: 180px;
-        height: 140px;
-        right: 0;
-        bottom: 20%;
-    }
+
 
 }
 
