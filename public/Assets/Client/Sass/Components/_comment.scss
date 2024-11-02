@@ -1,0 +1,33 @@
+.star-rating {
+    direction: rtl;
+    display: inline-block;
+}
+
+.star {
+    font-size: 30px;
+    color: #ccc; /* Màu ngôi sao chưa chọn */
+    cursor: pointer;
+}
+
+.rating-input:checked ~ .star {
+    color: #f39c12; /* Màu ngôi sao đã chọn */
+}
+
+.rating-input {
+    display: none; /* Ẩn radio input */
+}
+
+@media screen and (max-width: 768px) {
+    .avatar {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+/* Kích thước ảnh trên mobile */
+@media screen and (max-width: 576px) {
+    .avatar {
+        width: 35px;
+        height: 35px;
+    }
+}

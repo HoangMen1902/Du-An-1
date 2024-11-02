@@ -6,8 +6,12 @@
 
 
 @import './Components/layout';
+@import './Components/comment';
+@import './Components/product-description';
+@import './Components/related-product';
 @import './Base/reset';
 
+@import './Pages/product-detail.scss';
 
 
 @import './Home/popular.scss';
