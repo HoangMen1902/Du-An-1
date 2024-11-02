@@ -6,6 +6,7 @@ use Src\Controllers\Client\ContactController;
 use Src\Controllers\Client\AuthController;
 use Src\Controllers\Client\ProductController;
 use Src\Controllers\Client\CheckoutController;
+use Src\Controllers\Admin\DashboardController;
 
 
 
@@ -37,6 +38,10 @@ $dispatcher = FastRoute\simpleDispatcher(function(RouteCollector $r) {
 
     $r->addRoute('GET', '/login', [AuthController::class, 'login']);
     $r->addRoute('GET', '/register', [AuthController::class, 'register']);
+
+    $r->get('/admin', [DashboardController::class, 'show']);
+    $r->get('/admin/dashboard', [DashboardController::class, 'show']);
+
 });
 
 
