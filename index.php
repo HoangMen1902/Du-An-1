@@ -5,6 +5,7 @@ use Src\Controllers\Client\HomeController;
 use Src\Controllers\Client\ContactController;
 
 
+use Src\Controllers\Client\AuthController;
 
 require_once 'vendor/autoload.php';
 
@@ -29,6 +30,9 @@ $dispatcher = FastRoute\simpleDispatcher(function(RouteCollector $r) {
     $r->addRoute('GET', '/home', [HomeController::class, 'show']);
     $r->addRoute('GET', '/', [HomeController::class, 'show']);
     $r->addRoute('GET', '/Contact', [ContactController::class, 'show']);
+
+    $r->addRoute('GET', '/login', [AuthController::class, 'login']);
+    $r->addRoute('GET', '/register', [AuthController::class, 'register']);
 });
 
 
