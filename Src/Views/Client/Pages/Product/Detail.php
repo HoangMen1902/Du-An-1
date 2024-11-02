@@ -1,0 +1,1004 @@
+<?php $this->layout('Client/Components/Layout'); ?>
+
+
+
+<?php $this->start('main_content') ?>
+<!-- Insert nội dung vào đây -->
+<div class="product-detal__container">
+    <div class="product__carousel">
+        <div class="product__main-carousel-ids">
+            <button onclick="">
+                <img src="https://www.phongcachxanh.vn/cdn/shop/files/pre-order-lot-chu-t-kinh-c-ng-l-c-tekkusai-the-beast-limited-42087967293685.jpg?v=1730188755&width=64"
+                    alt="">
+            </button>
+
+            <button onclick="">
+                <img src="https://www.phongcachxanh.vn/cdn/shop/files/pre-order-lot-chu-t-kinh-c-ng-l-c-tekkusai-the-beast-limited-42087967064309.jpg?v=1730188758&width=64"
+                    alt="">
+            </button>
+
+        </div>
+        <div class="product__carousel-wrapper">
+            <div style="display: block;" class="product__carousel-wrapper__slide">
+                <img src="https://www.phongcachxanh.vn/cdn/shop/files/pre-order-lot-chu-t-kinh-c-ng-l-c-tekkusai-the-beast-limited-42087967293685.jpg?v=1730188755&width=800"
+                    alt="">
+            </div>
+
+            <div class="product__carousel-wrapper__slide">
+                <img src="/public/uploads/" alt="">
+            </div>
+
+        </div>
+    </div>
+    <div class="product__info">
+        <h4>[Pre-order] Lót chuột kính cường lực Tekkusai The Beast - Limited</h4>
+
+        <form action="/voucher" method="post">
+            <input type="hidden" name="method" value="POST">
+            <input type="hidden" name="id" value="">
+            <input type="hidden" name="voucher_id" value="">
+            <div class="product_discountCode">
+                <div class="product_discountCode-transition"></div>
+
+                <button>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </form>
+
+
+        <p class="product__info__text">
+
+
+            <span class="related-card__sub-price__delete" style="color: black;">
+                2.970.000₫
+            </span>
+
+        </p>
+
+
+        <hr>
+        <p></p>
+        <p>Mô tả</p>
+        <div class="product__info__ultext">
+            <ul>
+                <li>Kích thước: X
+                    X
+                </li>
+            </ul>
+        </div>
+        <hr>
+        <div class="product__info__buy">
+            <form action="/add-to-cart" method="post">
+                <input type="hidden" name="id" value="">
+                <input type="hidden" name="method" value="POST">
+                <?php
+
+
+                ?>
+                <div class="product__info__buy__list">
+                    <h6>:</h6>
+
+                    <div class="product__info__buy__list-fix">
+                        <label>
+                            <input type="radio" name="" value="">
+
+                        </label>
+                    </div>
+                </div>
+
+
+
+
+                <h4><i class="fa fa-eye"></i>:</h4>
+                <p>Số lượng:</p>
+
+                <div class="product__info__buy__quantity">
+                    <button onclick="" class="product__info__buy__button-l">-</button>
+                    <p id="quantityProduct">1</p>
+                    <button onclick="" class="product__info__buy__button-r">+</button>
+                </div>
+                <p>Chọn mua:</p>
+                <button class="product__info__buy__button text-white" name="add-to-cart">Chọn mua</button>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+
+<section class="container container-des" style="margin: auto">
+    <div class="feature-chart">
+        <h2>Thông số kỹ thuật</h2>
+        <div class="table-row">
+            <div class="table-row__title">
+                <p>Công nghệ CPU</p>
+            </div>
+            <div class="table-row__text">
+                <p>
+                    <span>
+
+                    </span>
+                </p>
+            </div>
+        </div>
+        <div class="table-row">
+            <div class="table-row__title">
+                <p>Số Nhân</p>
+            </div>
+            <div class="table-row__text">
+                <p>
+                    <span>
+
+                    </span>
+                </p>
+            </div>
+        </div>
+        <div class="table-row">
+            <div class="table-row__title">
+                <p>Số luồng</p>
+            </div>
+            <div class="table-row__text">
+                <p>
+                    <span>
+
+                    </span>
+                </p>
+            </div>
+        </div>
+        <div class="table-row">
+            <div class="table-row__title">
+                <p>Tốc độ CPU</p>
+            </div>
+            <div class="table-row__text">
+                <p>
+                    <span>
+
+                    </span>
+                </p>
+            </div>
+        </div>
+        <div class="table-row">
+            <div class="table-row__title">
+                <p>Tốc độ tối đa</p>
+            </div>
+            <div class="table-row__text">
+                <p>
+                    <span>
+
+                    </span>
+                </p>
+            </div>
+        </div>
+        <div class="table-row">
+            <div class="table-row__title">
+                <p>Bộ nhớ đệm</p>
+            </div>
+            <div class="table-row__text">
+                <p>
+                    <span>
+
+                    </span>
+                </p>
+            </div>
+        </div>
+        <p class="feature-chart__more" id="moreButton">
+            <a role="button" aria-expanded="false" aria-controls="collapseExample">
+                <span>Xem thêm</span>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                </svg>
+            </a>
+        </p>
+        <div class="collapse" id="collapseExample">
+            <div class="table-row">
+                <div class="table-row__title">
+                    <p>Ram</p>
+                </div>
+                <div class="table-row__text">
+                    <p>
+                        <span>
+
+                        </span>
+                    </p>
+                </div>
+            </div>
+            <div class="table-row">
+                <div class="table-row__title">
+                    <p>Loại RAM</p>
+                </div>
+                <div class="table-row__text">
+                    <p>
+                        <span>
+
+                        </span>
+                    </p>
+                </div>
+            </div>
+            <div class="table-row">
+                <div class="table-row__title">
+                    <p>Tốc độ Bus RAM</p>
+                </div>
+                <div class="table-row__text">
+                    <p>
+                        <span>
+
+                        </span>
+                    </p>
+                </div>
+            </div>
+            <div class="table-row">
+                <div class="table-row__title">
+                    <p>Hỗ trợ RAM tối đa</p>
+                </div>
+                <div class="table-row__text">
+                    <p>
+                        <span>
+
+                        </span>
+                    </p>
+                </div>
+            </div>
+            <div class="table-row">
+                <div class="table-row__title">
+                    <p>Ổ cứng</p>
+                </div>
+                <div class="table-row__text">
+                    <p>
+                        <span>
+
+                        </span>
+                    </p>
+                </div>
+            </div>
+            <div class="table-row">
+                <div class="table-row__title">
+                    <p>Màn hình</p>
+                </div>
+                <div class="table-row__text">
+                    <p>
+                        <span>
+
+                        </span>
+                    </p>
+                </div>
+            </div>
+            <div class="table-row">
+                <div class="table-row__title">
+                    <p>Độ phân giải</p>
+                </div>
+                <div class="table-row__text">
+                    <p>
+                        <span>
+
+                        </span>
+                    </p>
+                </div>
+            </div>
+            <div class="table-row">
+                <div class="table-row__title">
+                    <p>Tần số quét</p>
+                </div>
+                <div class="table-row__text">
+                    <p>
+                        <span>
+
+                        </span>
+                    </p>
+                </div>
+            </div>
+            <div class="table-row">
+                <div class="table-row__title">
+                    <p>Công nghệ màn hình</p>
+                </div>
+                <div class="table-row__text">
+                    <p>
+                        <span>
+
+                        </span>
+                    </p>
+                </div>
+            </div>
+            <div class="table-row">
+                <div class="table-row__title">
+                    <p>Card màn hình</p>
+                </div>
+                <div class="table-row__text">
+                    <p>
+                        <span>
+
+                        </span>
+                    </p>
+                </div>
+            </div>
+            <div class="table-row">
+                <div class="table-row__title">
+                    <p>Công nghệ âm thanh</p>
+                </div>
+                <div class="table-row__text">
+                    <p>
+                        <span>
+
+                        </span>
+                    </p>
+                </div>
+            </div>
+            <div class="table-row">
+                <div class="table-row__title">
+                    <p>Kết nối không dây</p>
+                </div>
+                <div class="table-row__text">
+                    <p>
+                        <span>
+
+                        </span>
+                    </p>
+                </div>
+            </div>
+            <div class="table-row">
+                <div class="table-row__title">
+                    <p>Khe đọc thẻ nhớ</p>
+                </div>
+                <div class="table-row__text">
+                    <p>
+                        <span>
+
+                        </span>
+                    </p>
+                </div>
+            </div>
+            <div class="table-row">
+                <div class="table-row__title">
+                    <p>Webcam</p>
+                </div>
+                <div class="table-row__text">
+                    <p>
+                        <span>
+
+                        </span>
+                    </p>
+                </div>
+            </div>
+            <div class="table-row">
+                <div class="table-row__title">
+                    <p>Tính năng khác</p>
+                </div>
+                <div class="table-row__text">
+                    <p>
+                        <span>
+
+                        </span>
+                    </p>
+                </div>
+            </div>
+            <div class="table-row">
+                <div class="table-row__title">
+                    <p>Đèn bàn phím</p>
+                </div>
+                <div class="table-row__text">
+                    <p>
+                        <span>
+
+                        </span>
+                    </p>
+                </div>
+            </div>
+            <div class="table-row">
+                <div class="table-row__title">
+                    <p>Kích thước</p>
+                </div>
+                <div class="table-row__text">
+                    <p>
+                        <span>
+
+                        </span>
+                    </p>
+                </div>
+            </div>
+            <div class="table-row">
+                <div class="table-row__title">
+                    <p>Khối lượng tịnh</p>
+                </div>
+                <div class="table-row__text">
+                    <p>
+                        <span>
+
+                        </span>
+                    </p>
+                </div>
+            </div>
+            <div class="table-row">
+                <div class="table-row__title">
+                    <p>Chất liệu</p>
+                </div>
+                <div class="table-row__text">
+                    <p>
+                        <span>
+
+                        </span>
+                    </p>
+                </div>
+            </div>
+            <div class="table-row">
+                <div class="table-row__title">
+                    <p>Thông tin Pin</p>
+                </div>
+                <div class="table-row__text">
+                    <p>
+                        <span>
+
+                        </span>
+                    </p>
+                </div>
+            </div>
+            <div class="table-row">
+                <div class="table-row__title">
+                    <p>Công suất bộ sạc</p>
+                </div>
+                <div class="table-row__text">
+                    <p>
+                        <span>
+
+                        </span>
+                    </p>
+                </div>
+            </div>
+            <div class="table-row">
+                <div class="table-row__title">
+                    <p>Hệ điều hành</p>
+                </div>
+                <div class="table-row__text">
+                    <p>
+                        <span>
+
+                        </span>
+                    </p>
+                </div>
+            </div>
+            <p class="feature-chart__more" id="lessButton">
+                <a role="button" aria-expanded="false" aria-controls="collapseExample">
+                    <span>Ẩn bớt</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5" />
+                    </svg>
+                </a>
+            </p>
+        </div>
+    </div>
+</section>
+
+
+<section class="container container-des" style="margin: auto">
+    <div class="feature-chart">
+        <h2>Thông số kỹ thuật</h2>
+        <div class="table-row">
+            <div class="table-row__title">
+                <p>Thông báo:</p>
+            </div>
+            <div class="table-row__text">
+                <p>
+                    <span>
+                        Sản phẩm đang cập nhật thông số kỹ thuật vui lòng quay lại sau!
+                    </span>
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container related">
+    <div class="related-title">
+        <h1 class="related-title__item">
+            Có thể bạn thích
+        </h1>
+    </div>
+    <div class="related-cards">
+        <div class="related-card">
+            <div class="related-card__items">
+                <div class="related-card__economize">
+                    <span class="related-card__economize-title">
+                        Tiết kiệm 100,000đ
+                    </span>
+                </div>
+                <div class="related-card__img" onclick="window.location.href='/product-detail/1';"
+                    class="product__slide__image">
+                    <img src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613932277.jpg?v=1710231814&width=800"
+                        alt="Tên sản phẩm" class="related-card__img-item" id="slide">
+                </div>
+                <div class="related-card__button">
+                    <button class="related-card__button-item" name="add-to-cart">
+                        + Thêm nhanh
+                    </button>
+                </div>
+            </div>
+            <div class="related-card__sub">
+                <div class="related-card__sub-title">
+                    <h3 class="related-card__sub-title__item">
+                        Tên sản phẩm
+                    </h3>
+                </div>
+                <div class="related-card__sub-evaluate">
+                    <span class="related-card__sub-evaluate-item">
+                        5.0
+                    </span>
+                </div>
+                <div class="related-card__sub-price">
+                    <span class="related-card__sub-price__item">
+                        500,000đ
+                    </span>
+                    <span class="related-card__sub-price__delete">
+                        600,000đ
+                    </span>
+                </div>
+            </div>
+            <div class="related-card__subImgs">
+                <div class="related-card__subImg">
+                    <img src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613670133.jpg?v=1711183578&width=800"
+                        onclick="img('https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613670133.jpg?v=1711183578&width=800')"
+                        class="related-card__subImg-item">
+                </div>
+                <div class="related-card__subImg">
+                    <img src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613702901.jpg?v=1711183578&width=800"
+                        alt="Tên sản phẩm"
+                        onclick="img('https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613702901.jpg?v=1711183578&width=800')"
+                        class="related-card__subImg-item">
+                </div>
+                <div class="related-card__subImg">
+                    <img src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170614063349.jpg?v=1711183578&width=800"
+                        alt="Tên sản phẩm"
+                        onclick="img('https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170614063349.jpg?v=1711183578&width=800')"
+                        class="related-card__subImg-item">
+                </div>
+                <div class="related-card__subImg">
+                    <img src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613997813.jpg?v=1710231818&width=800"
+                        alt="Tên sản phẩm"
+                        onclick="img('https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613997813.jpg?v=1710231818&width=800')"
+                        class="related-card__subImg-item">
+                </div>
+                <div class="related-card__subImg">
+                    <img src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613997813.jpg?v=1710231818&width=800"
+                        alt="Tên sản phẩm"
+                        onclick="img('https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613997813.jpg?v=1710231818&width=800')"
+                        class="related-card__subImg-item">
+                </div>
+            </div>
+        </div>
+        <div class="related-card">
+            <div class="related-card__items">
+                <div class="related-card__economize">
+                    <span class="related-card__economize-title">
+                        Tiết kiệm 100,000đ
+                    </span>
+                </div>
+                <div class="related-card__img" onclick="window.location.href='/product-detail/1';"
+                    class="product__slide__image">
+                    <img src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613932277.jpg?v=1710231814&width=800"
+                        alt="Tên sản phẩm" class="related-card__img-item" id="slide">
+                </div>
+                <div class="related-card__button">
+                    <button class="related-card__button-item" name="add-to-cart">
+                        + Thêm nhanh
+                    </button>
+                </div>
+            </div>
+            <div class="related-card__sub">
+                <div class="related-card__sub-title">
+                    <h3 class="related-card__sub-title__item">
+                        Tên sản phẩm
+                    </h3>
+                </div>
+                <div class="related-card__sub-evaluate">
+                    <span class="related-card__sub-evaluate-item">
+                        5.0
+                    </span>
+                </div>
+                <div class="related-card__sub-price">
+                    <span class="related-card__sub-price__item">
+                        500,000đ
+                    </span>
+                    <span class="related-card__sub-price__delete">
+                        600,000đ
+                    </span>
+                </div>
+            </div>
+            <div class="related-card__subImgs">
+                <div class="related-card__subImg">
+                    <img src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613670133.jpg?v=1711183578&width=800"
+                        onclick="img('https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613670133.jpg?v=1711183578&width=800')"
+                        class="related-card__subImg-item">
+                </div>
+                <div class="related-card__subImg">
+                    <img src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613702901.jpg?v=1711183578&width=800"
+                        alt="Tên sản phẩm"
+                        onclick="img('https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613702901.jpg?v=1711183578&width=800')"
+                        class="related-card__subImg-item">
+                </div>
+                <div class="related-card__subImg">
+                    <img src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170614063349.jpg?v=1711183578&width=800"
+                        alt="Tên sản phẩm"
+                        onclick="img('https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170614063349.jpg?v=1711183578&width=800')"
+                        class="related-card__subImg-item">
+                </div>
+                <div class="related-card__subImg">
+                    <img src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613997813.jpg?v=1710231818&width=800"
+                        alt="Tên sản phẩm"
+                        onclick="img('https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613997813.jpg?v=1710231818&width=800')"
+                        class="related-card__subImg-item">
+                </div>
+                <div class="related-card__subImg">
+                    <img src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613997813.jpg?v=1710231818&width=800"
+                        alt="Tên sản phẩm"
+                        onclick="img('https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613997813.jpg?v=1710231818&width=800')"
+                        class="related-card__subImg-item">
+                </div>
+            </div>
+        </div>
+        <div class="related-card">
+            <div class="related-card__items">
+                <div class="related-card__economize">
+                    <span class="related-card__economize-title">
+                        Tiết kiệm 100,000đ
+                    </span>
+                </div>
+                <div class="related-card__img" onclick="window.location.href='/product-detail/1';"
+                    class="product__slide__image">
+                    <img src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613932277.jpg?v=1710231814&width=800"
+                        alt="Tên sản phẩm" class="related-card__img-item" id="slide">
+                </div>
+                <div class="related-card__button">
+                    <button class="related-card__button-item" name="add-to-cart">
+                        + Thêm nhanh
+                    </button>
+                </div>
+            </div>
+            <div class="related-card__sub">
+                <div class="related-card__sub-title">
+                    <h3 class="related-card__sub-title__item">
+                        Tên sản phẩm
+                    </h3>
+                </div>
+                <div class="related-card__sub-evaluate">
+                    <span class="related-card__sub-evaluate-item">
+                        5.0
+                    </span>
+                </div>
+                <div class="related-card__sub-price">
+                    <span class="related-card__sub-price__item">
+                        500,000đ
+                    </span>
+                    <span class="related-card__sub-price__delete">
+                        600,000đ
+                    </span>
+                </div>
+            </div>
+            <div class="related-card__subImgs">
+                <div class="related-card__subImg">
+                    <img src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613670133.jpg?v=1711183578&width=800"
+                        onclick="img('https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613670133.jpg?v=1711183578&width=800')"
+                        class="related-card__subImg-item">
+                </div>
+                <div class="related-card__subImg">
+                    <img src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613702901.jpg?v=1711183578&width=800"
+                        alt="Tên sản phẩm"
+                        onclick="img('https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613702901.jpg?v=1711183578&width=800')"
+                        class="related-card__subImg-item">
+                </div>
+                <div class="related-card__subImg">
+                    <img src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170614063349.jpg?v=1711183578&width=800"
+                        alt="Tên sản phẩm"
+                        onclick="img('https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170614063349.jpg?v=1711183578&width=800')"
+                        class="related-card__subImg-item">
+                </div>
+                <div class="related-card__subImg">
+                    <img src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613997813.jpg?v=1710231818&width=800"
+                        alt="Tên sản phẩm"
+                        onclick="img('https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613997813.jpg?v=1710231818&width=800')"
+                        class="related-card__subImg-item">
+                </div>
+                <div class="related-card__subImg">
+                    <img src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613997813.jpg?v=1710231818&width=800"
+                        alt="Tên sản phẩm"
+                        onclick="img('https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613997813.jpg?v=1710231818&width=800')"
+                        class="related-card__subImg-item">
+                </div>
+            </div>
+        </div>
+        <div class="related-card">
+            <div class="related-card__items">
+                <div class="related-card__economize">
+                    <span class="related-card__economize-title">
+                        Tiết kiệm 100,000đ
+                    </span>
+                </div>
+                <div class="related-card__img" onclick="window.location.href='/product-detail/1';"
+                    class="product__slide__image">
+                    <img src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613932277.jpg?v=1710231814&width=800"
+                        alt="Tên sản phẩm" class="related-card__img-item" id="slide">
+                </div>
+                <div class="related-card__button">
+                    <button class="related-card__button-item" name="add-to-cart">
+                        + Thêm nhanh
+                    </button>
+                </div>
+            </div>
+            <div class="related-card__sub">
+                <div class="related-card__sub-title">
+                    <h3 class="related-card__sub-title__item">
+                        Tên sản phẩm
+                    </h3>
+                </div>
+                <div class="related-card__sub-evaluate">
+                    <span class="related-card__sub-evaluate-item">
+                        5.0
+                    </span>
+                </div>
+                <div class="related-card__sub-price">
+                    <span class="related-card__sub-price__item">
+                        500,000đ
+                    </span>
+                    <span class="related-card__sub-price__delete">
+                        600,000đ
+                    </span>
+                </div>
+            </div>
+            <div class="related-card__subImgs">
+                <div class="related-card__subImg">
+                    <img src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613670133.jpg?v=1711183578&width=800"
+                        onclick="img('https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613670133.jpg?v=1711183578&width=800')"
+                        class="related-card__subImg-item">
+                </div>
+                <div class="related-card__subImg">
+                    <img src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613702901.jpg?v=1711183578&width=800"
+                        alt="Tên sản phẩm"
+                        onclick="img('https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613702901.jpg?v=1711183578&width=800')"
+                        class="related-card__subImg-item">
+                </div>
+                <div class="related-card__subImg">
+                    <img src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170614063349.jpg?v=1711183578&width=800"
+                        alt="Tên sản phẩm"
+                        onclick="img('https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170614063349.jpg?v=1711183578&width=800')"
+                        class="related-card__subImg-item">
+                </div>
+                <div class="related-card__subImg">
+                    <img src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613997813.jpg?v=1710231818&width=800"
+                        alt="Tên sản phẩm"
+                        onclick="img('https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613997813.jpg?v=1710231818&width=800')"
+                        class="related-card__subImg-item">
+                </div>
+                <div class="related-card__subImg">
+                    <img src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613997813.jpg?v=1710231818&width=800"
+                        alt="Tên sản phẩm"
+                        onclick="img('https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613997813.jpg?v=1710231818&width=800')"
+                        class="related-card__subImg-item">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="gradient-custom">
+    <div class="container my-5 py-5">
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-12 col-lg-10 col-xl-8 py-5">
+                <form action="/comment" method="post">
+                    <input type="hidden" name="method" value="POST">
+
+                    <!-- Star Rating Section -->
+                    <div class="mb-3">
+                        <label for="rating" class="form-label">Đánh giá:</label>
+                        <div class="star-rating">
+                            <input type="radio" name="rating" id="star5" value="5" class="rating-input">
+                            <label for="star5" class="star">&#9733;</label>
+                            <input type="radio" name="rating" id="star4" value="4" class="rating-input">
+                            <label for="star4" class="star">&#9733;</label>
+                            <input type="radio" name="rating" id="star3" value="3" class="rating-input" checked>
+                            <label for="star3" class="star">&#9733;</label>
+                            <input type="radio" name="rating" id="star2" value="2" class="rating-input">
+                            <label for="star2" class="star">&#9734;</label>
+                            <input type="radio" name="rating" id="star1" value="1" class="rating-input">
+                            <label for="star1" class="star">&#9734;</label>
+                        </div>
+                    </div>
+
+                    <!-- Comment Section -->
+                    <textarea class="form-control mb-3" rows="5" placeholder="Hãy viết vào bình luận của bạn"
+                        name="content"></textarea>
+                    <input type="hidden" name="product_id" value="">
+                    <div class="d-flex justify-content-end">
+                        <button class="btn btn-info text-white">Bình luận</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Comments Display Section -->
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-12 col-lg-10 col-xl-8">
+                <div class="card">
+                    <div class="card-body p-4">
+                        <h4 class="text-center mb-4 pb-2">Comments</h4>
+                        <!-- Comment Item -->
+                        <div class="d-flex flex-start mb-4 comment-item">
+                            <img class="rounded-circle shadow-1-strong me-3"
+                                src="https://sinpo.id/storage/gambar/foto/wartawan/default_photo.jpg" alt="avatar"
+                                width="65" height="65" />
+                            <div class="flex-grow-1 flex-shrink-1">
+                                <div>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <p class="mb-1">
+                                            Username
+                                            <span class="separator">•</span>
+                                            <span class="small">3 hours ago</span>
+                                        </p>
+                                        <div>
+                                            <button type="button" class="btn btn-link btn-edit"><i
+                                                    class="fas fa-edit fa-xs"></i><span
+                                                    class="small">edit</span></button>
+                                            <button type="button" class="btn btn-link btn-delete"><i
+                                                    class="fas fa-trash fa-xs"></i><span
+                                                    class="small">delete</span></button>
+                                            <button type="button" class="btn btn-link btn-reply"><i
+                                                    class="fas fa-reply fa-xs"></i><span
+                                                    class="small">reply</span></button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Display Rating -->
+                                    <div class="star-rating">
+                                        <span>&#9733;</span>
+                                        <span>&#9733;</span>
+                                        <span>&#9733;</span>
+                                        <span>&#9734;</span>
+                                        <span>&#9734;</span>
+                                    </div>
+
+                                    <p class="small mb-0">Good product...</p>
+
+                                    <!-- Reply Form -->
+                                    <div class="reply-form mt-3" style="display: none;">
+                                        <form action="/reply" method="post">
+                                            <input type="hidden" name="method" value="POST">
+                                            <textarea class="form-control mb-2" placeholder="Viết phản hồi của bạn"
+                                                name="content"></textarea>
+                                            <div class="d-flex justify-content-end">
+                                                <button class="btn btn-info w-15">Gửi phản hồi</button>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                    <!-- Edit Form -->
+                                    <div class="edit-form mt-3" style="display: none;">
+                                        <form action="/edit-comment" method="post">
+                                            <input type="hidden" name="method" value="PUT">
+                                            <textarea class="form-control mb-2"
+                                                placeholder="Chỉnh sửa bình luận của bạn"
+                                                name="content">Good product...</textarea>
+                                            <div class="d-flex justify-content-end">
+                                                <button class="btn btn-info w-15">Cập nhật</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+
+                                <!-- Nested Replies -->
+                                <div class="d-flex flex-start mt-4 comment-item">
+                                    <a class="me-3" href="#">
+                                        <img class="rounded-circle shadow-1-strong"
+                                            src="https://sinpo.id/storage/gambar/foto/wartawan/default_photo.jpg"
+                                            alt="avatar" width="65" height="65" />
+                                    </a>
+                                    <div class="flex-grow-1 flex-shrink-1">
+                                        <div>
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <p class="mb-1">
+                                                    Username
+                                                    <span class="separator">•</span>
+                                                    <span class="small">2 hours ago</span>
+                                                </p>
+                                                <div>
+                                                    <button type="button" class="btn btn-link btn-edit"><i
+                                                            class="fas fa-edit fa-xs"></i><span
+                                                            class="small">edit</span></button>
+                                                    <button type="button" class="btn btn-link btn-delete"><i
+                                                            class="fas fa-trash fa-xs"></i><span
+                                                            class="small">delete</span></button>
+                                                </div>
+                                            </div>
+                                            <p class="small mb-0">Reply content here...</p>
+
+                                            <!-- Edit Form for Reply -->
+                                            <div class="edit-form mt-3" style="display: none;">
+                                                <form action="/edit-comment" method="post">
+                                                    <input type="hidden" name="method" value="PUT">
+                                                    <textarea class="form-control mb-2"
+                                                        placeholder="Chỉnh sửa bình luận của bạn"
+                                                        name="content">Reply content here...</textarea>
+                                                    <div class="d-flex justify-content-end">
+                                                        <button class="btn btn-info w-15">Cập nhật</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="container text-center mt-5">
+                            <h3 class="display-6">Không có bình luận nào</h3>
+                            <p class="lead">Hãy bình luận cho chúng tôi nếu có phản hồi gì về sản phẩm!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const stars = document.querySelectorAll('.star');
+
+        stars.forEach(star => {
+            star.addEventListener('click', function () {
+                // Xóa lớp 'selected' khỏi tất cả các ngôi sao
+                stars.forEach(s => s.classList.remove('selected'));
+
+                // Đánh dấu ngôi sao đã chọn
+                this.classList.add('selected');
+
+                // Cập nhật input radio tương ứng
+                const ratingInput = this.previousElementSibling; // Lấy radio input tương ứng
+                ratingInput.checked = true; // Đánh dấu là đã chọn
+            });
+        });
+    });
+
+    document.querySelectorAll(".product__info__buy__list").forEach(group => {
+        const labels = group.querySelectorAll(".product__info__buy__list-fix label");
+
+        labels.forEach(label => {
+            label.addEventListener("click", function () {
+                labels.forEach(lbl => lbl.classList.remove("active-product"));
+                label.classList.add("active-product");
+            });
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.btn-reply').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                let commentItem = this.closest('.comment-item');
+                let replyForm = commentItem.querySelector('.reply-form');
+                let editForm = commentItem.querySelector('.edit-form');
+                replyForm.style.display = replyForm.style.display === 'none' ? 'block' : 'none';
+                editForm.style.display = 'none';
+            });
+        });
+
+        document.querySelectorAll('.btn-edit').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                let commentItem = this.closest('.comment-item');
+                let editForm = commentItem.querySelector('.edit-form');
+                let replyForm = commentItem.querySelector('.reply-form');
+                editForm.style.display = editForm.style.display === 'none' ? 'block' : 'none';
+                replyForm.style.display = 'none';
+            });
+        });
+
+        document.querySelectorAll('.btn-delete').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                alert('Đã xóa thành công');
+            });
+        });
+    });
+</script>
+
+<?php $this->stop() ?>

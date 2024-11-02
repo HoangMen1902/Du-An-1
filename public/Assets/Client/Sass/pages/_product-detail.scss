@@ -1,0 +1,451 @@
+* {
+    box-sizing: border-box;
+    font-family: "Montserrat", sans-serif;
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+  }
+  
+  .product__carousel-wrapper__slide {
+    display: none;
+    img {
+      width: 100%;
+      border-radius: 10px;
+      //   animation: fadeIn 0.5s ease-in-out;
+      transition: opacity 2s ease-in;
+    }
+  }
+  
+  .product__active {
+    background-color: #000;
+  }
+  
+  .product-detal__container {
+    margin: 0px auto;
+    max-width: 1400px;
+    display: flex;
+    height: auto;
+    padding: 2%;
+    @include down(1600px) {
+      max-width: 1400px;
+    }
+    @include down(2xl) {
+      max-width: 1100px;
+    }
+    @include down(xl) {
+      max-width: 1000px;
+    }
+    @include down(lg) {
+      display: block;
+      padding: 5%;
+    }
+    @include down(md) {
+      max-width: 700px;
+      padding: 2%;
+    }
+    @include down(sm) {
+      max-width: 500px;
+      padding: 2%;
+      .product__main-carousel-ids {
+        display: none;
+      }
+    }
+    @include down(xs) {
+      max-width: 400px;
+      padding: 2%;
+      .product__main-carousel-ids {
+        display: none;
+      }
+    }
+  }
+  
+  .product__carousel {
+    width: 55%;
+    display: flex;
+    gap: 30px;
+    @include down(lg) {
+      width: 100%;
+    }
+  }
+  
+  .product__carousel-wrapper {
+    max-width: 700px;
+    // max-width: 600px;
+    border-radius: 10px;
+  }
+  
+  .product__main-carousel-ids {
+    width: 100px;
+    button {
+      width: 80px;
+      height: 80px;
+      border-radius: 10px;
+      margin: 10px;
+      border: 0px;
+    }
+    img {
+      border-radius: 10px;
+      width: 100%;
+    }
+  }
+  
+  .product__info {
+    max-width: 45%;
+    // background-color: red;
+    height: max-content;
+    padding-left: 20px;
+    @include down(lg) {
+      max-width: 100%;
+    }
+    &__vendor {
+      a {
+        font-size: 30px;
+      }
+    }
+    h3 {
+      margin-block: 20px;
+    }
+    h4 {
+      font-size: $fs-h2;
+      margin-block: 20px;
+    }
+    &__text {
+      color: $color-text-price;
+      font-size: 28px;
+      font-weight: bold;
+    }
+    &__ultext {
+      ul {
+        display: grid;
+        row-gap: 10px;
+      }
+      li {
+        font-size: 18px;
+      }
+    }
+    &__buy {
+      padding-inline: 10px;
+      width: 100%;
+      height: max-content;
+      &__color {
+        display: flex;
+      }
+      &__img {
+        width: 70px;
+        height: 70px;
+        border-radius: 10px;
+        margin-inline: 10px;
+        img {
+          width: 100%;
+          border-radius: 10px;
+        }
+      }
+      &__list {
+        display: flex;
+        padding: 0px;
+        margin-bottom: 10px;
+        &-fix{
+         display: flex; 
+        }
+        h6 {
+          margin-right: 15px;
+        }
+        label {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-right: 20px;
+          cursor: pointer;
+          width: 70px;
+          height: 45px;
+          border-radius: 30px;
+          border: 2px solid rgba(0, 0, 0, 0.493) !important;
+          background-color: #fff;
+          text-align: center;
+          position: relative;
+        }
+  
+        input{
+          appearance: none;
+          position: absolute; 
+          width: 0;
+          height: 0;
+          margin: 0;
+        }
+     
+      }
+      &__quantity {
+        width: 150px;
+        height: 45px;
+        border-radius: 30px;
+        border: 2px solid black;
+        display: flex;
+        margin-bottom: 10px;
+        p {
+          width: 33.33%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin: 0px;
+        }
+      }
+      &__button-l {
+        width: 33.33%;
+        border-radius: 50%;
+        border: 0px;
+        background-color: #ffffff;
+      }
+      &__button-r {
+        width: 33.33%;
+        border-radius: 50%;
+        border: 0px;
+        background-color: #ffffff;
+      }
+      &__button {
+        border-radius: 30px;
+        border: 2px solid #3c619e;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #3c619e;
+        width: 80%;
+        height: 55px;
+        font-size: 20px;
+        transition: background-color 0.8s ease;
+        &:hover {
+          background-color: #ffffff;
+          color: black !important;
+        }
+      }
+    }
+  }
+  
+  .mrl0 {
+    margin-left: 0px !important;
+  }
+  
+  .active-product {
+    background-color: #000 !important;
+    color: #ffffff;
+  }
+  
+  * {
+    font-family: "Montserrat", sans-serif;
+  }
+  .product_discountCode {
+    width: fit-content;
+    height: auto;
+    position: relative;
+  }
+  .product_discountCode-transition {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    pointer-events: none;
+    z-index: 99999999;
+    border-radius: 50%;
+    box-shadow: -120px -218.66667px blue, 248px -16.66667px #00ff84,
+      190px 16.33333px #002bff, -113px -308.66667px #ff009d,
+      -109px -287.66667px #ffb300, -50px -313.66667px #ff006e,
+      226px -31.66667px #ff4000, 180px -351.66667px #ff00d0,
+      -12px -338.66667px #00f6ff, 220px -388.66667px #99ff00,
+      -69px -27.66667px #ff0400, -111px -339.66667px #6200ff,
+      155px -237.66667px #00ddff, -152px -380.66667px #00ffd0,
+      -50px -37.66667px #00ffdd, -95px -175.66667px #a6ff00,
+      -88px 10.33333px #0d00ff, 112px -309.66667px #005eff,
+      69px -415.66667px #ff00a6, 168px -100.66667px #ff004c,
+      -244px 24.33333px #ff6600, 97px -325.66667px #ff0066,
+      -211px -182.66667px #00ffa2, 236px -126.66667px #b700ff,
+      140px -196.66667px #9000ff, 125px -175.66667px #00bbff,
+      118px -381.66667px #ff002f, 144px -111.66667px #ffae00,
+      36px -78.66667px #f600ff, -63px -196.66667px #c800ff,
+      -218px -227.66667px #d4ff00, -134px -377.66667px #ea00ff,
+      -36px -412.66667px #ff00d4, 209px -106.66667px #00fff2,
+      91px -278.66667px #000dff, -22px -191.66667px #9dff00,
+      139px -392.66667px #a6ff00, 56px -2.66667px #0099ff,
+      -156px -276.66667px #ea00ff, -163px -233.66667px #00fffb,
+      -238px -346.66667px #00ff73, 62px -363.66667px #0088ff,
+      244px -170.66667px #0062ff, 224px -142.66667px #b300ff,
+      141px -208.66667px #9000ff, 211px -285.66667px #ff6600,
+      181px -128.66667px #1e00ff, 90px -123.66667px #c800ff,
+      189px 70.33333px #00ffc8, -18px -383.66667px #00ff33,
+      100px -6.66667px #ff008c;
+    animation: 1s bang ease-out 1 forwards, 1s gravity ease-in 1 forwards,
+      5s position linear 1 forwards;
+  }
+  
+  @keyframes bang {
+    from {
+      box-shadow: 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white,
+        0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white,
+        0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white,
+        0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white,
+        0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white,
+        0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white,
+        0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white,
+        0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white,
+        0 0 white, 0 0 white, 0 0 white, 0 0 white;
+    }
+  }
+  
+  @keyframes gravity {
+    to {
+      transform: translateY(200px);
+      opacity: 0;
+    }
+  }
+  
+  @keyframes position {
+    0%,
+    19.9% {
+      margin-top: 10%;
+      margin-left: 40%;
+    }
+    20%,
+    39.9% {
+      margin-top: 40%;
+      margin-left: 30%;
+    }
+    40%,
+    59.9% {
+      margin-top: 20%;
+      margin-left: 70%;
+    }
+    60%,
+    79.9% {
+      margin-top: 30%;
+      margin-left: 20%;
+    }
+    80%,
+    99.9% {
+      margin-top: 30%;
+      margin-left: 80%;
+    }
+  }
+  
+  .product_discountCode button {
+    height: 70px;
+    background: linear-gradient(to left top, #3c619e 50%, #2e64bd 50%);
+    border-style: none;
+    color: #fff;
+    font-size: 23px;
+    letter-spacing: 3px;
+    font-weight: 600;
+    outline: none;
+    border-radius: 30px;
+    cursor: pointer;
+    position: relative;
+    padding: 0px;
+    overflow: hidden;
+    transition: all 0.5s;
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
+    padding-inline: 20px;
+  }
+  
+  .product_discountCode button span {
+    position: absolute;
+    display: block;
+  }
+  
+  .product_discountCode button span:nth-child(1) {
+    height: 3px;
+    width: 200px;
+    top: 0px;
+    left: -200px;
+    background: linear-gradient(to right, rgba(0, 0, 0, 0), #f6e58d);
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+    animation: span1 2s linear infinite;
+    animation-delay: 1s;
+  }
+  
+  @keyframes span1 {
+    0% {
+      left: -200px;
+    }
+  
+    100% {
+      left: 200px;
+    }
+  }
+  
+  .product_discountCode button span:nth-child(2) {
+    height: 70px;
+    width: 3px;
+    top: -70px;
+    right: 0px;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0), #f6e58d);
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
+    animation: span2 2s linear infinite;
+    animation-delay: 2s;
+  }
+  
+  @keyframes span2 {
+    0% {
+      top: -70px;
+    }
+  
+    100% {
+      top: 70px;
+    }
+  }
+  
+  .product_discountCode button span:nth-child(3) {
+    height: 3px;
+    width: 200px;
+    right: -200px;
+    bottom: 0px;
+    background: linear-gradient(to left, rgba(0, 0, 0, 0), #f6e58d);
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+    animation: span3 2s linear infinite;
+    animation-delay: 3s;
+  }
+  
+  @keyframes span3 {
+    0% {
+      right: -200px;
+    }
+  
+    100% {
+      right: 200px;
+    }
+  }
+  
+  .product_discountCodebutton span:nth-child(4) {
+    height: 70px;
+    width: 3px;
+    bottom: -70px;
+    left: 0px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0), #f6e58d);
+    border-top-right-radius: 2px;
+    border-top-left-radius: 2px;
+    animation: span4 2s linear infinite;
+    animation-delay: 4s;
+  }
+  
+  @keyframes span4 {
+    0% {
+      bottom: -70px;
+    }
+  
+    100% {
+      bottom: 70px;
+    }
+  }
+  
+  .product_discountCode button:hover {
+    transition: all 0.5s;
+    transform: rotate(-3deg) scale(1.1);
+    box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.4);
+  }
+  
+  .product_discountCode button:hover span {
+    animation-play-state: paused;
+  }
+  .active-product {
+    background-color: #00000091 !important;
+    color: #ffffff;
+  }
+  

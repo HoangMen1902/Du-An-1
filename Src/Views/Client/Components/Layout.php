@@ -7,6 +7,7 @@
     <title>BeeTechNova</title>
     <?= $this->section('styles') ?>
     <link rel="stylesheet" href="<?= $_ENV['APP_URL'] ?>/public/Assets/Client/Styles/main.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css">
 </head>
 
 <body>
