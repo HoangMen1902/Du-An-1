@@ -7,6 +7,8 @@
     padding-bottom: 8px;
 }
 
+
+
 .border-title-bottom-custom::after {
     content: "";
     position: absolute;
@@ -29,6 +31,11 @@
 
 .contact-check{
     margin: 100px 0px;
+}
+.contact-content {
+    justify-self: center;
+    width: 70%;
+    margin: auto;
 }
 
 .icon-truck {
