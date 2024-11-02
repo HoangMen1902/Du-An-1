@@ -19,7 +19,7 @@
             <li><a href="/home" class="text-decoration-none">Trang chủ</a></li>
             <li><a href="" class="text-decoration-none">Sản phẩm</a></li>
             <li><a href="" class="text-decoration-none">Giới thiệu</a></li>
-            <li><a href="" class="text-decoration-none">Liên hệ</a></li>
+            <li><a href="<?= $_ENV['APP_URL'] ?>/Contact" class="text-decoration-none">Liên hệ</a></li>
         </ul>
         <div class="icon-group">
             <button class="search-btn"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.0" stroke="currentColor" class="size-6">

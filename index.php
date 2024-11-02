@@ -2,6 +2,9 @@
 use FastRoute\RouteCollector;
 use League\Plates\Extension\URI;
 use Src\Controllers\Client\HomeController;
+use Src\Controllers\Client\ContactController;
+
+
 
 require_once 'vendor/autoload.php';
 
@@ -25,6 +28,7 @@ $dotenv->load();
 $dispatcher = FastRoute\simpleDispatcher(function(RouteCollector $r) {
     $r->addRoute('GET', '/home', [HomeController::class, 'show']);
     $r->addRoute('GET', '/', [HomeController::class, 'show']);
+    $r->addRoute('GET', '/Contact', [ContactController::class, 'show']);
 });
 
 
