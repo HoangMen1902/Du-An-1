@@ -22,6 +22,9 @@ final class WardsTable extends AbstractMigration
         $table = $this->table('Wards');
         $table->addColumn('name', 'string', ['limit' => 100]);
         $table->addColumn('district_id', 'integer', ['null' => true]);
+        $table->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP']);
+        $table->addColumn('updated_at', 'timestamp');
+
         $table->create();
     }
 }

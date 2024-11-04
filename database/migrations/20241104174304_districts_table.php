@@ -22,6 +22,9 @@ final class DistrictsTable extends AbstractMigration
         $table = $this->table('Districts');
         $table->addColumn('name', 'string', ['limit' => 100]);
         $table->addColumn('province_id', 'integer', ['null' => false]);
+        $table->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP']);
+        $table->addColumn('updated_at', 'timestamp');
+
         $table->create();
     }
 }

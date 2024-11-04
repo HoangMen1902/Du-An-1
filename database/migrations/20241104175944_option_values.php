@@ -24,6 +24,8 @@ final class OptionValues extends AbstractMigration
         $table->addColumn('option_id', 'integer');
         $table->addColumn('value_name', 'string');
         $table->addColumn('status', 'integer', ['default' => '1']);
+        $table->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP']);
+        $table->addColumn('updated_at', 'timestamp');
         $table->create();
     }
 }
