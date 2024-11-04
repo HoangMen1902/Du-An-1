@@ -8,7 +8,7 @@ use Src\Controllers\Client\ProductController;
 use Src\Controllers\Client\CheckoutController;
 use Src\Controllers\Admin\DashboardController;
 use Src\Controllers\Client\SearchController;
-
+use Src\Controllers\Client\UserInfoController;
 
 
 
@@ -40,6 +40,13 @@ $dispatcher = FastRoute\simpleDispatcher(function(RouteCollector $r) {
 
     $r->addRoute('GET', '/login', [AuthController::class, 'login']);
     $r->addRoute('GET', '/register', [AuthController::class, 'register']);
+
+    $r->addGroup('/profile', function (FastRoute\RouteCollector $r) {
+        $r->get('', [UserInfoController::class, 'myAccount']);
+        $r->get('/change-password', [UserInfoController::class, 'changePassword']);
+        $r->get('/address', [UserInfoController::class, 'address']);
+        $r->get('/orders-list', [UserInfoController::class, 'userOrders']);
+    });
 
     $r->get('/admin', [DashboardController::class, 'show']);
     $r->get('/admin/dashboard', [DashboardController::class, 'show']);
