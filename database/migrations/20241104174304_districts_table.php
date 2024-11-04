@@ -1,15 +1,10 @@
-Ví dụ --
-
-
-
-
 <?php
 
 declare(strict_types=1);
 
 use Phinx\Migration\AbstractMigration;
 
-final class ExampleMigration extends AbstractMigration
+final class DistrictsTable extends AbstractMigration
 {
     /**
      * Change Method.
@@ -24,11 +19,9 @@ final class ExampleMigration extends AbstractMigration
      */
     public function change(): void
     {
-           $table = $this->table('users');
-           $table->addColumn('name', 'string', ['limit' => 100])
-              ->addColumn('email', 'string', ['limit' => 100])
-              ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
-              ->create();
-    }
+        $table = $this->table('Districts');
+        $table->addColumn('name', 'string', ['limit' => 100]);
+        $table->addColumn('province_id', 'integer', ['null' => false]);
+        $table->create();
     }
 }
