@@ -1,121 +1,80 @@
-<?php
-
-namespace App\Views\Admin\Pages\Vouchers;
-
-use App\Views\BaseView;
-
-class VoucherAdd extends BaseView
-{
-    public static function render($data = null)
-    {
+<?php $this->layout('Admin/Layouts/Layout') ?>
 
 
+<?php 
+$this->start('main_content');
 ?>
-        <div class="col-12 grid-margin stretch-card">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title">Thêm mã giảm giá</h4>
-                    <form class="forms-sample" action="/admin/add-voucher" method="post" enctype="multipart/form-data">
-                        <input type="hidden" name="method" value="POST">
-                        <div class="form-group">
-                            <label for="name">Tên</label>
-                            <input type="text" class="form-control" id="name" placeholder="Name" name="name">
-                        </div>
-                        <div class="form-group">
-                            <label for="code">Mã Voucher</label>
-                            <input type="text" class="form-control" id="code" name="code"></input>
-                        </div>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label for="">Giá giảm</label>
-                                    <div class="input-group">
-                                        <input type="number" class="form-control" name="discountAmount" id="discountAmount">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">VNĐ</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="">Áp dụng cho đơn trên</label>
-                                    <div class="input-group">
-                                        <input type="number" class="form-control" name="orderValueDiscount" id="orderValueDiscount">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">VNĐ</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-md-6">
-                                <label class="col-sm-6 col-form-label">Ngày hết hạn</label>
-                                <div class="col-sm-9" style="padding: 0">
-                                    <!-- <input class="form-control" type="datetime-local" step="1" id="createdAt" name="createdAt"> -->
-                                    <input class="form-control" type="datetime-local" step="1" id="dueAt" name="dueAt">
-                                    <div id="invalidDate" style="display: none; color: red;">Vui lòng nhập ngày hợp lệ</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Trạng thái</label>
-                            <div class="form-check form-check-success ">
-                                <select class="form-control form-control-sm col-lg-2" name="status">
-                                    <option value="1">Hoạt động</option>
-                                    <option value="2">Không hoạt động</option>
-                                </select>
-                            </div>
-                        </div>
-                        <button type="submit" name="submit" class="btn btn-primary mr-2">Thêm</button>
-                        <?php
-                        if (isset($_SESSION['voucher']['error'])) :
-                        ?>
-                            <div class="alert alert-danger mt-5" role="alert">
-                                <?= $_SESSION['voucher']['error'] ?>
-                            </div>
-                        <?php
-                            unset($_SESSION['voucher']);
-                        endif;
-                        ?>
-                        <?php
-                        if (isset($_SESSION['voucher']['success'])) :
-                        ?>
-                            <div class="alert alert-success mt-5" role="alert">
-                                <?= $_SESSION['voucher']['success'] ?>
-                            </div>
-                        <?php
-                            unset($_SESSION['voucher']['success']);
-                        endif;
-                        ?>
 
-                        <?php
-                        if (isset($_SESSION['voucher']['failDelete'])) :
-                        ?>
-                            <div class="alert alert-danger mt-5" role="alert">
-                                <?= $_SESSION['voucher']['failDelete'] ?>
-                            </div>
-                        <?php
-                            unset($_SESSION['voucher']);
-                        endif;
-                        ?>
-
-                        <?php
-                        if (isset($_SESSION['voucher']['successDelete'])) :
-                        ?>
-                            <div class="alert alert-success mt-5" role="alert">
-                                <?= $_SESSION['voucher']['successDelete'] ?>
-                            </div>
-                        <?php
-                            unset($_SESSION['voucher']);
-                        endif;
-                        ?>
-                    </form>
-                </div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="table-responsive pt-3">
+                <table class="table table-striped project-orders-table">
+                    <thead>
+                        <tr>
+                            <th class="ml-5">ID</th>
+                            <th>Họ Tên</th>
+                            <th>Email</th>
+                            <th>Số điện thoại</th>
+                            <th>Trạng thái</th>
+                            <th>Vai trò</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Nguyễn Văn A</td>
+                            <td>nguyenvana@example.com</td>
+                            <td>0123456789</td>
+                            <td>Đang hoạt động</td>
+                            <td>client</td>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <a href="/admin/edit-user/1">
+                                        <button type="button" class="btn btn-success btn-sm btn-icon-text mr-3">
+                                            Sửa
+                                            <i class="typcn typcn-edit btn-icon-append"></i>
+                                        </button>
+                                    </a>
+                                    <form action="/admin/delete-user/1" method="get" onsubmit="return confirm('Bạn chắc là xóa chứ?')">
+                                        <input type="hidden" name="method" value="DELETE">
+                                        <button type="submit" class="btn btn-danger btn-sm btn-icon-text">Xóa</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Trần Thị B</td>
+                            <td>tranthib@example.com</td>
+                            <td>0987654321</td>
+                            <td>vô hiệu hóa</td>
+                            <td>admin</td>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <a href="/admin/edit-user/2">
+                                        <button type="button" class="btn btn-success btn-sm btn-icon-text mr-3">
+                                            Sửa
+                                            <i class="typcn typcn-edit btn-icon-append"></i>
+                                        </button>
+                                    </a>
+                                    <form action="/admin/delete-user/2" method="get" onsubmit="return confirm('Bạn chắc là xóa chứ?')">
+                                        <input type="hidden" name="method" value="DELETE">
+                                        <button type="submit" class="btn btn-danger btn-sm btn-icon-text">Xóa</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                        <!-- Thêm nhiều dòng khác nếu cần -->
+                    </tbody>
+                </table>
             </div>
         </div>
+    </div>
+</div>
+
 <?php
 
-    }
-}
-
+$this->stop();
 ?>

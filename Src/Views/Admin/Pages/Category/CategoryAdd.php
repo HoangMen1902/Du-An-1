@@ -1,16 +1,9 @@
-<?php
-
-namespace App\Views\Admin\Pages\Category;
-use App\Views\BaseView;
-
-class CategoryAdd extends BaseView
-{
-    public static function render($data = null)
-    {
+<?php $this->layout('Admin/Layouts/Layout') ?>
 
 
+<?php 
+$this->start('main_content');
 ?>
-
 <div class="col-md-12 grid-margin stretch-card">
     <div class="card">
         <div class="card-body">
@@ -28,7 +21,7 @@ class CategoryAdd extends BaseView
                 
                 <div class="form-group">
                     <label>Trạng thái</label>
-                    <div class="form-check form-check-success ">
+                    <div class="form-check form-check-success">
                         <select class="form-control form-control-sm col-lg-2" name="status">
                             <option value="1">Hoạt động</option>
                             <option value="2">Không hoạt động</option>
@@ -38,20 +31,16 @@ class CategoryAdd extends BaseView
                 
                 <button type="submit" name="submit" class="btn btn-primary" style="justify-self: flex-end;">Thêm</button>
             </form>
-            <?php if (isset($_SESSION['category']['error'])) : ?>
-                <div class="mt-5 alert alert-danger" role="alert">
-                    <?= $_SESSION['category']['error'] ?>
-                </div>
-                <?php
-                unset($_SESSION['category']['error']);
-                endif;
-                ?>
+            <div class="mt-5 alert alert-danger" role="alert">
+                <!-- Thông báo lỗi ở đây -->
+                Đã có lỗi xảy ra. Vui lòng thử lại.
+            </div>
         </div>
     </div>
 </div>
 <?php
-
-}
-}
-
+$this->stop();
 ?>
+
+
+
