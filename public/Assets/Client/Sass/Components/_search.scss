@@ -1,0 +1,133 @@
+/* Cấu trúc tổng thể */
+.filter-panel {
+    width: 400px;
+    padding: 15px;
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+}
+
+.filter-panel h3 {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.filter-panel h3 i {
+    margin-right: 5px;
+}
+
+.filter-section {
+    margin-bottom: 15px;
+}
+
+.filter-section label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+
+.filter-section.stock {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.filter-section.stock label {
+    font-weight: bold;
+    margin: 0;
+}
+
+.filter-section select,
+.filter-section input[type="checkbox"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.filter-section input[type="checkbox"] {
+    width: auto;
+    transform: scale(1.2);
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
+/* Định dạng thanh kéo (range slider) */
+input[type="range"] {
+    width: 100%;
+    -webkit-appearance: none;
+    height: 6px;
+    background: #ddd;
+    outline: none;
+    opacity: 0.7;
+    transition: opacity .2s;
+}
+
+input[type="range"]:hover {
+    opacity: 1;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    background: #007bff;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+.price-display {
+    text-align: center;
+    font-weight: bold;
+    margin-top: 8px;
+}
+/* Thanh tìm kiếm */
+.search-bar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    align-items: center;
+    justify-content: center; 
+}
+
+#search-input {
+    flex: 1; 
+    min-width: 600px; 
+    max-width: 600px; 
+    padding: 8px;
+    border: none; 
+    border-bottom: 2px solid #ddd; 
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+#search-input:focus {
+    border-bottom: 2px solid #007bff;
+}
+
+.search-bar button {
+    padding: 8px 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.search-bar button:hover {
+    background-color: #0056b3;
+}
+
+.search-bar-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}

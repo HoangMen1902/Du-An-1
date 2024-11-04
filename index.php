@@ -7,6 +7,8 @@ use Src\Controllers\Client\AuthController;
 use Src\Controllers\Client\ProductController;
 use Src\Controllers\Client\CheckoutController;
 use Src\Controllers\Admin\DashboardController;
+use Src\Controllers\Client\SearchController;
+
 
 
 
@@ -41,6 +43,7 @@ $dispatcher = FastRoute\simpleDispatcher(function(RouteCollector $r) {
 
     $r->get('/admin', [DashboardController::class, 'show']);
     $r->get('/admin/dashboard', [DashboardController::class, 'show']);
+    $r->addRoute('GET', '/search', [SearchController::class, 'show']);
 
 });
 
