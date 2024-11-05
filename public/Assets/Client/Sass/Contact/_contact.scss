@@ -8,7 +8,6 @@
 }
 
 
-
 .border-title-bottom-custom::after {
     content: "";
     position: absolute;
@@ -24,9 +23,12 @@
     width: 1189px;
     height: 450px;
 }
+
+.contact-image {
+    position: relative;
+}
 .contact-image img{
-    min-width: 1189px;
-    min-height: 400px;
+    max-width: 100%;
 }
 
 .contact-check{
