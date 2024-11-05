@@ -58,7 +58,7 @@
 
     .carousel-text {
         position: absolute;
-        top: calc($w-halfscreen + 5%);
+        top: calc($w-halfscreen);
         left: $w-halfscreen;
         transform: translate(-$w-halfscreen, -$w-halfscreen);
         text-align: center;
@@ -97,75 +97,11 @@
 }
 
 .carousel-wrapper {
+    position: relative;
     overflow: hidden;
 }
 
-.carousel-header {
-    position: absolute;
-    z-index: 2;
-    display: grid;
-    grid-template-columns: auto 1fr auto;
-    padding: 2.215rem 8.25rem;
-    width: $w-full;
 
-    .menu {
-        list-style-type: none;
-        display: flex;
-        align-items: center;
-        gap: $s-16px $s-40px;
-        justify-content: center;
-        margin: 0;
-
-        li:hover {
-            opacity: 0.7;
-            transition: 0.25s;
-        }
-
-        a {
-            svg {
-                width: 16px;
-            }
-
-            text-decoration: none;
-            color: $color-text-light;
-            font-weight: $fw-bold;
-            display: flex;
-            justify-content: center;
-        }
-    }
-
-    .icons {
-        display: flex;
-        align-items: center;
-        font-size: $fs-h4;
-        gap: $s-20px;
-
-        svg {
-            width: $fs-h4;
-        }
-
-        a {
-            color: $color-text-light;
-        }
-    }
-
-    .logo {
-        max-width: 230px;
-        max-height: 62px;
-    }
-}
-
-.offcanvas-inner {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-
-    a {
-        text-decoration: none;
-        color: $color-text-dark;
-        font-size: $fs-h4;
-    }
-}
 
 .fade-animation {
     animation: fade 1.5s;
