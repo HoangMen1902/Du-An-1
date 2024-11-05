@@ -212,7 +212,7 @@
                         </a>
                         <div id="InstallmentsSubmenu" class="collapse submenu">
                             <a class="nav-link" href="/admin/tragop">Danh sách trả góp</a>
-                            <a class="nav-link" href="/admin/themtragop">Thêm đơn trả góp</a>
+                            <a class="nav-link" href="/admin/tragop/add">Thêm đơn trả góp</a>
                         </div>
                     </li>
 

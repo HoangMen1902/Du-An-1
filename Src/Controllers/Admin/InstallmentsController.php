@@ -10,4 +10,7 @@ class InstallmentsController extends BaseController {
     public function add() {
         echo $this->view->render('Admin/Pages/InstallmentPlan/AddInstallment');
     }
+    public function detail() {
+        echo $this->view->render('Admin/Pages/InstallmentPlan/InstallmentDetail');
+    }
 }

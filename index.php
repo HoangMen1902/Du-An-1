@@ -81,7 +81,9 @@ $dispatcher = FastRoute\simpleDispatcher(function(RouteCollector $r) {
         $r->get('/comments', [CommentController::class, 'show']);
         $r->get('/orders', [OrdersController::class, 'show']);
         $r->get('/tragop', [InstallmentsController::class, 'show']);
-        $r->get('/themtragop', [InstallmentsController::class, 'add']);
+        $r->get('/tragop/add', [InstallmentsController::class, 'add']);
+        $r->get('/tragop/detail', [InstallmentsController::class, 'detail']);
+
 
     });
 
