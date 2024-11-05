@@ -8,11 +8,16 @@
 
 .adsProducts {
   &_height {
-    height: 430px;
-    // font-size: 14px;
-    // width: fit-content;
-
+    // height: 580px;
+    height: 480px;
+    @media (max-width: 768px) {
+      height: 200px !important;
+    }
+    @media (max-width: 1440px) {
+      height: 460px;
+    }
     button {
+      height: 45px;
       color: #fff;
       border: 1px solid #fff;
       border-radius: 100px;
@@ -23,9 +28,7 @@
       transition: 0.5s ease-in-out;
       color: #292936;
     }
-    @media (max-width: 768px) {
-      height: 300px;
-    }
+
     &_2 {
       height: 48%;
     }
@@ -41,10 +44,16 @@
   }
 
   &_image {
-    width: 75%;
-    max-width: 250px;
+    // width: 75%;
+    // max-width: 250px;
     bottom: 10px;
-    right: 10px;
+    right: 15px;
+    // mix-blend-mode: multiply;
+    img {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+    }
     &2 {
       max-width: 150px;
       width: 25%;

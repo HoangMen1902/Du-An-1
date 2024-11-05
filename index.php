@@ -4,6 +4,7 @@ use League\Plates\Extension\URI;
 use Src\Controllers\Client\HomeController;
 use Src\Controllers\Client\ContactController;
 use Src\Controllers\Client\AuthController;
+use Src\Controllers\Client\CartController;
 use Src\Controllers\Client\ProductController;
 use Src\Controllers\Client\CheckoutController;
 use Src\Controllers\Admin\DashboardController;
@@ -47,6 +48,7 @@ $dispatcher = FastRoute\simpleDispatcher(function(RouteCollector $r) {
     $r->addRoute('GET', '/Contact', [ContactController::class, 'show']);
 
     $r->addRoute('GET', '/login', [AuthController::class, 'login']);
+    $r->addRoute('GET', '/cart', [CartController::class, 'show']);
     $r->addRoute('GET', '/register', [AuthController::class, 'register']);
 
     $r->addGroup('/profile', function (FastRoute\RouteCollector $r) {
