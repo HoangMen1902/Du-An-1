@@ -10,7 +10,6 @@
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <link rel="stylesheet" href="<?= getenv('APP_URL') ?>\node_modules\typicons.font\src\font/typicons.css">
-    <!-- <link rel="stylesheet" href="<?= getenv('APP_URL') ?>/public/assets/admin/vendors/css/vendor.bundle.base.css"> -->
     <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="<?= getenv('APP_URL') ?>/public/Assets/Admin/Styles/style.css">
     <!-- <link rel="shortcut icon" href="<?= getenv('APP_URL') ?>/public/assets/admin/images/favicon.png" /> -->
@@ -19,6 +18,8 @@
         src="https://code.jquery.com/jquery-3.7.1.slim.min.js"
         integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8="
         crossorigin="anonymous"></script>
+        <script src="<?= getenv('APP_URL') ?>/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
 </head>
 
 <body>
@@ -42,7 +43,7 @@
                 <ul class="navbar-nav navbar-nav-right">
                     <li class="nav-item dropdown">
                         <a class="nav-link count-indicator dropdown-toggle d-flex justify-content-center align-items-center"
-                            id="messageDropdown" href="#" data-toggle="dropdown">
+                            id="messageDropdown" href="#" data-bs-toggle="dropdown">
                             <i class="typcn typcn-cog-outline mx-0"></i>
                             <span class="count"></span>
                         </a>
@@ -53,7 +54,7 @@
                     </li>
                     <li class="nav-item dropdown mr-0">
                         <a class="nav-link count-indicator dropdown-toggle d-flex align-items-center justify-content-center"
-                            id="notificationDropdown" href="#" data-toggle="dropdown">
+                            id="notificationDropdown" href="#" data-bs-toggle="dropdown">
                             <i class="typcn typcn-bell mx-0"></i>
                             <span class="count"></span>
                         </a>
@@ -243,7 +244,6 @@
         </div>
     </div>
     <?= $this->section('scripts') ?>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
     <!-- <script src="<?= getenv('APP_URL') ?>/public/assets/admin/vendors/js/vendor.bundle.base.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="<?= getenv('APP_URL') ?>/node_modules/chart.js/dist/Chart.min.js"></script>

@@ -28,7 +28,7 @@ $this->start('main_content');
                             <td>Hoạt động</td>
                             <td>
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                    <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="bi bi-three-dots"></i>
                                     </button>
                                     <div class="dropdown-menu">
