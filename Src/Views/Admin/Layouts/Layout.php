@@ -205,6 +205,16 @@
                             <a class="nav-link" href="/admin/orders">Danh sách đơn hàng</a>
                         </div>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#InstallmentsSubmenu">
+                            <i class="typcn typcn-th-small menu-icon"></i>
+                            <span class="menu-title">Kế Hoạch Trả Góp</span>
+                        </a>
+                        <div id="InstallmentsSubmenu" class="collapse submenu">
+                            <a class="nav-link" href="/admin/tragop">Danh sách trả góp</a>
+                            <a class="nav-link" href="/admin/themtragop">Thêm đơn trả góp</a>
+                        </div>
+                    </li>
 
                 </ul>
             </nav>

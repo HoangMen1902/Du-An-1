@@ -19,6 +19,8 @@ use Src\Controllers\Admin\BrandController;
 use Src\Controllers\Admin\CommentController;
 use Src\Controllers\Admin\CategoryController;
 use Src\Controllers\Admin\AttributeController;
+use Src\Controllers\Admin\InstallmentsController;
+
 
 
 require_once 'vendor/autoload.php';
@@ -61,6 +63,8 @@ $dispatcher = FastRoute\simpleDispatcher(function(RouteCollector $r) {
     $r->addRoute('GET', '/search', [SearchController::class, 'show']);
 
     $r->addGroup('/admin', function (FastRoute\RouteCollector $r) {
+        $r->get('/admin', [DashboardController::class, 'show']);
+        $r->get('/admin/dashboard', [DashboardController::class, 'show']);
         $r->get('', [DashboardController::class, 'show']);
         $r->get('/dashboard', [DashboardController::class, 'show']);
         $r->get('/vouchers', [VouchersController::class, 'show']);
@@ -76,6 +80,9 @@ $dispatcher = FastRoute\simpleDispatcher(function(RouteCollector $r) {
         $r->get('/brand/add', [BrandController::class, 'add']);
         $r->get('/comments', [CommentController::class, 'show']);
         $r->get('/orders', [OrdersController::class, 'show']);
+        $r->get('/tragop', [InstallmentsController::class, 'show']);
+        $r->get('/themtragop', [InstallmentsController::class, 'add']);
+
     });
 
 
