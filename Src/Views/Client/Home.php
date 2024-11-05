@@ -1,14 +1,18 @@
+<?php $this->layout('Client/Components/Layout'); ?>
 
+<?php
 
+$this->start('additional_content');
 
-<?php $this->layout('Client/Components/Layout');?>
+$this->insert('/Client/Home/Carousel');
 
+$this->stop()
+?>
 
 
 <?php $this->start('main_content') ?>
 <!-- Insert nội dung vào đây -->
 <?php
-$this->insert('/Client/Home/Carousel');  
 $this->insert('/Client/Home/AdsBanner');
 $this->Insert("/Client/Home/popular");
 $this->insert('/Client/Home/AdsProducts');
@@ -25,7 +29,7 @@ $this->Insert('Client/Home/feedback');
 <?php
 $this->push('scripts')
 ?>
-<script src="<?=$_ENV['APP_URL']?>/public/Assets/Client/js/Carousel.js"></script>
+<script src="<?= $_ENV['APP_URL'] ?>/public/Assets/Client/js/Carousel.js"></script>
 <?php
 $this->end();
 ?>
