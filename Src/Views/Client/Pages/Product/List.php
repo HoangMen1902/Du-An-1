@@ -80,7 +80,7 @@
         <div class="col-md-10 my-4 p-0">
 
             <div class="col-12 d-flex justify-content-between p-0">
-                <div class="col-6 ">
+                <div class="col-7 ">
                     <button class="col-2 btn  border me-1" style="height: 40px; background-color: #1C61E7; color: white; ">Mới nhất</button>
                     <button class="col-2 btn  border mx-1" style="height: 40px; ">Liên quan</button>
                     <button class="col-2 btn  border mx-1" style="height: 40px; ">Bán chạy</button>
