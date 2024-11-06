@@ -24,6 +24,7 @@ final class OptionsTable extends AbstractMigration
         $table->addColumn('status', 'integer', ['default' => 1, 'null' => false]);
         $table->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP']);
         $table->addColumn('updated_at', 'timestamp', ['null' => true]);
+        $table->create();
         
     }
 }

@@ -36,6 +36,7 @@ final class UsersTable extends AbstractMigration
         $table->addColumn('role', 'integer', ['default' => 1]);
         $table->addColumn('created_at', 'datetime', ['default' => 'CURRENT_TIMESTAMP']);
         $table->addColumn('updated_at', 'datetime');
-        $table->save(); 
+        $table->create();
+
     }
 }

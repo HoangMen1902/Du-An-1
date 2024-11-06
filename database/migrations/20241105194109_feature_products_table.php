@@ -24,5 +24,6 @@ final class FeatureProductsTable extends AbstractMigration
         $table->addColumn('user_id', 'integer', ['null' => false]);
         $table->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP']);
         $table->addColumn('updated_at', 'timestamp', ['null' => true]);
+        $table->create();
     }
 }

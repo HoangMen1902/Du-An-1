@@ -24,5 +24,7 @@ final class SpecDefinitions extends AbstractMigration
         $table->addColumn('description', 'text');
         $table->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP']);
         $table->addColumn('updated_at', 'timestamp', ['null' => true]);
+        $table->create();
+
     }
 }
