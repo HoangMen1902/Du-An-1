@@ -23,7 +23,7 @@
 
     </div>
     <div class="row">
-        <div class="col-xl-3 col-md-3 my-5">
+        <div class="col-xl-3 col-md-3 my-4 px-3">
             <div class="filter-panel">
                 <h3>
                     <svg xmlns="http://www.w3.org/2000/svg" height="20px" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -77,12 +77,186 @@
             </div>
         </div>
         <div class="col-md-9 my-5">
+            <div class="row">
+                <div class="col-xl-4 mb-4">
+                    <div class="card position-relative">
+                        <img id="main-img" src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800" class="card-img-top" alt="ảnh sản phẩm">
+                        <div class="card-body">
+                            <h5 class="card-title mb-2 text-limit">Lót chuột Lethal Gaming Gear Jupiter PRO (V2)</h5>
+                            <p class="card-text mb-2 text-limit">Thuộc phân loại Control - Slow, chậm nhất trong các dòng PRO của Lethal Gaming.</p>
+
+                            <div class="d-flex justify-content-star align-items-center">
+                                <span class="price text-muted mb-2 text-decoration-line-through">1.500.000đ</span>
+                                <span class="price mb-2 ms-2">1.000.000đ</span>
+                            </div>
+                            <button class="btn btn-mainColor button-hover mt-3 text-white rounded-5 position-absolute" style="right: 10px; top:220px; height: 40px;">Mua ngay</button>
+
+                            <div>
+                                <button class="img-thumbnail col-3" onclick="changeImage('https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800')">
+                                    <img class=" col-12" src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800" alt="">
+                                </button>
+                                <button class="img-thumbnail col-3" onclick="changeImage(' https://www.phongcachxanh.vn/cdn/shop/files/lot-chu-t-lethal-gaming-gear-jupiter-pro-v2-41227243946229.jpg?v=1726313363&width=800 ')">
+                                    <img class="col-12" src="https://www.phongcachxanh.vn/cdn/shop/files/lot-chu-t-lethal-gaming-gear-jupiter-pro-v2-41227243946229.jpg?v=1726313363&width=800" alt="">
+                                </button>
+                                <button class="img-thumbnail col-3" onclick="changeImage('https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800')">
+                                    <img class=" col-12" src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800" alt="">
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-4 mb-4">
+                    <div class="card position-relative">
+                        <img id="main-img" src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800" class="card-img-top" alt="ảnh sản phẩm">
+                        <div class="card-body">
+                            <h5 class="card-title mb-2 text-limit">Lót chuột Lethal Gaming Gear Jupiter PRO (V2)</h5>
+                            <p class="card-text mb-2 text-limit">Thuộc phân loại Control - Slow, chậm nhất trong các dòng PRO của Lethal Gaming.</p>
+
+                            <div class="d-flex justify-content-star align-items-center">
+                                <span class="price text-muted mb-2 text-decoration-line-through">1.500.000đ</span>
+                                <span class="price mb-2 ms-2">1.000.000đ</span>
+                            </div>
+                            <button class="btn btn-mainColor button-hover mt-3 text-white rounded-5 position-absolute" style="right: 10px; top:220px; height: 40px;">Mua ngay</button>
+
+                            <div>
+                                <button class="img-thumbnail col-3" onclick="changeImage('https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800')">
+                                    <img class=" col-12" src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800" alt="">
+                                </button>
+                                <button class="img-thumbnail col-3" onclick="changeImage(' https://www.phongcachxanh.vn/cdn/shop/files/lot-chu-t-lethal-gaming-gear-jupiter-pro-v2-41227243946229.jpg?v=1726313363&width=800 ')">
+                                    <img class="col-12" src="https://www.phongcachxanh.vn/cdn/shop/files/lot-chu-t-lethal-gaming-gear-jupiter-pro-v2-41227243946229.jpg?v=1726313363&width=800" alt="">
+                                </button>
+                                <button class="img-thumbnail col-3" onclick="changeImage('https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800')">
+                                    <img class=" col-12" src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800" alt="">
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 mb-4">
+                    <div class="card position-relative">
+                        <img id="main-img" src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800" class="card-img-top" alt="ảnh sản phẩm">
+                        <div class="card-body">
+                            <h5 class="card-title mb-2 text-limit">Lót chuột Lethal Gaming Gear Jupiter PRO (V2)</h5>
+                            <p class="card-text mb-2 text-limit">Thuộc phân loại Control - Slow, chậm nhất trong các dòng PRO của Lethal Gaming.</p>
+
+                            <div class="d-flex justify-content-star align-items-center">
+                                <span class="price text-muted mb-2 text-decoration-line-through">1.500.000đ</span>
+                                <span class="price mb-2 ms-2">1.000.000đ</span>
+                            </div>
+                            <button class="btn btn-mainColor button-hover mt-3 text-white rounded-5 position-absolute" style="right: 10px; top:220px; height: 40px;">Mua ngay</button>
+
+                            <div>
+                                <button class="img-thumbnail col-3" onclick="changeImage('https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800')">
+                                    <img class=" col-12" src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800" alt="">
+                                </button>
+                                <button class="img-thumbnail col-3" onclick="changeImage(' https://www.phongcachxanh.vn/cdn/shop/files/lot-chu-t-lethal-gaming-gear-jupiter-pro-v2-41227243946229.jpg?v=1726313363&width=800 ')">
+                                    <img class="col-12" src="https://www.phongcachxanh.vn/cdn/shop/files/lot-chu-t-lethal-gaming-gear-jupiter-pro-v2-41227243946229.jpg?v=1726313363&width=800" alt="">
+                                </button>
+                                <button class="img-thumbnail col-3" onclick="changeImage('https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800')">
+                                    <img class=" col-12" src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800" alt="">
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 mb-4">
+                    <div class="card position-relative">
+                        <img id="main-img" src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800" class="card-img-top" alt="ảnh sản phẩm">
+                        <div class="card-body">
+                            <h5 class="card-title mb-2 text-limit">Lót chuột Lethal Gaming Gear Jupiter PRO (V2)</h5>
+                            <p class="card-text mb-2 text-limit">Thuộc phân loại Control - Slow, chậm nhất trong các dòng PRO của Lethal Gaming.</p>
+
+                            <div class="d-flex justify-content-star align-items-center">
+                                <span class="price text-muted mb-2 text-decoration-line-through">1.500.000đ</span>
+                                <span class="price mb-2 ms-2">1.000.000đ</span>
+                            </div>
+                            <button class="btn btn-mainColor button-hover mt-3 text-white rounded-5 position-absolute" style="right: 10px; top:220px; height: 40px;">Mua ngay</button>
+
+                            <div>
+                                <button class="img-thumbnail col-3" onclick="changeImage('https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800')">
+                                    <img class=" col-12" src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800" alt="">
+                                </button>
+                                <button class="img-thumbnail col-3" onclick="changeImage(' https://www.phongcachxanh.vn/cdn/shop/files/lot-chu-t-lethal-gaming-gear-jupiter-pro-v2-41227243946229.jpg?v=1726313363&width=800 ')">
+                                    <img class="col-12" src="https://www.phongcachxanh.vn/cdn/shop/files/lot-chu-t-lethal-gaming-gear-jupiter-pro-v2-41227243946229.jpg?v=1726313363&width=800" alt="">
+                                </button>
+                                <button class="img-thumbnail col-3" onclick="changeImage('https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800')">
+                                    <img class=" col-12" src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800" alt="">
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 mb-4">
+                    <div class="card position-relative">
+                        <img id="main-img" src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800" class="card-img-top" alt="ảnh sản phẩm">
+                        <div class="card-body">
+                            <h5 class="card-title mb-2 text-limit">Lót chuột Lethal Gaming Gear Jupiter PRO (V2)</h5>
+                            <p class="card-text mb-2 text-limit">Thuộc phân loại Control - Slow, chậm nhất trong các dòng PRO của Lethal Gaming.</p>
+
+                            <div class="d-flex justify-content-star align-items-center">
+                                <span class="price text-muted mb-2 text-decoration-line-through">1.500.000đ</span>
+                                <span class="price mb-2 ms-2">1.000.000đ</span>
+                            </div>
+                            <button class="btn btn-mainColor button-hover mt-3 text-white rounded-5 position-absolute" style="right: 10px; top:220px; height: 40px;">Mua ngay</button>
+
+                            <div>
+                                <button class="img-thumbnail col-3" onclick="changeImage('https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800')">
+                                    <img class=" col-12" src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800" alt="">
+                                </button>
+                                <button class="img-thumbnail col-3" onclick="changeImage(' https://www.phongcachxanh.vn/cdn/shop/files/lot-chu-t-lethal-gaming-gear-jupiter-pro-v2-41227243946229.jpg?v=1726313363&width=800 ')">
+                                    <img class="col-12" src="https://www.phongcachxanh.vn/cdn/shop/files/lot-chu-t-lethal-gaming-gear-jupiter-pro-v2-41227243946229.jpg?v=1726313363&width=800" alt="">
+                                </button>
+                                <button class="img-thumbnail col-3" onclick="changeImage('https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800')">
+                                    <img class=" col-12" src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800" alt="">
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 mb-4">
+                    <div class="card position-relative">
+                        <img id="main-img" src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800" class="card-img-top" alt="ảnh sản phẩm">
+                        <div class="card-body">
+                            <h5 class="card-title mb-2 text-limit">Lót chuột Lethal Gaming Gear Jupiter PRO (V2)</h5>
+                            <p class="card-text mb-2 text-limit">Thuộc phân loại Control - Slow, chậm nhất trong các dòng PRO của Lethal Gaming.</p>
+
+                            <div class="d-flex justify-content-star align-items-center">
+                                <span class="price text-muted mb-2 text-decoration-line-through">1.500.000đ</span>
+                                <span class="price mb-2 ms-2">1.000.000đ</span>
+                            </div>
+                            <button class="btn btn-mainColor button-hover mt-3 text-white rounded-5 position-absolute" style="right: 10px; top:220px; height: 40px;">Mua ngay</button>
+
+                            <div>
+                                <button class="img-thumbnail col-3" onclick="changeImage('https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800')">
+                                    <img class=" col-12" src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800" alt="">
+                                </button>
+                                <button class="img-thumbnail col-3" onclick="changeImage(' https://www.phongcachxanh.vn/cdn/shop/files/lot-chu-t-lethal-gaming-gear-jupiter-pro-v2-41227243946229.jpg?v=1726313363&width=800 ')">
+                                    <img class="col-12" src="https://www.phongcachxanh.vn/cdn/shop/files/lot-chu-t-lethal-gaming-gear-jupiter-pro-v2-41227243946229.jpg?v=1726313363&width=800" alt="">
+                                </button>
+                                <button class="img-thumbnail col-3" onclick="changeImage('https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800')">
+                                    <img class=" col-12" src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800" alt="">
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
-
-
+<script>
+    function changeImage(imageSrc) {
+        const mainImage = document.getElementById('main-img');
+        mainImage.style.opacity = 0;
+        setTimeout(function() {
+            mainImage.src = imageSrc;
+            mainImage.style.transition = 'opacity 0.2s ease-in-out';
+            mainImage.style.opacity = 1;
+        }, 200);
+    }
+</script>
 
 <?php $this->stop() ?>
 
@@ -93,6 +267,7 @@
 $this->push('scripts')
 ?>
 <script src="<?= $_ENV['APP_URL'] ?>/public/Assets/Client/js/Filter.js"></script>
+
 <?php
 $this->end();
 ?>
