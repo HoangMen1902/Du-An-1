@@ -21,7 +21,7 @@
         <a href="/home"><img src="<?= $_ENV['APP_URL'] ?>/public/Assets/Client/Images/WebLogo.png" alt="logo"></a>
         <ul class="nav-menu">
             <li><a href="/home" class="text-decoration-none">Trang chủ</a></li>
-            <li><a href="" class="text-decoration-none">Sản phẩm</a></li>
+            <li><a href="/list" class="text-decoration-none">Sản phẩm</a></li>
             <li><a href="" class="text-decoration-none">Giới thiệu</a></li>
             <li><a href="<?= $_ENV['APP_URL'] ?>/Contact" class="text-decoration-none">Liên hệ</a></li>
         </ul>

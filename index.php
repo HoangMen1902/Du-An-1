@@ -1,4 +1,6 @@
 <?php
+
+use App\Views\Admin\Pages\Products\ProductsList;
 use FastRoute\RouteCollector;
 use League\Plates\Extension\URI;
 use Src\Controllers\Client\HomeController;
@@ -8,6 +10,7 @@ use Src\Controllers\Client\CartController;
 use Src\Controllers\Client\ProductController;
 use Src\Controllers\Client\CheckoutController;
 use Src\Controllers\Admin\DashboardController;
+use Src\Controllers\Client\ProductListController;
 use Src\Controllers\Client\SearchController;
 use Src\Controllers\Client\UserInfoController;
 
@@ -45,6 +48,7 @@ $dotenv->load();
 $dispatcher = FastRoute\simpleDispatcher(function(RouteCollector $r) {
     $r->addRoute('GET', '/home', [HomeController::class, 'show']);
     $r->addRoute('GET', '/detail', [ProductController::class, 'show']);
+    $r->addRoute('GET', '/list', [ProductListController::class, 'show']);
     $r->addRoute('GET', '/checkout', [CheckoutController::class, 'show']);
     $r->addRoute('GET', '/', [HomeController::class, 'show']);
     $r->addRoute('GET', '/Contact', [ContactController::class, 'show']);
