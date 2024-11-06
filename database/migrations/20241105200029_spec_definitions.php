@@ -20,11 +20,13 @@ final class SpecDefinitions extends AbstractMigration
     public function change(): void
     {
         $table = $this->table('spec_definitions');
-        $table->addColumn('name', 'string', ['limit' => 320]);
-        $table->addColumn('description', 'text');
-        $table->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP']);
-        $table->addColumn('updated_at', 'timestamp', ['null' => true]);
-        $table->create();
-
+        $table->addColumn('name', 'string', ['limit' => 320])
+            ->addColumn('description', 'text')
+            ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
+            ->addColumn('updated_at', 'timestamp', [
+                'default' => 'CURRENT_TIMESTAMP',
+                'update' => 'CURRENT_TIMESTAMP'
+            ])
+            ->create();
     }
 }

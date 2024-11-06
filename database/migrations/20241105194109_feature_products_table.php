@@ -20,10 +20,13 @@ final class FeatureProductsTable extends AbstractMigration
     public function change(): void
     {
         $table = $this->table('feature_products');
-        $table->addColumn('product_id', 'integer', ['null' => false]);
-        $table->addColumn('user_id', 'integer', ['null' => false]);
-        $table->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP']);
-        $table->addColumn('updated_at', 'timestamp', ['null' => true]);
-        $table->create();
+        $table->addColumn('product_id', 'integer', ['null' => false])
+            ->addColumn('user_id', 'integer', ['null' => false])
+            ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
+            ->addColumn('updated_at', 'timestamp', [
+                'default' => 'CURRENT_TIMESTAMP',
+                'update' => 'CURRENT_TIMESTAMP'
+            ])
+            ->create();
     }
 }

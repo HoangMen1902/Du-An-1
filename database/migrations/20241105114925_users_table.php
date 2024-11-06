@@ -20,23 +20,25 @@ final class UsersTable extends AbstractMigration
     public function change(): void
     {
         $table = $this->table('Users');
-        $table->addColumn('email', 'string', ['limit' => 254]);
-        $table->addColumn('phone', 'string', ['limit' => 10]);
-        $table->addColumn('password', 'string', ['limit' => 101]);
-        $table->addColumn('address', 'string', ['limit' => 255]);
-        $table->addColumn('firstname', 'string', ['limit' => 100]);
-        $table->addColumn('lastName', 'string', ['limit' => 100]);
-        $table->addColumn('username', 'string', ['limit' => 50]);
-        $table->addColumn('reset_token', 'string', ['limit' => 64]);
-        $table->addColumn('reset_token_expires', 'datetime');
-        $table->addColumn('province_id', 'integer', ['null' => true]);
-        $table->addColumn('district_id', 'integer', ['null' => true]);
-        $table->addColumn('ward_id', 'integer', ['null' => true]);
-        $table->addColumn('status', 'integer', ['default' => 1]);
-        $table->addColumn('role', 'integer', ['default' => 1]);
-        $table->addColumn('created_at', 'datetime', ['default' => 'CURRENT_TIMESTAMP']);
-        $table->addColumn('updated_at', 'datetime');
-        $table->create();
-
+        $table->addColumn('email', 'string', ['limit' => 255])
+            ->addColumn('phone', 'string', ['limit' => 10])
+            ->addColumn('password', 'string', ['limit' => 101])
+            ->addColumn('address', 'string', ['limit' => 255])
+            ->addColumn('firstname', 'string', ['limit' => 100])
+            ->addColumn('lastName', 'string', ['limit' => 100])
+            ->addColumn('username', 'string', ['limit' => 50])
+            ->addColumn('reset_token', 'string', ['limit' => 64])
+            ->addColumn('reset_token_expires', 'datetime')
+            ->addColumn('province_id', 'integer', ['null' => true])
+            ->addColumn('district_id', 'integer', ['null' => true])
+            ->addColumn('ward_id', 'integer', ['null' => true])
+            ->addColumn('status', 'integer', ['default' => 1])
+            ->addColumn('role', 'integer', ['default' => 1])
+            ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
+            ->addColumn('updated_at', 'timestamp', [
+                'default' => 'CURRENT_TIMESTAMP',
+                'update' => 'CURRENT_TIMESTAMP'
+            ])
+            ->create();
     }
 }

@@ -20,11 +20,14 @@ final class SkuValues extends AbstractMigration
     public function change(): void
     {
         $table = $this->table('Sku_values');
-        $table->addColumn('sku_id', 'integer', ['null' => false]);
-        $table->addColumn('option_id', 'integer', ['null' => false]);
-        $table->addColumn('value_id', 'integer', ['null' => false]);
-        $table->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP']);
-        $table->addColumn('updated_at', 'timestamp');
-        $table->create();
+        $table->addColumn('sku_id', 'integer', ['null' => false])
+            ->addColumn('option_id', 'integer', ['null' => false])
+            ->addColumn('value_id', 'integer', ['null' => false])
+            ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
+            ->addColumn('updated_at', 'timestamp', [
+                'default' => 'CURRENT_TIMESTAMP',
+                'update' => 'CURRENT_TIMESTAMP'
+            ])
+            ->create();
     }
 }

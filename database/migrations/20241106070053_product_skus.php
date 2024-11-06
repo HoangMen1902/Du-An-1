@@ -26,6 +26,11 @@ final class ProductSkus extends AbstractMigration
               ->addColumn('price', 'decimal', ['precision' => 10, 'scale' => 2, 'null' => false]) 
               ->addColumn('quantity', 'integer', ['signed' => false, 'default' => 0, 'null' => false])
               ->addColumn('product_id', 'integer', ['signed' => false, 'null' => false])  
+              ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
+              ->addColumn('updated_at', 'timestamp', [
+                  'default' => 'CURRENT_TIMESTAMP',
+                  'update' => 'CURRENT_TIMESTAMP'
+              ])
               ->create();
     }
 }

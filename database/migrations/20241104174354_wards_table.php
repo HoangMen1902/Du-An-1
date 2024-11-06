@@ -20,12 +20,13 @@ final class WardsTable extends AbstractMigration
     public function change(): void
     {
         $table = $this->table('Wards');
-        $table->addColumn('name', 'string', ['limit' => 100]);
-        $table->addColumn('district_id', 'integer', ['null' => true]);
-        $table->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP']);
-        $table->addColumn('updated_at', 'timestamp');
-
-        $table->create();
+        $table->addColumn('name', 'string', ['limit' => 100])
+            ->addColumn('district_id', 'integer', ['null' => true])
+            ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
+            ->addColumn('updated_at', 'timestamp', [
+                'default' => 'CURRENT_TIMESTAMP',
+                'update' => 'CURRENT_TIMESTAMP'
+            ])
+            ->create();
     }
 }
-   

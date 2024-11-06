@@ -23,6 +23,11 @@ final class ProductSpecs extends AbstractMigration
         
         $table->addColumn('product_id', 'integer', ['signed' => false, 'null' => false])  
               ->addColumn('spec_id', 'integer', ['signed' => false, 'null' => false])  
+              ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
+              ->addColumn('updated_at', 'timestamp', [
+                  'default' => 'CURRENT_TIMESTAMP',
+                  'update' => 'CURRENT_TIMESTAMP'
+              ])
               ->create();
     }
 }

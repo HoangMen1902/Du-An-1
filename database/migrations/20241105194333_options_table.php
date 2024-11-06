@@ -20,11 +20,13 @@ final class OptionsTable extends AbstractMigration
     public function change(): void
     {
         $table = $this->table('options');
-        $table->addColumn('name', 'string', ['limit' => 100]);
-        $table->addColumn('status', 'integer', ['default' => 1, 'null' => false]);
-        $table->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP']);
-        $table->addColumn('updated_at', 'timestamp', ['null' => true]);
-        $table->create();
-        
+        $table->addColumn('name', 'string', ['limit' => 100])
+            ->addColumn('status', 'integer', ['default' => 1, 'null' => false])
+            ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
+            ->addColumn('updated_at', 'timestamp', [
+                'default' => 'CURRENT_TIMESTAMP',
+                'update' => 'CURRENT_TIMESTAMP'
+            ])
+            ->create();
     }
 }

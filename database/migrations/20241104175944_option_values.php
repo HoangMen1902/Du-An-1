@@ -20,12 +20,15 @@ final class OptionValues extends AbstractMigration
     public function change(): void
     {
         $table = $this->table('Option_values');
-        $table->addColumn('product_id', 'integer');
-        $table->addColumn('option_id', 'integer');
-        $table->addColumn('value_name', 'string');
-        $table->addColumn('status', 'integer', ['default' => '1']);
-        $table->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP']);
-        $table->addColumn('updated_at', 'timestamp');
-        $table->create();
+        $table->addColumn('product_id', 'integer')
+            ->addColumn('option_id', 'integer')
+            ->addColumn('value_name', 'string')
+            ->addColumn('status', 'integer', ['default' => '1'])
+            ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
+            ->addColumn('updated_at', 'timestamp', [
+                'default' => 'CURRENT_TIMESTAMP',
+                'update' => 'CURRENT_TIMESTAMP'
+            ])
+            ->create();
     }
 }

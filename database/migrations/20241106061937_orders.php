@@ -20,11 +20,15 @@ final class Orders extends AbstractMigration
     public function change(): void
     {
         $table = $this->table('Orders');
-        $table->addColumn('status', 'integer', ['default' => '1']);
-        $table->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP']);
-        $table->addColumn('total_price', 'decimal', ['precision' => 10, 'scale' => 2]);
-        $table->addColumn('user_id', 'integer', ['null' => false]);
-
-        $table->create();
+        $table->addColumn('status', 'integer', ['default' => '1'])
+            ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
+            ->addColumn('total_price', 'decimal', ['precision' => 10, 'scale' => 2])
+            ->addColumn('user_id', 'integer', ['null' => false])
+            ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
+            ->addColumn('updated_at', 'timestamp', [
+                'default' => 'CURRENT_TIMESTAMP',
+                'update' => 'CURRENT_TIMESTAMP'
+            ])
+            ->create();
     }
 }

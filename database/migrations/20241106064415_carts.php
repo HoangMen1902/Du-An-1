@@ -24,6 +24,11 @@ final class Carts extends AbstractMigration
         ->addColumn('product_id', 'integer', ['signed' => false, 'null' => false])  
         ->addColumn('sku_id', 'integer', ['signed' => false, 'null' => false])  
         ->addColumn('quantity', 'integer', ['signed' => false, 'default' => 1, 'null' => false])  
+        ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
+        ->addColumn('updated_at', 'timestamp', [
+            'default' => 'CURRENT_TIMESTAMP',
+            'update' => 'CURRENT_TIMESTAMP'
+        ])
         ->create();
     }
 }

@@ -27,7 +27,10 @@ final class OrderDetails extends AbstractMigration
             ->addColumn('price', 'decimal', ['precision' => 10, 'scale' => 2])
             ->addColumn('quantity', 'integer', ['signed' => false])
             ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
-
+            ->addColumn('updated_at', 'timestamp', [
+                'default' => 'CURRENT_TIMESTAMP',
+                'update' => 'CURRENT_TIMESTAMP'
+            ])
             ->create();
     }
 }

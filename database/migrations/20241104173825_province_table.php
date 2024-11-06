@@ -20,9 +20,12 @@ final class ProvinceTable extends AbstractMigration
     public function change(): void
     {
         $table = $this->table('Provinces');
-        $table->addColumn('name', 'string', ['limit' => 16]);
-        $table->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP']);
-        $table->addColumn('updated_at', 'timestamp');
-        $table->create();
+        $table->addColumn('name', 'string', ['limit' => 16])
+            ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
+            ->addColumn('updated_at', 'timestamp', [
+                'default' => 'CURRENT_TIMESTAMP',
+                'update' => 'CURRENT_TIMESTAMP'
+            ])
+            ->create();
     }
 }
