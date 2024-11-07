@@ -17,7 +17,7 @@ final class UsersTable extends AbstractMigration
      * Remember to call "create()" or "update()" and NOT "save()" when working
      * with the Table class.
      */
-    public function change(): void
+    public function up(): void
     {
         $table = $this->table('Users');
         $table->addColumn('email', 'string', ['limit' => 255])
@@ -29,16 +29,20 @@ final class UsersTable extends AbstractMigration
             ->addColumn('username', 'string', ['limit' => 50])
             ->addColumn('reset_token', 'string', ['limit' => 64])
             ->addColumn('reset_token_expires', 'datetime')
-            ->addColumn('province_id', 'integer', ['null' => true])
-            ->addColumn('district_id', 'integer', ['null' => true])
-            ->addColumn('ward_id', 'integer', ['null' => true])
+            ->addColumn('province_id', 'integer', ['null' => true, 'signed' => false])
+            ->addColumn('district_id', 'integer', ['null' => true, 'signed' => false])
+            ->addColumn('ward_id', 'integer', ['null' => true, 'signed' => false])
             ->addColumn('status', 'integer', ['default' => 1])
             ->addColumn('role', 'integer', ['default' => 1])
             ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
             ->addColumn('updated_at', 'timestamp', [
                 'default' => 'CURRENT_TIMESTAMP',
                 'update' => 'CURRENT_TIMESTAMP'
-            ])
+            ])->addForeignKey('province_id', 'provinces', 'id', ['update' => 'NO_ACTION', 'delete' => 'CASCADE'])
+            ->addForeignKey('district_id', 'districts', 'id', ['update' => 'NO_ACTION', 'delete' => 'CASCADE'])
+            ->addForeignKey('ward_id', 'wards', 'id', ['update' => 'NO_ACTION', 'delete' => 'CASCADE'])
             ->create();
     }
+
+
 }

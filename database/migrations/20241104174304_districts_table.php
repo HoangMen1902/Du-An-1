@@ -17,16 +17,17 @@ final class DistrictsTable extends AbstractMigration
      * Remember to call "create()" or "update()" and NOT "save()" when working
      * with the Table class.
      */
-    public function change(): void
+    public function up(): void
     {
         $table = $this->table('Districts');
         $table->addColumn('name', 'string', ['limit' => 100])
-            ->addColumn('province_id', 'integer', ['null' => false])
+            ->addColumn('province_id', 'integer', ['null' => true, 'signed' => false])
             ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
             ->addColumn('updated_at', 'timestamp', [
                 'default' => 'CURRENT_TIMESTAMP',
                 'update' => 'CURRENT_TIMESTAMP'
-            ])
+            ])->addForeignKey('province_id', 'provinces', 'id', ['delete'  => 'CASCADE', 'update' => 'NO_ACTION'])
             ->create();
     }
+
 }

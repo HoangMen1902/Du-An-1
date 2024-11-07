@@ -17,16 +17,18 @@ final class OptionsTable extends AbstractMigration
      * Remember to call "create()" or "update()" and NOT "save()" when working
      * with the Table class.
      */
-    public function change(): void
+    public function up(): void
     {
         $table = $this->table('Options');
         $table->addColumn('name', 'string', ['limit' => 100])
             ->addColumn('status', 'integer', ['default' => 1, 'null' => false])
+            ->addColumn('product_id', 'integer', ['null' => false, 'signed' => false])
             ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
             ->addColumn('updated_at', 'timestamp', [
                 'default' => 'CURRENT_TIMESTAMP',
                 'update' => 'CURRENT_TIMESTAMP'
-            ])
+            ])->addForeignKey('product_id','products', 'id', ['delete' => 'CASCADE', 'update' => 'NO_ACTION'])
             ->create();
     }
+
 }
