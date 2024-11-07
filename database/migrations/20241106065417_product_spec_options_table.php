@@ -21,12 +21,17 @@ final class ProductSpecOptionsTable extends AbstractMigration
     {
         $table = $this->table('product_spec_options');
         $table->addColumn('specification_value', 'string', ['limit' => 512] ) 
-              ->addColumn('product_spec_id', 'integer') 
+              ->addColumn('product_spec_id', 'integer',['signed' => false]) 
               ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
               ->addColumn('updated_at', 'timestamp', [
                   'default' => 'CURRENT_TIMESTAMP',
                   'update' => 'CURRENT_TIMESTAMP'
               ])
+              ->addForeignKey('product_spec_id', 'Product_Specs', 'id', [
+                'delete' => 'CASCADE', 
+                'update' => 'NO_ACTION' 
+            ])
+            
               ->create();
     }
 }

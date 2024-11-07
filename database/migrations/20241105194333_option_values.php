@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use Phinx\Migration\AbstractMigration;
 
-final class OptionsTable extends AbstractMigration
+final class OptionValues extends AbstractMigration
 {
     /**
      * Change Method.
@@ -19,13 +19,23 @@ final class OptionsTable extends AbstractMigration
      */
     public function change(): void
     {
-        $table = $this->table('options');
-        $table->addColumn('name', 'string', ['limit' => 100])
-            ->addColumn('status', 'integer', ['default' => 1, 'null' => false])
+        $table = $this->table('Option_values');
+        $table->addColumn('product_id', 'integer',['signed' => false])
+            ->addColumn('option_id', 'integer',['signed' => false])
+            ->addColumn('value_name', 'string')
+            ->addColumn('status', 'integer', ['default' => '1'])
             ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
             ->addColumn('updated_at', 'timestamp', [
                 'default' => 'CURRENT_TIMESTAMP',
                 'update' => 'CURRENT_TIMESTAMP'
+            ])
+            ->addForeignKey('option_id', 'Options', 'id', [
+                'delete' => 'CASCADE', 
+                'update' => 'NO_ACTION' 
+            ])
+            ->addForeignKey('product_id', 'Products', 'id', [
+                'delete' => 'CASCADE', 
+                'update' => 'NO_ACTION' 
             ])
             ->create();
     }

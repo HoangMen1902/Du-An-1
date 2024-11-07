@@ -23,7 +23,6 @@ final class Comments extends AbstractMigration
         $table->addColumn('content', 'text')
             ->addColumn('rating', 'integer', ['limit' => 5])
             ->addColumn('status', 'integer', ['default' => '1'])
-            ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
             ->addColumn('product_id', 'integer', ['null' => false])
             ->addColumn('parent_id', 'integer', ['null' => true])
             ->addColumn('user_id', 'integer')

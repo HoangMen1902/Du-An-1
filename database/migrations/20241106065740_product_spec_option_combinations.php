@@ -20,13 +20,22 @@ final class ProductSpecOptionCombinations extends AbstractMigration
     public function change(): void
     {
         $table = $this->table('Product_spec_option_combinations');
-        $table->addColumn('product_spec_option_id', 'integer' ) 
-              ->addColumn('sku_id', 'integer') 
+        $table->addColumn('product_spec_option_id', 'integer' ,['signed' => false]) 
+              ->addColumn('sku_id', 'integer',['null' => false, 'signed' => false]) 
               ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
               ->addColumn('updated_at', 'timestamp', [
                   'default' => 'CURRENT_TIMESTAMP',
                   'update' => 'CURRENT_TIMESTAMP'
               ])
+
+              ->addForeignKey('product_spec_option_id', 'Product_Spec_options', 'id', [
+                'delete' => 'CASCADE', 
+                'update' => 'NO_ACTION' 
+            ])
+            ->addForeignKey('sku_id', 'product_skus', 'id', [
+                'delete' => 'CASCADE', 
+                'update' => 'NO_ACTION' 
+            ])
               ->create();
     }
 }

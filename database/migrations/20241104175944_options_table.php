@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use Phinx\Migration\AbstractMigration;
 
-final class SkuValues extends AbstractMigration
+final class OptionsTable extends AbstractMigration
 {
     /**
      * Change Method.
@@ -19,10 +19,9 @@ final class SkuValues extends AbstractMigration
      */
     public function change(): void
     {
-        $table = $this->table('Sku_values');
-        $table->addColumn('sku_id', 'integer', ['null' => false])
-            ->addColumn('option_id', 'integer', ['null' => false])
-            ->addColumn('value_id', 'integer', ['null' => false])
+        $table = $this->table('Options');
+        $table->addColumn('name', 'string', ['limit' => 100])
+            ->addColumn('status', 'integer', ['default' => 1, 'null' => false])
             ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
             ->addColumn('updated_at', 'timestamp', [
                 'default' => 'CURRENT_TIMESTAMP',

@@ -31,6 +31,12 @@ final class ProductSkus extends AbstractMigration
                   'default' => 'CURRENT_TIMESTAMP',
                   'update' => 'CURRENT_TIMESTAMP'
               ])
+       ->addForeignKey('product_id', 'Products', 'id', [
+            'delete' => 'CASCADE', 
+            'update' => 'NO_ACTION' 
+        ])
+        
+
               ->create();
     }
 }
