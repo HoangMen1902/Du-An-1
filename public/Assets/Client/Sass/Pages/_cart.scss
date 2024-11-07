@@ -80,16 +80,18 @@
   }
   
   .cart__header {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    justify-content: space-between;
+    display: flex;
+    justify-content: start;
     border-bottom: 1px solid #ccc;
     padding-bottom: 10px;
     margin-bottom: 30px;
-  
+    &-blank{
+      width: 110px;
+    }
     &-product {
       font-weight: bold;
       justify-self: flex-start;
+      width: 383px;
       @media (max-width: 768px) {
         margin-left: 0;
         margin-bottom: 10px;
@@ -99,6 +101,7 @@
     &-quantity {
       font-weight: bold;
       justify-self: flex-start;
+      width: 100px;
       @media (max-width: 768px) {
         margin-left: 0;
         margin-bottom: 10px;

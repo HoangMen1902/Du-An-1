@@ -497,287 +497,160 @@
             Có thể bạn thích
         </h1>
     </div>
-    <div class="related-cards">
-        <div class="related-card">
-            <div class="related-card__items">
-                <div class="related-card__economize">
-                    <span class="related-card__economize-title">
-                        Tiết kiệm 100,000đ
-                    </span>
+    <div class="col-xxl-12 col-md-12  my-4 p-0">
+
+
+
+
+
+
+        <div class="col-12 ">
+
+
+
+            <div class="row mt-3 d-flex justify-content-between">
+                <div class="col-md-4 mb-4  col-xxl-3">
+                    <div class="card position-relative" id="card-1">
+                        <img class="product-img" id="main-img-1" src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800" class="card-img-top" alt="ảnh sản phẩm">
+                        <div class="card-body">
+                            <h5 class="card-title mb-2 text-limit">Lót chuột Lethal Gaming Gear Jupiter PRO (V2)</h5>
+                            <p class="card-text mb-2 text-limit">Thuộc phân loại Control - Slow, chậm nhất trong các dòng PRO của Lethal Gaming.</p>
+
+                            <div class="d-flex justify-content-star align-items-center">
+                                <span class="price text-muted mb-2 text-decoration-line-through">1.500.000đ</span>
+                                <span class="price mb-2 ms-2">1.000.000đ</span>
+                            </div>
+                            <button class="btn btn-mainColor button-hover button-add text-white rounded-5 position-absolute ">Mua ngay</button>
+
+                            <div class="d-flex mt-3">
+                                <button class="img-thumbnail col-3  me-1 product-thumbnail  " onclick="changeImage('main-img-1', 'https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800')">
+                                    <img class="col-12 " src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800" alt="thumbnail">
+                                </button>
+                                <button class="img-thumbnail col-3 me-1 product-thumbnail" onclick="changeImage('main-img-1', 'https://www.phongcachxanh.vn/cdn/shop/files/lot-chu-t-lethal-gaming-gear-jupiter-pro-v2-41227243946229.jpg?v=1726313363&width=800')">
+                                    <img class="col-12" src="https://www.phongcachxanh.vn/cdn/shop/files/lot-chu-t-lethal-gaming-gear-jupiter-pro-v2-41227243946229.jpg?v=1726313363&width=800" alt="thumbnail">
+                                </button>
+                                <button class="img-thumbnail col-3 me-1 product-thumbnail" onclick="changeImage('main-img-1', 'https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800')">
+                                    <img class="col-12" src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800" alt="thumbnail">
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="related-card__img" onclick="window.location.href='/product-detail/1';"
-                    class="product__slide__image">
-                    <img src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613932277.jpg?v=1710231814&width=800"
-                        alt="Tên sản phẩm" class="related-card__img-item" id="slide">
+
+                <div class="col-md-4 mb-4  col-xxl-3">
+                    <div class="card position-relative" id="card-2">
+                        <img class="product-img" id="main-img-2" src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800" class="card-img-top" alt="ảnh sản phẩm">
+                        <div class="card-body">
+                            <h5 class="card-title mb-2 text-limit">Lót chuột Lethal Gaming Gear Jupiter PRO (V2)</h5>
+                            <p class="card-text mb-2 text-limit">Thuộc phân loại Control - Slow, chậm nhất trong các dòng PRO của Lethal Gaming.</p>
+
+                            <div class="d-flex justify-content-star align-items-center">
+                                <span class="price text-muted mb-2 text-decoration-line-through">1.500.000đ</span>
+                                <span class="price mb-2 ms-2">1.000.000đ</span>
+                            </div>
+                            <button class="btn btn-mainColor button-hover button-add  text-white rounded-5 position-absolute">Mua ngay</button>
+
+                            <div class="d-flex mt-3">
+                                <button class="img-thumbnail col-3 me-1 product-thumbnail" onclick="changeImage('main-img-2', 'https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800')">
+                                    <img class="col-12" src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800" alt="thumbnail">
+                                </button>
+                                <button class="img-thumbnail col-3 me-1 product-thumbnail" onclick="changeImage('main-img-2', 'https://www.phongcachxanh.vn/cdn/shop/files/lot-chu-t-lethal-gaming-gear-jupiter-pro-v2-41227243946229.jpg?v=1726313363&width=800')">
+                                    <img class="col-12" src="https://www.phongcachxanh.vn/cdn/shop/files/lot-chu-t-lethal-gaming-gear-jupiter-pro-v2-41227243946229.jpg?v=1726313363&width=800" alt="thumbnail">
+                                </button>
+                                <button class="img-thumbnail col-3 me-1 product-thumbnail" onclick="changeImage('main-img-2', 'https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800')">
+                                    <img class="col-12" src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800" alt="thumbnail">
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="related-card__button">
-                    <button class="related-card__button-item" name="add-to-cart">
-                        + Thêm nhanh
-                    </button>
+                <div class="col-md-4 mb-4  col-xxl-3">
+                    <div class="card position-relative" id="card-2">
+                        <img class="product-img" id="main-img-2 product-img" src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800" class="card-img-top" alt="ảnh sản phẩm">
+                        <div class="card-body">
+                            <h5 class="card-title mb-2 text-limit">Lót chuột Lethal Gaming Gear Jupiter PRO (V2)</h5>
+                            <p class="card-text mb-2 text-limit">Thuộc phân loại Control - Slow, chậm nhất trong các dòng PRO của Lethal Gaming.</p>
+
+                            <div class="d-flex justify-content-star align-items-center">
+                                <span class="price text-muted mb-2 text-decoration-line-through">1.500.000đ</span>
+                                <span class="price mb-2 ms-2">1.000.000đ</span>
+                            </div>
+                            <button class="btn btn-mainColor button-hover button-add  text-white rounded-5 position-absolute">Mua ngay</button>
+
+                            <div class="d-flex mt-3">
+                                <button class="img-thumbnail col-3 me-1 product-thumbnail" onclick="changeImage('main-img-2', 'https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800')">
+                                    <img class="col-12" src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800" alt="thumbnail">
+                                </button>
+                                <button class="img-thumbnail col-3 me-1 product-thumbnail" onclick="changeImage('main-img-2', 'https://www.phongcachxanh.vn/cdn/shop/files/lot-chu-t-lethal-gaming-gear-jupiter-pro-v2-41227243946229.jpg?v=1726313363&width=800')">
+                                    <img class="col-12" src="https://www.phongcachxanh.vn/cdn/shop/files/lot-chu-t-lethal-gaming-gear-jupiter-pro-v2-41227243946229.jpg?v=1726313363&width=800" alt="thumbnail">
+                                </button>
+                                <button class="img-thumbnail col-3 me-1 product-thumbnail" onclick="changeImage('main-img-2', 'https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800')">
+                                    <img class="col-12" src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800" alt="thumbnail">
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="related-card__sub">
-                <div class="related-card__sub-title">
-                    <h3 class="related-card__sub-title__item">
-                        Tên sản phẩm
-                    </h3>
+                <div class="col-md-4 mb-4  col-xxl-3">
+                    <div class="card position-relative" id="card-2">
+                        <img class="product-img" id="main-img-2" src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800" class="card-img-top" alt="ảnh sản phẩm">
+                        <div class="card-body">
+                            <h5 class="card-title mb-2 text-limit">Lót chuột Lethal Gaming Gear Jupiter PRO (V2)</h5>
+                            <p class="card-text mb-2 text-limit">Thuộc phân loại Control - Slow, chậm nhất trong các dòng PRO của Lethal Gaming.</p>
+
+                            <div class="d-flex justify-content-star align-items-center">
+                                <span class="price text-muted mb-2 text-decoration-line-through">1.500.000đ</span>
+                                <span class="price mb-2 ms-2">1.000.000đ</span>
+                            </div>
+                            <button class="btn btn-mainColor button-hover button-add  text-white rounded-5 position-absolute">Mua ngay</button>
+
+                            <div class="d-flex mt-3">
+                                <button class="img-thumbnail col-3 me-1 product-thumbnail" onclick="changeImage('main-img-2', 'https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800')">
+                                    <img class="col-12" src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800" alt="thumbnail">
+                                </button>
+                                <button class="img-thumbnail col-3 me-1 product-thumbnail" onclick="changeImage('main-img-2', 'https://www.phongcachxanh.vn/cdn/shop/files/lot-chu-t-lethal-gaming-gear-jupiter-pro-v2-41227243946229.jpg?v=1726313363&width=800')">
+                                    <img class="col-12" src="https://www.phongcachxanh.vn/cdn/shop/files/lot-chu-t-lethal-gaming-gear-jupiter-pro-v2-41227243946229.jpg?v=1726313363&width=800" alt="thumbnail">
+                                </button>
+                                <button class="img-thumbnail col-3 me-1 product-thumbnail" onclick="changeImage('main-img-2', 'https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800')">
+                                    <img class="col-12" src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800" alt="thumbnail">
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="related-card__sub-evaluate">
-                    <span class="related-card__sub-evaluate-item">
-                        5.0
-                    </span>
+                <div class="col-md-4 mb-4  col-xxl-3">
+                    <div class="card position-relative" id="card-2">
+                        <img class="product-img" id="main-img-2" src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800" class="card-img-top" alt="ảnh sản phẩm">
+                        <div class="card-body">
+                            <h5 class="card-title mb-2 text-limit">Lót chuột Lethal Gaming Gear Jupiter PRO (V2)</h5>
+                            <p class="card-text mb-2 text-limit">Thuộc phân loại Control - Slow, chậm nhất trong các dòng PRO của Lethal Gaming.</p>
+
+                            <div class="d-flex justify-content-star align-items-center">
+                                <span class="price text-muted mb-2 text-decoration-line-through">1.500.000đ</span>
+                                <span class="price mb-2 ms-2">1.000.000đ</span>
+                            </div>
+                            <button class="btn btn-mainColor button-hover button-add  text-white rounded-5 position-absolute">Mua ngay</button>
+
+                            <div class="d-flex mt-3">
+                                <button class="img-thumbnail col-3 me-1 product-thumbnail" onclick="changeImage('main-img-2', 'https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800')">
+                                    <img class="col-12" src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800" alt="thumbnail">
+                                </button>
+                                <button class="img-thumbnail col-3 me-1 product-thumbnail" onclick="changeImage('main-img-2', 'https://www.phongcachxanh.vn/cdn/shop/files/lot-chu-t-lethal-gaming-gear-jupiter-pro-v2-41227243946229.jpg?v=1726313363&width=800')">
+                                    <img class="col-12" src="https://www.phongcachxanh.vn/cdn/shop/files/lot-chu-t-lethal-gaming-gear-jupiter-pro-v2-41227243946229.jpg?v=1726313363&width=800" alt="thumbnail">
+                                </button>
+                                <button class="img-thumbnail col-3 me-1 product-thumbnail" onclick="changeImage('main-img-2', 'https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800')">
+                                    <img class="col-12" src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800" alt="thumbnail">
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="related-card__sub-price">
-                    <span class="related-card__sub-price__item">
-                        500,000đ
-                    </span>
-                    <span class="related-card__sub-price__delete">
-                        600,000đ
-                    </span>
-                </div>
-            </div>
-            <div class="related-card__subImgs">
-                <div class="related-card__subImg">
-                    <img src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613670133.jpg?v=1711183578&width=800"
-                        onclick="img('https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613670133.jpg?v=1711183578&width=800')"
-                        class="related-card__subImg-item">
-                </div>
-                <div class="related-card__subImg">
-                    <img src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613702901.jpg?v=1711183578&width=800"
-                        alt="Tên sản phẩm"
-                        onclick="img('https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613702901.jpg?v=1711183578&width=800')"
-                        class="related-card__subImg-item">
-                </div>
-                <div class="related-card__subImg">
-                    <img src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170614063349.jpg?v=1711183578&width=800"
-                        alt="Tên sản phẩm"
-                        onclick="img('https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170614063349.jpg?v=1711183578&width=800')"
-                        class="related-card__subImg-item">
-                </div>
-                <div class="related-card__subImg">
-                    <img src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613997813.jpg?v=1710231818&width=800"
-                        alt="Tên sản phẩm"
-                        onclick="img('https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613997813.jpg?v=1710231818&width=800')"
-                        class="related-card__subImg-item">
-                </div>
-                <div class="related-card__subImg">
-                    <img src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613997813.jpg?v=1710231818&width=800"
-                        alt="Tên sản phẩm"
-                        onclick="img('https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613997813.jpg?v=1710231818&width=800')"
-                        class="related-card__subImg-item">
-                </div>
-            </div>
-        </div>
-        <div class="related-card">
-            <div class="related-card__items">
-                <div class="related-card__economize">
-                    <span class="related-card__economize-title">
-                        Tiết kiệm 100,000đ
-                    </span>
-                </div>
-                <div class="related-card__img" onclick="window.location.href='/product-detail/1';"
-                    class="product__slide__image">
-                    <img src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613932277.jpg?v=1710231814&width=800"
-                        alt="Tên sản phẩm" class="related-card__img-item" id="slide">
-                </div>
-                <div class="related-card__button">
-                    <button class="related-card__button-item" name="add-to-cart">
-                        + Thêm nhanh
-                    </button>
-                </div>
-            </div>
-            <div class="related-card__sub">
-                <div class="related-card__sub-title">
-                    <h3 class="related-card__sub-title__item">
-                        Tên sản phẩm
-                    </h3>
-                </div>
-                <div class="related-card__sub-evaluate">
-                    <span class="related-card__sub-evaluate-item">
-                        5.0
-                    </span>
-                </div>
-                <div class="related-card__sub-price">
-                    <span class="related-card__sub-price__item">
-                        500,000đ
-                    </span>
-                    <span class="related-card__sub-price__delete">
-                        600,000đ
-                    </span>
-                </div>
-            </div>
-            <div class="related-card__subImgs">
-                <div class="related-card__subImg">
-                    <img src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613670133.jpg?v=1711183578&width=800"
-                        onclick="img('https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613670133.jpg?v=1711183578&width=800')"
-                        class="related-card__subImg-item">
-                </div>
-                <div class="related-card__subImg">
-                    <img src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613702901.jpg?v=1711183578&width=800"
-                        alt="Tên sản phẩm"
-                        onclick="img('https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613702901.jpg?v=1711183578&width=800')"
-                        class="related-card__subImg-item">
-                </div>
-                <div class="related-card__subImg">
-                    <img src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170614063349.jpg?v=1711183578&width=800"
-                        alt="Tên sản phẩm"
-                        onclick="img('https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170614063349.jpg?v=1711183578&width=800')"
-                        class="related-card__subImg-item">
-                </div>
-                <div class="related-card__subImg">
-                    <img src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613997813.jpg?v=1710231818&width=800"
-                        alt="Tên sản phẩm"
-                        onclick="img('https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613997813.jpg?v=1710231818&width=800')"
-                        class="related-card__subImg-item">
-                </div>
-                <div class="related-card__subImg">
-                    <img src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613997813.jpg?v=1710231818&width=800"
-                        alt="Tên sản phẩm"
-                        onclick="img('https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613997813.jpg?v=1710231818&width=800')"
-                        class="related-card__subImg-item">
-                </div>
-            </div>
-        </div>
-        <div class="related-card">
-            <div class="related-card__items">
-                <div class="related-card__economize">
-                    <span class="related-card__economize-title">
-                        Tiết kiệm 100,000đ
-                    </span>
-                </div>
-                <div class="related-card__img" onclick="window.location.href='/product-detail/1';"
-                    class="product__slide__image">
-                    <img src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613932277.jpg?v=1710231814&width=800"
-                        alt="Tên sản phẩm" class="related-card__img-item" id="slide">
-                </div>
-                <div class="related-card__button">
-                    <button class="related-card__button-item" name="add-to-cart">
-                        + Thêm nhanh
-                    </button>
-                </div>
-            </div>
-            <div class="related-card__sub">
-                <div class="related-card__sub-title">
-                    <h3 class="related-card__sub-title__item">
-                        Tên sản phẩm
-                    </h3>
-                </div>
-                <div class="related-card__sub-evaluate">
-                    <span class="related-card__sub-evaluate-item">
-                        5.0
-                    </span>
-                </div>
-                <div class="related-card__sub-price">
-                    <span class="related-card__sub-price__item">
-                        500,000đ
-                    </span>
-                    <span class="related-card__sub-price__delete">
-                        600,000đ
-                    </span>
-                </div>
-            </div>
-            <div class="related-card__subImgs">
-                <div class="related-card__subImg">
-                    <img src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613670133.jpg?v=1711183578&width=800"
-                        onclick="img('https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613670133.jpg?v=1711183578&width=800')"
-                        class="related-card__subImg-item">
-                </div>
-                <div class="related-card__subImg">
-                    <img src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613702901.jpg?v=1711183578&width=800"
-                        alt="Tên sản phẩm"
-                        onclick="img('https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613702901.jpg?v=1711183578&width=800')"
-                        class="related-card__subImg-item">
-                </div>
-                <div class="related-card__subImg">
-                    <img src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170614063349.jpg?v=1711183578&width=800"
-                        alt="Tên sản phẩm"
-                        onclick="img('https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170614063349.jpg?v=1711183578&width=800')"
-                        class="related-card__subImg-item">
-                </div>
-                <div class="related-card__subImg">
-                    <img src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613997813.jpg?v=1710231818&width=800"
-                        alt="Tên sản phẩm"
-                        onclick="img('https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613997813.jpg?v=1710231818&width=800')"
-                        class="related-card__subImg-item">
-                </div>
-                <div class="related-card__subImg">
-                    <img src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613997813.jpg?v=1710231818&width=800"
-                        alt="Tên sản phẩm"
-                        onclick="img('https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613997813.jpg?v=1710231818&width=800')"
-                        class="related-card__subImg-item">
-                </div>
+
+
             </div>
         </div>
-        <div class="related-card">
-            <div class="related-card__items">
-                <div class="related-card__economize">
-                    <span class="related-card__economize-title">
-                        Tiết kiệm 100,000đ
-                    </span>
-                </div>
-                <div class="related-card__img" onclick="window.location.href='/product-detail/1';"
-                    class="product__slide__image">
-                    <img src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613932277.jpg?v=1710231814&width=800"
-                        alt="Tên sản phẩm" class="related-card__img-item" id="slide">
-                </div>
-                <div class="related-card__button">
-                    <button class="related-card__button-item" name="add-to-cart">
-                        + Thêm nhanh
-                    </button>
-                </div>
-            </div>
-            <div class="related-card__sub">
-                <div class="related-card__sub-title">
-                    <h3 class="related-card__sub-title__item">
-                        Tên sản phẩm
-                    </h3>
-                </div>
-                <div class="related-card__sub-evaluate">
-                    <span class="related-card__sub-evaluate-item">
-                        5.0
-                    </span>
-                </div>
-                <div class="related-card__sub-price">
-                    <span class="related-card__sub-price__item">
-                        500,000đ
-                    </span>
-                    <span class="related-card__sub-price__delete">
-                        600,000đ
-                    </span>
-                </div>
-            </div>
-            <div class="related-card__subImgs">
-                <div class="related-card__subImg">
-                    <img src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613670133.jpg?v=1711183578&width=800"
-                        onclick="img('https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613670133.jpg?v=1711183578&width=800')"
-                        class="related-card__subImg-item">
-                </div>
-                <div class="related-card__subImg">
-                    <img src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613702901.jpg?v=1711183578&width=800"
-                        alt="Tên sản phẩm"
-                        onclick="img('https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613702901.jpg?v=1711183578&width=800')"
-                        class="related-card__subImg-item">
-                </div>
-                <div class="related-card__subImg">
-                    <img src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170614063349.jpg?v=1711183578&width=800"
-                        alt="Tên sản phẩm"
-                        onclick="img('https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170614063349.jpg?v=1711183578&width=800')"
-                        class="related-card__subImg-item">
-                </div>
-                <div class="related-card__subImg">
-                    <img src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613997813.jpg?v=1710231818&width=800"
-                        alt="Tên sản phẩm"
-                        onclick="img('https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613997813.jpg?v=1710231818&width=800')"
-                        class="related-card__subImg-item">
-                </div>
-                <div class="related-card__subImg">
-                    <img src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613997813.jpg?v=1710231818&width=800"
-                        alt="Tên sản phẩm"
-                        onclick="img('https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-pulsar-x2h-mini-muichiro-tokito-pulsar-x-demon-slayer-limited-edition-40170613997813.jpg?v=1710231818&width=800')"
-                        class="related-card__subImg-item">
-                </div>
-            </div>
-        </div>
+
+
     </div>
 </div>
 
@@ -943,11 +816,11 @@
 
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
         const stars = document.querySelectorAll('.star');
 
         stars.forEach(star => {
-            star.addEventListener('click', function () {
+            star.addEventListener('click', function() {
                 // Xóa lớp 'selected' khỏi tất cả các ngôi sao
                 stars.forEach(s => s.classList.remove('selected'));
 
@@ -965,16 +838,16 @@
         const labels = group.querySelectorAll(".product__info__buy__list-fix label");
 
         labels.forEach(label => {
-            label.addEventListener("click", function () {
+            label.addEventListener("click", function() {
                 labels.forEach(lbl => lbl.classList.remove("active-product"));
                 label.classList.add("active-product");
             });
         });
     });
 
-    document.addEventListener('DOMContentLoaded', function () {
-        document.querySelectorAll('.btn-reply').forEach(function (btn) {
-            btn.addEventListener('click', function () {
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.btn-reply').forEach(function(btn) {
+            btn.addEventListener('click', function() {
                 let commentItem = this.closest('.comment-item');
                 let replyForm = commentItem.querySelector('.reply-form');
                 let editForm = commentItem.querySelector('.edit-form');
@@ -983,8 +856,8 @@
             });
         });
 
-        document.querySelectorAll('.btn-edit').forEach(function (btn) {
-            btn.addEventListener('click', function () {
+        document.querySelectorAll('.btn-edit').forEach(function(btn) {
+            btn.addEventListener('click', function() {
                 let commentItem = this.closest('.comment-item');
                 let editForm = commentItem.querySelector('.edit-form');
                 let replyForm = commentItem.querySelector('.reply-form');
@@ -993,8 +866,8 @@
             });
         });
 
-        document.querySelectorAll('.btn-delete').forEach(function (btn) {
-            btn.addEventListener('click', function () {
+        document.querySelectorAll('.btn-delete').forEach(function(btn) {
+            btn.addEventListener('click', function() {
                 alert('Đã xóa thành công');
             });
         });
