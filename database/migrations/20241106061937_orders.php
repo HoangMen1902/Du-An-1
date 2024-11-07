@@ -22,11 +22,15 @@ final class Orders extends AbstractMigration
         $table = $this->table('Orders');
         $table->addColumn('status', 'integer', ['default' => '1'])
             ->addColumn('total_price', 'decimal', ['precision' => 10, 'scale' => 2])
-            ->addColumn('user_id', 'integer', ['null' => false])
+            ->addColumn('user_id', 'integer', ['signed' => false, 'null' => false])
             ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
             ->addColumn('updated_at', 'timestamp', [
                 'default' => 'CURRENT_TIMESTAMP',
                 'update' => 'CURRENT_TIMESTAMP'
+            ])
+            ->addForeignKey('user_id', 'users', 'id', [
+                'delete' => 'CASCADE', 
+                'update' => 'NO_ACTION'
             ])
             ->create();
     }

@@ -21,8 +21,8 @@ final class OrderDetails extends AbstractMigration
     {
         $table = $this->table('order_details');
 
-        $table->addColumn('order_id', 'integer', ['signed' => false])
-            ->addColumn('sku_id', 'string', ['limit' => 50])
+        $table->addColumn('order_id', 'integer', ['signed' => false, 'null' => false] )
+            ->addColumn('sku_id', 'integer',  ['signed' => false, 'null' => false])
             ->addColumn('address', 'text')
             ->addColumn('price', 'decimal', ['precision' => 10, 'scale' => 2])
             ->addColumn('quantity', 'integer', ['signed' => false])
@@ -30,6 +30,13 @@ final class OrderDetails extends AbstractMigration
             ->addColumn('updated_at', 'timestamp', [
                 'default' => 'CURRENT_TIMESTAMP',
                 'update' => 'CURRENT_TIMESTAMP'
+            ])
+            ->addForeignKey('order_id', 'orders', 'id', [
+                'delete' => 'CASCADE', 
+                'update' => 'NO_ACTION'
+            ])    ->addForeignKey('sku_id', 'product_skus', 'id', [
+                'delete' => 'CASCADE', 
+                'update' => 'NO_ACTION'
             ])
             ->create();
     }

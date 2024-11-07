@@ -20,13 +20,21 @@ final class ProductSpecsTable extends AbstractMigration
     public function change(): void
     {
         $table = $this->table('product_specs');
-        $table->addColumn('spec_id', 'integer') 
-              ->addColumn('product_id', 'integer') 
-              ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
-              ->addColumn('updated_at', 'timestamp', [
-                  'default' => 'CURRENT_TIMESTAMP',
-                  'update' => 'CURRENT_TIMESTAMP'
-              ])
-              ->create();
+        $table->addColumn('spec_id', 'integer', ['signed' => false, 'null' => false])
+            ->addColumn('product_id', 'integer', ['signed' => false, 'null' => false])
+            ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
+            ->addColumn('updated_at', 'timestamp', [
+                'default' => 'CURRENT_TIMESTAMP',
+                'update' => 'CURRENT_TIMESTAMP'
+            ])
+            ->addForeignKey('product_id', 'products', 'id', [
+                'delete' => 'CASCADE',
+                'update' => 'NO_ACTION'
+            ])
+            ->addForeignKey('spec_id', 'spec_definitions', 'id', [
+                'delete' => 'CASCADE',
+                'update' => 'NO_ACTION'
+            ])
+            ->create();
     }
 }

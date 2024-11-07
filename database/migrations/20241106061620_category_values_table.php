@@ -22,12 +22,16 @@ final class CategoryValuesTable extends AbstractMigration
         $table = $this->table('category_values');
         $table->addColumn('name', 'string', ['limit' => 255])
               ->addColumn('status', 'integer', ['default' => 1]) 
-              ->addColumn('category_id', 'integer') 
+              ->addColumn('category_id', 'integer', ['null' => false, 'signed' => false]) 
               ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
               ->addColumn('updated_at', 'timestamp', [
                   'default' => 'CURRENT_TIMESTAMP',
                   'update' => 'CURRENT_TIMESTAMP'
               ])
+              ->addForeignKey('category_id', 'categories', 'id', [
+                'delete' => 'CASCADE', 
+                'update' => 'NO_ACTION'
+            ])
               ->create();
     }
 }
