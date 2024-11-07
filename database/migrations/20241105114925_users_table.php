@@ -17,16 +17,17 @@ final class UsersTable extends AbstractMigration
      * Remember to call "create()" or "update()" and NOT "save()" when working
      * with the Table class.
      */
-    public function up(): void
+    public function change(): void
     {
         $table = $this->table('Users');
         $table->addColumn('email', 'string', ['limit' => 255])
             ->addColumn('phone', 'string', ['limit' => 10])
             ->addColumn('password', 'string', ['limit' => 101])
-            ->addColumn('address', 'string', ['limit' => 255])
+            ->addColumn('address', 'string', ['limit' => 320])
             ->addColumn('firstname', 'string', ['limit' => 100])
             ->addColumn('lastName', 'string', ['limit' => 100])
             ->addColumn('username', 'string', ['limit' => 50])
+            ->addColumn('birthday', 'date')
             ->addColumn('reset_token', 'string', ['limit' => 64])
             ->addColumn('reset_token_expires', 'datetime')
             ->addColumn('province_id', 'integer', ['null' => true, 'signed' => false])

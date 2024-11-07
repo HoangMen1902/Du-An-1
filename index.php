@@ -88,6 +88,7 @@ $dispatcher = FastRoute\simpleDispatcher(function(RouteCollector $r) {
         $r->get('/tragop/add', [InstallmentsController::class, 'add']);
         $r->get('/tragop/detail', [InstallmentsController::class, 'detail']);
 
+        $r->post('/add-user', [UserController::class, 'store']);
 
     });
 

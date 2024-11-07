@@ -17,7 +17,7 @@ final class DistrictsTable extends AbstractMigration
      * Remember to call "create()" or "update()" and NOT "save()" when working
      * with the Table class.
      */
-    public function up(): void
+    public function change(): void
     {
         $table = $this->table('Districts');
         $table->addColumn('name', 'string', ['limit' => 100])
