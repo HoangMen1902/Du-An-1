@@ -21,14 +21,25 @@ final class Carts extends AbstractMigration
     {
         $table = $this->table('carts');
         $table->addColumn('user_id', 'integer', ['signed' => false, 'null' => false])  
-        ->addColumn('product_id', 'integer', ['signed' => false, 'null' => false])  
-        ->addColumn('sku_id', 'integer', ['signed' => false, 'null' => false])  
-        ->addColumn('quantity', 'integer', ['signed' => false, 'default' => 1, 'null' => false])  
-        ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
-        ->addColumn('updated_at', 'timestamp', [
-            'default' => 'CURRENT_TIMESTAMP',
-            'update' => 'CURRENT_TIMESTAMP'
-        ])
-        ->create();
+              ->addColumn('product_id', 'integer', ['signed' => false, 'null' => false])  
+              ->addColumn('sku_id', 'integer', ['signed' => false, 'null' => false])  
+              ->addColumn('quantity', 'integer', ['signed' => false, 'default' => 1, 'null' => false]);
+    
+        // Adding foreign keys
+        $table->addForeignKey('user_id', 'users', 'id', [
+            'delete' => 'CASCADE',
+            'update' => 'NO_ACTION'
+        ]);
+        $table->addForeignKey('product_id', 'products', 'id', [
+            'delete' => 'CASCADE',
+            'update' => 'NO_ACTION'
+        ]);
+        $table->addForeignKey('sku_id', 'product_skus', 'id', [
+            'delete' => 'CASCADE',
+            'update' => 'NO_ACTION'
+        ]);
+    
+        $table->create();
     }
+    
 }

@@ -18,19 +18,25 @@ final class Comments extends AbstractMigration
      * with the Table class.
      */
     public function change(): void
-    {
-        $table = $this->table('Comments');
-        $table->addColumn('content', 'text')
-            ->addColumn('rating', 'integer', ['limit' => 5])
-            ->addColumn('status', 'integer', ['default' => '1'])
-            ->addColumn('product_id', 'integer', ['null' => false])
-            ->addColumn('parent_id', 'integer', ['null' => true])
-            ->addColumn('user_id', 'integer')
-            ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
-            ->addColumn('updated_at', 'timestamp', [
-                'default' => 'CURRENT_TIMESTAMP',
-                'update' => 'CURRENT_TIMESTAMP'
-            ])
-            ->create();
-    }
+{
+    $table = $this->table('Comments');
+    $table->addColumn('content', 'text');
+    $table->addColumn('rating', 'integer', ['limit' => 5]);
+    $table->addColumn('status', 'integer', ['default' => '1']);
+    $table->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP']);
+    $table->addColumn('product_id', 'integer', ['null' => false, 'signed' => false]);
+    $table->addColumn('parent_id', 'integer', ['null' => true]);
+    $table->addColumn('user_id', 'integer', ['null' => false, 'signed' => false]);
+
+    $table->addForeignKey('product_id', 'products', 'id', [
+        'delete' => 'CASCADE',
+        'update' => 'NO_ACTION'
+    ]);
+    $table->addForeignKey('user_id', 'users', 'id', [
+        'delete' => 'CASCADE',
+        'update' => 'NO_ACTION'
+    ]);
+
+    $table->create();
+}
 }
