@@ -10,6 +10,16 @@ class CategoryController extends BaseController {
         echo $this->view->render('Admin/Pages/Category/CategoryList');
     }
 
+    public function showSub() {
+        $categoryModel = new CategoryModel();
+        $categoryValues = $categoryModel->getCategoryValues();
+
+        echo $this->view->render('Admin/Pages/Category/CategoryValueList', [
+            'categoryValues' => $categoryValues
+        ]);
+    }
+    
+
     public function add(){
         echo $this->view->render('Admin/Pages/Category/CategoryAdd');
     }

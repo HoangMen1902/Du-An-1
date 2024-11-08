@@ -25,16 +25,24 @@ $this->start('main_content');
                             <td>Tên loại sản phẩm 1</td>
                             <td>Hoạt động</td>
                             <td>
-                                <div class="d-flex align-items-center">
-                                    <a href="/admin/edit-category/1" class="btn btn-success btn-sm btn-icon-text mr-3">
-                                        Sửa
-                                        <i class="typcn typcn-edit btn-icon-append"></i>
-                                    </a>
-                                    <a href="/admin/delete-category/1" onclick="return confirm('Bạn chắc chứ?')"
-                                        class="btn btn-danger btn-sm btn-icon-text">
-                                        Xóa
-                                        <i class="typcn typcn-delete-outline btn-icon-append"></i>
-                                    </a>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="bi bi-three-dots"></i>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item d-flex" href="#"><p>Sửa</p>
+                                            <i class="typcn typcn-edit btn-icon-append"></i>
+                                        </a>
+                                        <a class="dropdown-item d-flex" href="#" onclick="return confirm('Bạn chắc chứ?')"><p>Xóa</p>
+                                            <i class="typcn typcn-delete-outline btn-icon-append"></i>
+                                        </a>
+                                        <a class="dropdown-item d-flex" href="/admin/category/value"><p>Danh sách loại sản phẩm con</p>
+                                            <i class="typcn typcn-edit btn-icon-append"></i>
+                                        </a>
+                                        <a class="dropdown-item d-flex" href="#"><p>Thêm loại sản phẩm con</p>
+                                            <i class="typcn typcn-edit btn-icon-append"></i>
+                                        </a>
+                                    </div>
                                 </div>
                             </td>
                         </tr>
@@ -43,16 +51,24 @@ $this->start('main_content');
                             <td>Tên loại sản phẩm 2</td>
                             <td>Không hoạt động</td>
                             <td>
-                                <div class="d-flex align-items-center">
-                                    <a href="/admin/edit-category/2" class="btn btn-success btn-sm btn-icon-text mr-3">
-                                        Sửa
-                                        <i class="typcn typcn-edit btn-icon-append"></i>
-                                    </a>
-                                    <a href="/admin/delete-category/2" onclick="return confirm('Bạn chắc chứ?')"
-                                        class="btn btn-danger btn-sm btn-icon-text">
-                                        Xóa
-                                        <i class="typcn typcn-delete-outline btn-icon-append"></i>
-                                    </a>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="bi bi-three-dots"></i>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item d-flex" style="display: flex;" href="#"><p>Sửa</p>
+                                            <i class="typcn typcn-edit btn-icon-append"></i>
+                                        </a>
+                                        <a class="dropdown-item d-flex" href="#" onclick="return confirm('Bạn chắc chứ?')"><p>Xóa</p>
+                                            <i class="typcn typcn-delete-outline btn-icon-append"></i>
+                                        </a>
+                                        <a class="dropdown-item d-flex" href="/admin/category/value"><p>Danh sách loại sản phẩm con</p>
+                                            <i class="typcn typcn-edit btn-icon-append"></i>
+                                        </a>
+                                        <a class="dropdown-item d-flex" href="#"><p>Thêm loại sản phẩm con</p>
+                                            <i class="typcn typcn-edit btn-icon-append"></i>
+                                        </a>
+                                    </div>
                                 </div>
                             </td>
                         </tr>

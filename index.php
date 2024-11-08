@@ -79,6 +79,7 @@ $dispatcher = FastRoute\simpleDispatcher(function(RouteCollector $r) {
         $r->get('/allattribute', [UserController::class, 'show']);
         $r->get('/attribute', [AttributeController::class, 'add']);
         $r->get('/categories', [CategoryController::class, 'show']);
+        $r->get('/category/value', [CategoryController::class, 'showSub']);
         $r->get('/category/add', [CategoryController::class, 'add']);
         $r->post('/category/store', [CategoryController::class, 'store']);
         $r->get('/brands', [BrandController::class, 'show']);
