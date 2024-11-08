@@ -90,7 +90,7 @@ $dispatcher = FastRoute\simpleDispatcher(function(RouteCollector $r) {
         $r->get('/tragop/detail', [InstallmentsController::class, 'detail']);
 
         $r->post('/add-user', [UserController::class, 'store']);
-
+        $r->post('/user-search', [UserController::class, 'search']);
     });
 
 
@@ -142,3 +142,6 @@ switch ($routeInfo[0]) {
         $controller->$method($vars);
         break;
 }
+
+
+
