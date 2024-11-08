@@ -67,7 +67,7 @@ $('#user-search').on('submit', (e) => {
     e.preventDefault();
 });
 
-$('#userSearch').on('input', (e) => {
+$('#userSearch').on('change', (e) => {
 
     setTimeout(() => {
         $.ajax({
