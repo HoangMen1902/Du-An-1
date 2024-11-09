@@ -10,11 +10,18 @@ $this->start('main_content');
 if(isset($_GET['status']) && $_GET['status'] === 'success') {
     ?>
             <div class="alert alert-success mt-5">
-                <p class="m-0">Đã thêm thành công</p>
+                <p class="m-0">Thao tác thành công</p>
             </div>
     <?php
+} else if(isset($_GET['status']) && $_GET['status'] === 'failed' && $_GET['error'] == 3) {
+?>
+            <div class="alert alert-danger mt-5">
+                <p class="m-0">Dữ liệu đã bị trùng, lỗi: <?=$_GET['name']?></p>
+            </div>
+<?php
 }
 ?>
+
 <div class="row mt-4">
     <div class="col-12 grid-margin">
         <div class="card">

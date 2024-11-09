@@ -4,7 +4,6 @@
 <?php 
 $this->start('main_content');
 ?>
-
 <div class="row mt-4">
     <div class="col-12 grid-margin">
         <div class="card">

@@ -29,7 +29,7 @@
                 <div class="navbar-brand-inner-wrapper d-flex justify-content-between align-items-center w-100">
                     <!-- <a class="navbar-brand brand-logo" href="/admin/dashboard"><img src="<?= getenv('APP_URL') ?>public/assets/admin/images/beelogo.png" -->
                     <a class="navbar-brand brand-logo" href="/admin/dashboard"><img
-                            src="" alt="logo" /></a>
+                            src="<?= getenv('APP_URL') ?>/public\Assets\Admin\Images\WebLogo.png" alt="logo" /></a>
                     <a class="navbar-brand brand-logo-mini" href="/admin/dashboard"
                         style="color: #fff; text-decoration: none;">Bee</a>
                     <button class="navbar-toggler navbar-toggler align-self-center" type="button"
