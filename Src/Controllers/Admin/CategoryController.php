@@ -11,7 +11,11 @@ class CategoryController extends BaseController
 {
     public function show()
     {
-        echo $this->view->render('Admin/Pages/Category/CategoryList');
+        $categoryModel = new CategoryModel();
+        $category = $categoryModel->getAllCategory();
+        echo $this->view->render('Admin/Pages/Category/CategoryList', [
+            'categories' => $category
+        ]);
     }
 
     public function add()

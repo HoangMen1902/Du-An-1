@@ -45,10 +45,6 @@ $this->start('main_content');
                     <?php endforeach; ?>
                 </div>
             <?php endif; ?>
-            <div class="mt-5 alert alert-danger" role="alert">
-                <!-- Thông báo lỗi ở đây -->
-                Đã có lỗi xảy ra. Vui lòng thử lại.
-            </div>
         </div>
     </div>
 </div>
