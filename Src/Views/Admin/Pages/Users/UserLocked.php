@@ -31,7 +31,7 @@ $this->start('main_content');
                             <th></th>
                         </tr>
                     </thead>
-                    <tbody id="userTable">
+                    <tbody id="lockedUserTable">
                         <?php
                         if (isset($data) && !empty($data) && $data != null) :
                             foreach ($data as $user):
