@@ -66,6 +66,53 @@ class CategoryController extends BaseController
             'categoryValues' => $categoryValues
         ]);
     }
+    public function addSub()
+    {
+        $categoryModel = new CategoryModel();
+        $categories = $categoryModel->getAllCategory();
+        echo $this->view->render('Admin/Pages/Category/CategoryValueAdd', [
+            'categories' => $categories
+        ]);
+    }
+    public function storeSub()
+    {
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $data = [
+                'name' => $_POST['name'] ?? null,
+                'status' => $_POST['status'] ?? null,
+                'category_id' => $_POST['category_id'] ?? null
+            ];
+    
+            $validationResult = CategoryValidation::categoryValueValidation($data);
+
+            if ($validationResult === true) {
+                $categoryValueModel = new CategoryValueModel();
+                $saveResult = $categoryValueModel->createCategoryValue($data);
+
+
+                if ($saveResult) {
+                    header("Location: /admin/category/CategoryValueList");
+                    exit();
+                } else {
+                    $errors[] = "Không thể lưu phân loại. Vui lòng thử lại.";
+                }
+            } else {
+                $errors = $validationResult;
+            }
+            $categoryModel = new CategoryModel();
+            $categories = $categoryModel->getAllCategory();
+          
+            echo $this->view->render('Admin/Pages/Category/CategoryValueAdd', [
+                'categories' => $categories,
+                'data' => $data,
+                'errors' => $errors ?? []
+            ]);
+        } else {
+            // header("Location: /category/add");
+            exit();
+        }
+    }
 
 
     public function editSub($id)

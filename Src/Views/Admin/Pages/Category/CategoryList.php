@@ -36,10 +36,10 @@ $this->start('main_content');
                                         <a class="dropdown-item d-flex" href="#" onclick="return confirm('Bạn chắc chứ?')"><p>Xóa</p>
                                             <i class="typcn typcn-delete-outline btn-icon-append"></i>
                                         </a>
-                                        <a class="dropdown-item d-flex" href="/admin/category/value"><p>Danh sách loại sản phẩm con</p>
+                                        <a class="dropdown-item d-flex" href="/admin/category/CategoryValueList"><p>Danh sách loại sản phẩm con</p>
                                             <i class="typcn typcn-edit btn-icon-append"></i>
                                         </a>
-                                        <a class="dropdown-item d-flex" href="#"><p>Thêm loại sản phẩm con</p>
+                                        <a class="dropdown-item d-flex" href="/admin/category/CategoryValueAdd"><p>Thêm loại sản phẩm con</p>
                                             <i class="typcn typcn-edit btn-icon-append"></i>
                                         </a>
                                     </div>
@@ -62,10 +62,10 @@ $this->start('main_content');
                                         <a class="dropdown-item d-flex" href="#" onclick="return confirm('Bạn chắc chứ?')"><p>Xóa</p>
                                             <i class="typcn typcn-delete-outline btn-icon-append"></i>
                                         </a>
-                                        <a class="dropdown-item d-flex" href="/admin/category/value"><p>Danh sách loại sản phẩm con</p>
+                                        <a class="dropdown-item d-flex" href="/admin/category/CategoryValueList"><p>Danh sách loại sản phẩm con</p>
                                             <i class="typcn typcn-edit btn-icon-append"></i>
                                         </a>
-                                        <a class="dropdown-item d-flex" href="#"><p>Thêm loại sản phẩm con</p>
+                                        <a class="dropdown-item d-flex" href="/admin/category/CategoryValueAdd"><p>Thêm loại sản phẩm con</p>
                                             <i class="typcn typcn-edit btn-icon-append"></i>
                                         </a>
                                     </div>
