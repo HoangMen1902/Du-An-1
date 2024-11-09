@@ -74,7 +74,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
         $r->get('/vouchers', [VouchersController::class, 'show']);
         $r->get('/users', [UserController::class, 'show']);
         $r->get('/create-user', [UserController::class, 'add']);
-        $r->get('/products', [productsController::class, 'show']);
+        $r->get('/products', [productsController::class, 'index']);
         $r->get('/product/add', [productsController::class, 'add']);
         $r->get('/allattribute', [UserController::class, 'show']);
         $r->get('/attribute', [AttributeController::class, 'add']);
@@ -95,6 +95,8 @@ $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
 
         $r->post('/add-user', [UserController::class, 'store']);
         $r->post('/user-search', [UserController::class, 'search']);
+        $r->post('/product/store', [ProductsController::class, 'store']);
+
     });
 });
 
