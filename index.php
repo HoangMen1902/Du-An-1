@@ -45,7 +45,7 @@ $dotenv->load();
 
 //Router
 
-$dispatcher = FastRoute\simpleDispatcher(function(RouteCollector $r) {
+$dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
     $r->addRoute('GET', '/home', [HomeController::class, 'show']);
     $r->addRoute('GET', '/detail', [ProductController::class, 'show']);
     $r->addRoute('GET', '/list', [ProductListController::class, 'show']);
@@ -82,6 +82,9 @@ $dispatcher = FastRoute\simpleDispatcher(function(RouteCollector $r) {
         $r->get('/category/value', [CategoryController::class, 'showSub']);
         $r->get('/category/add', [CategoryController::class, 'add']);
         $r->post('/category/store', [CategoryController::class, 'store']);
+        $r->get('/category/value/edit/{id}', [CategoryController::class, 'editSub']);
+        $r->post('/category/value/update/{id}', [CategoryController::class, 'updateSub']);
+        $r->post('/category/value/delete/{id}', [CategoryController::class, 'delete']);
         $r->get('/brands', [BrandController::class, 'show']);
         $r->get('/brand/add', [BrandController::class, 'add']);
         $r->get('/comments', [CommentController::class, 'show']);
@@ -93,8 +96,6 @@ $dispatcher = FastRoute\simpleDispatcher(function(RouteCollector $r) {
         $r->post('/add-user', [UserController::class, 'store']);
         $r->post('/user-search', [UserController::class, 'search']);
     });
-
-
 });
 
 
@@ -143,6 +144,3 @@ switch ($routeInfo[0]) {
         $controller->$method($vars);
         break;
 }
-
-
-

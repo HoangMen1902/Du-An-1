@@ -102,9 +102,8 @@ abstract class BaseModel implements CrudInterface
             echo '<pre>';
             var_dump($sql);
             return $stmt->execute();
-
         } catch (\Throwable $th) {
-            error_log('Lỗi khi cập nhật dữ liệu: '. $th->getMessage());
+            error_log('Lỗi khi cập nhật dữ liệu: ' . $th->getMessage());
             return false;
         }
     }
@@ -132,7 +131,8 @@ abstract class BaseModel implements CrudInterface
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function countTotal() {
+    public function countTotal()
+    {
         $result = [];
         try {
             $sql = "SELECT count(*) AS total FROM $this->table";
@@ -152,7 +152,7 @@ abstract class BaseModel implements CrudInterface
             GROUP BY comments.product_id ORDER BY count DESC LIMIT 5";
             $result = $this->_conn->MySQLi()->query($sql);
             return $result->fetch_all(MYSQLI_ASSOC);
-        } catch (\Throwable $th) {  
+        } catch (\Throwable $th) {
             error_log('Lỗi khi hiển thị tất cả dữ liệu: ' . $th->getMessage());
             return $result;
         }
@@ -191,5 +191,5 @@ abstract class BaseModel implements CrudInterface
         }
     }
 
-    
+ 
 }
