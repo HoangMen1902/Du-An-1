@@ -1,39 +1,23 @@
 
-$.ajaxSetup({
-    cache: false
-  });
-
-function getInput(form) {
-    if($('input[name="password"]').length) {
-        let input = {
-            username: $('input[name="username"]').val().trim(),
-            firstName: $('input[name="firstName"]').val().trim(),
-            lastName: $('input[name="lastName"]').val().trim(),
-            password: $('input[name="password"]').val().trim(),
-            email: $('input[name="email"]').val().trim(),
-            role: $('input[name="role"]').val(),
-        }
-    } else {
-        let input = {
-            username: $('input[name="username"]').val().trim(),
-            firstName: $('input[name="firstName"]').val().trim(),
-            lastName: $('input[name="lastName"]').val().trim(),
-            email: $('input[name="email"]').val().trim(),
-            role: $('input[name="role"]').val(),
-        }
+function getInput() {
+    let input = {
+        username: $('input[name="username"]').val().trim(),
+        firstName: $('input[name="firstName"]').val().trim(),
+        lastName: $('input[name="lastName"]').val().trim(),
+        password: $('input[name="password"]').val().trim(),
+        email: $('input[name="email"]').val().trim(),
+        role: $('input[name="role"]').val(),
     }
-
 
     return input;
 }
 
-
 function userValidate() {
     let input = getInput();
-    console.log(input);
     let is_valid = true;
     Object.entries(input).forEach(([key, value]) => {
         if (value === '') {
+            console.log(`${key}-validate`);
             $(`#${key}-validate`).show();
             is_valid = false;
         } else {
@@ -138,10 +122,41 @@ $('#userSearch').on('change', (e) => {
     }, 500);
 })
 
-
-
-
-
-
-
-
+$('#userTable').on('submit', $('#deleteForm'), (e) => {
+    e.preventDefault();
+    let id = $('#deleteForm').attr('data-user');
+    console.log(id);
+    $.ajax({
+        type: 'DELETE',
+        url: `/admin/delete-user/${id}`,
+        success: function (response) {
+            $('#userTable').empty();
+            response.forEach(user => {
+                let html = `
+                <tr>
+                                    <td>${user.id}</td>
+                                    <td>${user.firstname} ${user.lastname}</td>
+                                    <td>${user.email}</td>
+                                    <td>${user.phone}</td>
+                                    <td>${user.status == 1 ? 'Hoạt động' : 'Khóa'}</td>
+                                    <td>${user.role == 1 ? 'Khách hàng' : 'Quản trị'}</td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <a href="/admin/edit-user/${user.id}">
+                                                <button type="button" class="btn btn-success btn-sm btn-icon-text mr-3">
+                                                    Sửa
+                                                    <i class="typcn typcn-edit btn-icon-append"></i>
+                                                </button>
+                                            </a>
+                                            <form action="/admin/delete-user/${user.id}" data-user="${user.id}" method="post" id="deleteForm">
+                                                <button type="submit" class="btn btn-danger btn-sm btn-icon-text">Xóa</button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                `
+                $('#userTable').append(html);
+            });
+        }
+    });
+})
