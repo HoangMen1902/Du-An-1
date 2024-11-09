@@ -1,48 +1,60 @@
 <?php $this->layout('Admin/Layouts/Layout') ?>
 
 
-<?php 
+<?php
 $this->start('main_content');
 ?>
 
 <div class="col-12 grid-margin">
     <div class="card">
-        <div class="card-body">
-            <h4 class="card-title">Thông tin sản phẩm</h4>
-            <form class="forms-sample" action="/admin/add-product-detail-action/" method="post" enctype="multipart/form-data">
-                <input type="hidden" name="id" value="">
-                <input type="hidden" name="method" value="POST">
+    <div class="card-body">
+    <h4 class="card-title">Thông tin sản phẩm</h4>
+    <form class="forms-sample" action="/admin/add-product-detail-action/" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="id" value="<?= htmlspecialchars($data['id'] ?? '') ?>">
+        <input type="hidden" name="method" value="POST">
 
-                <div class="form-group">
-                    <label for="name">Tên sản phẩm</label>
-                    <input type="text" class="form-control" name="name" id="name" value="" disabled>
-                </div>
-                <div class="form-group">
-                    <label for="description">Mô tả sản phẩm</label>
-                    <input type="text" class="form-control" name="description" id="description" value="" disabled>
-                </div>
-                <div class="form-group">
-                    <label for="brand_id">Thương hiệu</label>
-                    <input type="text" class="form-control" name="brand_id" id="brand_id" value="" disabled>
-                </div>
-                <div class="form-group">
-                    <label for="category_id">Phân loại sản phẩm</label>
-                    <input type="text" class="form-control" name="category_id" id="category_id" value="" disabled>
-                </div>
-                <div class="form-group">
-                    <label for="price">Giá tiền</label>
-                    <input type="number" class="form-control" name="price" id="price" value="" disabled>
-                </div>
-                <div class="form-group">
-                    <label for="quantity">Số lượng</label>
-                    <input type="number" class="form-control" name="quantity" id="quantity" value="" disabled>
-                </div>
-                <div class="form-group">
-                    <label for="discountRate">Giá giảm (%)</label>
-                    <input type="number" class="form-control" name="discountRate" id="discountRate" value="" disabled>
-                </div>
-            </form>
+        
+        <div class="form-group">
+            <label for="name">Tên sản phẩm</label>
+            <input type="text" class="form-control" name="name" id="name" value="<?= htmlspecialchars($data['name'] ?? '') ?>" disabled>
         </div>
+        <div class="form-group">
+            <label for="thumbnail">Hình ảnh sản phẩm</label><br>
+            <?php if (!empty($data['thumbnail'])): ?>
+                <img src="<?=$_ENV['APP_URL'] ?>/public/Uploads/Products/<?= htmlspecialchars($data['thumbnail']) ?>" alt="Thumbnail" style="max-width: 100px; height: auto;">
+            <?php else: ?>
+                <p>Không có hình ảnh</p>
+            <?php endif; ?>
+        </div>
+        <div class="form-group">
+            <label for="description">Mô tả sản phẩm</label>
+            <input type="text" class="form-control" name="description" id="description" value="<?= htmlspecialchars($data['description'] ?? '') ?>" disabled>
+        </div>
+        <div class="form-group">
+            <label for="brand_id">Thương hiệu</label>
+            <input type="text" class="form-control" name="brand_id" id="brand_id" value="<?= htmlspecialchars($data['brand'] ?? '') ?>" disabled>
+        </div>
+        <div class="form-group">
+            <label for="category_id">Phân loại sản phẩm</label>
+            <input type="text" class="form-control" name="category_id" id="category_id" value="<?= htmlspecialchars($data['category'] ?? '') ?>" disabled>
+        </div>
+        <div class="form-group">
+            <label for="price">Giá tiền</label>
+            <input type="number" class="form-control" name="price" id="price" value="<?= htmlspecialchars($data['price'] ?? '') ?>" disabled>
+        </div>
+        <div class="form-group">
+            <label for="quantity">Số lượng</label>
+            <input type="number" class="form-control" name="quantity" id="quantity" value="<?= htmlspecialchars($data['total_quantity'] ?? '') ?>" disabled>
+        </div>
+        <div class="form-group">
+            <label for="discountRate">Giá giảm (%)</label>
+            <input type="number" class="form-control" name="discountRate" id="discountRate" value="<?= htmlspecialchars($data['discount'] ?? '') ?>" disabled>
+        </div>
+       
+    </form>
+</div>
+
+
     </div>
 </div>
 
@@ -90,7 +102,8 @@ $this->start('main_content');
                 </div>
                 <div class="form-group">
                     <label for="max_ram_supported">Hỗ trợ RAM tối đa</label>
-                    <input type="text" class="form-control" name="max_ram_supported" id="max_ram_supported" value="" disabled>
+                    <input type="text" class="form-control" name="max_ram_supported" id="max_ram_supported" value=""
+                        disabled>
                 </div>
                 <div class="form-group">
                     <label for="storage">Ổ cứng</label>
@@ -110,7 +123,8 @@ $this->start('main_content');
                 </div>
                 <div class="form-group">
                     <label for="screen_technology">Công nghệ màn hình</label>
-                    <input type="text" class="form-control" name="screen_technology" id="screen_technology" value="" disabled>
+                    <input type="text" class="form-control" name="screen_technology" id="screen_technology" value=""
+                        disabled>
                 </div>
                 <div class="form-group">
                     <label for="gpu">Card màn hình</label>
@@ -118,11 +132,13 @@ $this->start('main_content');
                 </div>
                 <div class="form-group">
                     <label for="audio_technology">Công nghệ âm thanh</label>
-                    <input type="text" class="form-control" name="audio_technology" id="audio_technology" value="" disabled>
+                    <input type="text" class="form-control" name="audio_technology" id="audio_technology" value=""
+                        disabled>
                 </div>
                 <div class="form-group">
                     <label for="wireless_connectivity">Kết nối không dây</label>
-                    <input type="text" class="form-control" name="wireless_connectivity" id="wireless_connectivity" value="" disabled>
+                    <input type="text" class="form-control" name="wireless_connectivity" id="wireless_connectivity"
+                        value="" disabled>
                 </div>
                 <div class="form-group">
                     <label for="card_reader">Khe đọc thẻ nhớ</label>
@@ -134,11 +150,13 @@ $this->start('main_content');
                 </div>
                 <div class="form-group">
                     <label for="additional_features">Tính năng khác</label>
-                    <input type="text" class="form-control" name="additional_features" id="additional_features" value="" disabled>
+                    <input type="text" class="form-control" name="additional_features" id="additional_features" value=""
+                        disabled>
                 </div>
                 <div class="form-group">
                     <label for="keyboard_backlight">Đèn bàn phím</label>
-                    <input type="text" class="form-control" name="keyboard_backlight" id="keyboard_backlight" value="" disabled>
+                    <input type="text" class="form-control" name="keyboard_backlight" id="keyboard_backlight" value=""
+                        disabled>
                 </div>
                 <div class="form-group">
                     <label for="dimensions">Kích thước</label>
@@ -164,9 +182,7 @@ $this->start('main_content');
                     <label for="os">Hệ điều hành</label>
                     <input type="text" class="form-control" name="os" id="os" value="" disabled>
                 </div>
-                <a href
+                <a href <?php
 
-<?php
-
-$this->stop();
-?>
+                $this->stop();
+                ?>

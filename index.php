@@ -76,6 +76,8 @@ $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
         $r->get('/create-user', [UserController::class, 'add']);
         $r->get('/products', [productsController::class, 'index']);
         $r->get('/product/add', [productsController::class, 'add']);
+        $r->get('/product/detail/{id}', [productsController::class, 'show']);
+        $r->get('/product/edit/{id}', [productsController::class, 'edit']);
         $r->get('/allattribute', [UserController::class, 'show']);
         $r->get('/attribute', [AttributeController::class, 'add']);
         $r->get('/categories', [CategoryController::class, 'show']);
@@ -96,14 +98,17 @@ $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
         $r->get('/tragop/detail', [InstallmentsController::class, 'detail']);
         $r->get('/edit-user/{id:\d+}', [UserController::class, 'edit']);
         $r->get('/locked-account', [UserController::class, 'locked']);
+        $r->get('/delete-product/{id}', [productsController::class, 'delete']);
 
         $r->post('/add-user', [UserController::class, 'store']);
         $r->post('/user-search', [UserController::class, 'search']);
+        $r->post('/product/update/{id}', [productsController::class, 'update']);
         $r->post('/product/store', [ProductsController::class, 'store']);
         $r->post('/edit-user/{id:\d+}', [UserController::class, 'update']);
         $r->post('/lock-user/{id:\d+}', [UserController::class, 'lockUser']);
 
         $r->delete('/delete-user/{id:\d+}', [UserController::class, 'delete']);
+
     });
 });
 

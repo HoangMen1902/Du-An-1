@@ -10,6 +10,7 @@
              return $this->getAll();
         }
         public function getOneProduct($id){
+            $id = (int) $id;
             return $this->getOne($id);
         }
         public function createProduct($data){
@@ -21,7 +22,7 @@
         public function deleteProduct($id){
             return $this->delete($id);
         }
-        public function isNameDuplicate($name)
+        public function isNameDupliProductByColumn($name)
         {
             return $this->findDuplicateByColumn('name', $name);
         }

@@ -1,22 +1,43 @@
 <?php
 namespace Src\Validations\Admin;
 
+use Src\Models\Admin\ProductModel;
+
 class ProductValidation {
-    public static function productValidation($data) {
+    public static function productValidation($data, $id = null) {
         $is_valid = true;
         $errors = [];
 
-        if (strlen($data['name']) > 100 || empty($data['name'])) {
-            $is_valid = false;
-            $errors['name'] = "Tên sản phẩm không được để trống và phải dưới 100 ký tự.";
+        if (!is_array($data)) {
+            $data = [];
         }
 
-        if (strlen($data['description']) > 500) {
+        $productModel = new ProductModel();
+
+        if (empty($data['name'])) {
+            $is_valid = false;
+            $errors['name'] = "Tên sản phẩm không được để trống.";
+        } else {
+            if ($id && $data['name'] !== $productModel->getOneProduct($id)['name'] && $productModel->isNameDupliProductByColumn($data['name'])) {
+                $is_valid = false;
+                $errors['name'] = "Tên sản phẩm đã tồn tại.";
+            } elseif (!$id && $productModel->isNameDupliProductByColumn($data['name'])) {
+                $is_valid = false;
+                $errors['name'] = "Tên sản phẩm đã tồn tại.";
+            }
+        }
+
+        if (isset($data['name']) && strlen($data['name']) > 100) {
+            $is_valid = false;
+            $errors['name'] = "Tên sản phẩm phải dưới 100 ký tự.";
+        }
+
+        if (isset($data['description']) && strlen($data['description']) > 500) {
             $is_valid = false;
             $errors['description'] = "Mô tả sản phẩm phải dưới 500 ký tự.";
         }
 
-        if (!is_numeric($data['total_quantity']) || (int)$data['total_quantity'] <= 0) {
+        if (isset($data['total_quantity']) && (!is_numeric($data['total_quantity']) || (int)$data['total_quantity'] <= 0)) {
             $is_valid = false;
             $errors['total_quantity'] = "Số lượng tổng phải là một số hợp lệ và lớn hơn 0.";
         }
@@ -26,20 +47,17 @@ class ProductValidation {
             $errors['brand'] = "Thương hiệu không được để trống.";
         }
 
-        if (!is_numeric($data['discount']) || (int)$data['discount'] < 0 || (int)$data['discount'] > 100) {
+        if (isset($data['discount']) && (!is_numeric($data['discount']) || (int)$data['discount'] < 0 || (int)$data['discount'] > 100)) {
             $is_valid = false;
             $errors['discount'] = "Giá giảm phải là số từ 0 đến 100.";
         }
 
-        if (!in_array($data['status'], [1, 2])) {
+        if (isset($data['status']) && !in_array($data['status'], [1, 2])) {
             $is_valid = false;
             $errors['status'] = "Trạng thái không hợp lệ.";
         }
 
-        if ($is_valid === true) {
-            return true;
-        }
-        
-        return $errors;
+        return $is_valid ? true : $errors;
     }
 }
+

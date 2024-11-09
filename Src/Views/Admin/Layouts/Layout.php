@@ -185,11 +185,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#commentsSubmenu">
-                            <svg class="typcn typcn-ticket menu-icon" xmlns="http://www.w3.org/2000/svg" height="20px"
-                                viewBox="0 -960 960 960" width="20px" fill="#788791">
-                                <path
-                                    d="M240-400h480v-80H240v80Zm0-120h480v-80H240v80Zm0-120h480v-80H240v80ZM880-80 720-240H160q-33 0-56.5-23.5T80-320v-480q0-33 23.5-56.5T160-880h640q33 0 56.5 23.5T880-800v720ZM160-320h594l46 45v-525H160v480Zm0 0v-480 480Z" />
-                            </svg>
+                        <i class="typcn typcn-message menu-icon"></i>
                             <span class="menu-title">Bình luận</span>
                         </a>
                         <div id="commentsSubmenu" class="collapse submenu">

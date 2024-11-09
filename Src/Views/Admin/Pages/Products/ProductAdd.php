@@ -3,6 +3,24 @@
 <?php
 $this->start('main_content');
 ?>
+<?php
+
+if(isset($_GET['status']) && $_GET['status'] === 'success') {
+    ?>
+            <div class="alert alert-success mt-5">
+                <p class="m-0">Đã thêm thành công</p>
+            </div>
+    <?php
+ 
+}   else if(isset($_GET['status']) && $_GET['status'] === 'failed'){
+   ?>
+    <div class="alert alert-danger mt-5">
+                <p class="m-0">Đã thêm thất bại</p>
+            </div>
+<?php
+}
+?>
+
 <div class="col-md-12 grid-margin stretch-card">
     <div class="card">
         <div class="card-body">
@@ -55,16 +73,14 @@ $this->start('main_content');
                 <div class="form-group">
                     <label for="status">Trạng thái</label>
                     <select class="form-control form-control-sm col-lg-2" name="status">
-                        <option value="1" <?= isset($data['status']) && $data['status'] == 1 ? 'selected' : '' ?>>Hoạt động
-                        </option>
-                        <option value="2" <?= isset($data['status']) && $data['status'] == 2 ? 'selected' : '' ?>>Không
-                            hoạt động</option>
+                        <option value="1" <?= isset($data['status']) && $data['status'] == 1 ? 'selected' : '' ?>>Hoạt động</option>
+                        <option value="2" <?= isset($data['status']) && $data['status'] == 2 ? 'selected' : '' ?>>Không hoạt động</option>
                     </select>
                 </div>
 
                 <div class="form-group">
                     <label for="properties">Thuộc tính</label>
-                    <a href="javascript:void(0)" onclick="create()" class="btn btn-primary btn-sm">Thêm thuộc tính</a>
+                    <a href="javascript:void(0)" onclick="createProperty()" class="btn btn-primary btn-sm">Thêm thuộc tính</a>
                     <div id="multi_properties">
                         <div class="row items_properties mb-3">
                             <div class="col-5">
@@ -72,20 +88,17 @@ $this->start('main_content');
                                 <select name="option_id[]" class="form-control">
                                     <option value="">Chọn thuộc tính</option>
                                     <?php foreach ($attributes as $attribute): ?>
-                                        <option value="<?= $attribute['id'] ?>"><?= htmlspecialchars($attribute['name']) ?>
-                                        </option>
+                                        <option value="<?= $attribute['id'] ?>"><?= htmlspecialchars($attribute['name']) ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>
                             <div class="col-5">
                                 <label for="option_vl_name">Giá trị</label>
-                                <input type="text" class="form-control" name="option_vl_name[]"
-                                    placeholder="Giá trị thuộc tính">
+                                <input type="text" class="form-control" name="option_vl_name[]" placeholder="Giá trị thuộc tính">
                             </div>
                             <div class="col-1">
                                 <label for="">&nbsp;</label>
-                                <a href="javascript:void(0)" onclick="delete_(this)"
-                                    class="btn btn-danger btn-sm d-block">Xóa</a>
+                                <a href="javascript:void(0)" onclick="deleteProperty(this)" class="btn btn-danger btn-sm d-block">Xóa</a>
                             </div>
                         </div>
                     </div>
@@ -106,7 +119,7 @@ $this->start('main_content');
 </div>
 
 <script>
-    function create() {
+    function createProperty() {
         $("#multi_properties").append(`
             <div class="row items_properties mb-3">
                 <div class="col-5">
@@ -114,7 +127,7 @@ $this->start('main_content');
                     <select name="option_id[]" class="form-control">
                         <option value="">Chọn thuộc tính</option>
                         <?php foreach ($attributes as $attribute): ?>
-                                        <option value="<?= $attribute['id'] ?>"><?= htmlspecialchars($attribute['name']) ?></option>
+                            <option value="<?= $attribute['id'] ?>"><?= htmlspecialchars($attribute['name']) ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
@@ -124,17 +137,24 @@ $this->start('main_content');
                 </div>
                 <div class="col-1">
                     <label for="">&nbsp;</label>
-                    <a href="javascript:void(0)" onclick="delete_(this)" class="btn btn-danger btn-sm d-block">Xóa</a>
+                    <a href="javascript:void(0)" onclick="deleteProperty(this)" class="btn btn-danger btn-sm d-block">Xóa</a>
                 </div>
             </div>
         `);
     }
 
-    function delete_(__this) {
-        $(__this).closest(".items_properties").remove();
+    function deleteProperty(element) {
+        $(element).closest(".items_properties").remove();
     }
 </script>
 
 <?php
 $this->stop();
+?>
+<?php
+$this->push('scripts');
+?>
+    <script src="<?= $_ENV['APP_URL'] ?>/public/Assets/Admin/js/Pages/ProductValidate.js"></script>
+<?php
+$this->end();
 ?>
