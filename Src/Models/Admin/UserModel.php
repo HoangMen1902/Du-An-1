@@ -17,43 +17,88 @@ class UserModel extends BaseModel
 
     public function showAll()
     {
-        return $this->getAll();
+        $result = [];
+        try {
+            $sql = "SELECT * FROM $this->table WHERE status = 1 ORDER BY created_at DESC";
+            $result = $this->_conn->MySQLi()->query($sql);
+            return $result->fetch_all(MYSQLI_ASSOC);
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi hiển thị tất cả dữ liệu: ' . $th->getMessage());
+            return $result;
+        }
+    }
+
+    public function getLockedUsers() {
+        try {
+            $sql = "SELECT * FROM $this->table WHERE status = 2 ORDER BY created_at DESC";
+            $result = $this->_conn->MySQLi()->query($sql);
+            return $result->fetch_all(MYSQLI_ASSOC);
+        } catch( Exception $e) {
+            error_log('Lỗi khi lấy danh s: ' . $e->getMessage());
+            return false;
+        }
+
+    }
+
+    public function getUser($id) {
+        return $this->getOne($id);
     }
 
     public function searchUser($data)
     {
         try {
-            if(empty($data)) {
+            if (empty($data)) {
                 $sql = "SELECT * FROM USERS";
                 $conn = $this->_conn->MySQLi();
                 $result = $conn->query($sql);
                 return $result->fetch_all(MYSQLI_ASSOC);
             } else {
-                $sql = "SELECT * FROM users 
-                WHERE users.username LIKE ?
-                   OR users.id = ?
+                if (is_numeric($data) && (string)$data[0] != 0 ) {
+                    $sql = "SELECT * FROM users 
+                            WHERE users.id = ?";
+                    $conn = $this->_conn->MySQLi();
+                    $stmt = $conn->prepare($sql);
+
+                    $stmt->bind_param('i', $data);
+                    if ($stmt->execute()) {
+                        $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+                        return $result;
+                    } else {
+                        return false;
+                    };
+                } else {
+                    $sql = "SELECT * FROM users 
+                WHERE users.id = ?
                    OR users.firstname LIKE ?
                    OR users.lastname LIKE ?
                    OR users.email LIKE ?
                    OR users.phone LIKE ?";
                     $conn = $this->_conn->MySQLi();
                     $stmt = $conn->prepare($sql);
-        
+
                     $data = '%' . $data . '%';
-                    $stmt->bind_param('sissss', $data, $data, $data, $data, $data, $data);
-                    if($stmt->execute()) {
+                    $stmt->bind_param('issss', $data, $data, $data, $data, $data);
+                    if ($stmt->execute()) {
                         $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
                         return $result;
                     } else {
-                        echo "Execute failed: " . $stmt->error;
                         return false;
                     };
+                }
             }
-            
-
         } catch (Exception $e) {
-            error_log('Lỗi khi hiển thị tất cả dữ liệu: ' . $e->getMessage());
+            error_log('Lỗi khi search user: ' . $e->getMessage());
             return false;
         }
     }
+
+    public function updateUser($id, $data) {
+        return $this->update($id, $data);
+    }
+
+    public function deleteUser($id) {
+        return $this->delete($id);
+    }
+
+
 }

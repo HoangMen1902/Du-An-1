@@ -20,16 +20,26 @@ class UserController extends BaseController
     {
         echo $this->view->render('Admin/Pages/Users/UserAdd');
     }
-    public function edit()
+    public function edit($id)
     {
-        echo $this->view->render('Admin/Pages/Users/UserEdit');
+        $UserModel = new UserModel();
+        $data = $UserModel->getOne($id['id']);
+        if(isset($data) && !empty($data)) {
+            echo $this->view->render('Admin/Pages/Users/UserEdit', ['data' => $data]);
+        }
+
     }
+
+
 
     public function store()
     {
         $data = NULL;
         foreach ($_POST as $input => $value) {
             if (!empty($value) || $value === null) {
+                if($input === 'password') {
+                    $value = password_hash($value, PASSWORD_DEFAULT);
+                }
                 $data[$input] = $value;
             }
         }
@@ -57,6 +67,60 @@ class UserController extends BaseController
         $userModel = new UserModel();
         $result = $userModel->searchUser($user);
         echo json_encode($result);
-        
+    }
+
+    public function update($params) {
+        $id = $params['id'];
+        $data = [];
+        foreach ($_POST as $input => $value) {
+            if (!empty($value) || $value === null) {
+                $data[$input] = $value;
+            }
+        }
+
+        unset($data['password']);
+
+
+        $UserModel = new UserModel();
+        $result = $UserModel->update($id, $data);
+        if($result != false) {
+            header('location: /admin/users?status=success');
+        } else {
+            header('location: /admin/users?status=failed');
+        }
+    }
+
+
+    public function locked() {
+        $userModel = new UserModel();
+        $data = $userModel->getLockedUsers();
+        echo $this->view->render('Admin/Pages/Users/UserLocked', ['data' => $data]);
+    }
+
+    public function delete($params) {
+        header('Content-Type: application/json');
+        $id = $params['id'];
+        $userModel = new UserModel();
+        $result = $userModel->deleteUser($id);
+        if($result !== false) {
+            $data = $userModel->getLockedUsers();
+            $data = json_encode($data);
+            echo $data;
+        } else {
+            header('location: /admin/locked-account?action=delete&status=failed');
+        }
+    }
+
+    public function lockUser($params) {
+
+        $id = $params['id'];
+        $user_data = ['status' => 2];
+        $userModel = new UserModel();
+        $result = $userModel->updateUser($id, $user_data);
+        if($result) {
+            header('location: /admin/users?action=lock-user?status=success');
+        } else {
+            header('location: /admin/users?action=lock-user?status=failed');
+        }
     }
 }

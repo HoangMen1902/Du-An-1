@@ -5,7 +5,7 @@ class UserValidation {
     public static function userValidation($data) {
         $is_valid = true;
         $errors = [];
-
+        
         if(!isset($data['firstName']) || !isset($data['lastName']) || !isset($data['username'])) {
             $errors = ['code' => 1, 'name' => 'required_input'];
             $is_valid = false;

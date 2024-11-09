@@ -25,6 +25,7 @@
         "phinx-migrate": "vendor/bin/phinx migrate",
         "phinx-rollback": "vendor/bin/phinx rollback",
         "phinx-rollback-all": "vendor/bin/phinx rollback -e development -t 0",
-        "phinx-seed": "vendor/bin/phinx seed:run"
+        "phinx-seed": "vendor/bin/phinx seed:run",
+        "phinx-seed-create": "vendor/bin/phinx seed:create"
     }
 }

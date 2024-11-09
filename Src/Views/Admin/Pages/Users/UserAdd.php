@@ -152,6 +152,18 @@ if(isset($_GET['status']) && $_GET['status'] === 'success') {
                             </div>
 
                         </div>
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Trạng thái</label>
+                                <div class="col-sm-2">
+                                    <select class="form-control" name="status" id="status">
+                                        <option value="1">Hoạt động</option>
+                                        <option value="2">Khóa</option>
+                                    </select>
+                                    <small class="text-danger" style="display: none;" id="role-validate">* Vai trò không được trống</small>
+                                </div>
+                            </div>
+                        </div>
                         <div class="row justify-content-end">
                             <button type="submit" class="btn btn-primary" id="submitUserBtn">Thêm</button>
                         </div>

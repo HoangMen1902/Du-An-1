@@ -100,7 +100,6 @@ abstract class BaseModel implements CrudInterface
             $conn = $this->_conn->MySQLi();
             $stmt = $conn->prepare($sql);
             echo '<pre>';
-            var_dump($sql);
             return $stmt->execute();
         } catch (\Throwable $th) {
             error_log('Lỗi khi cập nhật dữ liệu: ' . $th->getMessage());

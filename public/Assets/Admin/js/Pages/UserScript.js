@@ -1,23 +1,39 @@
 
-function getInput() {
-    let input = {
-        username: $('input[name="username"]').val().trim(),
-        firstName: $('input[name="firstName"]').val().trim(),
-        lastName: $('input[name="lastName"]').val().trim(),
-        password: $('input[name="password"]').val().trim(),
-        email: $('input[name="email"]').val().trim(),
-        role: $('input[name="role"]').val(),
+$.ajaxSetup({
+    cache: false
+  });
+
+function getInput(form) {
+    if($('input[name="password"]').length) {
+        let input = {
+            username: $('input[name="username"]').val().trim(),
+            firstName: $('input[name="firstName"]').val().trim(),
+            lastName: $('input[name="lastName"]').val().trim(),
+            password: $('input[name="password"]').val().trim(),
+            email: $('input[name="email"]').val().trim(),
+            role: $('input[name="role"]').val(),
+        }
+    } else {
+        let input = {
+            username: $('input[name="username"]').val().trim(),
+            firstName: $('input[name="firstName"]').val().trim(),
+            lastName: $('input[name="lastName"]').val().trim(),
+            email: $('input[name="email"]').val().trim(),
+            role: $('input[name="role"]').val(),
+        }
     }
+
 
     return input;
 }
 
+
 function userValidate() {
     let input = getInput();
+    console.log(input);
     let is_valid = true;
     Object.entries(input).forEach(([key, value]) => {
         if (value === '') {
-            console.log(`${key}-validate`);
             $(`#${key}-validate`).show();
             is_valid = false;
         } else {
@@ -121,3 +137,11 @@ $('#userSearch').on('change', (e) => {
         });
     }, 500);
 })
+
+
+
+
+
+
+
+

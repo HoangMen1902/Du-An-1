@@ -92,11 +92,16 @@ $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
         $r->get('/tragop', [InstallmentsController::class, 'show']);
         $r->get('/tragop/add', [InstallmentsController::class, 'add']);
         $r->get('/tragop/detail', [InstallmentsController::class, 'detail']);
+        $r->get('/edit-user/{id:\d+}', [UserController::class, 'edit']);
+        $r->get('/locked-account', [UserController::class, 'locked']);
 
         $r->post('/add-user', [UserController::class, 'store']);
         $r->post('/user-search', [UserController::class, 'search']);
         $r->post('/product/store', [ProductsController::class, 'store']);
+        $r->post('/edit-user/{id:\d+}', [UserController::class, 'update']);
+        $r->post('/lock-user/{id:\d+}', [UserController::class, 'lockUser']);
 
+        $r->delete('/delete-user/{id:\d+}', [UserController::class, 'delete']);
     });
 });
 
@@ -128,7 +133,7 @@ $uri = rawurldecode($uri);
 $routeInfo = $dispatcher->dispatch($httpMethod, $uri);
 switch ($routeInfo[0]) {
     case FastRoute\Dispatcher::NOT_FOUND:
-        // ... 404 Not Found
+        var_dump($_SERVER['REQUEST_METHOD']);
         echo 'Not Found';
         break;
     case FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
