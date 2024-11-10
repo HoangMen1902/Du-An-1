@@ -16,7 +16,7 @@ $( () => {
         Object.entries(input).forEach(([key, value]) => {
             if(!value) {
                 $(`#${key}-validate`).show();
-                is_valid = !is_valid;
+                is_valid = is_valid;
             } else {
                 $(`#${key}-validate`).hide();
             }
