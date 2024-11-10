@@ -42,19 +42,26 @@ class CategoryValueModel extends BaseModel
 
 
 
-    public function getCategoryValuesWithParent()
+    public function getCategoryValuesWithParent($id)
     {
         $sql = "
-            SELECT category_values.*, categories.name AS category_name
+            SELECT category_values.*, categories.name AS category_name 
             FROM category_values
-            INNER JOIN categories ON category_values.category_id = categories.id
+            JOIN categories ON category_values.category_id = categories.id 
+            WHERE category_values.category_id = ?;
         ";
 
-        $result = $this->_conn->MySQLi()->query($sql);
+        $conn = $this->_conn->MySQLi();
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function deleteCategoryValue( $id)
+
+    public function deleteCategoryValue($id)
     {
         return $this->delete($id);
     }

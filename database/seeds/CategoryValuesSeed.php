@@ -16,22 +16,26 @@ class CategoryValuesSeed extends AbstractSeed
      */
     public function run(): void
     {
-    $categories = $this->fetchAll("SELECT id, name FROM categories WHERE name IN ('DELL', 'LENOVO', 'ASUS')");
+    $categories = $this->fetchAll("SELECT id, name FROM categories WHERE name IN ('Điện Thoại', 'Laptop', 'Chuột')");
 
     $data = [];
 
     foreach ($categories as $category) {
-        if ($category['name'] == 'DELL') {
-            $data[] = ['name' => 'Laptop DELL XPS', 'status' => 1, 'category_id' => $category['id'], 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')];
-            $data[] = ['name' => 'Laptop DELL Inspiron', 'status' => 1, 'category_id' => $category['id'], 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')];
+        if ($category['name'] == 'Điện Thoại') {
+            $data[] = ['name' => 'SamSung', 'status' => 1, 'category_id' => $category['id'], 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')];
+            $data[] = ['name' => 'Apple', 'status' => 1, 'category_id' => $category['id'], 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')];
+            $data[] = ['name' => 'Xiaomi', 'status' => 1, 'category_id' => $category['id'], 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')];
+
         }
-        if ($category['name'] == 'LENOVO') {
-            $data[] = ['name' => 'Laptop LENOVO ThinkPad', 'status' => 1, 'category_id' => $category['id'], 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')];
-            $data[] = ['name' => 'Laptop LENOVO IdeaPad', 'status' => 1, 'category_id' => $category['id'], 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')];
+        if ($category['name'] == 'Laptop') {
+            $data[] = ['name' => 'LENOVO', 'status' => 1, 'category_id' => $category['id'], 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')];
+            $data[] = ['name' => 'MACBOOK', 'status' => 1, 'category_id' => $category['id'], 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')];
+            $data[] = ['name' => 'DELL', 'status' => 1, 'category_id' => $category['id'], 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')];
         }
-        if ($category['name'] == 'ASUS') {
-            $data[] = ['name' => 'Laptop ASUS ZenBook', 'status' => 1, 'category_id' => $category['id'], 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')];
-            $data[] = ['name' => 'Laptop ASUS ROG', 'status' => 1, 'category_id' => $category['id'], 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')];
+        if ($category['name'] == 'Chuột') {
+            $data[] = ['name' => 'Logitech', 'status' => 1, 'category_id' => $category['id'], 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')];
+            $data[] = ['name' => 'Fnatic', 'status' => 1, 'category_id' => $category['id'], 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')];
+            $data[] = ['name' => 'Vancer', 'status' => 1, 'category_id' => $category['id'], 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')];
         }
     }
 

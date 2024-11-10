@@ -61,10 +61,11 @@ class CategoryController extends BaseController
 
 
     // danh mục con
-    public function showSub()
+    public function showSub($id)
     {
-        $categoryModel = new CategoryValueModel();
-        $categoryValues = $categoryModel->getCategoryValuesWithParent();
+
+        $categoryValueModel = new CategoryValueModel();
+        $categoryValues = $categoryValueModel->getCategoryValuesWithParent($id ['id']);
 
         echo $this->view->render('Admin/Pages/Category/CategoryValueList', [
             'categoryValues' => $categoryValues
@@ -107,7 +108,7 @@ class CategoryController extends BaseController
             $categoryModel = new CategoryModel();
             $categories = $categoryModel->getAllCategory();
           
-            echo $this->view->render('Admin/Pages/Category/CategoryValueAdd', [
+            echo $this->view->render('Admin/Pages/Category/CategoryValueAdd/', [
                 'categories' => $categories,
                 'data' => $data,
                 'errors' => $errors ?? []
@@ -159,11 +160,17 @@ class CategoryController extends BaseController
             }
 
             $categoryValueModel = new CategoryValueModel();
-            $updateSuccess = $categoryValueModel->updateCategoryValue($id, $data);
+            $updateSuccess = $categoryValueModel->updateCategoryValue($id['id'], $data);
 
             if ($updateSuccess) {
-                header('Location: /admin/category/value');
-                exit;
+                if ($updateSuccess) {
+                    header("location: /admin/category/CategoryValueList/{$data['category_id']}?status=success");
+                    exit();
+                } else {
+                    header("location: /admin/category/CategoryValueList/{$data['category_id']}?status=failed");
+
+                }
+                
             } else {
                 echo "Cập nhật thất bại!";
             }
@@ -174,16 +181,24 @@ class CategoryController extends BaseController
     public function delete($id)
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $categoryModel = new CategoryValueModel();
-
-            $deleteSuccess = $categoryModel->deleteCategoryValue($id['id']);
-
-            if ($deleteSuccess) {
-                header('Location: /admin/category/value');
-                exit;
+            $categoryValueModel = new CategoryValueModel();
+            $categoryValue = $categoryValueModel->getOneCategoryValue($id['id']);
+            
+            if ($categoryValue) {
+                $category_id = $categoryValue['category_id'];
+                
+                $deleteSuccess = $categoryValueModel->deleteCategoryValue($id['id']);
+    
+                if ($deleteSuccess) {
+                    header("Location: /admin/category/CategoryValueList/$category_id?status=success");
+                    exit;
+                } else {
+                    header("Location: /admin/category/CategoryValueList/$category_id?status=failed");
+                }
             } else {
-                echo "Xóa thất bại!";
+                echo "Không tìm thấy danh mục!";
             }
         }
     }
+    
 }

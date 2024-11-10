@@ -27,6 +27,7 @@ final class ProductsTable extends AbstractMigration
               ->addColumn('status', 'integer', ['default' => 1]) 
               ->addColumn('discount', 'decimal', ['precision' => 5, 'scale' => 2, 'default' => 0.00])
               ->addColumn('thumbnail', 'string', ['limit' => 255, 'null' => true])
+              ->addColumn('specifications', 'text',['null' => true])
               ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
               ->addColumn('updated_at', 'timestamp', [
                   'default' => 'CURRENT_TIMESTAMP',

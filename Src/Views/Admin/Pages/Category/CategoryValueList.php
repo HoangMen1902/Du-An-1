@@ -1,6 +1,25 @@
 <?php $this->layout('Admin/Layouts/Layout') ?>
 
+
+
 <?php $this->start('main_content'); ?>
+<?php
+
+if(isset($_GET['status']) && $_GET['status'] === 'success') {
+    ?>
+            <div class="alert alert-success mt-5">
+                <p class="m-0">Thao tác thành công</p>
+            </div>
+    <?php
+ 
+}   else if(isset($_GET['status']) && $_GET['status'] === 'failed'){
+   ?>
+    <div class="alert alert-danger mt-5">
+                <p class="m-0">Thao tác thất bại</p>
+            </div>
+<?php
+}
+?>
 <div class="col-lg-12 grid-margin stretch-card">
     <div class="card">
         <div class="card-body">
@@ -17,7 +36,6 @@
                         </tr>
                     </thead>
                     <tbody>
-
                         <?php if (!empty($categoryValues)): ?>
                             <?php foreach ($categoryValues as $categoryValue): ?>
                                 <tr>

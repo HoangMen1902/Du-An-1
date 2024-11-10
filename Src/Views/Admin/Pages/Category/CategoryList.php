@@ -38,7 +38,7 @@ $this->start('main_content');
                                                 <p>Xóa</p>
                                                 <i class="typcn typcn-delete-outline btn-icon-append"></i>
                                             </a>
-                                            <a class="dropdown-item d-flex" href="/admin/category/CategoryValueList">
+                                            <a class="dropdown-item d-flex" href="/admin/category/CategoryValueList/<?= $category['id'] ?>">
                                                 <p>Danh sách loại sản phẩm con</p>
                                                 <i class="typcn typcn-edit btn-icon-append"></i>
                                             </a>
