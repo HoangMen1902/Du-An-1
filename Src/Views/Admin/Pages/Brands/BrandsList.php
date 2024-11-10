@@ -20,16 +20,19 @@ $this->start('main_content');
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Dữ liệu sẽ được chèn vào đây bằng cách sử dụng JavaScript hoặc một ngôn ngữ phía máy chủ -->
+                        <?php
+                            if(isset($data)):
+                                foreach($data as $brand):
+                        ?>
                         <tr>
-                            <td>1</td>
-                            <td>Bàn phím</td>
+                            <td><?=$brand['id']?></td>
+                            <td><?=$brand['name']?></td>
                             <td>
-                                <img src="/public/uploads/brands/brand-image.png" 
+                                <img src="<?=$_ENV['APP_URL']?>/public/Uploads/Brands/<?=$brand['image']?>" 
                                      alt="Brand Image" 
                                      style="object-fit: contain; width: 100px; height: auto;">
                             </td>
-                            <td>Hoạt động</td>
+                            <td><?=$brand['status'] == 1 ? 'Hoạt động' : 'Khóa'?></td>
                             <td>
                                 <div class="d-flex align-items-center">
                                     <a href="/admin/edit-brand/1" class="btn btn-success btn-sm btn-icon-text mr-3">
@@ -43,34 +46,17 @@ $this->start('main_content');
                                 </div>
                             </td>
                         </tr>
-                        <!-- Thêm các hàng khác tương tự ở đây -->
-                        <tr>
-                            <td>2</td>
-                            <td>Chuột</td>
-                            <td>
-                                <img src="/public/uploads/brands/brand-image2.png" 
-                                     alt="Brand Image" 
-                                     style="object-fit: contain; width: 100px; height: auto;">
-                            </td>
-                            <td>Không hoạt động</td>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <a href="/admin/edit-brand/2" class="btn btn-success btn-sm btn-icon-text mr-3">
-                                        Sửa
-                                        <i class="typcn typcn-edit btn-icon-append"></i>
-                                    </a>
-                                    <a href="/admin/delete-brand/2" onclick="return confirm('Bạn chắc chứ?')" class="btn btn-danger btn-sm btn-icon-text">
-                                        Xóa
-                                        <i class="typcn typcn-delete-outline btn-icon-append"></i>
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
+                        <?php
+                        endforeach;
+                    endif;
+                    ?>
                         <!-- Thêm các hàng khác nếu cần -->
                     </tbody>
                 </table>
             </div>
+            <?php if(!isset($data) || empty($data)):?>
             <h4 class="text-center text-danger">Không có dữ liệu</h4>
+            <?php endif;?>
         </div>
     </div>
 </div>

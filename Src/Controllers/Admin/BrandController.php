@@ -11,7 +11,9 @@ class BrandController extends BaseController
 {
     public function show()
     {
-        echo $this->view->render('Admin/Pages/Brands/BrandsList');
+        $BrandModel = new BrandModel();
+        $data = $BrandModel->getAll();
+        echo $this->view->render('Admin/Pages/Brands/BrandsList', ['data' => $data]);
     }
 
     public function add()
