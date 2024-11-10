@@ -28,6 +28,11 @@ final class ProductsTable extends AbstractMigration
               ->addColumn('discount', 'decimal', ['precision' => 5, 'scale' => 2, 'default' => 0.00])
               ->addColumn('thumbnail', 'string', ['limit' => 255, 'null' => true])
               ->addColumn('specifications', 'text',['null' => true])
+              ->addColumn('brand_id', 'integer',['null' => true, 'signed' => false])
+              ->addForeignKey('brand_id','brands','id', [
+                'delete' => 'CASCADE',
+                'update' => 'NO_ACTION'
+              ])
               ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
               ->addColumn('updated_at', 'timestamp', [
                   'default' => 'CURRENT_TIMESTAMP',
