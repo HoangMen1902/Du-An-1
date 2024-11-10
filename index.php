@@ -106,6 +106,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
         $r->post('/product/store', [ProductsController::class, 'store']);
         $r->post('/edit-user/{id:\d+}', [UserController::class, 'update']);
         $r->post('/lock-user/{id:\d+}', [UserController::class, 'lockUser']);
+        $r->post('/add-brand', [BrandController::class, 'store']);
 
         $r->delete('/delete-user/{id:\d+}', [UserController::class, 'delete']);
 
