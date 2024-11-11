@@ -33,7 +33,7 @@ ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
 ini_set('log_errors', TRUE);
 ini_set('error_log', './logs/php-errors.log');
-
+session_start();
 
 
 
@@ -78,8 +78,9 @@ $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
         $r->get('/product/add', [productsController::class, 'add']);
         $r->get('/product/detail/{id}', [productsController::class, 'show']);
         $r->get('/product/edit/{id}', [productsController::class, 'edit']);
-        $r->get('/allattribute', [UserController::class, 'show']);
+        $r->get('/allAttribute', [AttributeController::class, 'show']);
         $r->get('/attribute', [AttributeController::class, 'add']);
+        $r->get('/attribute-edit/{id}', [AttributeController::class, 'edit']);
         $r->get('/categories', [CategoryController::class, 'show']);
         $r->get('/category/CategoryValueList/{id}', [CategoryController::class, 'showSub']);
         $r->get('/category/CategoryValueAdd', [CategoryController::class, 'addSub']);
@@ -99,6 +100,8 @@ $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
         $r->get('/edit-user/{id:\d+}', [UserController::class, 'edit']);
         $r->get('/locked-account', [UserController::class, 'locked']);
         $r->get('/delete-product/{id}', [productsController::class, 'delete']);
+        $r->get('/delete-attribute/{id}', [AttributeController::class, 'delete']);
+
 
         $r->post('/add-user', [UserController::class, 'store']);
         $r->post('/user-search', [UserController::class, 'search']);
@@ -107,6 +110,11 @@ $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
         $r->post('/edit-user/{id:\d+}', [UserController::class, 'update']);
         $r->post('/lock-user/{id:\d+}', [UserController::class, 'lockUser']);
         $r->post('/add-brand', [BrandController::class, 'store']);
+        $r->post('/attribute-add', [AttributeController::class, 'store']);
+        $r->post('/attribute-update/{id}', [AttributeController::class, 'update']);
+
+
+
 
         $r->delete('/delete-user/{id:\d+}', [UserController::class, 'delete']);
 

@@ -149,7 +149,7 @@
                             <span class="menu-title">Thuộc Tính Sản phẩm</span>
                         </a>
                         <div id="attributeSubmenu" class="collapse submenu">
-                            <a class="nav-link" href="/admin/allattribute">Danh sách thuộc tính sản phẩm</a>
+                            <a class="nav-link" href="/admin/allAttribute">Danh sách thuộc tính sản phẩm</a>
                             <a class="nav-link" href="/admin/attribute">Thêm thuộc tính</a>
                         </div>
                     </li>

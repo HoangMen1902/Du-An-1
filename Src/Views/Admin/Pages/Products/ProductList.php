@@ -4,22 +4,46 @@
 $this->start('main_content');
 ?>
 <?php
+if (isset($_GET['status'])) {
+    $status = $_GET['status'];
+    $message = '';
+    $alertClass = '';
 
-if(isset($_GET['status']) && $_GET['status'] === 'success') {
-    ?>
-            <div class="alert alert-success mt-5">
-                <p class="m-0">Đã xóa thành công</p>
-            </div>
-    <?php
- 
-}   else if(isset($_GET['status']) && $_GET['status'] === 'failed'){
-   ?>
-    <div class="alert alert-danger mt-5">
-                <p class="m-0">Đã xóa thất bại</p>
-            </div>
-<?php
+    switch ($status) {
+        case 'success':
+            $message = 'Thao tác thành công';
+            $alertClass = 'alert-success';
+            break;
+        case 'failed':
+            $message = 'Thao tác thất bại';
+            $alertClass = 'alert-danger';
+            break;
+        case 'added':
+            $message = 'Sản phẩm đã được thêm thành công';
+            $alertClass = 'alert-success';
+            break;
+        case 'updated':
+            $message = 'Sản phẩm đã được cập nhật thành công';
+            $alertClass = 'alert-success';
+            break;
+        case 'deleted':
+            $message = 'Sản phẩm đã được xóa thành công';
+            $alertClass = 'alert-success';
+            break;
+    }
+
+    if ($message) {
+        echo '<div class="alert ' . $alertClass . ' mt-5" id="alert-box">';
+        echo '<p class="m-0">' . $message . '</p>';
+        echo '<button type="button" class="close" aria-label="Close" onclick="closeAlert()">';
+        echo '<span aria-hidden="true">&times;</span>';
+        echo '</button>';
+        echo '</div>';
+    }
 }
 ?>
+
+
 <div class="col-lg-12 grid-margin stretch-card">
     <div class="card">
         <div class="card-body">
@@ -87,7 +111,12 @@ if(isset($_GET['status']) && $_GET['status'] === 'success') {
     </div>
 </div>
 
-
+<script>
+    function closeAlert() {
+        // Đóng thông báo khi người dùng nhấn nút đóng
+        document.getElementById('alert-box').style.display = 'none';
+    }
+</script>
 
 <?php
 $this->stop();
