@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
+use Phinx\Db\Adapter\MysqlAdapter;
 use Phinx\Migration\AbstractMigration;
-
 final class CategoriesTable extends AbstractMigration
 {
     /**
@@ -21,7 +21,7 @@ final class CategoriesTable extends AbstractMigration
     {
         $table = $this->table('categories');
         $table->addColumn('name', 'string', ['limit' => 255])
-              ->addColumn('status', 'integer', ['default' => 1]) 
+              ->addColumn('status', 'integer', ['limit' => MysqlAdapter::INT_TINY, 'default' => 1])
               ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
               ->addColumn('updated_at', 'timestamp', [
                   'default' => 'CURRENT_TIMESTAMP',

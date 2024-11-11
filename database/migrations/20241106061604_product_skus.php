@@ -23,7 +23,7 @@ final class ProductSkus extends AbstractMigration
         
         $table->addColumn('sku', 'string', ['limit' => 100, 'null' => false]) 
               ->addColumn('images', 'text', ['null' => false])  
-              ->addColumn('price', 'decimal', ['precision' => 10, 'scale' => 2, 'null' => false]) 
+              ->addColumn('price', 'integer', ['null' => false]) 
               ->addColumn('quantity', 'integer', ['signed' => false, 'default' => 0, 'null' => false])
               ->addColumn('product_id', 'integer', ['signed' => false, 'null' => false])  
               ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])

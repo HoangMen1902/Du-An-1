@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Phinx\Migration\AbstractMigration;
+use Phinx\Db\Adapter\MysqlAdapter;
 
 final class UsersTable extends AbstractMigration
 {
@@ -20,27 +21,22 @@ final class UsersTable extends AbstractMigration
     public function change(): void
     {
         $table = $this->table('Users');
-        $table->addColumn('email', 'string', ['limit' => 255])
+        $table->addColumn('email', 'string', ['limit' => 320])
             ->addColumn('phone', 'string', ['limit' => 10])
             ->addColumn('password', 'string', ['limit' => 101])
-            ->addColumn('address', 'string', ['limit' => 320])
             ->addColumn('firstname', 'string', ['limit' => 100])
             ->addColumn('lastname', 'string', ['limit' => 100])
             ->addColumn('birthday', 'date')
             ->addColumn('reset_token', 'string', ['limit' => 64])
             ->addColumn('reset_token_expires', 'datetime')
-            ->addColumn('province_id', 'integer', ['null' => true, 'signed' => false])
-            ->addColumn('district_id', 'integer', ['null' => true, 'signed' => false])
-            ->addColumn('ward_id', 'integer', ['null' => true, 'signed' => false])
-            ->addColumn('status', 'integer', ['default' => 1])
-            ->addColumn('role', 'integer', ['default' => 1])
+            ->addColumn('status', 'integer', ['limit' => MysqlAdapter::INT_TINY, 'default' => 1])
+            ->addColumn('role', 'integer', ['limit' => MysqlAdapter::INT_TINY, 'default' => 1])
+            ->addColumn('avatar', 'text')
             ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
             ->addColumn('updated_at', 'timestamp', [
                 'default' => 'CURRENT_TIMESTAMP',
                 'update' => 'CURRENT_TIMESTAMP'
-            ])->addForeignKey('province_id', 'provinces', 'id', ['update' => 'NO_ACTION', 'delete' => 'CASCADE'])
-            ->addForeignKey('district_id', 'districts', 'id', ['update' => 'NO_ACTION', 'delete' => 'CASCADE'])
-            ->addForeignKey('ward_id', 'wards', 'id', ['update' => 'NO_ACTION', 'delete' => 'CASCADE'])
+            ])
             ->create();
     }
 

@@ -23,7 +23,6 @@ final class OrderDetails extends AbstractMigration
 
         $table->addColumn('order_id', 'integer', ['signed' => false, 'null' => false] )
             ->addColumn('sku_id', 'integer',  ['signed' => false, 'null' => false])
-            ->addColumn('address', 'text')
             ->addColumn('price', 'decimal', ['precision' => 10, 'scale' => 2])
             ->addColumn('quantity', 'integer', ['signed' => false])
             ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])

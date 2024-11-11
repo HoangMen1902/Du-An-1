@@ -19,7 +19,7 @@ final class FeatureProductsTable extends AbstractMigration
      */
     public function change(): void
     {
-        $table = $this->table('feature_products');
+        $table = $this->table('wishlists');
         $table->addColumn('product_id', 'integer', ['null' => false, 'signed' => false])
             ->addColumn('user_id', 'integer', ['null' => false, 'signed' => false])
             ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])

@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
+use Phinx\Db\Adapter\MysqlAdapter;
 use Phinx\Migration\AbstractMigration;
+
 
 final class Comments extends AbstractMigration
 {
@@ -21,8 +23,8 @@ final class Comments extends AbstractMigration
 {
     $table = $this->table('Comments');
     $table->addColumn('content', 'text');
-    $table->addColumn('rating', 'integer', ['limit' => 5]);
-    $table->addColumn('status', 'integer', ['default' => '1']);
+    $table->addColumn('rating_id', 'integer', ['signed' => false]);
+    $table->addColumn('status', 'integer', ['limit' => MysqlAdapter::INT_TINY, 'default' => 1]);
     $table->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP']);
     $table->addColumn('product_id', 'integer', ['null' => false, 'signed' => false]);
     $table->addColumn('parent_id', 'integer', ['null' => true]);

@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use Phinx\Migration\AbstractMigration;
-
+use Phinx\Db\Adapter\MysqlAdapter;
 final class OptionsTable extends AbstractMigration
 {
     /**
@@ -20,8 +20,8 @@ final class OptionsTable extends AbstractMigration
     public function change(): void
     {
         $table = $this->table('Options');
-        $table->addColumn('name', 'string', ['limit' => 100])
-            ->addColumn('status', 'integer', ['default' => 1, 'null' => false])
+        $table->addColumn('name', 'string', ['limit' => 255])
+        ->addColumn('status', 'integer', ['limit' => MysqlAdapter::INT_TINY, 'default' => 1])
             ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
             ->addColumn('updated_at', 'timestamp', [
                 'default' => 'CURRENT_TIMESTAMP',

@@ -22,9 +22,14 @@ final class BrandTable extends AbstractMigration
     {
         $table = $this->table('brands');
         $table->addColumn('name', 'string', ['limit' => 255])
-        ->addColumn('status', 'integer', ['limit' => MysqlAdapter::INT_TINY, 'default' => 1])
         ->addColumn('image', 'text')
         ->addColumn('description', 'text')
+        ->addColumn('status', 'integer', ['limit' => MysqlAdapter::INT_TINY, 'default' => 1])
+        ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
+        ->addColumn('updated_at', 'timestamp', [
+            'default' => 'CURRENT_TIMESTAMP',
+            'update' => 'CURRENT_TIMESTAMP'
+        ])
         ->create();
     }
 }

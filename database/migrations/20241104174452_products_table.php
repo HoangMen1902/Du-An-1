@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use Phinx\Db\Adapter\MysqlAdapter;
+
 use Phinx\Migration\AbstractMigration;
 
 final class ProductsTable extends AbstractMigration
@@ -20,14 +22,13 @@ final class ProductsTable extends AbstractMigration
     public function change(): void
     {
         $table = $this->table('products');
-        $table->addColumn('name', 'string', ['limit' => 512])
-              ->addColumn('description', 'text', ['null' => true])
+        $table->addColumn('name', 'string', ['limit' => 255])
+              ->addColumn('description', 'text')
               ->addColumn('total_quantity', 'integer', ['default' => 0])
-              ->addColumn('brand', 'string', ['limit' => 255, 'null' => true])
-              ->addColumn('status', 'integer', ['default' => 1]) 
               ->addColumn('discount', 'decimal', ['precision' => 5, 'scale' => 2, 'default' => 0.00])
-              ->addColumn('thumbnail', 'string', ['limit' => 255, 'null' => true])
-              ->addColumn('specifications', 'text',['null' => true])
+              ->addColumn('thumbnail', 'text')
+              ->addColumn('specifications', 'text')
+              ->addColumn('status', 'integer', ['limit' => MysqlAdapter::INT_TINY, 'default' => 1])
               ->addColumn('brand_id', 'integer',['null' => true, 'signed' => false])
               ->addForeignKey('brand_id','brands','id', [
                 'delete' => 'CASCADE',

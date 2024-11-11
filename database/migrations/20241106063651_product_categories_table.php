@@ -20,7 +20,7 @@ final class ProductCategoriesTable extends AbstractMigration
     public function change(): void
     {
         $table = $this->table('product_categories');
-        $table->addColumn('category_id', 'integer',['signed' => false]) 
+        $table->addColumn('category_values_id', 'integer',['signed' => false]) 
               ->addColumn('product_id', 'integer',['signed' => false]) 
               ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
               ->addColumn('updated_at', 'timestamp', [
@@ -31,7 +31,7 @@ final class ProductCategoriesTable extends AbstractMigration
                 'delete' => 'CASCADE', 
                 'update' => 'NO_ACTION' 
             ])
-            ->addForeignKey('category_id', 'Categories', 'id', [
+            ->addForeignKey('category_values_id', 'category_values', 'id', [
                 'delete' => 'CASCADE', 
                 'update' => 'NO_ACTION' 
             ])
