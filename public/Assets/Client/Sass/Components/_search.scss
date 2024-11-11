@@ -140,3 +140,25 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 }
+
+.searchOffCanvas {
+    width: 100%;
+    border: none;
+    border-bottom: 3px solid #ccc;
+    outline: none;
+    transition: border-color 0.3s;
+    font-size: 20px;
+    padding: 10px;
+    &:focus {
+        border-bottom: 3px solid #000;
+    }
+    &__form{
+        width: 100%;
+        button {
+            display: none;
+        }
+    }
+    &__main {
+        padding: 20px;
+    } 
+}

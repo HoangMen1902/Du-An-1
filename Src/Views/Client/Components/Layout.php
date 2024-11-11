@@ -26,11 +26,16 @@
             <li><a href="<?= $_ENV['APP_URL'] ?>/Contact" class="text-decoration-none">Liên hệ</a></li>
         </ul>
         <div class="icon-group">
-            <button class="search-btn"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+            <!-- <button class="search-btn"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                     stroke-width="2.0" stroke="currentColor" class="size-6">
                     <path stroke-linecap="round" stroke-linejoin="round"
                         d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-                </svg></button>
+                </svg></button> -->
+            <a href="#" data-bs-toggle="offcanvas" data-bs-target="#searchOffCanvas" aria-controls="searchCanvas">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                </svg>
+            </a>
             <a href="/login"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.0"
                     stroke="currentColor" class="size-6">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -200,7 +205,18 @@
             <a href="" class="text-decoration-none">Liên hệ</a>
         </div>
     </div>
-
+    <div class="offcanvas offcanvas-end searchOffCanvas__main" tabindex="-1" id="searchOffCanvas" aria-labelledby="offcanvasRightLabel" style="width: 600px;">
+        <div class="offcanvas-header">
+            <form class="searchOffCanvas__form" action="/search" method="GET">
+                <input type="hidden" name="method" value="POST">
+                <input class="searchOffCanvas" type="text" placeholder="Tìm kiếm" name="search">
+                <button type="submit"></button>
+            </form>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+        </div>
+    </div>
     <?= $this->section('scripts') ?>
 </body>
 
