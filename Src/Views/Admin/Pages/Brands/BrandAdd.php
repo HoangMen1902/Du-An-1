@@ -63,7 +63,7 @@ endif;
                 
                 <div class="form-group">
                     <label>Mô tả</label>
-                    <input type="text" class="form-control form-control-lg brand-input" name="description">
+                    <textarea  class="form-control form-control-lg brand-input" name="description"></textarea>
                     <small class="text-danger" style="display: none;" id="description-validate">* Vui lòng nhập mô tả thương hiệu</small>
                 </div>
                 

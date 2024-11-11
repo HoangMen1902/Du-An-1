@@ -55,17 +55,6 @@ $this->start('main_content');
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group row">
-                                <label class="col-sm-1 col-form-label">Username</label>
-                                <div class="col-sm-11">
-                                    <input type="text" class="form-control" name="username" id="username" value="<?=$data['username']?>"/>
-                                    <small class="text-danger" style="display: none;" id="username-validate">* Vui lòng nhập mật Username</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
                         <div class="col-md-6">
                             <div class="form-group row">
                                 <label class="col-sm-3 col-form-label" >Ngày sinh</label>

@@ -1,4 +1,3 @@
-const { ajax } = require("jquery");
 
 function getProductInput() {
     return {

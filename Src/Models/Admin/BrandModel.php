@@ -10,4 +10,16 @@ class BrandModel extends BaseModel {
     public function store($data) {
         return $this->create($data);
     }
+
+
+    public function getOneBrand($id) {
+        return $this->getOne($id);
+    }
+    public function updateBrand($id, $data) {
+        return $this->update($id,$data);
+    }
+
+    public function deleteBrand($id) {
+        return $this->delete($id);
+    } 
 }

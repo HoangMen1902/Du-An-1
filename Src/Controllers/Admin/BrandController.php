@@ -18,11 +18,20 @@ class BrandController extends BaseController
 
     public function add()
     {
+        $BrandModel = new BrandModel();
+        $data = $BrandModel->getAll();
         echo $this->view->render('Admin/Pages/Brands/BrandAdd');
     }
-    public function edit()
+    public function edit($params)
     {
-        echo $this->view->render('Admin/Pages/Brands/BrandEdit');
+        $id = $params['id'];
+        $BrandModel = new BrandModel();
+        $data = $BrandModel->getOne($id);
+        if ($data) {
+            echo $this->view->render('Admin/Pages/Brands/BrandEdit', ['data' => $data]);
+        } else {
+            header('location: /admin/brands');
+        }
     }
 
     public function store()
@@ -40,8 +49,6 @@ class BrandController extends BaseController
             exit();
         } else {
             $target_dir =  "public/Uploads/Brands/";
-            $target_file = $target_dir . basename($_FILES["image"]["name"]);
-            $uploadOk = 1;
 
             if (Validator::image()->validate($_FILES["image"]["tmp_name"])) {
                 $temp = explode(".", $_FILES["image"]["name"]);
@@ -64,6 +71,70 @@ class BrandController extends BaseController
                 header('location: /admin/brand/add?status=failed&code=4');
                 exit();
             }
+        }
+    }
+
+    public function update($params)
+    {
+        $id = $params['id'];
+        $data = [];
+
+        foreach ($_POST as $input => $value) {
+            $data[$input] = $value;
+        }
+
+        $validation = BrandValidation::brandValidation($data);
+        if(!$validation) {
+            header('location: /admin/brands?status=failed&code=1');
+            exit();
+        }
+
+        if (Validator::stringType()->notEmpty()->noWhitespace()->validate($_FILES['image']['tmp_file'])) {
+            if (Validator::image()->validate($_FILES['image']['tmp_file'])) {
+                $target_dir = 'public/Uploads/Brands';
+                $temp = explode(".", $_FILES["image"]["name"]);
+                $newfilename = round(microtime(true)) . '.' . end($temp);
+                if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_dir . $newfilename)) {
+                    $BrandModel = new BrandModel();
+                    $data['image'] = $newfilename;
+                    $result = $BrandModel->update($id, $data);
+                    if ($result) {
+                        header('location: /admin/brands?status=success');
+                        exit();
+                    } else {
+                        header('location: /admin/brands?status=failed&code=2');
+                        exit();
+                    }
+                } else {
+                    header('location: /admin/brands?status=failed&code=3');
+                    exit();
+                }
+            } else {
+                header('location: /admin/brands?status=failed&code=4');
+            }
+        } else {
+            $BrandModel = new BrandModel();
+            $result = $BrandModel->update($id, $data);
+            if ($result) {
+                header('location: /admin/brands?status=success');
+                exit();
+            } else {
+                header('location: /admin/brands?status=failed&code=2');
+                exit;
+            }
+        }
+    }
+
+    public function delete($params) {
+        $id = $params['id'];
+        $BrandModel = new BrandModel();
+        $result = $BrandModel->delete($id);
+        if($result) {
+            header('location: /admin/brands?action=delete&status=success');
+            exit();
+        } else {
+            header('location: /admin/brands?action=delete&status=failed&code=5');
+            exit();
         }
     }
 }

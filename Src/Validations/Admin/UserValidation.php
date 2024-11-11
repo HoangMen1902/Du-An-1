@@ -8,11 +8,11 @@ class UserValidation {
         $is_valid = true;
         $errors = [];
         
-        if(!isset($data['firstName']) || !isset($data['lastName']) || !isset($data['username'])) {
+        if(!isset($data['firstName']) || !isset($data['lastName'])) {
             $errors += ['code' => 1, 'name' => 'required_input'];
             $is_valid = false;
         } else{
-            if(strlen($data['firstName']) > 50 || strlen($data['lastName'])  > 50  || strlen($data['username'])  > 50) {
+            if(strlen($data['firstName']) > 50) {
                 $errors += ['code' => 2, 'name' => 'invalid_data'];
                 $is_valid = false;
             }
@@ -24,10 +24,7 @@ class UserValidation {
 
 
         $UserModel = new UserModel();
-        if($UserModel->findDuplicateUsersByColumn('username', $data['username'])) {
-            $errors += ['code' => 3, 'name' => 'duplicate_username'];
-            $is_valid = false;
-        }
+
 
         if($UserModel->findDuplicateUsersByColumn('email', $data['email'])) {
             $errors += ['code' => 3, 'name' => 'duplicate_email'];
@@ -46,11 +43,11 @@ class UserValidation {
         $is_valid = true;
         $errors = [];
         
-        if(!isset($data['firstName']) || !isset($data['lastName']) || !isset($data['username'])) {
+        if(!isset($data['firstName']) || !isset($data['lastName'])) {
             $errors += ['code' => 1, 'name' => 'required_input'];
             $is_valid = false;
         } else{
-            if(strlen($data['firstName']) > 50 || strlen($data['lastName'])  > 50  || strlen($data['username'])  > 50) {
+            if(strlen($data['firstName']) > 50 || strlen($data['lastName'])  > 50) {
                 $errors += ['code' => 2, 'name' => 'invalid_data'];
                 $is_valid = false;
             }
@@ -62,10 +59,6 @@ class UserValidation {
 
 
         $UserModel = new UserModel();
-        if($UserModel->findDuplicateUsersForUpdate('username', $data['username'], $id)) {
-            $errors += ['code' => 3, 'name' => 'duplicate_username'];
-            $is_valid = false;
-        }
 
         if($UserModel->findDuplicateUsersForUpdate('email', $data['email'], $id)) {
             $errors += ['code' => 3, 'name' => 'duplicate_email'];

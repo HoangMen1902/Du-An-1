@@ -73,15 +73,7 @@ if(isset($_GET['status']) && $_GET['status'] === 'success') {
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group row">
-                                <label class="col-sm-3 col-form-label">Username</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="username" id="username" />
-                                    <small class="text-danger" style="display: none;" id="username-validate">* Vui lòng nhập mật Username</small>
-                                </div>
-                            </div>
-                        </div>
+                        
                         <div class="col-md-6">
                             <div class="form-group row">
                                 <label class="col-sm-3 col-form-label">Mật khẩu</label>

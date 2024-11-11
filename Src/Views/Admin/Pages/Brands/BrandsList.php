@@ -4,6 +4,46 @@
 <?php 
 $this->start('main_content');
 ?>
+
+<?php
+if(isset($_GET['status']) && $_GET['status'] === 'success') :
+
+
+?>
+
+<div class="alert alert-success" role="alert">
+  Đã cập nhật thương hiệu thành công
+</div>
+<?php
+elseif (isset($_GET['status']) && $_GET['status'] === 'failed'):;
+
+?>
+
+<div class="alert alert-danger" role="alert">
+    <?php switch ($_GET['code']) {
+        case '1':
+            echo 'Lỗi! Dữ liệu không hợp lệ';
+            break;
+        case '2':
+            echo 'Lỗi! khi thêm dữ liệu';
+            break;
+        case '3':
+            echo 'Lỗi! không thể upload file hình ảnh';
+            break;
+        case '4':
+            echo 'Lỗi! File không phải là hình ảnh';
+            break;
+        case '5':
+            echo 'Lỗi! không thể xóa được thương hiệu';
+            break;
+        default:
+            break;
+    }?>
+</div>
+<?php
+
+endif;
+?>
 <div class="col-lg-12 grid-margin stretch-card">
     <div class="card">
         <div class="card-body">
@@ -39,10 +79,10 @@ $this->start('main_content');
                                         Sửa
                                         <i class="typcn typcn-edit btn-icon-append"></i>
                                     </a>
-                                    <a href="/admin/delete-brand/1" onclick="return confirm('Bạn chắc chứ?')" class="btn btn-danger btn-sm btn-icon-text">
+                                    <button  onclick="deleteBrand(<?=$brand['id']?>)" class="btn btn-danger btn-sm btn-icon-text">
                                         Xóa
                                         <i class="typcn typcn-delete-outline btn-icon-append"></i>
-                                    </a>
+                                    </button>
                                 </div>
                             </td>
                         </tr>
@@ -63,4 +103,16 @@ $this->start('main_content');
 
 <?php
 $this->stop();
+?>
+<?php
+
+$this->push('scripts')
+
+?>
+
+<script src="<?=$_ENV['APP_URL']?>/public\Assets\Admin\js\Pages\BrandScript.js"></script>
+
+
+<?php
+$this->end();
 ?>

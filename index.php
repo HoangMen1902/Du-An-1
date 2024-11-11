@@ -104,7 +104,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
         $r->get('/locked-account', [UserController::class, 'locked']);
         $r->get('/delete-product/{id}', [productsController::class, 'delete']);
         $r->get('/delete-attribute/{id}', [AttributeController::class, 'delete']);
-
+        $r->get('/edit-brand/{id:\d+}', [BrandController::class, 'edit']);
 
         $r->post('/add-user', [UserController::class, 'store']);
         $r->post('/user-search', [UserController::class, 'search']);
@@ -115,8 +115,9 @@ $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
         $r->post('/add-brand', [BrandController::class, 'store']);
         $r->post('/attribute-add', [AttributeController::class, 'store']);
         $r->post('/attribute-update/{id}', [AttributeController::class, 'update']);
+        $r->post('/update-brand/{id:\d+}', [BrandController::class, 'update']);
 
-
+        $r->delete('/delete-brand/{id:\d+}', [BrandController::class, 'delete']);
 
 
         $r->delete('/delete-user/{id:\d+}', [UserController::class, 'delete']);

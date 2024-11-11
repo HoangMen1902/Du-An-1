@@ -1,7 +1,6 @@
 
 function getInput() {
     let input = {
-        username: $('input[name="username"]').val().trim(),
         firstName: $('input[name="firstName"]').val().trim(),
         lastName: $('input[name="lastName"]').val().trim(),
         password: $('input[name="password"]').val().trim(),
