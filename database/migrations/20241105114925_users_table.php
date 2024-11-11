@@ -26,7 +26,6 @@ final class UsersTable extends AbstractMigration
             ->addColumn('address', 'string', ['limit' => 320])
             ->addColumn('firstname', 'string', ['limit' => 100])
             ->addColumn('lastname', 'string', ['limit' => 100])
-            ->addColumn('username', 'string', ['limit' => 50])
             ->addColumn('birthday', 'date')
             ->addColumn('reset_token', 'string', ['limit' => 64])
             ->addColumn('reset_token_expires', 'datetime')

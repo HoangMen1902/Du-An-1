@@ -14,6 +14,7 @@ use Src\Controllers\Client\ProductListController;
 use Src\Controllers\Client\SearchController;
 use Src\Controllers\Client\UserInfoController;
 
+
 use Src\Controllers\Admin\VouchersController;
 use Src\Controllers\Admin\UserController;
 use Src\Controllers\Admin\ProductsController;
@@ -56,6 +57,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
     $r->addRoute('GET', '/login', [AuthController::class, 'login']);
     $r->addRoute('GET', '/cart', [CartController::class, 'show']);
     $r->addRoute('GET', '/register', [AuthController::class, 'register']);
+    $r->post('/register-action', [AuthController::class, 'store']);
 
     $r->addGroup('/profile', function (FastRoute\RouteCollector $r) {
         $r->get('', [UserInfoController::class, 'myAccount']);
@@ -63,6 +65,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
         $r->get('/address', [UserInfoController::class, 'address']);
         $r->get('/orders-list', [UserInfoController::class, 'userOrders']);
     });
+ 
 
     $r->addRoute('GET', '/search', [SearchController::class, 'show']);
 

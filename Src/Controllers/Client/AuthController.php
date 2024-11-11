@@ -2,6 +2,8 @@
 namespace Src\Controllers\Client;
 
 use Src\Controllers\BaseController;
+use Src\Models\Client\UserModel;
+use Src\Validations\Client\UserValidation;
 
 class AuthController extends BaseController {
     public function login() {
@@ -10,5 +12,44 @@ class AuthController extends BaseController {
 
     public function register() {
         echo $this->view->render('Client/Pages/Register');
+    }
+
+    public function store() {
+        $data = [
+            'firstname' => $_POST['firstname'] ?? null,
+            'lastname' => $_POST['lastname'] ?? null,
+            'email' => $_POST['email'] ?? null,
+            'password' => $_POST['password'] ?? null,
+            'passwordhash' => $_POST['passwordhash'] ?? null
+        ];
+
+        // Kích hoạt validation
+        $validation = UserValidation::userValidation($data);
+        if ($validation !== true) {
+            // Hiển thị form đăng ký với các lỗi
+            echo $this->view->render('Client/Pages/Register', ['errors' => $validation]);
+            return;
+        }
+
+        // Nếu validation thành công, băm mật khẩu và tạo tài khoản
+        $hashedPassword = password_hash($data['password'], PASSWORD_DEFAULT);
+
+        $userData = [
+            'firstname' => $data['firstname'],
+            'lastname' => $data['lastname'],
+            'email' => $data['email'],
+            'password' => $hashedPassword,
+            'status' => 1 
+        ];
+
+        $userModel = new UserModel();
+        $isCreated = $userModel->store($userData);
+
+        if ($isCreated) {
+            header('Location: /login?status=success');
+            exit;
+        } else {
+            header('Location: /register?status=failed');
+        }
     }
 }
