@@ -58,6 +58,69 @@ class CategoryController extends BaseController
     }
 
 
+    public function edit($id)
+    {
+        $categoryModel = new CategoryModel();
+
+        $category = $categoryModel->getOneCategory($id['id']);
+        echo $this->view->render('Admin/Pages/Category/CategoryEdit', [
+            'category' => $category
+        ]);
+    }
+    public function update($id)
+    {
+
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $id = $_POST['id'];
+            $data = [
+                'id' => $id,
+                'name' => trim($_POST['name']),
+                'status' => $_POST['status']
+            ];
+
+            $validationResult = CategoryValidation::categoryValidation($data, $id);
+
+            if ($validationResult === true) {
+                $categoryModel = new CategoryModel();
+
+                $saveResult = $categoryModel->updateCategory($id, $data);
+                if ($saveResult) {
+                    header("Location: /admin/categories");
+                    exit();
+                } else {
+                    $errors[] = "Không thể lưu phân loại. Vui lòng thử lại.";
+                }
+            } else {
+                // $errors = $validationResult;
+                header("Location: /admin/categories");
+            }
+        }
+    }
+    public function delete($id)
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            $categoryModel = new CategoryModel();
+            $category = $categoryModel->getOneCategory($id['id']);
+            // var_dump($id);
+            // var_dump($category);
+            // echo'awe';
+            if ($category) {
+                $category_id = $category['category_id'];
+                
+                $deleteSuccess = $categoryModel->deleteCategory($id['id']);
+    
+                if ($deleteSuccess) {
+                    header("Location: /admin/category/CategoryValueList/$category_id?status=success");
+                    exit;
+                } else {
+                    header("Location: /admin/category/CategoryValueList/$category_id?status=failed");
+                }
+            } else {
+                echo "Không tìm thấy danh mục!";
+            }
+        }
+    }
 
 
     // danh mục con
@@ -178,7 +241,7 @@ class CategoryController extends BaseController
     }
 
 
-    public function delete($id)
+    public function deleteSub($id)
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $categoryValueModel = new CategoryValueModel();

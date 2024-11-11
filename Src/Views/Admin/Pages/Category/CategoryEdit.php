@@ -1,7 +1,7 @@
 <?php $this->layout('Admin/Layouts/Layout') ?>
 
 
-<?php 
+<?php
 $this->start('main_content');
 ?>
 
@@ -11,19 +11,24 @@ $this->start('main_content');
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">Sửa Loại sản phẩm</h4>
-                    <form action="/admin/category-update/ID" method="post" enctype="multipart/form-data">
+                    <?php if (!empty($errors)): ?>
+                        <div class="alert alert-danger">
+                            <?php foreach ($errors as $error): ?>
+                                <p><?= htmlspecialchars($error) ?></p>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endif; ?>
+
+                    <form action="/admin/category/update/<?= $category['id'] ?>" method="post" enctype="multipart/form-data">
+
                         <input type="hidden" name="method" value="POST">
                         <div class="form-group">
                             <label for="name">ID</label>
-                            <input type="text" class="form-control" id="id" placeholder="id" name="id" value="ID" readonly>
+                            <input type="text" class="form-control" id="id" placeholder="id" name="id" value="<?= htmlspecialchars($category['id']) ?>" readonly>
                         </div>
                         <div class="form-group">
                             <label>Tên Loại sản phẩm</label>
-                            <input type="text" class="form-control form-control-lg" name="name" placeholder="Bàn phím.." value="Tên loại sản phẩm" aria-label="Category Name">
-                        </div>
-                        <div class="form-group">
-                            <label>Mô tả Loại sản phẩm</label>
-                            <textarea class="form-control form-control-lg" name="description" placeholder="Bàn phím.." aria-label="Category Name">Mô tả loại sản phẩm</textarea>
+                            <input type="text" class="form-control form-control-lg" name="name" placeholder="Bàn phím.." value="<?= $category['name'] ?>" aria-label="Category Name">
                         </div>
                         <div class="form-group">
                             <label>Trạng thái</label>
@@ -46,5 +51,3 @@ $this->start('main_content');
 
 $this->stop();
 ?>
-
-

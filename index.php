@@ -88,11 +88,14 @@ $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
         $r->get('/category/CategoryValueList/{id}', [CategoryController::class, 'showSub']);
         $r->get('/category/CategoryValueAdd', [CategoryController::class, 'addSub']);
         $r->get('/category/add', [CategoryController::class, 'add']);
+        $r->get('/category/edit/{id}', [CategoryController::class, 'edit']);
+        $r->post('/category/update/{id}', [CategoryController::class, 'update']);
+        $r->get('/category/delete/{id}', [CategoryController::class, 'delete']);
         $r->post('/category/store', [CategoryController::class, 'store']);
         $r->post('/category/storeSub', [CategoryController::class, 'storeSub']);
         $r->get('/category/value/edit/{id}', [CategoryController::class, 'editSub']);
         $r->post('/category/value/update/{id}', [CategoryController::class, 'updateSub']);
-        $r->post('/category/value/delete/{id}', [CategoryController::class, 'delete']);
+        $r->post('/category/value/delete/{id}', [CategoryController::class, 'deleteSub']);
         $r->get('/brands', [BrandController::class, 'show']);
         $r->get('/brand/add', [BrandController::class, 'add']);
         $r->get('/comments', [CommentController::class, 'show']);

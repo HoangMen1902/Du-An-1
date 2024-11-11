@@ -30,6 +30,11 @@ class CategoryModel extends BaseModel
     {
         return $this->findDuplicateByColumn('name', $name);
     }
-
-
+    public function updateCategory($id, $data){
+        return $this->update($id, $data);
+    }
+    public function deleteCategory($id)
+    {
+        return $this->delete($id);
+    }
 }

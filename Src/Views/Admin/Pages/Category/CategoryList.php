@@ -30,11 +30,11 @@ $this->start('main_content');
                                             <i class="bi bi-three-dots"></i>
                                         </button>
                                         <div class="dropdown-menu">
-                                            <a class="dropdown-item d-flex" href="#">
+                                            <a class="dropdown-item d-flex" href="/admin/category/edit/<?= $category['id'] ?>">
                                                 <p>Sửa</p>
                                                 <i class="typcn typcn-edit btn-icon-append"></i>
                                             </a>
-                                            <a class="dropdown-item d-flex" href="#" onclick="return confirm('Bạn chắc chứ?')">
+                                            <a class="dropdown-item d-flex" href="/admin/category/delete/<?= $category['id'] ?>" onclick="return confirm('Bạn chắc chứ?')">
                                                 <p>Xóa</p>
                                                 <i class="typcn typcn-delete-outline btn-icon-append"></i>
                                             </a>
