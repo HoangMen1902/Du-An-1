@@ -1,9 +1,12 @@
 <?php
+
 namespace Src\Controllers\Admin;
 
 use Src\Controllers\BaseController;
 use Src\Validations\Admin\ProductValidation;
 use Src\Models\Admin\ProductModel;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use Exception;
 
 
 class ProductsController extends BaseController
@@ -13,8 +16,6 @@ class ProductsController extends BaseController
         $ProductModel = new ProductModel();
         $data = $ProductModel->getAllProduct();
         echo $this->view->render('Admin/Pages/Products/ProductList', ['data' => $data]);
-
-
     }
     public function show($params)
     {
@@ -22,7 +23,6 @@ class ProductsController extends BaseController
         $ProductModel = new ProductModel();
         $data = $ProductModel->getOneProduct($id);
         echo $this->view->render('Admin/Pages/Products/ProductDetail', ['data' => $data]);
-
     }
 
     public function add()
@@ -68,6 +68,53 @@ class ProductsController extends BaseController
                     $errors[] = "Định dạng ảnh không hợp lệ cho thumbnail. Chỉ chấp nhận JPG, JPEG, PNG, GIF.";
                 }
             }
+
+            // Kiểm tra và xử lý file Excel
+            if (isset($_FILES['specifications_file']) && $_FILES['specifications_file']['error'] == 0) {
+                $filePath = $_FILES['specifications_file']['tmp_name'];
+                $fileType = pathinfo($_FILES['specifications_file']['name'], PATHINFO_EXTENSION);
+            
+                if (!in_array(strtolower($fileType), ['xls', 'xlsx'])) {
+                    $errors[] = 'File phải có định dạng Excel (.xls, .xlsx).';
+                }
+            
+                if ($_FILES['specifications_file']['size'] > 10485760) { // 10MB max
+                    $errors[] = 'File quá lớn. Vui lòng tải lên file dưới 10MB.';
+                }
+            
+                if (empty($errors)) {
+                    try {
+                        $spreadsheet = IOFactory::load($filePath);
+                        $sheet = $spreadsheet->getActiveSheet();
+                        $specifications = [];
+            
+                        // Duyệt qua các dòng của sheet
+                        foreach ($sheet->getRowIterator() as $row) {
+                            $specName = $sheet->getCell('A' . $row->getRowIndex())->getValue();  // Cột A: Tên thuộc tính
+                            $specValue = $sheet->getCell('B' . $row->getRowIndex())->getValue(); // Cột B: Giá trị thuộc tính
+            
+                            if (!empty($specName) && !empty($specValue)) {
+                                $specifications[] = [
+                                    'spec_name' => $specName,
+                                    'spec_value' => $specValue,
+                                ];
+                            }
+                        }
+            
+                        if (empty($specifications)) {
+                            $errors[] = 'Không có thông tin thông số kỹ thuật hợp lệ trong file Excel.';
+                        } else {
+                            $data['specifications'] = json_encode($specifications, JSON_UNESCAPED_UNICODE);
+                        }
+            
+                    } catch (Exception $e) {
+                        $errors[] = 'Lỗi khi đọc file Excel: ' . $e->getMessage();
+                    }
+                }
+            } else {
+                $errors[] = 'Không có file Excel được tải lên hoặc có lỗi khi tải lên.';
+            }
+            
 
             $validationResult = ProductValidation::productValidation($data);
 
@@ -180,9 +227,7 @@ class ProductsController extends BaseController
                 exit;
             } else {
                 header('Location: /admin/products?status=failed ');
-
             }
         }
     }
-
 }

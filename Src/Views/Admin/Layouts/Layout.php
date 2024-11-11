@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Bee Technova Admin</title>
     <?= $this->section('styles') ?>
@@ -185,7 +185,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#commentsSubmenu">
-                        <i class="typcn typcn-message menu-icon"></i>
+                            <i class="typcn typcn-message menu-icon"></i>
                             <span class="menu-title">Bình luận</span>
                         </a>
                         <div id="commentsSubmenu" class="collapse submenu">

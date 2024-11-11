@@ -37,7 +37,8 @@ class Database {
     public function MySQLi()
     {
         $conn = new mysqli($this->_host, $this->_username, $this->_password, $this->_database);
-
+        $conn->set_charset("utf8mb4");
+        
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
         }
