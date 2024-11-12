@@ -5,22 +5,28 @@ $this->start('main_content');
 ?>
 <?php
 
-if(isset($_GET['status']) && $_GET['status'] === 'success') {
-    ?>
-            <div class="alert alert-success mt-5">
-                <p class="m-0">Đã thêm thành công</p>
-            </div>
-    <?php
- 
-}   else if(isset($_GET['status']) && $_GET['status'] === 'failed'){
-   ?>
+if (isset($_GET['status']) && $_GET['status'] === 'success') {
+?>
+    <div class="alert alert-success mt-5">
+        <p class="m-0">Đã thêm thành công</p>
+    </div>
+<?php
+
+} else if (isset($_GET['status']) && $_GET['status'] === 'failed') {
+?>
     <div class="alert alert-danger mt-5">
-                <p class="m-0">Đã thêm thất bại</p>
-            </div>
+        <p class="m-0">Đã thêm thất bại</p>
+    </div>
 <?php
 }
 ?>
-
+<?php if (!empty($errors)): ?>
+    <div class="alert alert-danger" role="alert">
+        <?php foreach ($errors as $error): ?>
+            <p><?= htmlspecialchars($error) ?></p>
+        <?php endforeach; ?>
+    </div>
+<?php endif; ?>
 <div class="col-md-12 grid-margin stretch-card">
     <div class="card">
         <div class="card-body">
@@ -42,15 +48,23 @@ if(isset($_GET['status']) && $_GET['status'] === 'success') {
                 </div>
 
                 <div class="form-group">
-                    <label for="total_quantity">Số lượng</label>
-                    <input type="number" class="form-control" name="total_quantity" placeholder="Số lượng sản phẩm"
-                        value="<?= htmlspecialchars($data['total_quantity'] ?? '') ?>">
-                </div>
-
-                <div class="form-group">
                     <label for="brand">Thương hiệu</label>
-                    <input type="text" class="form-control" name="brand" placeholder="Nhập tên thương hiệu"
-                        value="<?= htmlspecialchars($data['brand'] ?? '') ?>">
+                    <select class="form-control" name="brand">
+                        <?php
+                        if(isset($brands) && !empty($brands)):
+                            foreach($brands as $brand):
+                        ?>
+                        <option value="<?=$brand['id']?>"><?=$brand['name']?></option>
+                        <?php
+                        endforeach;
+                        else :
+                        ?>
+                        <option value="">Không có thương hiệu</option>
+
+                        <?php
+                        endif;
+                        ?>
+                        </select>
                 </div>
 
                 <div class="form-group">
@@ -70,6 +84,11 @@ if(isset($_GET['status']) && $_GET['status'] === 'success') {
                         </div>
                     <?php endif; ?>
                 </div>
+                <div class="form-group">
+                    <label for="specifications_file">Tải lên file Excel cho thông số kỹ thuật <span class="text-danger">(.xls hoặc .xlsx)</span></label>
+                    <input type="file" class="form-control" name="specifications_file" id="specifications_file" accept=".xls, .xlsx">
+                </div>
+
                 <div class="form-group">
                     <label for="status">Trạng thái</label>
                     <select class="form-control form-control-sm col-lg-2" name="status">
@@ -107,13 +126,7 @@ if(isset($_GET['status']) && $_GET['status'] === 'success') {
                 <button type="submit" name="submit" class="btn btn-primary">Thêm sản phẩm</button>
             </form>
 
-            <?php if (!empty($errors)): ?>
-                <div class="mt-5 alert alert-danger" role="alert">
-                    <?php foreach ($errors as $error): ?>
-                        <p><?= htmlspecialchars($error) ?></p>
-                    <?php endforeach; ?>
-                </div>
-            <?php endif; ?>
+
         </div>
     </div>
 </div>
@@ -154,7 +167,7 @@ $this->stop();
 <?php
 $this->push('scripts');
 ?>
-    <script src="<?= $_ENV['APP_URL'] ?>/public/Assets/Admin/js/Pages/ProductValidate.js"></script>
+<script src="<?= $_ENV['APP_URL'] ?>/public/Assets/Admin/js/Pages/ProductValidate.js"></script>
 <?php
 $this->end();
 ?>

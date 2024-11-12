@@ -37,12 +37,9 @@ class ProductValidation {
             $errors['description'] = "Mô tả sản phẩm phải dưới 500 ký tự.";
         }
 
-        if (isset($data['total_quantity']) && (!is_numeric($data['total_quantity']) || (int)$data['total_quantity'] <= 0)) {
-            $is_valid = false;
-            $errors['total_quantity'] = "Số lượng tổng phải là một số hợp lệ và lớn hơn 0.";
-        }
 
-        if (empty($data['brand'])) {
+
+        if (empty($data['brand_id'])) {
             $is_valid = false;
             $errors['brand'] = "Thương hiệu không được để trống.";
         }

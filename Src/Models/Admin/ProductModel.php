@@ -13,6 +13,7 @@
             $id = (int) $id;
             return $this->getOne($id);
         }
+
         public function createProduct($data){
             return $this->create($data);
         }

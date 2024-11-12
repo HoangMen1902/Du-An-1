@@ -3,6 +3,7 @@
 namespace Src\Controllers\Admin;
 
 use Src\Controllers\BaseController;
+use Src\Models\Admin\BrandModel;
 use Src\Validations\Admin\ProductValidation;
 use Src\Models\Admin\ProductModel;
 use PhpOffice\PhpSpreadsheet\IOFactory;
@@ -27,7 +28,9 @@ class ProductsController extends BaseController
 
     public function add()
     {
-        echo $this->view->render('Admin/Pages/Products/ProductAdd');
+        $BrandModel = new BrandModel();
+        $brands = $BrandModel->getAllActiveBrands();
+        echo $this->view->render('Admin/Pages/Products/ProductAdd', ['brands' => $brands]);
     }
     public function store()
     {
@@ -35,8 +38,7 @@ class ProductsController extends BaseController
             $data = [
                 'name' => $_POST['name'] ?? null,
                 'description' => $_POST['description'] ?? null,
-                'total_quantity' => $_POST['total_quantity'] ?? 0,
-                'brand' => $_POST['brand'] ?? null,
+                'brand_id' => $_POST['brand'] ?? null,
                 'status' => $_POST['status'] ?? null,
                 'discount' => $_POST['discount'] ?? 0
             ];

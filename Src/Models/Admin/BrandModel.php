@@ -19,6 +19,10 @@ class BrandModel extends BaseModel {
         return $this->update($id,$data);
     }
 
+    public function getAllActiveBrands() {
+        return $this->getAllByStatus();
+    }
+
     public function deleteBrand($id) {
         return $this->delete($id);
     } 
