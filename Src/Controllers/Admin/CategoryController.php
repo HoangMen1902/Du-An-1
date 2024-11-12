@@ -61,6 +61,7 @@ class CategoryController extends BaseController
     public function edit($id)
     {
         $categoryModel = new CategoryModel();
+        
 
         $category = $categoryModel->getOneCategory($id['id']);
         echo $this->view->render('Admin/Pages/Category/CategoryEdit', [

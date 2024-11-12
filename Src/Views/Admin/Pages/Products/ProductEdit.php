@@ -25,7 +25,22 @@ $this->start('main_content');
 
                 <div class="form-group">
                     <label for="brand">Thương hiệu</label>
-                    <input type="text" class="form-control" name="brand" id="brand" value="<?= htmlspecialchars($data['brand']) ?>" placeholder="Thương hiệu">
+                    <select class="form-control" name="brand">
+                        <?php
+                        if(isset($brands) && !empty($brands)):
+                            foreach($brands as $brand):
+                        ?>
+                        <option value="<?=$brand['id']?>"><?=$brand['name']?></option>
+                        <?php
+                        endforeach;
+                        else :
+                        ?>
+                        <option value="">Không có thương hiệu</option>
+
+                        <?php
+                        endif;
+                        ?>
+                    </select>
                 </div>
 
                 <div class="form-group">

@@ -64,7 +64,7 @@ if (isset($_GET['status']) && $_GET['status'] === 'success') {
                         <?php
                         endif;
                         ?>
-                        </select>
+                    </select>
                 </div>
 
                 <div class="form-group">

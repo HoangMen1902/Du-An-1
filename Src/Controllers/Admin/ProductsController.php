@@ -152,7 +152,9 @@ class ProductsController extends BaseController
         $id = $params['id'];
         $ProductModel = new ProductModel();
         $data = $ProductModel->getOneProduct($id);
-        echo $this->view->render('/Admin/Pages/Products/ProductEdit', ['data' => $data]);
+        $brandModel = new BrandModel();
+        $brand_data = $brandModel->getAllActiveBrands();
+        echo $this->view->render('/Admin/Pages/Products/ProductEdit', ['data' => $data, 'brands' => $brand_data]);
     }
     public function update($id)
     {
