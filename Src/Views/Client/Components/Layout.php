@@ -208,7 +208,6 @@
     <div class="offcanvas offcanvas-end searchOffCanvas__main" tabindex="-1" id="searchOffCanvas" aria-labelledby="offcanvasRightLabel" style="width: 600px;">
         <div class="offcanvas-header">
             <form class="searchOffCanvas__form" action="/search" method="GET">
-                <input type="hidden" name="method" value="POST">
                 <input class="searchOffCanvas" type="text" placeholder="Tìm kiếm" name="search">
                 <button type="submit"></button>
             </form>
