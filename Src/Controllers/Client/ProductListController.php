@@ -6,13 +6,12 @@
 
     class ProductListController extends BaseController {
         public function show() {
-
             $productModel = new ProductModel();
             $productData = $productModel->getAllProductWithSkus();
-
-            echo $this->view->render('Client/Pages/Product/List',
-             ['productData' => $productData]
-            );
+    
+            echo $this->view->render('Client/Pages/Product/List', [
+                'productData' => $productData
+            ]);
         }
     }
 ?>
