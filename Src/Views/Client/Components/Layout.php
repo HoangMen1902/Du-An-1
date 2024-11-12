@@ -22,7 +22,7 @@
         <ul class="nav-menu">
             <li><a href="/home" class="text-decoration-none">Trang chủ</a></li>
             <li><a href="/list" class="text-decoration-none">Sản phẩm</a></li>
-            <li><a href="" class="text-decoration-none">Giới thiệu</a></li>
+            <li><a href="/about" class="text-decoration-none">Giới thiệu</a></li>
             <li><a href="<?= $_ENV['APP_URL'] ?>/Contact" class="text-decoration-none">Liên hệ</a></li>
         </ul>
         <div class="icon-group">
