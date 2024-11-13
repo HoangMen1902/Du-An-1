@@ -3,15 +3,14 @@
 <?php
 $this->start('main_content');
 ?>
-<?php
 
+<?php
 if (isset($_GET['status']) && $_GET['status'] === 'success') {
 ?>
     <div class="alert alert-success mt-5">
         <p class="m-0">Đã thêm thành công</p>
     </div>
 <?php
-
 } else if (isset($_GET['status']) && $_GET['status'] === 'failed') {
 ?>
     <div class="alert alert-danger mt-5">
@@ -20,6 +19,7 @@ if (isset($_GET['status']) && $_GET['status'] === 'success') {
 <?php
 }
 ?>
+
 <?php if (!empty($errors)): ?>
     <div class="alert alert-danger" role="alert">
         <?php foreach ($errors as $error): ?>
@@ -27,147 +27,167 @@ if (isset($_GET['status']) && $_GET['status'] === 'success') {
         <?php endforeach; ?>
     </div>
 <?php endif; ?>
+
 <div class="col-md-12 grid-margin stretch-card">
     <div class="card">
         <div class="card-body">
             <h4 class="card-title">Thêm sản phẩm</h4>
             <form action="/admin/product/store" method="post" enctype="multipart/form-data">
-
+                
                 <p class="card-description">Thông tin sản phẩm</p>
-
                 <div class="form-group">
                     <label for="name">Tên sản phẩm</label>
-                    <input type="text" class="form-control form-control-lg" placeholder="Tên sản phẩm" name="name"
-                        value="<?= htmlspecialchars($data['name'] ?? '') ?>">
+                    <input type="text" class="form-control" name="name" placeholder="Tên sản phẩm" value="<?= htmlspecialchars($data['name'] ?? '') ?>">
                 </div>
 
                 <div class="form-group">
                     <label for="description">Mô tả sản phẩm</label>
-                    <textarea class="form-control" name="description" rows="4"
-                        placeholder="Mô tả sản phẩm"><?= htmlspecialchars($data['description'] ?? '') ?></textarea>
+                    <textarea class="form-control" name="description" rows="4" placeholder="Mô tả sản phẩm"><?= htmlspecialchars($data['description'] ?? '') ?></textarea>
                 </div>
 
                 <div class="form-group">
                     <label for="brand">Thương hiệu</label>
                     <select class="form-control" name="brand">
-                        <?php
-                        if(isset($brands) && !empty($brands)):
-                            foreach($brands as $brand):
-                        ?>
-                        <option value="<?=$brand['id']?>"><?=$brand['name']?></option>
-                        <?php
-                        endforeach;
-                        else :
-                        ?>
-                        <option value="">Không có thương hiệu</option>
-
-                        <?php
-                        endif;
-                        ?>
+                        <?php if(isset($brands) && !empty($brands)): ?>
+                            <?php foreach($brands as $brand): ?>
+                                <option value="<?=$brand['id']?>"><?=$brand['name']?></option>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <option value="">Không có thương hiệu</option>
+                        <?php endif; ?>
                     </select>
                 </div>
 
                 <div class="form-group">
                     <label for="discount">Giá giảm (%)</label>
-                    <input type="number" class="form-control" name="discount" placeholder="Giảm giá" min="0" max="100"
-                        value="<?= htmlspecialchars($data['discount'] ?? '') ?>">
+                    <input type="number" class="form-control" name="discount" placeholder="Giảm giá" min="0" max="100" value="<?= htmlspecialchars($data['discount'] ?? '') ?>">
                 </div>
-                <div class="form-group">
-                    <label for="image">Hình ảnh sản phẩm</label>
-                    <input type="file" class="form-control" name="thumbnail" id="image" accept="image/*">
 
-                    <?php if (!empty($data['thumbnail'])): ?>
-                        <div class="mt-2">
-                            <p>Hình ảnh hiện tại:</p>
-                            <img src="<?= htmlspecialchars($data['thumbnail']) ?>" alt="Hình ảnh sản phẩm"
-                                style="max-width: 200px;">
-                        </div>
-                    <?php endif; ?>
-                </div>
                 <div class="form-group">
-                    <label for="specifications_file">Tải lên file Excel cho thông số kỹ thuật <span class="text-danger">(.xls hoặc .xlsx)</span></label>
-                    <input type="file" class="form-control" name="specifications_file" id="specifications_file" accept=".xls, .xlsx">
+                    <label for="thumbnail">Hình ảnh sản phẩm</label>
+                    <input type="file" class="form-control" name="thumbnail" accept="image/*">
+                </div>
+
+                <div class="form-group">
+                    <label for="specifications_file">Tải lên file Excel cho thông số kỹ thuật (.xls hoặc .xlsx)</label>
+                    <input type="file" class="form-control" name="specifications_file" accept=".xls, .xlsx">
                 </div>
 
                 <div class="form-group">
                     <label for="status">Trạng thái</label>
-                    <select class="form-control form-control-sm col-lg-2" name="status">
+                    <select class="form-control" name="status">
                         <option value="1" <?= isset($data['status']) && $data['status'] == 1 ? 'selected' : '' ?>>Hoạt động</option>
                         <option value="2" <?= isset($data['status']) && $data['status'] == 2 ? 'selected' : '' ?>>Không hoạt động</option>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="properties">Thuộc tính</label>
-                    <a href="javascript:void(0)" onclick="createProperty()" class="btn btn-primary btn-sm">Thêm thuộc tính</a>
-                    <div id="multi_properties">
-                        <div class="row items_properties mb-3">
-                            <div class="col-5">
-                                <label for="option_id">Tên thuộc tính</label>
-                                <select name="option_id[]" class="form-control">
-                                    <option value="">Chọn thuộc tính</option>
-                                    <?php foreach ($attributes as $attribute): ?>
-                                        <option value="<?= $attribute['id'] ?>"><?= htmlspecialchars($attribute['name']) ?></option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </div>
-                            <div class="col-5">
-                                <label for="option_vl_name">Giá trị</label>
-                                <input type="text" class="form-control" name="option_vl_name[]" placeholder="Giá trị thuộc tính">
-                            </div>
-                            <div class="col-1">
-                                <label for="">&nbsp;</label>
-                                <a href="javascript:void(0)" onclick="deleteProperty(this)" class="btn btn-danger btn-sm d-block">Xóa</a>
-                            </div>
-                        </div>
+                    <label>SKUs và Thuộc tính</label>
+                    <div id="sku_section">
+                        <?php if (!empty($data['skus'])): ?>
+                            <?php foreach ($data['skus'] as $index => $sku): ?>
+                                <div class="sku-item row mb-3" id="sku-item-<?= $index ?>">
+                                    <div class="col-md-3">
+                                        <label>SKU</label>
+                                        <input type="text" name="sku[<?= $index ?>][sku]" class="form-control" value="<?= htmlspecialchars($sku['sku'] ?? '') ?>" placeholder="SKU">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>Giá</label>
+                                        <input type="number" name="sku[<?= $index ?>][price]" class="form-control" value="<?= htmlspecialchars($sku['price'] ?? '') ?>" placeholder="Giá">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>Số lượng</label>
+                                        <input type="number" name="sku[<?= $index ?>][quantity]" class="form-control" value="<?= htmlspecialchars($sku['quantity'] ?? '') ?>" placeholder="Số lượng">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>Hình ảnh SKU</label>
+                                        <input type="file" name="sku[<?= $index ?>][images][]" class="form-control" accept="image/*" multiple>
+                                    </div>
+                                    <div class="col-12 properties-container mt-2">
+                                        <!-- Dynamic property fields go here -->
+                                    </div>
+                                    <div class="col-12 mt-3">
+                                        <a href="javascript:void(0)" onclick="addProperty(this)" class="btn btn-primary">Thêm Thuộc tính</a>
+                                        <a href="javascript:void(0)" onclick="removeSku(<?= $index ?>)" class="btn btn-danger">Xóa SKU</a>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
                     </div>
+                    <a href="javascript:void(0)" onclick="addSku()" class="btn btn-success mt-3">Thêm SKU</a>
                 </div>
 
                 <button type="submit" name="submit" class="btn btn-primary">Thêm sản phẩm</button>
             </form>
-
-
         </div>
     </div>
 </div>
 
 <script>
-    function createProperty() {
-        $("#multi_properties").append(`
-            <div class="row items_properties mb-3">
-                <div class="col-5">
-                    <label for="option_id">Tên thuộc tính</label>
-                    <select name="option_id[]" class="form-control">
-                        <option value="">Chọn thuộc tính</option>
-                        <?php foreach ($attributes as $attribute): ?>
-                            <option value="<?= $attribute['id'] ?>"><?= htmlspecialchars($attribute['name']) ?></option>
-                        <?php endforeach; ?>
-                    </select>
+    let skuIndex = <?= count($data['skus'] ?? []) ?>;
+
+    function addSku() {
+        skuIndex++;
+        $('#sku_section').append(`
+            <div class="sku-item row mb-3" id="sku-item-${skuIndex}">
+                <div class="col-md-3">
+                    <label>SKU</label>
+                    <input type="text" name="sku[${skuIndex}][sku]" class="form-control" placeholder="SKU">
                 </div>
-                <div class="col-5">
-                    <label for="option_vl_name">Giá trị</label>
-                    <input type="text" class="form-control" name="option_vl_name[]" placeholder="Giá trị thuộc tính">
+                <div class="col-md-3">
+                    <label>Giá</label>
+                    <input type="number" name="sku[${skuIndex}][price]" class="form-control" placeholder="Giá">
                 </div>
-                <div class="col-1">
-                    <label for="">&nbsp;</label>
-                    <a href="javascript:void(0)" onclick="deleteProperty(this)" class="btn btn-danger btn-sm d-block">Xóa</a>
+                <div class="col-md-3">
+                    <label>Số lượng</label>
+                    <input type="number" name="sku[${skuIndex}][quantity]" class="form-control" placeholder="Số lượng">
+                </div>
+                <div class="col-md-3">
+                    <label>Hình ảnh SKU</label>
+                    <input type="file" name="sku[${skuIndex}][images][]" class="form-control" accept="image/*" multiple>
+                </div>
+                <div class="col-12 properties-container mt-2">
+                    <!-- Dynamic property fields go here -->
+                </div>
+                <div class="col-12 mt-3">
+                    <a href="javascript:void(0)" onclick="addProperty(this)" class="btn btn-primary">Thêm Thuộc tính</a>
+                    <a href="javascript:void(0)" onclick="removeSku(${skuIndex})" class="btn btn-danger">Xóa SKU</a>
                 </div>
             </div>
         `);
     }
 
-    function deleteProperty(element) {
-        $(element).closest(".items_properties").remove();
+    function addProperty(element) {
+        const propertyContainer = $(element).closest('.sku-item').find('.properties-container');
+        propertyContainer.append(`
+            <div class="row mb-2">
+                <div class="col-md-5">
+                    <label>Tên thuộc tính</label>
+                    <select name="option_id[${skuIndex}][]" class="form-control">
+                        <option value="">Chọn thuộc tính</option>
+                        <?php foreach ($options as $attribute): ?>
+                            <option value="<?= $attribute['id'] ?>"><?= htmlspecialchars($attribute['name']) ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <div class="col-md-5">
+                    <label>Giá trị</label>
+                    <input type="text" name="option_value[${skuIndex}][]" class="form-control" placeholder="Giá trị thuộc tính">
+                </div>
+                <div class="col-md-2">
+                    <a href="javascript:void(0)" onclick="removeProperty(this)" class="btn btn-danger">Xóa</a>
+                </div>
+            </div>
+        `);
+    }
+
+    function removeProperty(element) {
+        $(element).closest('.row').remove();
+    }
+
+    function removeSku(skuIndex) {
+        $('#sku-item-' + skuIndex).remove();
     }
 </script>
 
-<?php
-$this->stop();
-?>
-<?php
-$this->push('scripts');
-?>
-<script src="<?= $_ENV['APP_URL'] ?>/public/Assets/Admin/js/Pages/ProductValidate.js"></script>
-<?php
-$this->end();
-?>
+<?php $this->stop(); ?>
