@@ -184,13 +184,64 @@ abstract class BaseModel implements CrudInterface
             $stmt->execute();
             $result = $stmt->get_result()->fetch_assoc();
 
-            // Nếu count lớn hơn 0, nghĩa là có bản ghi trùng
             return $result['count'] > 0;
         } catch (\Throwable $th) {
             error_log('Lỗi khi kiểm tra trùng lặp theo cột: ' . $th->getMessage());
             return false;
         }
     }
+
+    public function findByColumn(int $product_id)
+    {
+        try {
+            $sql = "SELECT * FROM product_skus WHERE product_id = ?";
+            $conn = $this->_conn->MySQLi();
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param('i', $product_id);
+            $stmt->execute();
+            $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+            return $result;
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi lấy tất cả SKUs của sản phẩm: ' . $th->getMessage());
+            return [];
+        }
+    }
+
+    public function saveSku(array $skus, int $productId)
+    {
+        try {
+            $conn = $this->_conn->MySQLi();
+            $conn->begin_transaction();
+    
+            foreach ($skus as $sku) {
+                $images = $sku['images'] ?? null;
+    
+                $sql = "INSERT INTO product_skus (sku, images, price, quantity, product_id) 
+                        VALUES (?, ?, ?, ?, ?)";
+    
+                $stmt = $conn->prepare($sql);
+    
+                $stmt->bind_param('ssiii', 
+                    $sku['sku'],       
+                    $images,           
+                    $sku['price'],      
+                    $sku['quantity'],  
+                    $productId        
+                );
+    
+                $stmt->execute();
+            }
+    
+            $conn->commit();
+            return true;
+    
+        } catch (\Throwable $th) {
+            $conn->rollback();
+            error_log('Lỗi khi lưu SKU: ' . $th->getMessage());
+            return false;
+        }
+    }
+    
 
  
 }

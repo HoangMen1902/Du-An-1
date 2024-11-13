@@ -1,34 +1,42 @@
 <?php
-    namespace Src\Models\Admin;
+namespace Src\Models\Admin;
 
-    use Src\Models\BaseModel;
+use Src\Models\BaseModel;
 
-    class ProductModel extends BaseModel { 
-        protected $table = "products";
-        protected $id = "id";
-        public function getAllProduct(){
-             return $this->getAll();
-        }
-        public function getOneProduct($id){
-            $id = (int) $id;
-            return $this->getOne($id);
-        }
+class ProductModel extends BaseModel {
+    protected $table = "products";
+    protected $id = "id";
 
-        public function createProduct($data){
-            return $this->create($data);
-        }
-        public function updateProduct($id,$data){
-            return $this->update($id , $data);
-        }
-        public function deleteProduct($id){
-            return $this->delete($id);
-        }
-        public function isNameDupliProductByColumn($name)
-        {
-            return $this->findDuplicateByColumn('name', $name);
-        }
+    public function getAllProduct(){
+        return $this->getAll();
     }
 
+    public function getOneProduct($id){
+        $id = (int) $id;
+        return $this->getOne($id);
+    }
 
+    public function createProduct($data){
+        return $this->create($data);
+    }
 
+    public function updateProduct($id, $data){
+        return $this->update($id , $data);
+    }
+
+    public function deleteProduct($id){
+        return $this->delete($id);
+    }
+
+    public function isNameDupliProductByColumn($name)
+    {
+        return $this->findDuplicateByColumn('name', $name);
+    }
+
+    public function saveSkus(array $skus, int $productId) {
+        $productSkuModel = new ProductSkuModel();
+        return $productSkuModel->saveSku($skus, $productId);
+    }
+  
+}
 ?>
