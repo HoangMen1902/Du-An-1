@@ -286,7 +286,9 @@ class ProductsController extends BaseController
 
             if ($deleteSuccess) {
                 header('Location: /admin/products?status=success ');
+            } else {
                 header('Location: /admin/products?status=failed ');
+
             }
         }
     }

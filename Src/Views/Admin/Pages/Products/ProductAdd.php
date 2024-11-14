@@ -33,7 +33,7 @@ if (isset($_GET['status']) && $_GET['status'] === 'success') {
         <div class="card-body">
             <h4 class="card-title">Thêm sản phẩm</h4>
             <form action="/admin/product/store" method="post" enctype="multipart/form-data">
-                
+
                 <p class="card-description">Thông tin sản phẩm</p>
                 <div class="form-group">
                     <label for="name">Tên sản phẩm</label>
@@ -64,7 +64,6 @@ if (isset($_GET['status']) && $_GET['status'] === 'success') {
                         ?>
                     </select>
                 </div>
-                <form action="/admin/select-category">
                     <div class="form-group">
                         <label for="categories">Danh mục cha:</label>
                         <select class="form-control" id="categories" name="categories" required>
@@ -81,8 +80,6 @@ if (isset($_GET['status']) && $_GET['status'] === 'success') {
                             </select>
                         </div>
                     </div>
-                </form>
-
 
 
 
@@ -112,35 +109,7 @@ if (isset($_GET['status']) && $_GET['status'] === 'success') {
                 <div class="form-group">
                     <label>Thêm biến thể</label>
                     <div id="sku_section">
-                        <!-- <?php if (!empty($data['skus'])): ?>
-                            <?php foreach ($data['skus'] as $index => $sku): ?>
-                                <div class="sku-item row mb-3" id="sku-item-<?= $index ?>">
-                                    <div class="col-md-3">
-                                        <label>Mã SKU</label>
-                                        <input type="text" name="sku[<?= $index ?>][sku]" class="form-control" value="<?= htmlspecialchars($sku['sku'] ?? '') ?>" placeholder="Mã SKU">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label>Giá</label>
-                                        <input type="number" name="sku[<?= $index ?>][price]" class="form-control" value="<?= htmlspecialchars($sku['price'] ?? '') ?>" placeholder="Giá">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label>Số lượng</label>
-                                        <input type="number" name="sku[<?= $index ?>][quantity]" class="form-control" value="<?= htmlspecialchars($sku['quantity'] ?? '') ?>" placeholder="Số lượng">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label>Hình ảnh SKU</label>
-                                        <input type="file" name="sku[<?= $index ?>][images][]" class="form-control" accept="image/*" multiple>
-                                    </div>
-                                    <div class="col-12 properties-container mt-2">
-                                        <!-- Dynamic property fields go here -->
-                                    </div>
-                                    <div class="col-12 mt-3">
-                                        <a href="javascript:void(0)" onclick="addProperty(this)" class="btn btn-primary">Thêm Thuộc tính</a>
-                                        <a href="javascript:void(0)" onclick="removeSku(<?= $index ?>)" class="btn btn-danger">Xóa SKU</a>
-                                    </div>
-                                </div>
-                            <?php endforeach; ?>
-                        <?php endif; ?> -->
+                        
                     </div>
                     <a href="javascript:void(0)" onclick="addSku()" class="btn btn-success mt-3">Thêm SKU</a>
                 </div>
@@ -230,7 +199,7 @@ $this->push('scripts');
         skuIndex--;
     }
 </script>
-<script src="<?=$_ENV['APP_URL']?>/public\Assets\Admin\js\Pages\ProductValidate.js"></script>
+<script src="<?= $_ENV['APP_URL'] ?>/public\Assets\Admin\js\Pages\ProductValidate.js"></script>
 <?php
 
 $this->end();
