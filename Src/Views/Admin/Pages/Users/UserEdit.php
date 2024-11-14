@@ -77,52 +77,12 @@ $this->start('main_content');
                         </div>
                     </div>
                     <p class="card-description">Địa chỉ</p>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group row">
-                                <label class="col-sm-3 col-form-label">Tỉnh/thành</label>
-                                <div class="col-sm-9">
-                                    <select class="form-control" name="province_id" id="province">
-                                        <option value="0">Tạm thời trống</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group row">
-                                <label class="col-sm-3 col-form-label">Quận/Huyện</label>
-                                <div class="col-sm-9">
-                                    <select class="form-control" name="district_id" id="district">
-                                        <option value="0">Tạm thời trống</option>
 
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     <div class="col-md-12">
-                        <div class="form-group row">
-                            <label class="col-sm-12 col-form-label p-0">Phường/Xã</label>
-                            <div class="col-sm-12 p-0">
-                                <select class="form-control" name="ward_id" id="ward">
-                                    <option value="0">Tạm thời trống</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label">Địa chỉ chi tiết</label>
-                                    <div class="col-sm-12">
-                                        <input type="text" class="form-control" name="address" placeholder="ABC, Phường Hưng Thạnh, ..." value="<?=$data['address']?>"/>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                         <div class="col-md-6">
                             <div class="form-group row">
-                                <label class="col-sm-2 col-form-label">Trạng thái</label>
-                                <div class="col-sm-2">
+                                <label class="col-sm-4 col-form-label">Trạng thái</label>
+                                <div class="col-sm-4">
                                     <select class="form-control" name="status" id="status">
                                         <option value="1">Hoạt động</option>
                                         <option value="2">Khóa</option>

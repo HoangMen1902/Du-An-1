@@ -7,17 +7,17 @@ $this->start('main_content');
 
 <?php
 
-if(isset($_GET['status']) && $_GET['status'] === 'success') {
-    ?>
-            <div class="alert alert-success mt-5">
-                <p class="m-0">Thao tác thành công</p>
-            </div>
-    <?php
-} else if(isset($_GET['status']) && $_GET['status'] === 'failed' && $_GET['error'] == 3) {
+if (isset($_GET['status']) && $_GET['status'] === 'success') {
 ?>
-            <div class="alert alert-danger mt-5">
-                <p class="m-0">Dữ liệu đã bị trùng, lỗi: <?=$_GET['name']?></p>
-            </div>
+    <div class="alert alert-success mt-5">
+        <p class="m-0">Thao tác thành công</p>
+    </div>
+<?php
+} else if (isset($_GET['status']) && $_GET['status'] === 'failed' && $_GET['error'] == 3) {
+?>
+    <div class="alert alert-danger mt-5">
+        <p class="m-0">Dữ liệu đã bị trùng, lỗi: <?= $_GET['name'] ?></p>
+    </div>
 <?php
 }
 ?>
@@ -73,7 +73,6 @@ if(isset($_GET['status']) && $_GET['status'] === 'success') {
                         </div>
                     </div>
                     <div class="row">
-                        
                         <div class="col-md-6">
                             <div class="form-group row">
                                 <label class="col-sm-3 col-form-label">Mật khẩu</label>
@@ -108,53 +107,13 @@ if(isset($_GET['status']) && $_GET['status'] === 'success') {
                         </div>
                     </div>
                     <p class="card-description">Địa chỉ</p>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group row">
-                                <label class="col-sm-3 col-form-label">Tỉnh/thành</label>
-                                <div class="col-sm-9">
-                                    <select class="form-control" name="province_id" id="province">
-                                        <option value="0">Tạm thời trống</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group row">
-                                <label class="col-sm-3 col-form-label">Quận/Huyện</label>
-                                <div class="col-sm-9">
-                                    <select class="form-control" name="district_id" id="district">
-                                        <option value="0">Tạm thời trống</option>
-
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    
                     <div class="col-md-12">
-                        <div class="form-group row">
-                            <label class="col-sm-12 col-form-label p-0">Phường/Xã</label>
-                            <div class="col-sm-12 p-0">
-                                <select class="form-control" name="ward_id" id="ward">
-                                    <option value="0">Tạm thời trống</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label">Địa chỉ chi tiết</label>
-                                    <div class="col-sm-12">
-                                        <input type="text" class="form-control" name="address" placeholder="ABC, Phường Hưng Thạnh, ..." />
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
+                       
                         <div class="col-md-6">
                             <div class="form-group row">
-                                <label class="col-sm-2 col-form-label">Trạng thái</label>
-                                <div class="col-sm-2">
+                                <label class="col-sm-4 col-form-label">Trạng thái</label>
+                                <div class="col-sm-4">
                                     <select class="form-control" name="status" id="status">
                                         <option value="1">Hoạt động</option>
                                         <option value="2">Khóa</option>
@@ -166,6 +125,7 @@ if(isset($_GET['status']) && $_GET['status'] === 'success') {
                         <div class="row justify-content-end">
                             <button type="submit" class="btn btn-primary" id="submitUserBtn">Thêm</button>
                         </div>
+                    </div>
                 </form>
 
             </div>
@@ -187,7 +147,7 @@ if(isset($_GET['status']) && $_GET['status'] === 'success') {
             <?php
                         break;
                 }
-            } 
+            }
 
             ?>
         </div>
@@ -200,7 +160,7 @@ if(isset($_GET['status']) && $_GET['status'] === 'success') {
 
 $this->stop();
 $this->push('scripts') ?>
-<script src="<?=$_ENV['APP_URL']?>/public\Assets\Admin\js\Pages\UserScript.js"></script>
+<script src="<?= $_ENV['APP_URL'] ?>/public\Assets\Admin\js\Pages\UserScript.js"></script>
 
 <?php
 $this->end()
