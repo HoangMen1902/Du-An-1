@@ -48,15 +48,43 @@ if (isset($_GET['status']) && $_GET['status'] === 'success') {
                 <div class="form-group">
                     <label for="brand">Thương hiệu</label>
                     <select class="form-control" name="brand">
-                        <?php if(isset($brands) && !empty($brands)): ?>
-                            <?php foreach($brands as $brand): ?>
-                                <option value="<?=$brand['id']?>"><?=$brand['name']?></option>
-                            <?php endforeach; ?>
-                        <?php else: ?>
+                        <?php
+                        if (isset($brands) && !empty($brands)):
+                            foreach ($brands as $brand):
+                        ?>
+                                <option value="<?= $brand['id'] ?>"><?= $brand['name'] ?></option>
+                            <?php
+                            endforeach;
+                        else :
+                            ?>
                             <option value="">Không có thương hiệu</option>
-                        <?php endif; ?>
+
+                        <?php
+                        endif;
+                        ?>
                     </select>
                 </div>
+                <form action="/admin/select-category">
+                    <div class="form-group">
+                        <label for="categories">Danh mục cha:</label>
+                        <select class="form-control" id="categories" name="categories" required>
+                            <option value="">Chọn danh mục cha</option>
+                            <?php foreach ($categories as $category): ?>
+                                <option value="<?= $category['id'] ?>"><?= $category['name'] ?></option>
+                            <?php endforeach; ?>
+                        </select>
+
+                        <div id="child_category" style="display:none;">
+                            <label for="child_category">Danh mục con:</label>
+                            <select class="form-control" id="child_category" name="child_category">
+                                <option value="">Chọn danh mục con</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+
+
+
 
                 <div class="form-group">
                     <label for="discount">Giá giảm (%)</label>
@@ -123,6 +151,13 @@ if (isset($_GET['status']) && $_GET['status'] === 'success') {
     </div>
 </div>
 
+
+
+<?php $this->stop(); ?>
+<?php
+
+$this->push('scripts');
+?>
 <script>
     let skuIndex = 0;
     let optionIndex = 0
@@ -195,5 +230,7 @@ if (isset($_GET['status']) && $_GET['status'] === 'success') {
         skuIndex--;
     }
 </script>
+<script src="<?=$_ENV['APP_URL']?>/public\Assets\Admin\js\Pages\ProductValidate.js"></script>
+<?php
 
-<?php $this->stop(); ?>
+$this->end();

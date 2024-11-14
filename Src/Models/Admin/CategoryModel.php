@@ -37,4 +37,8 @@ class CategoryModel extends BaseModel
     {
         return $this->delete($id);
     }
+    
+    public function getAllActiveCategories(){
+        return $this->getAllByStatus();
+    }
 }

@@ -70,4 +70,32 @@ class CategoryValueModel extends BaseModel
     {
         return $this->findDuplicateByColumn('name', $name);
     }
+
+    public function getChildCategories()
+    {
+        if (isset($_POST['category_id'])) {
+            $categoryId = $_POST['category_id'];
+
+            if (is_array($categoryId) && isset($categoryId['id'])) {
+                $categoryId = $categoryId['id']; 
+            }
+
+            if (is_numeric($categoryId)) {
+                $query = "SELECT id, name FROM $this->table
+                WHERE category_id = ? AND status = 1";
+                $conn = $this->_conn->MySQLi();
+                $stmt = $conn->prepare($query);
+                $stmt->bind_param('i', $categoryId);
+                $stmt->execute();
+                $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+
+                header('Content-Type: application/json');
+                echo json_encode($result);
+            } else {
+                echo json_encode(['error' => 'Invalid category ID']);
+            }
+        } else {
+            echo json_encode(['error' => 'Category ID is missing']);
+        }
+    }
 }

@@ -122,6 +122,8 @@ $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
         $r->post('/attribute-add', [AttributeController::class, 'store']);
         $r->post('/attribute-update/{id}', [AttributeController::class, 'update']);
         $r->post('/update-brand/{id:\d+}', [BrandController::class, 'update']);
+        $r->post('/get-child-categories', [ProductsController::class, 'selectResult']);
+
 
         $r->delete('/delete-brand/{id:\d+}', [BrandController::class, 'delete']);
 

@@ -8,6 +8,8 @@ use Src\Models\Admin\SkuModel;
 use Src\Models\Database;
 use Src\Validations\Admin\ProductValidation;
 use Src\Models\Admin\ProductModel;
+use Src\Models\Admin\CategoryModel;
+use Src\Models\Admin\CategoryValueModel;
 use Src\Models\Admin\ProductSkuModel;
 use Src\Models\Admin\AttributeModel;
 
@@ -30,16 +32,21 @@ class ProductsController extends BaseController
         $id = $params['id'];
         $ProductModel = new ProductModel();
         $data = $ProductModel->getOneProduct($id);
-        echo $this->view->render('Admin/Pages/Products/ProductDetail', ['data' => $data]);
+        echo $this->view->render(
+            'Admin/Pages/Products/ProductDetail',
+            ['data' => $data,]
+        );
     }
 
     public function add()
     {
         $BrandModel = new BrandModel();
+        $CategoryModel = new CategoryModel;
         $brands = $BrandModel->getAllActiveBrands();
+        $categories = $CategoryModel->getAllActiveCategories();
         $option = new AttributeModel();
         $options = $option->getAllAttribute();
-        echo $this->view->render('Admin/Pages/Products/ProductAdd', ['brands' => $brands, 'options' => $options]);
+        echo $this->view->render('Admin/Pages/Products/ProductAdd', ['brands' => $brands,   'categories' => $categories, 'options' => $options]);
     }
     public function store()
     {
@@ -92,8 +99,8 @@ class ProductsController extends BaseController
                     $errors[] = 'Bạn cần phải tải lên file excel thông số kỹ thuật (.xls, .xlsx).';
                 }
 
-                if ($_FILES['specifications_file']['size'] > 10485760) {
-                    $errors[] = 'File quá lớn. vui lòng upload file dưới 10MB.';
+                if ($_FILES['specifications_file']['size'] > 10485760) { // 10MB max
+                    $errors[] = 'File quá lớn. Vui lòng tải lên file dưới 10MB.';
                 }
 
                 if (empty($errors)) {
@@ -102,9 +109,10 @@ class ProductsController extends BaseController
                         $sheet = $spreadsheet->getActiveSheet();
                         $specifications = [];
 
+                        // Duyệt qua các dòng của sheet
                         foreach ($sheet->getRowIterator() as $row) {
-                            $specName = $sheet->getCell('A' . $row->getRowIndex())->getValue();
-                            $specValue = $sheet->getCell('B' . $row->getRowIndex())->getValue();
+                            $specName = $sheet->getCell('A' . $row->getRowIndex())->getValue();  // Cột A: Tên thuộc tính
+                            $specValue = $sheet->getCell('B' . $row->getRowIndex())->getValue(); // Cột B: Giá trị thuộc tính
 
                             if (!empty($specName) && !empty($specValue)) {
                                 $specifications[] = [
@@ -126,6 +134,9 @@ class ProductsController extends BaseController
             } else {
                 $errors[] = 'No Excel file uploaded or error during upload.';
             }
+
+
+            $validationResult = ProductValidation::productValidation($data);
 
             if (empty($errors)) {
                 $productModel = new ProductModel();
@@ -278,5 +289,10 @@ class ProductsController extends BaseController
                 header('Location: /admin/products?status=failed ');
             }
         }
+    }
+
+    public function selectResult(){
+        $categoryModel = new CategoryValueModel();
+        $categoryModel->getChildCategories();
     }
 }
