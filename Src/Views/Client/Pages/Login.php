@@ -11,11 +11,11 @@
     </div>
     <div class="login">
         <div class="form-wrapper">
-            <form action="/user-login" method="post" class="login-form" id="loginForm" onsubmit="return loginValidate()">
+            <form action="/user-login" method="post" class="login-form" id="loginForm">
                 <h2 class="login-title">Đăng nhập</h2>
                 <div class="col-md-12">
                     <input type="text" placeholder="Địa chỉ Email" class="login-form-input " name="email" id="email">
-                    <span class="text-danger email-required" style="display:none" id="email-required">Vui lòng điền tài khoản *</span>
+                    <span class="text-danger email-required" style="display:none" id="email-required">Vui lòng điền Email *</span>
                 </div>
                 <div class="col-md-12">
                     <input type="password" placeholder="Mật khẩu" class="login-form-input" name="password" id="password">

@@ -1,32 +1,29 @@
 
-function loginValidate() {
-    let loginForm = document.getElementById('loginForm');
-    let input = loginForm.elements;
-    let is_valid = 0;
+$('#loginForm').on('submit', (e) => {
 
-    if (input['username'].value === '') {
-        document.getElementById('username-required').style.display = 'block';
-        is_valid = 1;
+    let email = $('#email').val();
+    let password = $('#password').val();
+    let is_valid = true;
+
+    if(email == '') {
+        $('#email-required').show();
+        is_valid = false;
     } else {
-        document.getElementById('username-required').style.display = 'none';
+        $('#email-required').hide();
     }
 
-    if (input['password'].value === '') {
-        document.getElementById('password-required').style.display = 'block';
-        is_valid = 1;
+    if(password == '') {
+        $('#password-required').show();
+        is_valid = false;
     } else {
-        document.getElementById('password-required').style.display = 'none';
+        $('#password-required').hide();
     }
+    console.log(email, password);
+    if(is_valid != true) {
+        e.preventDefault();
 
-    if (is_valid === 1) {
-        return false;
     }
-    return true;
-}
-
-
-
-
+})
 
 function registerValidate() {
     let registerForm = document.getElementById('registerForm');
