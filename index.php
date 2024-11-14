@@ -72,6 +72,9 @@ $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
     $r->addRoute('GET', '/searchResult', [SearchController::class, 'show']);
     $r->addRoute('GET', '/search', [SearchController::class, 'search']);
 
+    $r->post('/user-login', [AuthController::class, 'authLogin']);
+
+
     $r->addGroup('/admin', function (FastRoute\RouteCollector $r) {
         $r->get('/admin', [DashboardController::class, 'show']);
         $r->get('/admin/dashboard', [DashboardController::class, 'show']);

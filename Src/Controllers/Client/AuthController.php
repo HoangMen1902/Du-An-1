@@ -56,4 +56,30 @@ class AuthController extends BaseController {
             header('Location: /register?status=failed');
         }
     }
+
+    public function authLogin() {
+        $email = $_POST['email'];
+        $userModel = new UserModel();
+        $user = $userModel->findUserForLogin('email',$email);
+        if($user) {
+            if(password_verify($_POST['password'], $user['password'])) {
+                Notification::success('Đăng nhập thành công', 'Bạn đã đăng nhập thành công');
+                $_SESSION['user']['name'] = $user['firstname'] . ' ' . $user['lastname'];
+                $_SESSION['user']['id'] = $user['id'];
+                $_SESSION['user']['role'] = $user['role'];
+                $_SESSION['user']['status'] = $user['status'];
+
+                header('location: /home');
+                exit();
+            } else {
+                Notification::error('Đăng nhập thất bại', 'Thông tin đăng nhập không chính xác');
+                header('location: /login');
+                exit();
+            }
+        } else {
+            Notification::error('Đăng nhập thất bại', 'Thông tin đăng nhập không chính xác');
+            header('location: /login');
+            exit();
+        }
+    }
 }

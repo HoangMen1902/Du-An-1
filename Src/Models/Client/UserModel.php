@@ -28,15 +28,18 @@ class UserModel extends BaseModel
         }
     }
 
-    public function getUser($id) {
+    public function getUser($id)
+    {
         return $this->getOne($id);
     }
 
-    public function findDuplicateUsersByColumn($column, $value) {
+    public function findDuplicateUsersByColumn($column, $value)
+    {
         return $this->findDuplicateByColumn($column, $value);
     }
 
-    public function findDuplicateUsersForUpdate($column, $value, $id) {
+    public function findDuplicateUsersForUpdate($column, $value, $id)
+    {
         try {
             $sql = "SELECT COUNT(*) AS count FROM $this->table WHERE $column = ? AND id != ?";
             $conn = $this->_conn->MySQLi();
@@ -53,4 +56,22 @@ class UserModel extends BaseModel
         }
     }
 
+    public function findUserForLogin($column, $email)
+    {
+        try {
+            $sql = "SELECT * FROM $this->table WHERE $column = ?";
+            $conn = $this->_conn->MySQLi();
+            $stmt = $conn->prepare($sql);
+
+            // Gắn giá trị tham số
+            $stmt->bind_param('s', $email);
+            $stmt->execute();
+            $result = $stmt->get_result()->fetch_assoc();
+
+            return $result;
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi kiểm tra dữ liệu theo cột: ' . $th->getMessage());
+            return false;
+        }
+    }
 }
