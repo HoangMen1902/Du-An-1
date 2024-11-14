@@ -4,6 +4,7 @@ namespace Src\Controllers\Admin;
 
 use Src\Controllers\BaseController;
 use Src\Models\Admin\BrandModel;
+use Src\Models\Admin\ProductCategoryModel;
 use Src\Models\Admin\SkuModel;
 use Src\Models\Database;
 use Src\Validations\Admin\ProductValidation;
@@ -151,6 +152,10 @@ class ProductsController extends BaseController
                     exit();
                 }
 
+                $ProductCategory = new ProductCategoryModel;
+                $CategoryValueId = $_POST['child_category'];
+                $ProductCategoryData = ['category_values_id' => $CategoryValueId, 'product_id' => $product_insert];
+                $ProductCategoryInsert = $ProductCategory->store($ProductCategoryData);
 
 
                 $skuDataInsert = [];
@@ -203,6 +208,9 @@ class ProductsController extends BaseController
                     $result = $skuValuesModel->store($skuValue);
                 }
 
+                if($result !== false) {
+
+                } else {}
 
             }
         }

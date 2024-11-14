@@ -161,7 +161,7 @@ class CategoryController extends BaseController
 
 
                 if ($saveResult) {
-                    header("Location: /admin/category/CategoryValueList");
+                    header("Location: /admin/category/CategoryValueList/{$data['category_id']}");
                     exit();
                 } else {
                     $errors[] = "Không thể lưu phân loại. Vui lòng thử lại.";

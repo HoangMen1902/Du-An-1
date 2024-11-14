@@ -10,9 +10,8 @@
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <link rel="stylesheet" href="<?= getenv('APP_URL') ?>\node_modules\typicons.font\src\font/typicons.css">
-    <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="<?= getenv('APP_URL') ?>/public/Assets/Admin/Styles/style.css">
-    <!-- <link rel="shortcut icon" href="<?= getenv('APP_URL') ?>/public/assets/admin/images/favicon.png" /> -->
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script
         src="https://code.jquery.com/jquery-3.7.1.min.js"
@@ -24,6 +23,7 @@
 
 <body>
     <div class="container-scroller">
+
         <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
             <div class="navbar-brand-wrapper d-flex justify-content-center">
                 <div class="navbar-brand-inner-wrapper d-flex justify-content-between align-items-center w-100">
@@ -217,12 +217,16 @@
             </nav>
 
             <div class="main-panel">
+
                 <div class="content-wrapper">
 
                     <?= $this->section('main_content') ?>
 
                 </div>
+
+
                 <footer class="footer">
+
                     <div class="card">
                         <div class="card-body">
                             <div class="d-sm-flex justify-content-center justify-content-sm-between">
@@ -236,9 +240,14 @@
                         </div>
                     </div>
                 </footer>
+                
             </div>
+
         </div>
+
     </div>
+    <?php $this->insert('Notification'); ?>
+
     <?= $this->section('scripts') ?>
     <!-- <script src="<?= getenv('APP_URL') ?>/public/assets/admin/vendors/js/vendor.bundle.base.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

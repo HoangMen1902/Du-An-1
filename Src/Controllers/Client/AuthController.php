@@ -3,6 +3,7 @@ namespace Src\Controllers\Client;
 
 use Src\Controllers\BaseController;
 use Src\Models\Client\UserModel;
+use Src\Notifications\Notification;
 use Src\Validations\Client\UserValidation;
 
 class AuthController extends BaseController {
@@ -46,9 +47,12 @@ class AuthController extends BaseController {
         $isCreated = $userModel->store($userData);
 
         if ($isCreated) {
+            Notification::success('Đăng ký thành công', 'Bạn đã đăng ký thành công');
             header('Location: /login?status=success');
             exit;
         } else {
+            Notification::error('Đăng ký thất bại', 'Có lỗi đã xảy ra');
+
             header('Location: /register?status=failed');
         }
     }

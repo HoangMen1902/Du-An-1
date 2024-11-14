@@ -216,6 +216,7 @@
         <div class="offcanvas-body">
         </div>
     </div>
+    <?php $this->insert('Notification')?>
     <?= $this->section('scripts') ?>
 </body>
 

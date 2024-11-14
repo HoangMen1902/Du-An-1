@@ -14,8 +14,8 @@
             <form action="" class="login-form" id="loginForm" onsubmit="return loginValidate()">
                 <h2 class="login-title">Đăng nhập</h2>
                 <div class="col-md-12">
-                    <input type="text" placeholder="Tài khoản" class="login-form-input " name="username" id="username">
-                    <span class="text-danger username-required" style="display:none" id="username-required">Vui lòng điền tài khoản *</span>
+                    <input type="text" placeholder="Địa chỉ Email" class="login-form-input " name="email" id="email">
+                    <span class="text-danger email-required" style="display:none" id="email-required">Vui lòng điền tài khoản *</span>
                 </div>
                 <div class="col-md-12">
                     <input type="password" placeholder="Mật khẩu" class="login-form-input" name="password" id="password">

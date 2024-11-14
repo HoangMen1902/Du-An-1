@@ -215,7 +215,7 @@
     </div>
 </div>
 
-<script>
+<!-- <script>
     function userChart() {
         let php_data = <?= json_encode($data['total_product_category']) ?>;
         let labels = [];
@@ -285,4 +285,4 @@
     }
     commentByProduct();
     userChart();
-</script>
+</script> -->
