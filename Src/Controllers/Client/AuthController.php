@@ -27,8 +27,9 @@ class AuthController extends BaseController {
         // Kích hoạt validation
         $validation = UserValidation::userValidation($data);
         if ($validation !== true) {
-            // Hiển thị form đăng ký với các lỗi
-            echo $this->view->render('Client/Pages/Register', ['errors' => $validation]);
+            Notification::error('Đăng ký thất bại', 'Email đã tồn tại');
+
+            header('Location: /register?status=failed');
             return;
         }
 

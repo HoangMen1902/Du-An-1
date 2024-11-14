@@ -4,15 +4,6 @@
 
 <?php $this->start('main_content') ?>
 
-<?php if (isset($errors) && !empty($errors)) : ?>
-    <div class="alert alert-danger mt-3">
-        <ul>
-            <?php foreach ($errors as $error) : ?>
-                <li><?= htmlspecialchars($error['name']) ?></li>
-            <?php endforeach; ?>
-        </ul>
-    </div>
-<?php endif; ?>
 
 <div class="login-wrapper">
     <div class="login-img">
