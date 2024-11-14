@@ -33,10 +33,32 @@ class ProductModel extends BaseModel {
         return $this->findDuplicateByColumn('name', $name);
     }
 
-    public function saveSkus(array $skus, int $productId) {
-        $productSkuModel = new ProductSkuModel();
-        return $productSkuModel->saveSku($skus, $productId);
+
+    public function createReturnProductId($data) {
+        try {
+            $sql = "INSERT INTO $this->table (";
+            foreach ($data as $key => $value) {
+                $sql .= "$key, ";
+            }
+            $sql = rtrim($sql, ", ");
+            $sql .= " ) VALUES (";
+            foreach ($data as $key => $value) {
+                $sql .= "'$value', ";
+            }
+
+            $sql = rtrim($sql, ", ");
+
+            $sql .= ")";
+
+            $conn = $this->_conn->MySQLi();
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+            $id = $conn->insert_id;
+            return $id;
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi thêm dữ liệu: ' . $th->getMessage());
+            return false;
+        }
     }
-  
 }
 ?>

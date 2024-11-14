@@ -82,14 +82,14 @@ if (isset($_GET['status']) && $_GET['status'] === 'success') {
                 </div>
 
                 <div class="form-group">
-                    <label>SKUs và Thuộc tính</label>
+                    <label>Thêm biến thể</label>
                     <div id="sku_section">
-                        <?php if (!empty($data['skus'])): ?>
+                        <!-- <?php if (!empty($data['skus'])): ?>
                             <?php foreach ($data['skus'] as $index => $sku): ?>
                                 <div class="sku-item row mb-3" id="sku-item-<?= $index ?>">
                                     <div class="col-md-3">
-                                        <label>SKU</label>
-                                        <input type="text" name="sku[<?= $index ?>][sku]" class="form-control" value="<?= htmlspecialchars($sku['sku'] ?? '') ?>" placeholder="SKU">
+                                        <label>Mã SKU</label>
+                                        <input type="text" name="sku[<?= $index ?>][sku]" class="form-control" value="<?= htmlspecialchars($sku['sku'] ?? '') ?>" placeholder="Mã SKU">
                                     </div>
                                     <div class="col-md-3">
                                         <label>Giá</label>
@@ -112,7 +112,7 @@ if (isset($_GET['status']) && $_GET['status'] === 'success') {
                                     </div>
                                 </div>
                             <?php endforeach; ?>
-                        <?php endif; ?>
+                        <?php endif; ?> -->
                     </div>
                     <a href="javascript:void(0)" onclick="addSku()" class="btn btn-success mt-3">Thêm SKU</a>
                 </div>
@@ -124,18 +124,20 @@ if (isset($_GET['status']) && $_GET['status'] === 'success') {
 </div>
 
 <script>
-    let skuIndex = <?= count($data['skus'] ?? []) ?>;
+    let skuIndex = 0;
+    let optionIndex = 0
+    let optionValueIndex = 0
 
     function addSku() {
         skuIndex++;
         $('#sku_section').append(`
             <div class="sku-item row mb-3" id="sku-item-${skuIndex}">
                 <div class="col-md-3">
-                    <label>SKU</label>
+                    <label>Mã SKU</label>
                     <input type="text" name="sku[${skuIndex}][sku]" class="form-control" placeholder="SKU">
                 </div>
                 <div class="col-md-3">
-                    <label>Giá</label>
+                    <label>Giá gốc</label>
                     <input type="number" name="sku[${skuIndex}][price]" class="form-control" placeholder="Giá">
                 </div>
                 <div class="col-md-3">
@@ -143,8 +145,8 @@ if (isset($_GET['status']) && $_GET['status'] === 'success') {
                     <input type="number" name="sku[${skuIndex}][quantity]" class="form-control" placeholder="Số lượng">
                 </div>
                 <div class="col-md-3">
-                    <label>Hình ảnh SKU</label>
-                    <input type="file" name="sku[${skuIndex}][images][]" class="form-control" accept="image/*" multiple>
+                    <label>Hình ảnh</label>
+                    <input type="file" name="sku[${skuIndex}][images]" class="form-control" >
                 </div>
                 <div class="col-12 properties-container mt-2">
                     <!-- Dynamic property fields go here -->
@@ -158,23 +160,25 @@ if (isset($_GET['status']) && $_GET['status'] === 'success') {
     }
 
     function addProperty(element) {
+        optionIndex++;
         const propertyContainer = $(element).closest('.sku-item').find('.properties-container');
         propertyContainer.append(`
             <div class="row mb-2">
                 <div class="col-md-5">
                     <label>Tên thuộc tính</label>
-                    <select name="option_id[${skuIndex}][]" class="form-control">
+                    <select name="sku[${skuIndex}][option][${optionIndex}][option_id]" class="form-control">
                         <option value="">Chọn thuộc tính</option>
                         <?php foreach ($options as $attribute): ?>
                             <option value="<?= $attribute['id'] ?>"><?= htmlspecialchars($attribute['name']) ?></option>
                         <?php endforeach; ?>
                     </select>
+
                 </div>
-                <div class="col-md-5">
+                <div class="col-md-5">t
                     <label>Giá trị</label>
-                    <input type="text" name="option_value[${skuIndex}][]" class="form-control" placeholder="Giá trị thuộc tính">
+                    <input type="text" name="sku[${skuIndex}][option][${optionIndex}][value_name]" class="form-control" placeholder="Đen, trắng, ...">
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-2 d-flex align-items-end justify-content-center">
                     <a href="javascript:void(0)" onclick="removeProperty(this)" class="btn btn-danger">Xóa</a>
                 </div>
             </div>
@@ -183,10 +187,12 @@ if (isset($_GET['status']) && $_GET['status'] === 'success') {
 
     function removeProperty(element) {
         $(element).closest('.row').remove();
+        optionIndex--;
     }
 
     function removeSku(skuIndex) {
         $('#sku-item-' + skuIndex).remove();
+        skuIndex--;
     }
 </script>
 
