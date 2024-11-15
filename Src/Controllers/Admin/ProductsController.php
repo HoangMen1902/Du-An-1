@@ -13,12 +13,13 @@ use Src\Models\Admin\CategoryModel;
 use Src\Models\Admin\CategoryValueModel;
 use Src\Models\Admin\ProductSkuModel;
 use Src\Models\Admin\AttributeModel;
-
+use Respect\Validation\Validator as v;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use Exception;
 use Phinx\Db\Table\Index;
 use Src\Models\Admin\ProductOptionModel;
 use Src\Models\Admin\SkuValuesModel;
+use Src\Notifications\Notification;
 
 class ProductsController extends BaseController
 {
@@ -61,6 +62,17 @@ class ProductsController extends BaseController
                 'discount' => $_POST['discount'] ?? 0,
                 'specifications' => []
             ];
+
+            foreach ($data as $input => $value) {
+                if ($input === 'specifications') {
+                    continue;
+                }
+                if (empty($value) || $value === null) {
+                    Notification::error('Thêm thất bại', 'Vui lòng nhập đầy đủ thông tin');
+                    header('location:/admin/product/add');
+                    exit();
+                }
+            }
 
             $errors = [];
 
@@ -134,6 +146,9 @@ class ProductsController extends BaseController
                 }
             } else {
                 $errors[] = 'No Excel file uploaded or error during upload.';
+                Notification::error('Thêm thất bại', 'Đã xảy ra lỗi khi upload file excel!');
+                // header('location:/admin/product/add');
+                // exit();
             }
 
 
@@ -151,7 +166,6 @@ class ProductsController extends BaseController
                     ]);
                     exit();
                 }
-
                 $ProductCategory = new ProductCategoryModel;
                 $CategoryValueId = $_POST['child_category'];
                 $ProductCategoryData = ['category_values_id' => $CategoryValueId, 'product_id' => $product_insert];
@@ -162,6 +176,7 @@ class ProductsController extends BaseController
                 $skuModel = new SkuModel();
                 $skuValuesModel = new SkuValuesModel();
                 $optionModel = new ProductOptionModel();
+
                 foreach ($_POST['sku'] as $sku) {
 
                     $skuDataInsert[] = [
@@ -171,11 +186,47 @@ class ProductsController extends BaseController
                         'product_id' => $product_insert
                     ];
                 }
+                $images = [];
+                $tmp_name = [];
+                $target_dir =  "public/Uploads/Products/";
+                foreach ($_FILES['sku']['tmp_name'] as $index => $skuTmp) {
+                    if (v::image()->validate($skuTmp['images'])) {
+                        $tmp_name[] = $skuTmp['images'];
+                    } else {
+                        Notification::error('Thêm thất bại', 'Hình ảnh biến thể không hợp lệ!');
+                        header('location:/admin/product/add');
+                        exit();
+                    }
+                }
+                foreach($_FILES['sku']['name'] as $index => $value) {
+                    $temp = explode(".", $value['images']);
+                    $newfilename = round(microtime(true)) . '.' . end($temp);
+                    $images[] = $newfilename;
+                }
+
+                foreach($tmp_name as $index => $temp_name) {
+                    if(!move_uploaded_file($temp_name, $target_dir . $images[$index])) {
+                        Notification::error('Thêm thất bại', 'Lỗi khi upload hình ảnh biến thể!');
+                        header('location:/admin/product/add');
+                        exit();
+                    }
+                }
+
+                foreach($skuDataInsert as $index => $skuDataValues) {
+                    $skuDataInsert[$index]['images'] = $images[$index];
+                }
+
                 foreach ($skuDataInsert as $skuData) {
                     $insertData[] = $skuModel->storeReturnId($skuData);
                 }
 
-
+                foreach ($insertData as $dataCheck) {
+                    if ($dataCheck === false) {
+                        Notification::error('Thêm thất bại', 'Đã xảy ra lỗi khi thêm SKU!');
+                        header('location:/admin/product/add');
+                        exit();
+                    }
+                }
                 $skuPost = $_POST['sku'];
                 foreach ($skuPost as $singleSku => $value) {
                     $skuPost[$singleSku]['sku_id'] = $insertData[$singleSku - 1];
@@ -191,6 +242,16 @@ class ProductsController extends BaseController
                     $option_values_id[] = $optionModel->storeReturnId($option);
                 }
 
+
+                foreach ($option_values_id as $dataCheck) {
+                    if ($dataCheck === false) {
+                        Notification::error('Thêm thất bại', 'Đã xảy ra lỗi khi thêm SKU!');
+                        header('location:/admin/product/add');
+                        exit();
+                    }
+                }
+
+
                 $sku_data['product_id'] = $product_insert;
 
                 foreach ($skuPost as $index => $item) {
@@ -203,15 +264,25 @@ class ProductsController extends BaseController
                     }
                 }
 
-            
+
                 foreach ($SkuValuesResult as $skuValue) {
                     $result = $skuValuesModel->store($skuValue);
                 }
 
-                if($result !== false) {
 
-                } else {}
-
+                if ($result === false) {
+                    Notification::error('Thêm thất bại', 'Đã xảy ra lỗi khi thêm SKU!');
+                    header('location:/admin/product/add');
+                    exit();
+                } else {
+                    Notification::success('Thêm thành công', 'Đã thêm sản phẩm thành công!');
+                    header('location:/admin/product/add');
+                    exit();
+                }
+            } else {
+                Notification::error('405', 'Forbidden Method');
+                header('location:/admin/product/add');
+                exit();
             }
         }
     }
@@ -296,12 +367,12 @@ class ProductsController extends BaseController
                 header('Location: /admin/products?status=success ');
             } else {
                 header('Location: /admin/products?status=failed ');
-
             }
         }
     }
 
-    public function selectResult(){
+    public function selectResult()
+    {
         $categoryModel = new CategoryValueModel();
         $categoryModel->getChildCategories();
     }
