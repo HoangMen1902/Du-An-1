@@ -47,7 +47,7 @@
             <div class="login-option">
                 <p class="login-option-title">Hoặc đăng ký bằng</p>
                 <figure>
-                    <a href=""><img src="<?= $_ENV['APP_URL'] ?>/public/Assets/Client/Images/Login/Googlebg.png" alt="Google Icon" class="google-icon"></a>
+                    <a href="/login-google"><img src="<?= $_ENV['APP_URL'] ?>/public/Assets/Client/Images/Login/Googlebg.png" alt="Google Icon" class="google-icon"></a>
                 </figure>
             </div>
         </div>

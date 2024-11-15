@@ -74,4 +74,26 @@ class UserModel extends BaseModel
             return false;
         }
     }
+
+    public function getOneUserByInfo($column, $info)
+    {
+        $this->id = $column;
+        $result = [];
+        try {
+            $sql = "SELECT * FROM $this->table WHERE $this->id = ?";
+            $conn = $this->_conn->MySQLi();
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param('s', $info);
+            $stmt->execute();
+            return $stmt->get_result()->fetch_assoc();
+        } catch (\Throwable $th) {
+            error_log('Đã xảy ra lỗi khi lấy dữ liệu: ' . $th->getMessage());
+            return $result;
+        }
+    }
+    public function getUserById($id)
+    {
+        $this->id = 'id';
+        return $this->getOne($id);
+    }
 }

@@ -20,7 +20,9 @@
         "nikic/fast-route": "^1.3",
         "google/apiclient": "^2.15.0",
         "respect/validation": "^2.3",
-        "phpoffice/phpspreadsheet": "^3.4"
+        "phpoffice/phpspreadsheet": "^3.4",
+        "psr/cache": "^2.0",
+        "guzzlehttp/guzzle": "^7.0"
     },
     "scripts": {
         "phinx-create": "vendor/bin/phinx create",
