@@ -34,15 +34,19 @@
                 </div>
                 <button class="login-btn" id="loginSubmit">Đăng nhập</button>
 
-            </form> 
+            </form>
             <div class="login-option">
                 <p class="login-option-title">Hoặc đăng nhập bằng</p>
-                <figure>
-                    <a href="/login-google"><img src="<?= $_ENV['APP_URL'] ?>/public/Assets/Client/Images/Login/Googlebg.png" alt="Google Icon" class="google-icon"></a>
-                </figure>
-                
+                <div class="d-flex justify-content-center">
+                    <figure class="me-4">
+                        <a href="/login-google"><img src="<?= $_ENV['APP_URL'] ?>/public/Assets/Client/Images/Login/Googlebg.png" alt="Google Icon" class="google-icon"></a>
+                    </figure>
+                    <figure>
+                        <a href="/login-facebook"><img src="<?= $_ENV['APP_URL'] ?>/public/Assets/Client/Images/Login/fbicon-removebg-preview.png" alt="Google Icon" class="google-icon"></a>
+                    </figure>
+                </div>
             </div>
-            <p class="register-link">Chưa có tài khoản? Đăng ký ngay <a href="/register" >Tại đây</a></p>
+            <p class="register-link">Chưa có tài khoản? Đăng ký ngay <a href="/register">Tại đây</a></p>
         </div>
 
 

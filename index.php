@@ -61,6 +61,9 @@ $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
     $r->addRoute('GET', '/register', [AuthController::class, 'register']);
     $r->addRoute('GET', '/login-google', [AuthController::class, 'loginGoogle']);
     $r->addRoute('GET', '/logged-google', [AuthController::class, 'loginGoogleAction']);
+    $r->addRoute('GET', '/login-facebook', [AuthController::class, 'redirectToFacebook']);
+    $r->addRoute('GET', '/logged-facebook', [AuthController::class, 'handleFacebookCallback']);
+
 
 
     $r->post('/register-action', [AuthController::class, 'store']);

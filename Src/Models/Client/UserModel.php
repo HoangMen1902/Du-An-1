@@ -96,4 +96,45 @@ class UserModel extends BaseModel
         $this->id = 'id';
         return $this->getOne($id);
     }
+
+    public function getAccountByEmail($email) {
+        $sql = "SELECT * FROM Users WHERE email = ?";
+        $conn = $this->_conn->MySQLi();
+        $stmt = $conn->prepare($sql);
+    
+        if ($stmt) {
+            $stmt->bind_param('s', $email);
+            $stmt->execute();
+            $result = $stmt->get_result()->fetch_assoc();
+            $stmt->close();
+            return $result;
+        }
+    
+        return null; 
+    }
+    
+    public function insertAccount($email, $firstname, $lastname, $avatar, $method = 'local')
+    {
+        $sql = "INSERT INTO Users (email, firstname, lastname, avatar, status, role, method, created_at, updated_at) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
+        
+        $conn = $this->_conn->MySQLi();
+        $stmt = $conn->prepare($sql);
+
+        if ($stmt) {
+            $status = 1; 
+            $role = 1;   
+            $stmt->bind_param('ssssiss', $email, $firstname, $lastname, $avatar, $status, $role, $method);
+            $stmt->execute();
+            $insert_id = $stmt->insert_id;
+            $stmt->close();
+
+            return $insert_id;
+        }
+
+        return null;
+    }
+    
+    
+    
 }

@@ -33,6 +33,7 @@ final class UsersTable extends AbstractMigration
             ->addColumn('role', 'integer', ['limit' => MysqlAdapter::INT_TINY, 'default' => 1])
             ->addColumn('avatar', 'text')
             ->addColumn('google_id', 'string', ['limit' => 50, 'null' => true])
+            ->addColumn('method', 'string', ['limit' => 255, 'null' => true])
             ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
             ->addColumn('updated_at', 'timestamp', [
                 'default' => 'CURRENT_TIMESTAMP',

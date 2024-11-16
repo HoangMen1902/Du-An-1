@@ -12,7 +12,7 @@
     </div>
     <div class="login">
         <div class="form-wrapper">
-            <form  action="/register-action" class="login-form" id="registerForm" method="POST"  onsubmit="return registerValidate()">
+            <form action="/register-action" class="login-form" id="registerForm" method="POST" onsubmit="return registerValidate()">
                 <h2 class="login-title">Đăng Ký</h2>
                 <div class="col-md-12">
                     <input type="email" placeholder="Email" class="login-form-input " name="email" id="email">
@@ -46,9 +46,14 @@
             </form>
             <div class="login-option">
                 <p class="login-option-title">Hoặc đăng ký bằng</p>
-                <figure>
-                    <a href="/login-google"><img src="<?= $_ENV['APP_URL'] ?>/public/Assets/Client/Images/Login/Googlebg.png" alt="Google Icon" class="google-icon"></a>
-                </figure>
+                <div class="d-flex justify-content-center">
+                    <figure class="me-4">
+                        <a href="/login-google"><img src="<?= $_ENV['APP_URL'] ?>/public/Assets/Client/Images/Login/Googlebg.png" alt="Google Icon" class="google-icon"></a>
+                    </figure>
+                    <figure>
+                        <a href="/login-facebook"><img src="<?= $_ENV['APP_URL'] ?>/public/Assets/Client/Images/Login/fbicon-removebg-preview.png" alt="Google Icon" class="google-icon"></a>
+                    </figure>
+                </div>
             </div>
         </div>
 

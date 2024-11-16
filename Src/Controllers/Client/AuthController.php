@@ -1,4 +1,5 @@
 <?php
+
 namespace Src\Controllers\Client;
 
 use Src\Controllers\BaseController;
@@ -11,19 +12,23 @@ use Google\Service;
 use Google\Service\Oauth2;
 use Exception;
 
-class AuthController extends BaseController {
+class AuthController extends BaseController
+{
 
 
 
-    public function login() {
+    public function login()
+    {
         echo $this->view->render('Client/Pages/Login');
     }
 
-    public function register() {
+    public function register()
+    {
         echo $this->view->render('Client/Pages/Register');
     }
 
-    public function store() {
+    public function store()
+    {
         $data = [
             'firstname' => $_POST['firstname'] ?? null,
             'lastname' => $_POST['lastname'] ?? null,
@@ -49,7 +54,7 @@ class AuthController extends BaseController {
             'lastname' => $data['lastname'],
             'email' => $data['email'],
             'password' => $hashedPassword,
-            'status' => 1 
+            'status' => 1
         ];
 
         $userModel = new UserModel();
@@ -66,12 +71,13 @@ class AuthController extends BaseController {
         }
     }
 
-    public function authLogin() {
+    public function authLogin()
+    {
         $email = $_POST['email'];
         $userModel = new UserModel();
-        $user = $userModel->findUserForLogin('email',$email);
-        if($user) {
-            if(password_verify($_POST['password'], $user['password'])) {
+        $user = $userModel->findUserForLogin('email', $email);
+        if ($user) {
+            if (password_verify($_POST['password'], $user['password'])) {
                 Notification::success('Đăng nhập thành công', 'Bạn đã đăng nhập thành công');
                 $_SESSION['user']['name'] = $user['firstname'] . ' ' . $user['lastname'];
                 $_SESSION['user']['id'] = $user['id'];
@@ -180,6 +186,98 @@ class AuthController extends BaseController {
                 exit();
             }
         } else {
+            header('Location: /login');
+            exit();
+        }
+    }
+    public static function redirectToFacebook()
+    {
+        $facebook_oauth_app_id = $_ENV['FACEBOOK_APP_ID'];
+        $facebook_oauth_redirect_uri = $_ENV['FACEBOOK_REDIRECT_URI'];
+
+        $params = [
+            'client_id' => $facebook_oauth_app_id,
+            'redirect_uri' => $facebook_oauth_redirect_uri,
+            'response_type' => 'code',
+            'scope' => 'email'
+        ];
+
+        header('Location: https://www.facebook.com/dialog/oauth?' . http_build_query($params));
+        exit;
+    }
+
+    public static function handleFacebookCallback()
+    {
+        $usermodel = new UserModel();
+
+        $facebook_oauth_app_id = $_ENV['FACEBOOK_APP_ID'];
+        $facebook_oauth_app_secret = $_ENV['FACEBOOK_APP_SECRET'];
+        $facebook_oauth_redirect_uri = $_ENV['FACEBOOK_REDIRECT_URI'];
+        $facebook_oauth_version = 'v18.0';
+
+        if (isset($_GET['code']) && !empty($_GET['code'])) {
+            $params = [
+                'client_id' => $facebook_oauth_app_id,
+                'client_secret' => $facebook_oauth_app_secret,
+                'redirect_uri' => $facebook_oauth_redirect_uri,
+                'code' => $_GET['code']
+            ];
+
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, 'https://graph.facebook.com/oauth/access_token');
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($params));
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            $response = curl_exec($ch);
+            curl_close($ch);
+            $response = json_decode($response, true);
+
+            if (isset($response['access_token']) && !empty($response['access_token'])) {
+                $ch = curl_init();
+                curl_setopt($ch, CURLOPT_URL, 'https://graph.facebook.com/' . $facebook_oauth_version . '/me?fields=name,email,picture');
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($ch, CURLOPT_HTTPHEADER, ['Authorization: Bearer ' . $response['access_token']]);
+                $response = curl_exec($ch);
+                curl_close($ch);
+                $profile = json_decode($response, true);
+
+                if (isset($profile['email'])) {
+                    $nameParts = explode(" ", $profile['name']);
+                    $firstname = array_pop($nameParts);  
+                    $lastname = implode(" ", $nameParts); 
+
+                    $account = $usermodel->getAccountByEmail($profile['email']);
+                    if (!$account) {
+                        $id = $usermodel->insertAccount($profile['email'], $firstname, $lastname, $profile['picture']['data']['url'], 'facebook');
+                        Notification::success('Đăng ký thành công', 'Bạn đã đăng nhập bằng tài khoản facebook');
+                    } else {
+                        $id = $account['id'];
+                        if ($account['status'] != 1) {
+                            Notification::error('Tài khoản bị khóa', 'Tài khoản của bạn đã bị khóa');
+                            header('Location: /login');
+                            exit();
+                        }
+                        Notification::success('Đăng nhập thành công', 'Chào mừng trở lại!');
+                    }
+
+                    session_regenerate_id();
+                    $_SESSION['facebook_loggedin'] = true;
+                    $_SESSION['facebook_id'] = $id;
+
+                    header('Location: /home');
+                    exit;
+                } else {
+                    Notification::error('Lỗi', 'Không thể lấy thông tin hồ sơ từ Facebook!');
+                    header('Location: /login');
+                    exit();
+                }
+            } else {
+                Notification::error('Lỗi', 'Mã token không hợp lệ!');
+                header('Location: /login');
+                exit();
+            }
+        } else {
+            Notification::error('Lỗi', 'Không có mã xác thực!');
             header('Location: /login');
             exit();
         }
