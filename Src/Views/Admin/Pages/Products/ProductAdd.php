@@ -128,70 +128,69 @@ if (isset($_GET['status']) && $_GET['status'] === 'success') {
 $this->push('scripts');
 ?>
 <script>
-    let skuIndex = 0;
-    let optionIndex = 0
-    let optionValueIndex = 0
+let skuIndex = 0;
 
-    function addSku() {
-        skuIndex++;
-        $('#sku_section').append(`
-            <div class="sku-item row mb-3" id="sku-item-${skuIndex}">
-                <div class="col-md-3">
-                    <label>Mã SKU</label>
-                    <input type="text" name="sku[${skuIndex}][sku]" class="form-control" placeholder="SKU">
-                </div>
-                <div class="col-md-3">
-                    <label>Giá gốc</label>
-                    <input type="number" name="sku[${skuIndex}][price]" class="form-control" placeholder="Giá">
-                </div>
-                <div class="col-md-3">
-                    <label>Số lượng</label>
-                    <input type="number" name="sku[${skuIndex}][quantity]" class="form-control" placeholder="Số lượng">
-                </div>
-                <div class="col-md-3">
-                    <label>Hình ảnh</label>
-                    <input type="file" name="sku[${skuIndex}][images]" class="form-control" >
-                </div>
-                <div class="col-12 properties-container mt-2">
-                    <!-- Dynamic property fields go here -->
-                </div>
-                <div class="col-12 mt-3">
-                    <a href="javascript:void(0)" onclick="addProperty(this)" class="btn btn-primary">Thêm Thuộc tính</a>
-                    <a href="javascript:void(0)" onclick="removeSku(${skuIndex})" class="btn btn-danger">Xóa SKU</a>
-                </div>
+function addSku() {
+    skuIndex++;
+    $('#sku_section').append(`
+        <div class="sku-item row mb-3" id="sku-item-${skuIndex}" data-sku-index="${skuIndex}">
+            <div class="col-md-3">
+                <label>Mã SKU</label>
+                <input type="text" name="sku[${skuIndex}][sku]" class="form-control" placeholder="SKU">
             </div>
-        `);
-    }
-
-    function addProperty(element) {
-        optionIndex++;
-        const propertyContainer = $(element).closest('.sku-item').find('.properties-container');
-        propertyContainer.append(`
-            <div class="row mb-2">
-                <div class="col-md-5">
-                    <label>Tên thuộc tính</label>
-                    <select name="sku[${skuIndex}][option][${optionIndex}][option_id]" class="form-control">
-                        <option value="">Chọn thuộc tính</option>
-                        <?php foreach ($options as $attribute): ?>
-                            <option value="<?= $attribute['id'] ?>"><?= htmlspecialchars($attribute['name']) ?></option>
-                        <?php endforeach; ?>
-                    </select>
-
-                </div>
-                <div class="col-md-5">t
-                    <label>Giá trị</label>
-                    <input type="text" name="sku[${skuIndex}][option][${optionIndex}][value_name]" class="form-control" placeholder="Đen, trắng, ...">
-                </div>
-                <div class="col-md-2 d-flex align-items-end justify-content-center">
-                    <a href="javascript:void(0)" onclick="removeProperty(this)" class="btn btn-danger">Xóa</a>
-                </div>
+            <div class="col-md-3">
+                <label>Giá gốc</label>
+                <input type="number" name="sku[${skuIndex}][price]" class="form-control" placeholder="Giá">
             </div>
-        `);
-    }
+            <div class="col-md-3">
+                <label>Số lượng</label>
+                <input type="number" name="sku[${skuIndex}][quantity]" class="form-control" placeholder="Số lượng">
+            </div>
+            <div class="col-md-3">
+                <label>Hình ảnh</label>
+                <input type="file" name="sku[${skuIndex}][images]" class="form-control">
+            </div>
+            <div class="col-12 properties-container mt-2">
+                <!-- Dynamic property fields go here -->
+            </div>
+            <div class="col-12 mt-3">
+                <a href="javascript:void(0)" onclick="addProperty(this)" class="btn btn-primary">Thêm Thuộc tính</a>
+                <a href="javascript:void(0)" onclick="removeSku(${skuIndex})" class="btn btn-danger">Xóa SKU</a>
+            </div>
+        </div>
+    `);
+}
+function addProperty(element) {
+    const skuItem = $(element).closest('.sku-item'); // Tìm phần tử SKU đang thao tác
+    const skuIndex = skuItem.data('sku-index'); // Lấy skuIndex từ data attribute
+    const propertyContainer = skuItem.find('.properties-container'); // Tìm container thuộc tính
+
+    const newProperty = `
+        <div class="row mb-2">
+            <div class="col-md-5">
+                <label>Tên thuộc tính</label>
+                <select name="sku[${skuIndex}][option][][option_id]" class="form-control">
+                    <option value="">Chọn thuộc tính</option>
+                    <?php foreach ($options as $attribute): ?>
+                        <option value="<?= $attribute['id'] ?>"><?= htmlspecialchars($attribute['name']) ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            <div class="col-md-5">
+                <label>Giá trị</label>
+                <input type="text" name="sku[${skuIndex}][option][][value_name]" class="form-control" placeholder="Đen, trắng, ...">
+            </div>
+            <div class="col-md-2 d-flex align-items-end justify-content-center">
+                <a href="javascript:void(0)" onclick="removeProperty(this)" class="btn btn-danger">Xóa</a>
+            </div>
+        </div>
+    `;
+    propertyContainer.append(newProperty);
+}
 
     function removeProperty(element) {
         $(element).closest('.row').remove();
-        optionIndex--;
+
     }
 
     function removeSku(skuIndex) {

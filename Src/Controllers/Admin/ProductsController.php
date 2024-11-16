@@ -53,7 +53,6 @@ class ProductsController extends BaseController
     public function store()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $database = new Database();
             $data = [
                 'name' => $_POST['name'] ?? null,
                 'description' => $_POST['description'] ?? null,
@@ -147,137 +146,194 @@ class ProductsController extends BaseController
             } else {
                 $errors[] = 'No Excel file uploaded or error during upload.';
                 Notification::error('Thêm thất bại', 'Đã xảy ra lỗi khi upload file excel!');
-                // header('location:/admin/product/add');
-                // exit();
+                header('location:/admin/product/add');
+                exit();
             }
 
 
             $validationResult = ProductValidation::productValidation($data);
 
             if (empty($errors)) {
-                $productModel = new ProductModel();
-                $product_insert = $productModel->createReturnProductId($data);
-
-                if (!$product_insert) {
-                    $errors[] = 'No Excel file uploaded or error during upload.';
-                    echo $this->view->render('Admin/Pages/Products/ProductAdd', [
-                        'data' => $data,
-                        'errors' => $errors
-                    ]);
-                    exit();
-                }
-                $ProductCategory = new ProductCategoryModel;
-                $CategoryValueId = $_POST['child_category'];
-                $ProductCategoryData = ['category_values_id' => $CategoryValueId, 'product_id' => $product_insert];
-                $ProductCategoryInsert = $ProductCategory->store($ProductCategoryData);
+                $database = new Database();
+                $conn = $database->MySQLi();
+                $conn->begin_transaction();
+                try {
+                    $productModel = new ProductModel();
+                    $productModel->beginTransaction();
+                    $product_insert = $productModel->createReturnProductId($data);
 
 
-                $skuDataInsert = [];
-                $skuModel = new SkuModel();
-                $skuValuesModel = new SkuValuesModel();
-                $optionModel = new ProductOptionModel();
-
-                foreach ($_POST['sku'] as $sku) {
-
-                    $skuDataInsert[] = [
-                        'sku' => $sku['sku'],
-                        'price' => $sku['price'],
-                        'quantity' => $sku['quantity'],
-                        'product_id' => $product_insert
-                    ];
-                }
-                $images = [];
-                $tmp_name = [];
-                $target_dir =  "public/Uploads/Products/";
-                foreach ($_FILES['sku']['tmp_name'] as $index => $skuTmp) {
-                    if (v::image()->validate($skuTmp['images'])) {
-                        $tmp_name[] = $skuTmp['images'];
-                    } else {
-                        Notification::error('Thêm thất bại', 'Hình ảnh biến thể không hợp lệ!');
-                        header('location:/admin/product/add');
+                    if (!$product_insert) {
+                        $errors[] = 'No Excel file uploaded or error during upload.';
+                        echo $this->view->render('Admin/Pages/Products/ProductAdd', [
+                            'data' => $data,
+                            'errors' => $errors
+                        ]);
                         exit();
                     }
-                }
-                foreach($_FILES['sku']['name'] as $index => $value) {
-                    $temp = explode(".", $value['images']);
-                    $newfilename = round(microtime(true)) . '.' . end($temp);
-                    $images[] = $newfilename;
-                }
+                    $ProductCategory = new ProductCategoryModel;
+                    $CategoryValueId = $_POST['child_category'];
 
-                foreach($tmp_name as $index => $temp_name) {
-                    if(!move_uploaded_file($temp_name, $target_dir . $images[$index])) {
-                        Notification::error('Thêm thất bại', 'Lỗi khi upload hình ảnh biến thể!');
-                        header('location:/admin/product/add');
+                    if (empty($CategoryValueId) || !is_numeric($CategoryValueId)) {
+                        Notification::error('Thêm thất bại', 'Danh mục sản phẩm không hợp lệ!');
+                        header('location: /admin/product/add');
                         exit();
                     }
-                }
 
-                foreach($skuDataInsert as $index => $skuDataValues) {
-                    $skuDataInsert[$index]['images'] = $images[$index];
-                }
 
-                foreach ($skuDataInsert as $skuData) {
-                    $insertData[] = $skuModel->storeReturnId($skuData);
-                }
-
-                foreach ($insertData as $dataCheck) {
-                    if ($dataCheck === false) {
-                        Notification::error('Thêm thất bại', 'Đã xảy ra lỗi khi thêm SKU!');
-                        header('location:/admin/product/add');
-                        exit();
+                    $ProductCategoryData = ['category_values_id' => $CategoryValueId, 'product_id' => $product_insert];
+                    $ProductCategoryInsert = $ProductCategory->store($ProductCategoryData);
+                    if (!$ProductCategoryInsert) {
+                        Notification::error('Thêm thất bại', 'Đã xảy ra lỗi khi danh mục sản phẩm');
+                        header('location: /admin/product/add');
                     }
-                }
-                $skuPost = $_POST['sku'];
-                foreach ($skuPost as $singleSku => $value) {
-                    $skuPost[$singleSku]['sku_id'] = $insertData[$singleSku - 1];
-                    foreach ($value['option'] as $index => $options) {
-                        $optionData[] = $options;
-                    }
-                }
 
 
+                    $skuDataInsert = [];
+                    $skuModel = new SkuModel();
+                    $skuValuesModel = new SkuValuesModel();
+                    $optionModel = new ProductOptionModel();
 
-                foreach ($optionData as $option) {
-                    $option['product_id'] = $product_insert;
-                    $option_values_id[] = $optionModel->storeReturnId($option);
-                }
+                    foreach ($_POST['sku'] as $sku) {
 
-
-                foreach ($option_values_id as $dataCheck) {
-                    if ($dataCheck === false) {
-                        Notification::error('Thêm thất bại', 'Đã xảy ra lỗi khi thêm SKU!');
-                        header('location:/admin/product/add');
-                        exit();
-                    }
-                }
-
-
-                $sku_data['product_id'] = $product_insert;
-
-                foreach ($skuPost as $index => $item) {
-                    foreach ($item['option'] as $optionIndex => $option) {
-                        $SkuValuesResult[] = [
-                            'sku_id' => $item['sku_id'],
-                            'option_id' => $option['option_id'],
-                            'value_id' => $option_values_id[$optionIndex - 1]
+                        if (empty($sku['price']) || !is_numeric($sku['price'])) {
+                            Notification::error('Thêm thất bại', 'Giá sản phẩm không hợp lệ!');
+                            header('location: /admin/product/add');
+                            exit();
+                        }
+                        $skuDataInsert[] = [
+                            'sku' => $sku['sku'],
+                            'price' => $sku['price'],
+                            'quantity' => $sku['quantity'],
+                            'product_id' => $product_insert
                         ];
                     }
-                }
+                    $images = [];
+                    $tmp_name = [];
+                    $target_dir =  "public/Uploads/Products/";
+                    foreach ($_FILES['sku']['tmp_name'] as $index => $skuTmp) {
+                        if (v::image()->validate($skuTmp['images'])) {
+                            $tmp_name[] = $skuTmp['images'];
+                        } else {
+                            Notification::error('Thêm thất bại', 'Hình ảnh biến thể không hợp lệ!');
+                            header('location:/admin/product/add');
+                            exit();
+                        }
+                    }
+                    foreach ($_FILES['sku']['name'] as $index => $value) {
+                        $temp = explode(".", $value['images']);
+                        $newfilename = round(microtime(true)) . '.' . end($temp);
+                        $images[] = $newfilename;
+                    }
+
+                    foreach ($tmp_name as $index => $temp_name) {
+                        if (!move_uploaded_file($temp_name, $target_dir . $images[$index])) {
+                            Notification::error('Thêm thất bại', 'Lỗi khi upload hình ảnh biến thể!');
+                            header('location:/admin/product/add');
+                            exit();
+                        }
+                    }
+
+                    foreach ($skuDataInsert as $index => $skuDataValues) {
+                        $skuDataInsert[$index]['images'] = $images[$index];
+                    }
+
+                    foreach ($skuDataInsert as $skuData) {
+                        $insertData[] = $skuModel->storeReturnId($skuData);
+                    }
+
+                    foreach ($insertData as $dataCheck) {
+                        if ($dataCheck === false) {
+                            Notification::error('Thêm thất bại', 'Đã xảy ra lỗi khi thêm SKU!');
+                            header('location:/admin/product/add');
+                            exit();
+                        }
+                    }
+                    echo '<pre>';
+
+                    $optionData = [];
+                    $option_values_id = [];
+                    $skuPost = $_POST['sku'];
+                    $options_index = 0;
+                    foreach ($skuPost as $singleSku => $value) {
+                        $skuPost[$singleSku]['sku_id'] = $insertData[$options_index];
+                        $options_index++;
+
+                        $option = [];
+
+                        foreach ($value['option'] as $options) {
+                            if (isset($options['option_id'])) {
+                                $option['option_id'] = $options['option_id']; // Lưu option_id
+                            }
+                            if (isset($options['value_name'])) {
+                                $option['value_name'] = $options['value_name']; // Lưu value_name
+                            }
+
+                            if (isset($option['option_id']) && isset($option['value_name'])) {
+                                $optionData[] = [
+                                    'option_id' => $option['option_id'],
+                                    'value_name' => $option['value_name']
+                                ];
+                                $option = [];
+                            }
+                        }
+                    }
+
+                    foreach ($optionData as $option) {
+                        $option['product_id'] = $product_insert;
+                        $option_values_id[] = $optionModel->storeReturnId($option);
+                    }
+
+                    foreach ($option_values_id as $dataCheck) {
+                        if ($dataCheck === false) {
+                            Notification::error('Thêm thất bại', 'Đã xảy ra lỗi khi thêm SKU!');
+                            header('location:/admin/product/add');
+                            exit();
+                        }
+                    }
+
+                    $SkuValuesResult = [];
+                    $sku_data['product_id'] = $product_insert;
+
+                    $SkuValuesResult = [];
+                    $valueIndex = 0;
 
 
-                foreach ($SkuValuesResult as $skuValue) {
-                    $result = $skuValuesModel->store($skuValue);
-                }
+                    foreach ($skuPost as $item) {
+                        if (isset($item['option'], $item['sku_id'])) {
+                            $options = $item['option'];
+                            for ($i = 0; $i < count($options); $i += 2) {
+                                if (isset($options[$i]['option_id'], $options[$i + 1]['value_name'])) {
+                                    $SkuValuesResult[] = [
+                                        'sku_id' => $item['sku_id'],
+                                        'option_id' => $options[$i]['option_id'],
+                                        'value_id' => $option_values_id[$valueIndex]
+                                    ];
+                                    $valueIndex++;
+                                }
+                            }
+                        }
+                    }
 
+                    $result = [];
+                    var_dump($SkuValuesResult);
+                    foreach ($SkuValuesResult as $skuValue) {
 
-                if ($result === false) {
-                    Notification::error('Thêm thất bại', 'Đã xảy ra lỗi khi thêm SKU!');
-                    header('location:/admin/product/add');
-                    exit();
-                } else {
-                    Notification::success('Thêm thành công', 'Đã thêm sản phẩm thành công!');
-                    header('location:/admin/product/add');
-                    exit();
+                        $result = $skuValuesModel->store($skuValue);
+                    }
+                    $conn->commit();
+                    if ($result === false) {
+                        Notification::error('Thêm thất bại', 'Đã xảy ra lỗi khi thêm SKU!');
+                        header('location:/admin/product/add');
+                        exit();
+                    } else {
+                        Notification::success('Thêm thành công', 'Đã thêm sản phẩm thành công!');
+                        header('location:/admin/product/add');
+                        exit();
+                    }
+                } catch (Exception $e) {
+                    $conn->rollback();
+                    error_log('Lỗi: ' . $e->getMessage());
                 }
             } else {
                 Notification::error('405', 'Forbidden Method');
