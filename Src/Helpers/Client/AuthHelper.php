@@ -20,8 +20,9 @@
         $result = $UserModel->getUserById($id);
         $data = [
             'id' => $result['id'],
-            'firstName' => $result['firstName'],
-            'lastName' => $result['lastName'],
+            'fullname' => $result['fullname'],
+            'firstname' => $result['firstname'],
+            'lastname' => $result['lastname'],
             'email' => $result['email'],
             'phone' => $result['phone'],
         ];

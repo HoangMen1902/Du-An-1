@@ -162,9 +162,15 @@ class AuthController extends BaseController
                         exit();
                     }
                 } else {
+                    $nameParts = explode(" ", $accountInfo->getName());
+                    $lastname  = array_pop($nameParts);
+                    $firstname = implode(" ", $nameParts);
                     $data = [
                         'google_id' => $accountInfo->getId(),
                         'email' => $accountInfo->getEmail(),
+                        'fullname' => $accountInfo->getName(),
+                        'firstname' => $firstname,
+                        'lastname' => $lastname,
                     ];
                     $result = AuthHelper::register($data);
 
@@ -243,12 +249,12 @@ class AuthController extends BaseController
 
                 if (isset($profile['email'])) {
                     $nameParts = explode(" ", $profile['name']);
-                    $firstname = array_pop($nameParts);  
-                    $lastname = implode(" ", $nameParts); 
+                    $firstname = array_pop($nameParts);
+                    $lastname = implode(" ", $nameParts);
 
                     $account = $usermodel->getAccountByEmail($profile['email']);
                     if (!$account) {
-                        $id = $usermodel->insertAccount($profile['email'], $firstname, $lastname, $profile['picture']['data']['url'], 'facebook');
+                        $id = $usermodel->insertAccount($profile['name'], $profile['email'], $firstname, $lastname, $profile['picture']['data']['url'], 'facebook');
                         Notification::success('Đăng ký thành công', 'Bạn đã đăng nhập bằng tài khoản facebook');
                     } else {
                         $id = $account['id'];

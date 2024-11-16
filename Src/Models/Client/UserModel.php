@@ -113,10 +113,10 @@ class UserModel extends BaseModel
         return null; 
     }
     
-    public function insertAccount($email, $firstname, $lastname, $avatar, $method = 'local')
+    public function insertAccount($fullname ,$email, $firstname, $lastname, $avatar, $method = 'local')
     {
-        $sql = "INSERT INTO Users (email, firstname, lastname, avatar, status, role, method, created_at, updated_at) 
-                VALUES (?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
+        $sql = "INSERT INTO Users (fullname, email, firstname, lastname, avatar, status, role, method, created_at, updated_at) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
         
         $conn = $this->_conn->MySQLi();
         $stmt = $conn->prepare($sql);
@@ -124,7 +124,7 @@ class UserModel extends BaseModel
         if ($stmt) {
             $status = 1; 
             $role = 1;   
-            $stmt->bind_param('ssssiss', $email, $firstname, $lastname, $avatar, $status, $role, $method);
+            $stmt->bind_param('sssssiss',$fullname,$email, $firstname, $lastname, $avatar, $status, $role, $method);
             $stmt->execute();
             $insert_id = $stmt->insert_id;
             $stmt->close();

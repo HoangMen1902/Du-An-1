@@ -24,6 +24,7 @@ final class UsersTable extends AbstractMigration
         $table->addColumn('email', 'string', ['limit' => 320])
             ->addColumn('phone', 'string', ['limit' => 10])
             ->addColumn('password', 'string', ['limit' => 101])
+            ->addColumn('fullname', 'string', ['limit' => 255, 'null' => true])
             ->addColumn('firstname', 'string', ['limit' => 100])
             ->addColumn('lastname', 'string', ['limit' => 100])
             ->addColumn('birthday', 'date')
