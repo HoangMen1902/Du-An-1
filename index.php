@@ -63,6 +63,8 @@ $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
     $r->addRoute('GET', '/logged-google', [AuthController::class, 'loginGoogleAction']);
     $r->addRoute('GET', '/login-facebook', [AuthController::class, 'redirectToFacebook']);
     $r->addRoute('GET', '/logged-facebook', [AuthController::class, 'handleFacebookCallback']);
+    $r->addRoute('GET', '/logout', [AuthController::class, 'logoutUser']);
+
 
 
 

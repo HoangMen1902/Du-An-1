@@ -1,6 +1,7 @@
 <?php 
  namespace Src\Helpers\Client;
  use Src\Models\Client\UserModel;
+ use Src\Notifications\Notification;
 
  class AuthHelper{
     public static function checkExistedInfo($column, $info)
@@ -49,5 +50,9 @@
             $userData = json_encode($result);
             setcookie('user', $userData, time() + 3600 * 24 * 30 * 12, '/');
         }
+    }
+
+    public static function logout(){
+        unset($_SESSION['user']);
     }
  }

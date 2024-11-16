@@ -288,4 +288,12 @@ class AuthController extends BaseController
             exit();
         }
     }
+
+    public function logoutUser(){
+        $userHelper = new AuthHelper;
+        $userHelper->logout();
+        Notification::success('Đăng xuất thành công', 'bạn đã đăng xuất khỏi tài khoản');
+        header('Location: /login');
+        exit;
+    }
 }
