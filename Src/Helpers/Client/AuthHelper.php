@@ -55,4 +55,26 @@
     public static function logout(){
         unset($_SESSION['user']);
     }
+
+    public static function middleware()
+    {
+        $admin = explode('/', $_SERVER['REQUEST_URI']);
+        $admin = $admin[1];
+
+        if ($admin == 'admin') {
+            if (!isset($_SESSION['user'])) {
+                Notification::error('Admin', 'Vui lòng đăng nhập');
+                header('location: /login');
+                exit;
+            }
+            if ($_SESSION['user']['role'] != 2) {
+                Notification::error('Admin', 'Tài khoản không có quyền truy cập');
+                header('location: /404');
+                exit;
+            }
+            
+        }
+
+
+    }
  }
