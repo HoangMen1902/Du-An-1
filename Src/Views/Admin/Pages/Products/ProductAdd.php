@@ -32,17 +32,19 @@ if (isset($_GET['status']) && $_GET['status'] === 'success') {
     <div class="card">
         <div class="card-body">
             <h4 class="card-title">Thêm sản phẩm</h4>
-            <form action="/admin/product/store" method="post" enctype="multipart/form-data">
+            <form action="/admin/product/store" id="productAddForm" method="post" enctype="multipart/form-data">
 
                 <p class="card-description">Thông tin sản phẩm</p>
                 <div class="form-group">
                     <label for="name">Tên sản phẩm</label>
                     <input type="text" class="form-control" name="name" placeholder="Tên sản phẩm" value="<?= htmlspecialchars($data['name'] ?? '') ?>">
+                    <small id="name-required" class="text-danger" style="display:none">Vui lòng nhập tên sản phẩm</small>
                 </div>
 
                 <div class="form-group">
                     <label for="description">Mô tả sản phẩm</label>
                     <textarea class="form-control" name="description" rows="4" placeholder="Mô tả sản phẩm"><?= htmlspecialchars($data['description'] ?? '') ?></textarea>
+                    <small id="description-required" class="text-danger" style="display:none">Vui lòng nhập mô tả sản phẩm</small>
                 </div>
 
                 <div class="form-group">
@@ -63,10 +65,12 @@ if (isset($_GET['status']) && $_GET['status'] === 'success') {
                         endif;
                         ?>
                     </select>
+                    <small id="brand-required" class="text-danger" style="display:none">Vui lòng chọn thương hiệusản phẩm</small>
+
                 </div>
                     <div class="form-group">
                         <label for="categories">Danh mục cha:</label>
-                        <select class="form-control" id="categories" name="categories" required>
+                        <select class="form-control" id="categories" name="categories" >
                             <option value="">Chọn danh mục cha</option>
                             <?php foreach ($categories as $category): ?>
                                 <option value="<?= $category['id'] ?>"><?= $category['name'] ?></option>
@@ -79,6 +83,7 @@ if (isset($_GET['status']) && $_GET['status'] === 'success') {
                                 <option value="">Chọn danh mục con</option>
                             </select>
                         </div>
+                    <small id="categories-required" class="text-danger" style="display:none">Vui lòng chọn danh mục sản phẩm</small>
                     </div>
 
 
@@ -86,16 +91,19 @@ if (isset($_GET['status']) && $_GET['status'] === 'success') {
                 <div class="form-group">
                     <label for="discount">Giá giảm (%)</label>
                     <input type="number" class="form-control" name="discount" placeholder="Giảm giá" min="0" max="100" value="<?= htmlspecialchars($data['discount'] ?? '') ?>">
+                    <small id="discount-required" class="text-danger" style="display:none">Vui lòng nhập giá giảm</small>
                 </div>
 
                 <div class="form-group">
                     <label for="thumbnail">Hình ảnh sản phẩm</label>
                     <input type="file" class="form-control" name="thumbnail" accept="image/*">
+                    <small id="thumbnail-required" class="text-danger" style="display:none">Vui lòng chọn hình ảnh sản phẩm</small>
                 </div>
 
                 <div class="form-group">
                     <label for="specifications_file">Tải lên file Excel cho thông số kỹ thuật (.xls hoặc .xlsx)</label>
                     <input type="file" class="form-control" name="specifications_file" accept=".xls, .xlsx">
+                    <small id="categories-required" class="text-danger" style="display:none">Vui lòng tải lên file excel sản phẩm</small>
                 </div>
 
                 <div class="form-group">
@@ -133,26 +141,30 @@ let skuIndex = 0;
 function addSku() {
     skuIndex++;
     $('#sku_section').append(`
-        <div class="sku-item row mb-3" id="sku-item-${skuIndex}" data-sku-index="${skuIndex}">
+        <div class="sku-item row mb-3" id="sku-item-${skuIndex}" class="sku-form" data-sku-index="${skuIndex}">
             <div class="col-md-3">
                 <label>Mã SKU</label>
-                <input type="text" name="sku[${skuIndex}][sku]" class="form-control" placeholder="SKU">
+                <input type="text" name="sku[${skuIndex}][sku]" class="form-control"  placeholder="SKU">
+                <small class="text-danger" style="display:none">Vui lòng nhập mã SKU</small>
             </div>
             <div class="col-md-3">
                 <label>Giá gốc</label>
-                <input type="number" name="sku[${skuIndex}][price]" class="form-control" placeholder="Giá">
+                <input type="number" name="sku[${skuIndex}][price]" class="form-control"  placeholder="Giá">
+                <small class="text-danger" style="display:none">Vui lòng nhập giá</small>
             </div>
             <div class="col-md-3">
                 <label>Số lượng</label>
-                <input type="number" name="sku[${skuIndex}][quantity]" class="form-control" placeholder="Số lượng">
+                <input type="number" name="sku[${skuIndex}][quantity]" class="form-control"  placeholder="Số lượng">
+                <small class="text-danger" style="display:none">Vui lòng nhập số lượng</small>
             </div>
             <div class="col-md-3">
                 <label>Hình ảnh</label>
-                <input type="file" name="sku[${skuIndex}][images]" class="form-control">
+                <input type="file" name="sku[${skuIndex}][images]" class="form-control" id="skuImage" accept="image/*">
+                <small class="text-danger" style="display:none">Vui lòng tải hình ảnh</small>
             </div>
             <div class="col-12 properties-container mt-2">
-                <!-- Dynamic property fields go here -->
             </div>
+            <span class="text-danger" style="display:none" id="propertyCheck-${skuIndex}">Vui lòng nhập thuộc tính</span>
             <div class="col-12 mt-3">
                 <a href="javascript:void(0)" onclick="addProperty(this)" class="btn btn-primary">Thêm Thuộc tính</a>
                 <a href="javascript:void(0)" onclick="removeSku(${skuIndex})" class="btn btn-danger">Xóa SKU</a>
@@ -161,9 +173,9 @@ function addSku() {
     `);
 }
 function addProperty(element) {
-    const skuItem = $(element).closest('.sku-item'); // Tìm phần tử SKU đang thao tác
-    const skuIndex = skuItem.data('sku-index'); // Lấy skuIndex từ data attribute
-    const propertyContainer = skuItem.find('.properties-container'); // Tìm container thuộc tính
+    const skuItem = $(element).closest('.sku-item'); 
+    const skuIndex = skuItem.data('sku-index'); 
+    const propertyContainer = skuItem.find('.properties-container'); 
 
     const newProperty = `
         <div class="row mb-2">
@@ -179,6 +191,7 @@ function addProperty(element) {
             <div class="col-md-5">
                 <label>Giá trị</label>
                 <input type="text" name="sku[${skuIndex}][option][][value_name]" class="form-control" placeholder="Đen, trắng, ...">
+                <small class="text-danger" style="display:none">Vui lòng nhập giá trị thuộc tính</small>
             </div>
             <div class="col-md-2 d-flex align-items-end justify-content-center">
                 <a href="javascript:void(0)" onclick="removeProperty(this)" class="btn btn-danger">Xóa</a>

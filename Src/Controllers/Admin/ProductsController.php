@@ -52,7 +52,6 @@ class ProductsController extends BaseController
     }
     public function store()
     {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $data = [
                 'name' => $_POST['name'] ?? null,
                 'description' => $_POST['description'] ?? null,
@@ -335,11 +334,7 @@ class ProductsController extends BaseController
                     $conn->rollback();
                     error_log('Lỗi: ' . $e->getMessage());
                 }
-            } else {
-                Notification::error('405', 'Forbidden Method');
-                header('location:/admin/product/add');
                 exit();
-            }
         }
     }
     public function edit($params)
