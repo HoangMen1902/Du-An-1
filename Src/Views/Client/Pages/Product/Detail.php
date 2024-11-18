@@ -80,6 +80,7 @@
         <hr>
 
 
+
         <div class="product__info__buy row">
             <?php foreach ($productData['skus'] as $sku): ?>
                 <div class="col-4 p-1">
@@ -89,7 +90,7 @@
                                 form="add-to-cart"
                                 class="hidden"
                                 type="radio"
-                                value="<?= htmlspecialchars(json_encode($sku['options'])) ?>"
+                                value="<?= $sku['sku_id']   ?> "
                                 name="sku_options"
                                 data-image="<?= $_ENV['APP_URL'] ?>/public/Uploads/Products/<?= htmlspecialchars($sku['images']) ?>"
                                 data-price="<?= $sku['discounted_price'] ?>"
@@ -109,8 +110,6 @@
 
 
 
-
-
         <h4><i class="fa fa-eye">lượt xem</i>:</h4>
         <p>Số lượng:</p>
         <div class="product__info__buy__quantity">
@@ -119,8 +118,10 @@
             <button onclick="incrementProduct()" class="product__info__buy__button-r">+</button>
         </div>
         <p>Chọn mua:</p>
+
         <form id="add-to-cart" action="/add-to-cart" method="post">
             <input type="hidden" id="quantityInput" name="quantity" value="1">
+            <input type="hidden" name="product_id" value="<?= $productData['product_id'] ?>">
             <button class="product__info__buy__button text-white" name="add-to-cart">Chọn mua</button>
         </form>
 
@@ -701,7 +702,6 @@
                     <!-- Comment Section -->
                     <textarea class="form-control mb-3" rows="5" placeholder="Hãy viết vào bình luận của bạn"
                         name="content"></textarea>
-                    <input type="hidden" name="product_id" value="">
                     <div class="d-flex justify-content-end">
                         <button class="btn btn-info text-white">Bình luận</button>
                     </div>
@@ -855,7 +855,7 @@
 
         quantity++;
         quantityElement.innerText = quantity;
-        quantityInput.value = quantity; 
+        quantityInput.value = quantity;
     }
 
 

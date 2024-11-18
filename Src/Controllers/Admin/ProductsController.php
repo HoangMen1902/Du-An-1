@@ -171,7 +171,6 @@ class ProductsController extends BaseController
             $conn->begin_transaction();
             try {
                 $productModel = new ProductModel();
-                $productModel->beginTransaction();
                 $product_insert = $productModel->createReturnProductId($data);
 
 

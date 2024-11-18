@@ -21,18 +21,6 @@ abstract class BaseModel implements CrudInterface
         $this->_conn = new Database();
     }
 
-    public function beginTransaction() {
-        $conn = $this->_conn->MySQLi();
-        $conn->begin_transaction();
-    }
-    public function commit() {
-        $conn = $this->_conn->MySQLi();
-        $conn->commit();
-    }
-    public function rollback() {
-        $conn = $this->_conn->MySQLi();
-        $conn->rollback();
-    }
     public function getAll()
     {
         $result = [];
