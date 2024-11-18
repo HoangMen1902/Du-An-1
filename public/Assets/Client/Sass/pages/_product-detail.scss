@@ -90,7 +90,7 @@
 }
 
 .product__info {
-  max-width: 45%;
+  width: 45%;
   // background-color: red;
   height: max-content;
   padding-left: 20px;
@@ -124,8 +124,8 @@
     }
   }
   &__buy {
+    font-size: 15px;
     padding-inline: 10px;
-    width: 100%;
     height: max-content;
     &__color {
       display: flex;
@@ -146,6 +146,9 @@
       margin-bottom: 10px;
       &-fix {
         display: flex;
+        label{ 
+          font-size: 15px;
+        }
       }
       h6 {
         margin-right: 15px;
@@ -156,8 +159,8 @@
         align-items: center;
         margin-right: 20px;
         cursor: pointer;
-        width: 70px;
-        height: 45px;
+        width: max-content;
+        height: auto;
         border-radius: 30px;
         border: 2px solid rgba(0, 0, 0, 0.493) !important;
         background-color: #fff;

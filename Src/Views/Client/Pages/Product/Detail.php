@@ -20,7 +20,7 @@
         </div>
         <div class="product__carousel-wrapper">
             <div style="display: block;" class="product__carousel-wrapper__slide">
-                <img src="https://www.phongcachxanh.vn/cdn/shop/files/pre-order-lot-chu-t-kinh-c-ng-l-c-tekkusai-the-beast-limited-42087967293685.jpg?v=1730188755&width=800"
+                <img id="mainImage" src="<?= $_ENV['APP_URL'] ?>/public/Uploads/Brands/1731271265.png"
                     alt="">
             </div>
 
@@ -30,10 +30,17 @@
 
         </div>
     </div>
-    <div class="product__info">
-        <h4>[Pre-order] Lót chuột kính cường lực Tekkusai The Beast - Limited</h4>
 
-        <form action="/voucher" method="post">
+
+
+    <div class="product__info">
+        <h4 id="product-name-<?= $productData['product_id'] ?>"><?= $productData['product_name']  ?>
+        </h4>
+
+
+
+        <!--  chức năng voucher phát triển sau -->
+        <!-- <form action="/voucher" method="post">
             <input type="hidden" name="method" value="POST">
             <input type="hidden" name="id" value="">
             <input type="hidden" name="voucher_id" value="">
@@ -47,65 +54,78 @@
                     <span></span>
                 </button>
             </div>
-        </form>
+        </form> -->
+
 
 
         <p class="product__info__text">
-
-
-            <span class="related-card__sub-price__delete" style="color: black;">
-                2.970.000₫
+            <span id="old-price-<?= $productData['product_id'] ?>" class="related-card__sub-price__delete" style="color: black;">
+                <?= number_format($productData['skus'][1]['original_price']) ?> đ
             </span>
-
+            <span id="current-price-<?= $productData['product_id'] ?>">
+                <?= number_format($productData['skus'][1]['discounted_price']) ?> đ
+            </span>
         </p>
 
-
         <hr>
-        <p></p>
-        <p>Mô tả</p>
-        <div class="product__info__ultext">
+        <p><?= $productData['description'] ?></p>
+
+        <!-- <p>Mô tả</p> -->
+        <!-- <div class="product__info__ultext">
             <ul>
-                <li>Kích thước: X
-                    X
+                <li>Kích thước: 100
                 </li>
             </ul>
-        </div>
+        </div> -->
         <hr>
-        <div class="product__info__buy">
-            <form action="/add-to-cart" method="post">
-                <input type="hidden" name="id" value="">
-                <input type="hidden" name="method" value="POST">
-                <?php
 
 
-                ?>
-                <div class="product__info__buy__list">
-                    <h6>:</h6>
-
-                    <div class="product__info__buy__list-fix">
-                        <label>
-                            <input type="radio" name="" value="">
-
+        <div class="product__info__buy row">
+            <?php foreach ($productData['skus'] as $sku): ?>
+                <div class="col-4 p-1">
+                    <div class="border border-secondary rounded p-1">
+                        <label class="w-100">
+                            <input
+                                form="add-to-cart"
+                                class="hidden"
+                                type="radio"
+                                value="<?= htmlspecialchars(json_encode($sku['options'])) ?>"
+                                name="sku_options"
+                                data-image="<?= $_ENV['APP_URL'] ?>/public/Uploads/Products/<?= htmlspecialchars($sku['images']) ?>"
+                                data-price="<?= $sku['discounted_price'] ?>"
+                                data-old-price="<?= $sku['original_price'] ?>"
+                                product-name="<?= $sku['sku'] ?>"
+                                onclick="onSkuSelect(this)">
+                            <?php foreach ($sku['options'] as $option): ?>
+                                <div>
+                                    <?= htmlspecialchars($option['option_name']) . ': ' . htmlspecialchars($option['option_value']) ?>
+                                </div>
+                            <?php endforeach; ?>
                         </label>
                     </div>
                 </div>
-
-
-
-
-                <h4><i class="fa fa-eye"></i>:</h4>
-                <p>Số lượng:</p>
-
-                <div class="product__info__buy__quantity">
-                    <button onclick="" class="product__info__buy__button-l">-</button>
-                    <p id="quantityProduct">1</p>
-                    <button onclick="" class="product__info__buy__button-r">+</button>
-                </div>
-                <p>Chọn mua:</p>
-                <button class="product__info__buy__button text-white" name="add-to-cart">Chọn mua</button>
-            </form>
+            <?php endforeach; ?>
         </div>
+
+
+
+
+
+        <h4><i class="fa fa-eye">lượt xem</i>:</h4>
+        <p>Số lượng:</p>
+        <div class="product__info__buy__quantity">
+            <button onclick="decrementProduct()" class="product__info__buy__button-l">-</button>
+            <p id="quantityProduct">1</p>
+            <button onclick="incrementProduct()" class="product__info__buy__button-r">+</button>
+        </div>
+        <p>Chọn mua:</p>
+        <form id="add-to-cart" action="/add-to-cart" method="post">
+            <input type="hidden" id="quantityInput" name="quantity" value="1">
+            <button class="product__info__buy__button text-white" name="add-to-cart">Chọn mua</button>
+        </form>
+
     </div>
+</div>
 
 </div>
 
@@ -813,9 +833,102 @@
     </div>
 </section>
 
-
-
 <script>
+    let value = 0;
+
+    function decrementProduct() {
+        const quantityElement = document.getElementById('quantityProduct');
+        const quantityInput = document.getElementById('quantityInput');
+        let quantity = parseInt(quantityElement.innerText);
+
+        if (quantity > 1) {
+            quantity--;
+            quantityElement.innerText = quantity;
+            quantityInput.value = quantity;
+        }
+    }
+
+    function incrementProduct() {
+        const quantityElement = document.getElementById('quantityProduct');
+        const quantityInput = document.getElementById('quantityInput');
+        let quantity = parseInt(quantityElement.innerText);
+
+        quantity++;
+        quantityElement.innerText = quantity;
+        quantityInput.value = quantity; 
+    }
+
+
+
+
+
+
+
+
+
+
+    function changePriceAndImage(radioButton) {
+        // Lấy giá giảm và giá gốc từ radio button
+        const newPrice = parseFloat(radioButton.getAttribute('data-price')); // Giá giảm
+        const oldPrice = parseFloat(radioButton.getAttribute('data-old-price')); // Giá gốc
+
+        // Lấy các phần tử hiển thị giá
+        const currentPriceElement = document.getElementById('current-price-<?= $productData['product_id'] ?>');
+        const oldPriceElement = document.getElementById('old-price-<?= $productData['product_id'] ?>');
+
+        // Cập nhật giá giảm
+        currentPriceElement.innerText = newPrice.toLocaleString('de-DE', {
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0
+        }) + " đ";
+
+        // Cập nhật giá gốc nếu giá gốc cao hơn giá giảm
+        if (oldPrice > newPrice) {
+            oldPriceElement.innerText = oldPrice.toLocaleString('de-DE', {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            }) + " đ";
+        } else {
+            oldPriceElement.innerText = '';
+        }
+
+        // Cập nhật hình ảnh sản phẩm
+        const newImageUrl = radioButton.getAttribute('data-image');
+        const mainImage = document.getElementById('mainImage');
+        if (newImageUrl) {
+            mainImage.src = newImageUrl;
+        }
+    }
+
+    function onSkuSelect(radioButton) {
+        // Gọi hàm cập nhật giá và ảnh
+        changePriceAndImage(radioButton);
+
+        // Cập nhật tên sản phẩm với mã SKU
+        const skuName = radioButton.getAttribute('product-name');
+        const productNameElement = document.getElementById('product-name-<?= $productData['product_id'] ?>');
+
+        // Lấy tên sản phẩm gốc và cập nhật với mã SKU
+        const originalProductName = productNameElement.textContent.split(' - ')[0];
+        productNameElement.textContent = `${originalProductName} - ${skuName}`;
+    }
+
+
+    function changeImage(radio) {
+        // Lấy URL ảnh từ thuộc tính `data-image` của radio button được chọn
+        const newImageUrl = radio.getAttribute('data-image');
+        // Lấy phần tử ảnh chính
+        const mainImage = document.getElementById('mainImage');
+        // Thay đổi ảnh hiển thị
+        if (newImageUrl) {
+            mainImage.src = newImageUrl;
+        }
+    }
+
+
+
+
+
     document.addEventListener('DOMContentLoaded', function() {
         const stars = document.querySelectorAll('.star');
 
@@ -834,8 +947,8 @@
         });
     });
 
-    document.querySelectorAll(".product__info__buy__list").forEach(group => {
-        const labels = group.querySelectorAll(".product__info__buy__list-fix label");
+    document.querySelectorAll(".product__info__buy").forEach(group => {
+        const labels = group.querySelectorAll(".product__info__buy div div");
 
         labels.forEach(label => {
             label.addEventListener("click", function() {

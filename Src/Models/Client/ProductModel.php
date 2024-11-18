@@ -41,15 +41,15 @@ class ProductModel extends BaseModel
                 LEFT JOIN options AS o ON sv.option_id = o.id
                 WHERE p.status = 1
                 ORDER BY p.id, ps.id";
-    
+
         $conn = $this->_conn->MySQLi();
         $result = $conn->query($sql);
         $products = [];
-    
+
         while ($row = $result->fetch_assoc()) {
             $productId = $row['product_id'];
             $skuId = $row['sku_id'];
-    
+
             if (!isset($products[$productId])) {
                 $products[$productId] = [
                     'product_id' => $row['product_id'],
@@ -60,7 +60,7 @@ class ProductModel extends BaseModel
                     'skus' => []
                 ];
             }
-    
+
             $products[$productId]['skus'][$skuId]['sku_id'] = $skuId;
             $products[$productId]['skus'][$skuId]['sku'] = $row['sku'];
             $products[$productId]['skus'][$skuId]['images'] = $row['images'];
@@ -72,7 +72,6 @@ class ProductModel extends BaseModel
                 'option_value' => $row['option_value']
             ];
         }
-    
         return $products;
     }
     public function getAllRandomProductWithSkus()
@@ -132,5 +131,15 @@ class ProductModel extends BaseModel
     }
     return $products;
 }
+    public function getProductById($productId)
+    {
+        $allProducts = $this->getAllProductWithSkus();
+        // echo '<pre>';
+        // var_dump($allProducts);  
+        if (isset($allProducts[$productId])) {
+            return $allProducts[$productId];
+        }
+        return null;
+    }
 
 }
