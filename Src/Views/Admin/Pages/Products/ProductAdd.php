@@ -181,7 +181,7 @@ function addProperty(element) {
         <div class="row mb-2">
             <div class="col-md-5">
                 <label>Tên thuộc tính</label>
-                <select name="sku[${skuIndex}][option][][option_id]" class="form-control">
+                <select name="sku[${skuIndex}][option][][option_id]" class="form-control option-select">
                     <option value="">Chọn thuộc tính</option>
                     <?php foreach ($options as $attribute): ?>
                         <option value="<?= $attribute['id'] ?>"><?= htmlspecialchars($attribute['name']) ?></option>
@@ -199,11 +199,41 @@ function addProperty(element) {
         </div>
     `;
     propertyContainer.append(newProperty);
+    updateDisabledOptions(null, skuIndex);
+}
+
+
+function updateDisabledOptions(changedSelect = null, skuIndex) {
+    const skuItem = $(`[data-sku-index="${skuIndex}"]`); 
+    const allSelects = skuItem.find('.option-select'); 
+    const selectedValues = [];
+    
+    allSelects.each(function () {
+        const value = $(this).val();
+        if (value) {
+            selectedValues.push(value);
+        }
+    });
+    allSelects.each(function () {
+        const currentSelect = $(this);
+        const currentValue = currentSelect.val();
+
+        currentSelect.find('option').each(function () {
+            const optionValue = $(this).attr('value');
+            if (optionValue) {
+                if (selectedValues.includes(optionValue) && optionValue !== currentValue) {
+                    $(this).attr('disabled', 'disabled');
+                } else {
+                    $(this).removeAttr('disabled');
+                }
+            }
+        });
+    });
 }
 
     function removeProperty(element) {
         $(element).closest('.row').remove();
-
+        updateDisabledOptions(null, skuIndex); 
     }
 
     function removeSku(skuIndex) {

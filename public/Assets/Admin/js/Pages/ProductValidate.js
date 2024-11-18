@@ -7,11 +7,9 @@ function getProductInput() {
         status: $('select[name="status"]').val(),
         categories: $('select[name="categories"]').val(),
         child_category: $('select[name="child_category"]').val(),
-        thumbnail: $('input[name="thumbnail"]').val(),
         specifications_file: $('input[name="specifications_file"]').val().trim()
     };
 }
-
 
 
 function validationAddForm() {
@@ -126,7 +124,6 @@ $('#productAddForm').on('submit', (e) => {
             e.preventDefault();
         }
     }
-    e.preventDefault();
 })
 
 
