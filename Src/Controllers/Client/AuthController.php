@@ -156,12 +156,17 @@ class AuthController extends BaseController
                             header('Location: /home');
                             exit();
                         }
+                    } else if (!empty($existedUser['facebook_id'])) {
+                        // Nếu tài khoản đã có facebook_id, chuyển hướng đến đăng nhập Facebook
+                        Notification::error('Đăng nhập thất bại', 'Email này đã được liên kết với tài khoản Facebook. Vui lòng đăng nhập qua Facebook');
+                        header('Location: /login-facebook'); 
+                        exit();
                     } else {
                         Notification::error('Đăng ký thất bại', 'Tài khoản đã tồn tại và không liên kết với Google');
                         header('Location: /login');
                         exit();
                     }
-                } else {
+                }  else {
                     $nameParts = explode(" ", $accountInfo->getName());
                     $lastname  = array_pop($nameParts);
                     $firstname = implode(" ", $nameParts);
@@ -171,6 +176,7 @@ class AuthController extends BaseController
                         'fullname' => $accountInfo->getName(),
                         'firstname' => $firstname,
                         'lastname' => $lastname,
+                        'method' => 'google'
                     ];
                     $result = AuthHelper::register($data);
 
@@ -214,66 +220,106 @@ class AuthController extends BaseController
 
     public static function handleFacebookCallback()
     {
+    
         $usermodel = new UserModel();
-
+        $userHelper = new AuthHelper;
+    
         $facebook_oauth_app_id = $_ENV['FACEBOOK_APP_ID'];
         $facebook_oauth_app_secret = $_ENV['FACEBOOK_APP_SECRET'];
         $facebook_oauth_redirect_uri = $_ENV['FACEBOOK_REDIRECT_URI'];
-        $facebook_oauth_version = 'v18.0';
-
+        $facebook_oauth_version = $_ENV['FACEBOOK_OAUTH_VERSION'];
+    
         if (isset($_GET['code']) && !empty($_GET['code'])) {
+            // Lấy access token từ Facebook
             $params = [
                 'client_id' => $facebook_oauth_app_id,
                 'client_secret' => $facebook_oauth_app_secret,
                 'redirect_uri' => $facebook_oauth_redirect_uri,
                 'code' => $_GET['code']
             ];
-
+    
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL, 'https://graph.facebook.com/oauth/access_token');
             curl_setopt($ch, CURLOPT_POST, true);
             curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($params));
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             $response = curl_exec($ch);
+    
+            if (curl_errno($ch)) {
+                Notification::error('Lỗi', 'Không thể kết nối với Facebook: ' . curl_error($ch));
+                header('Location: /login');
+                exit();
+            }
+    
             curl_close($ch);
             $response = json_decode($response, true);
-
+    
             if (isset($response['access_token']) && !empty($response['access_token'])) {
+                // Lấy thông tin tài khoản từ Facebook
                 $ch = curl_init();
-                curl_setopt($ch, CURLOPT_URL, 'https://graph.facebook.com/' . $facebook_oauth_version . '/me?fields=name,email,picture');
+                curl_setopt($ch, CURLOPT_URL, 'https://graph.facebook.com/' . $facebook_oauth_version . '/me?fields=id,name,email,picture');
                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
                 curl_setopt($ch, CURLOPT_HTTPHEADER, ['Authorization: Bearer ' . $response['access_token']]);
-                $response = curl_exec($ch);
+                $profileResponse = curl_exec($ch);
                 curl_close($ch);
-                $profile = json_decode($response, true);
-
-                if (isset($profile['email'])) {
-                    $nameParts = explode(" ", $profile['name']);
+    
+                $profile = json_decode($profileResponse, true);
+    
+                if (isset($profile['email'], $profile['name'])) {
+                    // Tách tên và họ
+                    $nameParts = explode(' ', $profile['name']);
                     $firstname = array_pop($nameParts);
-                    $lastname = implode(" ", $nameParts);
-
+                    $lastname = implode(' ', $nameParts);
+    
+                    // Kiểm tra xem người dùng đã tồn tại
                     $account = $usermodel->getAccountByEmail($profile['email']);
                     if (!$account) {
-                        $id = $usermodel->insertAccount($profile['name'], $profile['email'], $firstname, $lastname, $profile['picture']['data']['url'], 'facebook');
-                        Notification::success('Đăng ký thành công', 'Bạn đã đăng nhập bằng tài khoản facebook');
-                    } else {
-                        $id = $account['id'];
-                        if ($account['status'] != 1) {
-                            Notification::error('Tài khoản bị khóa', 'Tài khoản của bạn đã bị khóa');
+                        // Tạo tài khoản mới
+                        $userData = [
+                            'facebook_id' => $profile['id'],
+                            'email' => $profile['email'],
+                            'fullname' => $profile['name'],
+                            'firstname' => $firstname,
+                            'phone' => $profile['phone'],
+                            'lastname' => $lastname,
+                            'avatar' => $profile['picture']['data']['url'],
+                            'status' => 1, 
+                            'role' => 1,  
+                            'method' => 'facebook'
+                        ];
+                        $userId = $userHelper->register($userData);
+    
+                        if (!$userId) {
+                            Notification::error('Lỗi', 'Không thể tạo tài khoản mới!');
                             header('Location: /login');
                             exit();
                         }
-                        Notification::success('Đăng nhập thành công', 'Chào mừng trở lại!');
+                    } else {
+                        $userId = $account['id'];
+                        if ($account['status'] != 1) {
+                            Notification::error('Lỗi', 'Tài khoản của bạn đã bị khóa!');
+                            header('Location: /login');
+                            exit();
+                        }
                     }
-
-                    session_regenerate_id();
-                    $_SESSION['facebook_loggedin'] = true;
-                    $_SESSION['facebook_id'] = $id;
-
+    
+                    // Lưu thông tin vào session
+                    $_SESSION['user'] = [
+                        'id' => $userId,
+                        'email' => $profile['email'],
+                        'fullname' => $profile['name'],
+                        'firstname' => $firstname,
+                        'lastname' => $lastname,
+                        'phone' => $profile['phone'],
+                        'avatar' => $profile['picture']['data']['url'],
+                        'method' => 'facebook'
+                    ];
+    
+                    Notification::success('Đăng nhập thành công', 'Chào mừng bạn trở lại!');
                     header('Location: /home');
-                    exit;
+                    exit();
                 } else {
-                    Notification::error('Lỗi', 'Không thể lấy thông tin hồ sơ từ Facebook!');
+                    Notification::error('Lỗi', 'Không thể lấy thông tin từ Facebook!');
                     header('Location: /login');
                     exit();
                 }
@@ -288,6 +334,7 @@ class AuthController extends BaseController
             exit();
         }
     }
+    
 
     public function logoutUser(){
         $userHelper = new AuthHelper;
