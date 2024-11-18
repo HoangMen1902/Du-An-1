@@ -69,7 +69,7 @@
             }
             if ($_SESSION['user']['role'] != 2) {
                 Notification::error('Admin', 'Tài khoản không có quyền truy cập');
-                header('location: /404');
+                header('location: /home');
                 exit;
             }
             

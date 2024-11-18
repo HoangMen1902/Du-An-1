@@ -96,7 +96,7 @@ if (isset($_GET['status']) && $_GET['status'] === 'success') {
 
                 <div class="form-group">
                     <label for="thumbnail">Hình ảnh sản phẩm</label>
-                    <input type="file" class="form-control" name="thumbnail" accept="image/*">
+                    <input type="file" class="form-control" name="thumbnail[]" accept="image/*" multiple>
                     <small id="thumbnail-required" class="text-danger" style="display:none">Vui lòng chọn hình ảnh sản phẩm</small>
                 </div>
 
