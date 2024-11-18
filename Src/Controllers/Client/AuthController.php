@@ -1,34 +1,21 @@
 <?php
-
 namespace Src\Controllers\Client;
 
 use Src\Controllers\BaseController;
 use Src\Models\Client\UserModel;
 use Src\Notifications\Notification;
 use Src\Validations\Client\UserValidation;
-use Src\Helpers\Client\AuthHelper;
-use Google\Client;
-use Google\Service;
-use Google\Service\Oauth2;
-use Exception;
 
-class AuthController extends BaseController
-{
-
-
-
-    public function login()
-    {
+class AuthController extends BaseController {
+    public function login() {
         echo $this->view->render('Client/Pages/Login');
     }
 
-    public function register()
-    {
+    public function register() {
         echo $this->view->render('Client/Pages/Register');
     }
 
-    public function store()
-    {
+    public function store() {
         $data = [
             'firstname' => $_POST['firstname'] ?? null,
             'lastname' => $_POST['lastname'] ?? null,
@@ -54,7 +41,7 @@ class AuthController extends BaseController
             'lastname' => $data['lastname'],
             'email' => $data['email'],
             'password' => $hashedPassword,
-            'status' => 1
+            'status' => 1 
         ];
 
         $userModel = new UserModel();
@@ -71,13 +58,12 @@ class AuthController extends BaseController
         }
     }
 
-    public function authLogin()
-    {
+    public function authLogin() {
         $email = $_POST['email'];
         $userModel = new UserModel();
-        $user = $userModel->findUserForLogin('email', $email);
-        if ($user) {
-            if (password_verify($_POST['password'], $user['password'])) {
+        $user = $userModel->findUserForLogin('email',$email);
+        if($user) {
+            if(password_verify($_POST['password'], $user['password'])) {
                 Notification::success('Đăng nhập thành công', 'Bạn đã đăng nhập thành công');
                 $_SESSION['user']['name'] = $user['firstname'] . ' ' . $user['lastname'];
                 $_SESSION['user']['id'] = $user['id'];

@@ -4,6 +4,7 @@ namespace Src\Controllers\Client;
 
 
 use Src\Controllers\BaseController;
+use Src\Models\Client\CartModel;
 
 class CartController extends BaseController
 {
@@ -12,10 +13,27 @@ class CartController extends BaseController
     {
         echo $this->view->render('Client/Pages/Cart', ['Name' => 'Tien']);
     }
-    public function addCart()
+    public function store()
     {
-        // echo $this->view->render('Client/Pages/Cart', ['Name' => 'Tien']);
-        echo '<pre>';
-        var_dump($_POST);
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $data = [
+                'sku_id ' => $_POST['sku_options'] ?? null,
+                'quantity' => $_POST['quantity'] ?? null,
+                'user_id ' => $_SESSION['user']['id']
+            ];
+            // var_dump($data);
+            $CartModel = new CartModel();
+            $saveResult = $CartModel->createCart($data);
+            if ($saveResult) {
+                header("Location: /cart");
+                exit();
+            } else {
+                $errors[] = "Không thể thêm sản phẩm vui lòng thử lại.";
+                echo ' lỗi rồi nha';
+            }
+        } else {
+            header("Location: /");
+            exit();
+        }
     }
 }

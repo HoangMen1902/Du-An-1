@@ -14,9 +14,9 @@ $this->stop()
 <!-- Insert nội dung vào đây -->
 <?php
 $this->insert('/Client/Home/AdsBanner');
-$this->Insert("/Client/Home/popular", ['dataProduct' => $dataProduct ]);
+$this->Insert("/Client/Home/popular");
 $this->insert('/Client/Home/AdsProducts');
-$this->Insert("/Client/Home/popular", ['dataProduct' => $dataProduct ] );
+$this->Insert("/Client/Home/popular");
 $this->Insert('Client/Home/feedback');
 ?>
 
