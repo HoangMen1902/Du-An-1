@@ -77,4 +77,43 @@
 
 
     }
+
+    public static function update($data)
+    {
+        $UserModel = new UserModel();
+        $result = $UserModel->updateUserInfo($_SESSION['user']['id'], $data);
+        if ($result) {
+            Notification::success('Cập nhật thông tin người dùng', 'Đã cập nhật thông tin tài khoản');
+            self::updateCookie($_SESSION['user']['id']);
+            self::updateSession($_SESSION['user']['id']);
+            return true;
+        } else {
+            Notification::error('Cập nhật thông tin người dùng', 'Cập nhật thông tin tài khoản thất bại, số điện thoại đã tồn tại');
+            return false;
+        }
+    }
+
+    public static function checkInformation($data)
+    {
+        if (isset($_SESSION['user']['id'])) {
+            $user = new UserModel();
+            $user_id = $_SESSION['user']['id'];
+
+            $result = $user->getOneUserByEmail($data['email']);
+            if ($result && $result['id'] != $user_id) {
+                Notification::error('email_existed', 'Email đã tồn tại');
+                return false;
+            }
+            return true;
+        } else {
+            $user = new UserModel();
+
+            $result = $user->getOneUserByEmail($data['email']);
+            if ($result) {
+                Notification::error('email_existed', 'Email đã tồn tại');
+                return false;
+            }
+            return true;
+        }
+    }
  }

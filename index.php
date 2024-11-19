@@ -38,7 +38,6 @@ ini_set('error_log', './logs/php-errors.log');
 session_start();
 
 
-
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
@@ -64,7 +63,9 @@ $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
     $r->addRoute('GET', '/logged-facebook', [AuthController::class, 'handleFacebookCallback']);
     $r->addRoute('GET', '/logout', [AuthController::class, 'logoutUser']);
     $r->get('/forgot-password', [AuthController::class, 'forgotPassword']);
+    $r->addRoute('POST', '/update-information', [AuthController::class, 'updateUserInfoAction']);
 
+    
 
 
     $r->addRoute('POST', '/add-to-cart', [CartController::class, 'store']);

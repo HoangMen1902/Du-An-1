@@ -112,5 +112,27 @@ class UserModel extends BaseModel
     
         return null; 
     }   
-    
+    public function getOneUserByEmail($email)
+    {
+        $this->id = "email";
+        $result = [];
+        try {
+            $sql = "SELECT * FROM $this->table WHERE $this->id=?";
+            $conn = $this->_conn->MySQLi();
+            $stmt = $conn->prepare($sql);
+
+            $stmt->bind_param('s', $email);
+            $stmt->execute();
+            return $stmt->get_result()->fetch_assoc();
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi hiển thị chi tiết dữ liệu: ' . $th->getMessage());
+            return $result;
+        }
+    }
+
+    public function updateUserInfo($id, $data)
+    {
+        $this->id = 'id';
+        return $this->update($id, $data);
+    }
 }

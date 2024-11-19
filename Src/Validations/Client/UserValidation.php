@@ -46,4 +46,35 @@ class UserValidation
 
         return true;
     }
+    public static function updateUserInfoValidation($data)
+    {
+        $is_valid = true;
+        $errors = [];
+
+        $phone_pattern = '/^[0-9]{10}$/';
+        $email_pattern = '/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/';
+
+
+        if (isset($data['fullname']) && strlen($data['fullname']) > 50) {
+            $errors[] = "Tên người dùng không được dài quá 50 ký tự";
+            $is_valid = false;
+        }
+        
+
+        if (isset($data['email']) && !preg_match($email_pattern, $data['email'])) {
+            $errors[] = 'Địa chỉ email không hợp lệ';
+            $is_valid = false;
+        }
+
+        if (isset($data['phone']) && !preg_match($phone_pattern, $data['phone'])) {
+            $errors[] = "Số điện thoại không hợp lệ";
+            $is_valid = false;
+        }
+
+        if ($is_valid === false) {
+            return $errors;
+        }
+
+        return true;
+    }
 }
