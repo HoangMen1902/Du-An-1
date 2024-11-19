@@ -2,6 +2,7 @@
 namespace Src\Controllers\Client;
 
 use Src\Controllers\BaseController;
+use Src\Helpers\Client\AuthHelper;
 use Src\Models\Client\UserModel;
 use Src\Notifications\Notification;
 use Src\Validations\Client\UserValidation;
