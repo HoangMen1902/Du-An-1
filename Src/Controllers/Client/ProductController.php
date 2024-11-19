@@ -7,9 +7,10 @@ use Src\Models\Client\ProductModel;
 
 class ProductController extends BaseController
 {
-    public function show()
+    public function show($id)
     {
-        $productId = $_GET['id'];
+        $productId = $id['id'];
+        var_dump($_GET);
         // var_dump($productId);
         if (!$productId) {
             echo "ID sản phẩm không hợp lệ.";

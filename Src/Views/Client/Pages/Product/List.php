@@ -143,9 +143,9 @@
                                             <span class="price mb-2 ms-2 current-price" id="current-price-<?= $product['product_id'] ?>"><?= number_format($currentPrice) ?> đ</span>
                                         <?php endif; ?>
                                     </div>
-                                    <button class="btn btn-mainColor button-hover button-add text-white rounded-5 position-absolute">
+                                    <a href="detail/<?= $product['product_id'] ?>" class="btn btn-mainColor button-hover button-add text-white rounded-5 position-absolute">
                                         Mua ngay
-                                    </button>
+                                    </a>
                                     <div class="d-flex mt-3">
                                         <?php foreach ($product['skus'] as $sku) : ?>
                                             <button class="img-thumbnail col-3 me-1 product-thumbnail">
