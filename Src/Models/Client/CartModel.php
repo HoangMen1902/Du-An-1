@@ -11,11 +11,41 @@ class CartModel extends BaseModel
     protected $table = 'Carts';
 
     protected $id = 'id';
-
     public function getAllCart()
     {
         return $this->getAll();
     }
+    public function getCartByUser($user_id)
+    {
+        try {
+            $sql = "SELECT Carts.id AS cart_id, Products.name AS product_name, Products.description  AS product_description , Users.email AS user_email, Product_skus.sku AS product_sku, Product_skus.price AS product_price, Product_skus.images  AS product_images, 
+                    Carts.quantity AS quantity, (Product_skus.price * Carts.quantity) AS total_price 
+                    FROM Carts 
+                    JOIN Users ON Carts.user_id = Users.id 
+                    JOIN Product_skus ON Carts.sku_id = Product_skus.id 
+                    JOIN Products ON Product_skus.product_id
+                    WHERE Carts.user_id = ?";
+
+            $conn = $this->_conn->MySQLi();
+
+            $stmt = $conn->prepare($sql);
+
+            $stmt->bind_param("i", $user_id); 
+
+            $stmt->execute();
+
+            $result = $stmt->get_result();
+
+            $results = $result->fetch_all(MYSQLI_ASSOC);
+
+            return $results;
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi lấy giỏ hàng: ' . $th->getMessage());
+            return false;
+        }
+    }
+
+
     public function getOneCart($id)
     {
         return $this->getOne($id);

@@ -11,7 +11,12 @@ class CartController extends BaseController
 
     public function show()
     {
-        echo $this->view->render('Client/Pages/Cart', ['Name' => 'Tien']);
+        $user_id  = $_SESSION['user']['id'];
+        $CartModel = new CartModel();
+        $Data = $CartModel->getCartByUser($user_id);
+        // echo '<pre>';
+        // var_dump($Data);
+        echo $this->view->render('Client/Pages/Cart', ['Data' => $Data]);
     }
     public function store()
     {
