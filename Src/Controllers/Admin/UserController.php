@@ -5,6 +5,7 @@ namespace Src\Controllers\Admin;
 use Laracasts\Flash\Flash;
 use Src\Controllers\BaseController;
 use Src\Models\Admin\UserModel;
+use Src\Notifications\Notification;
 use Src\Validations\Admin\UserValidation;
 
 class UserController extends BaseController
@@ -130,8 +131,11 @@ class UserController extends BaseController
         $userModel = new UserModel();
         $result = $userModel->updateUser($id, $user_data);
         if ($result) {
+            Notification::success('Khóa thành công', 'Đã khóa thành công');
             header('location: /admin/users?action=lock-user?status=success');
         } else {
+            Notification::error('Khóa thất bại', 'Khóa người dùng thất bại');
+
             header('location: /admin/users?action=lock-user?status=failed');
         }
     }
