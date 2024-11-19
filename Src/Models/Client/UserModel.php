@@ -135,4 +135,10 @@ class UserModel extends BaseModel
         $this->id = 'id';
         return $this->update($id, $data);
     }
+
+    public function updatePassword($id, $data)
+    {
+        return $this->update($id, $data);
+    }
+
 }

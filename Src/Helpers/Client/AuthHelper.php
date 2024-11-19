@@ -116,4 +116,36 @@
             return true;
         }
     }
+    public static function updatePassword($data)
+    {
+        $currentPassword = $data['currentPassword'];
+        $newPassword = $data['newPassword'];
+        $confirmPassword = $data['confirmPassword'];
+        $newPasswordHash = password_hash($data['newPassword'], PASSWORD_DEFAULT);
+
+        $UserModel = new UserModel();
+        $userData = $UserModel->getUserById($_SESSION['user']['id']);
+        echo '<pre>';
+
+        if (!password_verify($currentPassword, $userData['password'])) {
+            Notification::error('Đổi mật khẩu', 'Mật khẩu hiện tại không đúng');
+            return false;
+        }
+
+
+        if (strcmp($newPassword, $confirmPassword) !== 0) {
+            Notification::error('Đổi mật khẩu', 'Mật khẩu xác nhận không trùng khớp');
+            return false;
+
+        }
+
+        $result = $UserModel->updatePassword($_SESSION['user']['id'], ['password' => $newPasswordHash]);
+        if ($result) {
+            Notification::success('Đổi mật khẩu', 'Đã cập nhật mật khẩu thành công');
+            return true;
+        } else {
+            Notification::error('Đổi mật khẩu', 'Cập nhật mật khẩu thất bại');
+            return false;
+        }
+    }
  }

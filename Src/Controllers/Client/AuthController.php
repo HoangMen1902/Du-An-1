@@ -374,4 +374,16 @@ class AuthController extends BaseController {
     public function forgotPassword() {
         echo $this->view->render('Client/Pages/ForgotPassword');
     }
+
+    public static function updatePasswordAction()
+    {
+        $data = [
+            'currentPassword' => $_POST['currentPassword'],
+            'newPassword' => $_POST['newPassword'],
+            'confirmPassword' => $_POST['confirmPassword']
+        ];
+
+        AuthHelper::updatePassword($data);
+        header('location:/profile');
+    }
 }

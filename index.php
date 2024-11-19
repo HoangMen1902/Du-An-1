@@ -64,6 +64,8 @@ $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
     $r->addRoute('GET', '/logout', [AuthController::class, 'logoutUser']);
     $r->get('/forgot-password', [AuthController::class, 'forgotPassword']);
     $r->addRoute('POST', '/update-information', [AuthController::class, 'updateUserInfoAction']);
+    $r->addRoute('POST', '/change-user-password', [AuthController::class, 'updatePasswordAction']);
+
 
     
 
