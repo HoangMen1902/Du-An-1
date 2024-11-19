@@ -22,7 +22,8 @@
         "respect/validation": "^2.3",
         "phpoffice/phpspreadsheet": "^3.4",
         "psr/cache": "^2.0",
-        "guzzlehttp/guzzle": "^7.0"
+        "guzzlehttp/guzzle": "^7.0",
+        "phpmailer/phpmailer": "*"
     },
     "scripts": {
         "phinx-create": "vendor/bin/phinx create",
