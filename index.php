@@ -48,7 +48,7 @@ Src\Helpers\Client\AuthHelper::middleware();
 
 $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
     $r->addRoute('GET', '/home', [HomeController::class, 'show']);
-    $r->addRoute('GET', '/detail', [ProductController::class, 'show']);
+    $r->addRoute('GET', '/detail/{id}', [ProductController::class, 'show']);
     $r->addRoute('GET', '/list', [ProductListController::class, 'show']);
     $r->addRoute('GET', '/checkout', [CheckoutController::class, 'show']);
     $r->addRoute('GET', '/about', [AboutController::class, 'show']);
