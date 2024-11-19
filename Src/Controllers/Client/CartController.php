@@ -26,7 +26,7 @@ class CartController extends BaseController
                 'quantity' => $_POST['quantity'] ?? null,
                 'user_id ' => $_SESSION['user']['id']
             ];
-            // var_dump($data);
+            var_dump($data);
             $CartModel = new CartModel();
             $saveResult = $CartModel->createCart($data);
             if ($saveResult) {

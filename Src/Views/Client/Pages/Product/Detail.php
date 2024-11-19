@@ -78,8 +78,9 @@
             </ul>
         </div> -->
         <hr>
-
-
+        <?php
+        var_dump($productData);
+        ?>
 
         <div class="product__info__buy row">
             <?php foreach ($productData['skus'] as $sku): ?>
