@@ -73,6 +73,10 @@ $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
     $r->addRoute('POST', '/add-to-cart', [CartController::class, 'store']);
 
     $r->addRoute('GET', '/register', [AuthController::class, 'register']);
+    $r->get('/reset-password', [AuthController::class, 'loadResetPage']);
+
+    $r->post('/reset-password/{token}', [AuthController::class, 'resetPassword']);
+    $r->post('/send-mail', [AuthController::class, 'forgotPasswordSubmit']);
     $r->post('/register-action', [AuthController::class, 'store']);
 
     $r->addGroup('/profile', function (FastRoute\RouteCollector $r) {
@@ -81,7 +85,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
         $r->get('/address', [UserInfoController::class, 'address']);
         $r->get('/orders-list', [UserInfoController::class, 'userOrders']);
     });
- 
+
 
     $r->addRoute('GET', '/searchResult', [SearchController::class, 'show']);
     $r->addRoute('GET', '/search', [SearchController::class, 'search']);
@@ -146,7 +150,6 @@ $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
 
 
         $r->delete('/delete-user/{id:\d+}', [UserController::class, 'delete']);
-
     });
 });
 

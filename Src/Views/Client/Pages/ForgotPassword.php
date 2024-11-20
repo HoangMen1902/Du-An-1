@@ -5,7 +5,7 @@
 <div class="login-wrapper justify-content-center align-items-center">
     <div class="login" style="width: fit-content;">
         <div class="form-wrapper">
-            <form action="/send-mail" method="post" class="login-form" id="loginForm">
+            <form action="/send-mail" method="post" class="mail-form" id="loginForm">
                 <h2 class="login-title text-center">Quên mật khẩu</h2>
                 <div class="col-md-12">
                     <input type="text" placeholder="Địa chỉ Email" class="login-form-input" name="email" id="email">
