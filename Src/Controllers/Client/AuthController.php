@@ -1,8 +1,9 @@
 <?php
 namespace Src\Controllers\Client;
 
-
+use DateTime;
 use Src\Controllers\BaseController;
+use Src\Helpers\Client\SendMailHelper;
 use Src\Models\Client\UserModel;
 use Src\Notifications\Notification;
 use Src\Validations\Client\UserValidation;
@@ -373,5 +374,73 @@ class AuthController extends BaseController {
 
     public function forgotPassword() {
         echo $this->view->render('Client/Pages/ForgotPassword');
+    }
+
+    public function forgotPasswordSubmit() {
+        $email = $_POST['email'];
+        $sendMail = new SendMailHelper();
+        if($sendMail->sendMail($email)) {
+            Notification::success('Gửi mail thành công', 'Vui lòng check mail');
+            header('location: /forgot-password');
+            exit();
+        } else {
+            Notification::error('Gửi mail thất bại', 'Vui lòng kiểm tra lại thông tin tài khoản');
+            header('location: /forgot-password');
+            exit();
+        }
+    }
+
+    public function loadResetPage() {
+        $UserModel = new UserModel();
+        $token = $_GET['token'];
+        $user = $UserModel->getUserByToken($token);
+        if($user) {
+
+                $expires = date("U");
+                date_default_timezone_set('Asia/Ho_Chi_Minh');
+                $expiresTime = date("Y-m-d H:i:s", $expires);
+                $timeNow = new DateTime($expiresTime);
+                $userExpired = new DateTime($user['reset_token_expires']);
+            if($userExpired < $timeNow) {
+                Notification::error('Truy cập thất bại', 'Link đã hết hạn, vui lòng gửi mail mới');
+                header('location: /forgot-password');
+                exit();
+            } else {
+                echo $this->view->render('Client/Pages/ResetPassword', ['token' => $token]);
+            }
+        } else {
+            Notification::error('Không thể truy cập', 'Bạn không thể truy cập trang này');
+            header('location :/');
+            exit();
+        }
+    }
+
+    public function resetPassword($params) {
+        $token = $params['token'];
+        $password = $_POST['password'];
+        $passVerify = $_POST['password-verify'];
+        if(strcmp($password, $passVerify) != 0) {
+            Notification::error('Không thể khôi phục', 'Mật khẩu xác nhận không chính xác');
+            header('location: /forgot-password');
+            exit();
+        }
+
+        $UserModel = new UserModel();
+        $user = $UserModel->getUserByToken($token);
+        var_dump($user);
+        $data = [
+            'password' => password_hash($password = $_POST['password'], PASSWORD_DEFAULT)
+        ];
+        $updateResult = $UserModel->updateUser($user['id'], $data);
+
+        if($updateResult) {
+            Notification::success('Thành công', 'Đã thay đổi mật khẩu thành công');
+            header('location: /login');
+            exit();
+        } else {
+            Notification::error('Thất bại', 'Thay đổi mật khẩu thất bại');
+            header('location: /login');
+            exit();
+        }
     }
 }

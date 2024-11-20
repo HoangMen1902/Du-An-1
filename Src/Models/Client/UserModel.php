@@ -133,6 +133,47 @@ class UserModel extends BaseModel
     public function updateUserInfo($id, $data)
     {
         $this->id = 'id';
+    }
+    public function updateToken($token, $time, $email) {
+        try {
+            $sql = "UPDATE $this->table SET reset_token = ?, reset_token_expires = ? WHERE email = ?";
+            $conn = $this->_conn->MySQLi();
+            $stmt = $conn->prepare($sql);
+            date_default_timezone_set('Asia/Ho_Chi_Minh');
+            $stmt->bind_param('sss', $token, $time, $email);
+            $result = $stmt->execute();
+            return $result;
+        } catch (Exception $e) {
+            error_log('Đã có lỗi khi ujpdate token: ' . $e->getMessage());
+            return false;
+        }
+
+    }
+
+    public function getUserByToken($token) {
+        try {
+            $sql = "SELECT * FROM $this->table WHERE reset_token = ?";
+            $conn = $this->_conn->MySQLi();
+            $stmt = $conn->prepare($sql);
+            if($stmt) {
+                $stmt->bind_param('s', $token);
+                $stmt->execute();
+                $result = $stmt->get_result();
+                if($result->num_rows > 1) {
+                    return $result->fetch_all(MYSQLI_ASSOC);
+                } else {
+                    return $result->fetch_assoc();
+                }
+            }
+            return null;
+        } catch (Exception $e) {
+            error_log('Có lỗi xảy ra trong quá trình fetch token: ' . $e->getMessage());
+            return null;
+        }
+    }
+
+    public function updateUser($id, $data) {
         return $this->update($id, $data);
     }
 }
+

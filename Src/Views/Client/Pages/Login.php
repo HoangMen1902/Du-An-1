@@ -29,7 +29,7 @@
                         <span>Nhớ tài khoản</span>
                     </div>
                     <div class="forgot-password">
-                        <a href="">Quên mật khẩu</a>
+                        <a href="/forgot-password">Quên mật khẩu</a>
                     </div>
                 </div>
                 <button class="login-btn" id="loginSubmit">Đăng nhập</button>
