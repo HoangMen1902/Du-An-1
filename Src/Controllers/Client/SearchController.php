@@ -23,7 +23,7 @@ class SearchController extends BaseController
         if (isset($_GET['search']) && !empty($_GET['search'])) {
             // echo '<pre>';
             $keyword = $_GET['search'];
-            // echo ' tìm kiếm thành công';
+            // echo ' tìm kiếm thành công';`
             // var_dump($keyword);
             $SearchModel = new SearchModel();
             $searchResult = $SearchModel->search($keyword);

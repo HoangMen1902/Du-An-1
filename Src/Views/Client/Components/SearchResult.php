@@ -107,6 +107,73 @@
 
 
 
+                <div class="row mt-3 d-flex">
+                    <?php foreach ($productData as $product):
+                        $thumbnail = explode(',', $product['thumbnail']);
+                    ?>
+                        <div class="col-md-4 mb-4 col-xxl-3 card-list ">
+                            <div class="card position-relative h-100" id="card-<?= $product['product_id'] ?>">
+                                <div class="w-100 ratio ratio-1x1 ">
+                                    <img class="product-img   p-3" style="object-fit: contain; "
+                                        src="<?= $_ENV['APP_URL'] ?>/public/Uploads/Products/<?= $thumbnail[0] ?>"
+                                        alt="<?= $product['product_name'] ?>"
+                                        id="main-image-<?= $product['product_id'] ?>"
+                                        data-product-id="<?= $product['product_id'] ?>">
+                                </div>
+
+                                <div class="card-body  " style="display: flex; flex-direction: column;">
+                                    <h5 class="card-title mb-2 text-limit" id="product-name-<?= $product['product_id'] ?>">
+                                        <?= $product['product_name'] ?>
+                                        <span id="sku-attributes-<?= $product['product_id'] ?>"></span> <!-- Đây là nơi hiển thị thuộc tính SKU -->
+                                    </h5>
+
+                                    <p class="card-text mb-2 text-limit"><?= $product['description'] ?></p>
+
+                                    <div class="price">
+                                        <?php if ($product['skus']) :
+                                            $sku = current($product['skus']);
+                                            $oldPrice = $sku['original_price'];
+                                            $currentPrice = $sku['discounted_price'];
+                                        ?>
+                                            <?php if ($oldPrice > $currentPrice) : ?>
+                                                <span class="price text-muted mb-2 text-decoration-line-through old-price" id="old-price-<?= $product['product_id'] ?>"><?= number_format($oldPrice) ?> đ</span>
+                                            <?php endif; ?>
+                                            <span class="price mb-2 ms-2 current-price" id="current-price-<?= $product['product_id'] ?>"><?= number_format($currentPrice) ?> đ</span>
+                                        <?php endif; ?>
+                                    </div>
+                                    <a href="detail/<?= $product['product_id'] ?>" class="btn btn-mainColor button-hover button-add text-white rounded-5 position-absolute">
+                                        Mua ngay
+                                    </a>
+                                    <div style="margin-top: auto;">
+                                        <?php foreach ($product['skus'] as $sku) : ?>
+                                            <button class="img-thumbnail  me-1 product-thumbnail  ">
+                                                <img class="col-12 variant-image "
+                                                    src="<?= $_ENV['APP_URL'] ?>/public/Uploads/Products/<?= $sku['images'] ?>"
+                                                    alt="Variant Image"
+                                                    onclick="changeVariant(<?= $product['product_id'] ?>,
+                                                     '<?= $_ENV['APP_URL'] ?>/public/Uploads/Products/<?= $sku['images'] ?>',
+                                                     <?= $sku['discounted_price'] ?>,
+                                                      <?= $sku['original_price'] ?>)">
+
+                                            </button>
+                                        <?php endforeach; ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+
+
+
+
+
+
+
+
+
+
+<!-- 
                     <div class="row mt-3 d-flex">
                         <div class="col-md-4 mb-4  col-xxl-3">
                             <div class="card position-relative" id="card-1">
@@ -246,7 +313,10 @@
                         </div>
 
 
-                    </div>
+                    </div> -->
+
+
+
                 </div>
 
 

@@ -2,6 +2,7 @@
 
 namespace Src\Models\Client;
 
+use Exception;
 use Src\Models\BaseModel;
 
 
@@ -30,7 +31,7 @@ class CartModel extends BaseModel
 
             $stmt = $conn->prepare($sql);
 
-            $stmt->bind_param("i", $user_id); 
+            $stmt->bind_param("i", $user_id);
 
             $stmt->execute();
 
@@ -63,5 +64,20 @@ class CartModel extends BaseModel
     public function deleteCart($id)
     {
         return $this->delete($id);
+    }
+
+    public function deleteAllCarts($userId)
+    {
+        try {
+            $sql = "DELETE FROM $this->table WHERE user_id = ?";
+            $conn = $this->_conn->MySQLi();
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param('i', $userId);
+            $result = $stmt->execute();
+            return $result;
+        } catch (Exception $e) {
+            error_log('Loi khi delete all cart');
+            return false;
+        }
     }
 }

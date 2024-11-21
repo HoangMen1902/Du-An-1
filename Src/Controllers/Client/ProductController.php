@@ -10,7 +10,6 @@ class ProductController extends BaseController
     public function show($id)
     {
         $productId = $id['id'];
-        var_dump($_GET);
         // var_dump($productId);
         if (!$productId) {
             echo "ID sản phẩm không hợp lệ.";

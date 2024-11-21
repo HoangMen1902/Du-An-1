@@ -67,7 +67,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
     $r->addRoute('POST', '/change-user-password', [AuthController::class, 'updatePasswordAction']);
 
 
-    
+
 
 
     $r->addRoute('POST', '/add-to-cart', [CartController::class, 'store']);
@@ -87,9 +87,11 @@ $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
     });
 
 
+
     $r->addRoute('GET', '/searchResult', [SearchController::class, 'show']);
     $r->addRoute('GET', '/search', [SearchController::class, 'search']);
 
+    $r->post('/delete-all-cart', [CartController::class, 'deleteAllCart']);
     $r->post('/user-login', [AuthController::class, 'authLogin']);
 
 

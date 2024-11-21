@@ -114,18 +114,20 @@
             <div class="col-12 ">
 
                 <div class="row mt-3 d-flex">
-                    <?php foreach ($productData as $product): 
-                        $thumbnail = explode(',',$product['thumbnail']);
-                        ?>
-                        <div class="col-md-4 mb-4 col-xxl-3">
-                            <div class="card position-relative" id="card-<?= $product['product_id'] ?>">
-                                <img class="product-img card-img-top"
-                                    src="<?= $_ENV['APP_URL'] ?>/public/Uploads/Products/<?= $thumbnail[0] ?>"
-                                    alt="<?= $product['product_name'] ?>"
-                                    id="main-image-<?= $product['product_id'] ?>"
-                                    data-product-id="<?= $product['product_id'] ?>">
+                    <?php foreach ($productData as $product):
+                        $thumbnail = explode(',', $product['thumbnail']);
+                    ?>
+                        <div class="col-md-4 mb-4 col-xxl-3 card-list ">
+                            <div class="card position-relative h-100" id="card-<?= $product['product_id'] ?>">
+                                <div class="w-100 ratio ratio-1x1 ">
+                                    <img class="product-img   p-3" style="object-fit: contain; "
+                                        src="<?= $_ENV['APP_URL'] ?>/public/Uploads/Products/<?= $thumbnail[0] ?>"
+                                        alt="<?= $product['product_name'] ?>"
+                                        id="main-image-<?= $product['product_id'] ?>"
+                                        data-product-id="<?= $product['product_id'] ?>">
+                                </div>
 
-                                <div class="card-body">
+                                <div class="card-body  " style="display: flex; flex-direction: column;">
                                     <h5 class="card-title mb-2 text-limit" id="product-name-<?= $product['product_id'] ?>">
                                         <?= $product['product_name'] ?>
                                         <span id="sku-attributes-<?= $product['product_id'] ?>"></span> <!-- Đây là nơi hiển thị thuộc tính SKU -->
@@ -148,10 +150,10 @@
                                     <a href="detail/<?= $product['product_id'] ?>" class="btn btn-mainColor button-hover button-add text-white rounded-5 position-absolute">
                                         Mua ngay
                                     </a>
-                                    <div class="d-flex mt-3">
+                                    <div style="margin-top: auto;">
                                         <?php foreach ($product['skus'] as $sku) : ?>
-                                            <button class="img-thumbnail col-3 me-1 product-thumbnail">
-                                                <img class="col-12 variant-image"
+                                            <button class="img-thumbnail  me-1 product-thumbnail  ">
+                                                <img class="col-12 variant-image "
                                                     src="<?= $_ENV['APP_URL'] ?>/public/Uploads/Products/<?= $sku['images'] ?>"
                                                     alt="Variant Image"
                                                     onclick="changeVariant(<?= $product['product_id'] ?>,
