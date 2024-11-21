@@ -233,8 +233,9 @@ class ProductsController extends BaseController
                     }
                 }
                 foreach ($_FILES['sku']['name'] as $index => $value) {
+                    $bin2hex = bin2hex(random_bytes(5));
                     $temp = explode(".", $value['images']);
-                    $newfilename = round(microtime(true)) . '.' . end($temp);
+                    $newfilename = $bin2hex . '_' . round(microtime(true)) . '.' . end($temp);
                     $images[] = $newfilename;
                 }
 
