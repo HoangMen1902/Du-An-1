@@ -16,10 +16,11 @@
 $counter = 0;
 foreach ($dataProduct as $product): 
     if ($counter >= 4) break; 
+    $thumbnail = explode(',',$product['thumbnail'])
 ?>
     <div class="col-lg-3 col-md-6 col-sm-12">
         <div class="product-card">
-            <img src="/public/Uploads/Products/<?= $product['thumbnail']; ?>" 
+            <img src="/public/Uploads/Products/<?= $thumbnail[0]; ?>" 
                  alt="<?= $product['product_name']; ?>" 
                  class="img-fluid">
 
