@@ -114,11 +114,13 @@
             <div class="col-12 ">
 
                 <div class="row mt-3 d-flex">
-                    <?php foreach ($productData as $product): ?>
+                    <?php foreach ($productData as $product): 
+                        $thumbnail = explode(',',$product['thumbnail']);
+                        ?>
                         <div class="col-md-4 mb-4 col-xxl-3">
                             <div class="card position-relative" id="card-<?= $product['product_id'] ?>">
                                 <img class="product-img card-img-top"
-                                    src="<?= $_ENV['APP_URL'] ?>/public/Uploads/Products/<?= $product['thumbnail'] ?>"
+                                    src="<?= $_ENV['APP_URL'] ?>/public/Uploads/Products/<?= $thumbnail[0] ?>"
                                     alt="<?= $product['product_name'] ?>"
                                     id="main-image-<?= $product['product_id'] ?>"
                                     data-product-id="<?= $product['product_id'] ?>">
