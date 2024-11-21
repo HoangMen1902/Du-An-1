@@ -74,6 +74,16 @@ class UserSeeder extends AbstractSeed
                 'password' => 'hahah22123123a',
                 'status' => '2'
 
+            ],
+            [
+                'fullname' => 'Ly Hoang',
+                'firstname' => 'Ly',
+                'lastname' => 'hoangmen',
+                'email' => 'admin01@gmail.com',
+                'phone' => '1234567890',
+                'status' => 1,
+                'role' => 2,
+                'password' => password_hash('admin123', PASSWORD_DEFAULT)
             ]
         ];
 
