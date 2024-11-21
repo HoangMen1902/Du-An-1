@@ -133,6 +133,7 @@ class UserModel extends BaseModel
     public function updateUserInfo($id, $data)
     {
         $this->id = 'id';
+        return $this->update($id, $data);
     }
     public function updateToken($token, $time, $email) {
         try {
