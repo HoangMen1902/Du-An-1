@@ -57,14 +57,6 @@ $this->start('main_content');
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group row">
-                                <label class="col-sm-3 col-form-label" >Ngày sinh</label>
-                                <div class="col-sm-9">
-                                    <input type="date" class="form-control" name="birthday" value="<?=$data['birthday']?>"/>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group row">
                                 <label class="col-sm-3 col-form-label">Vai trò</label>
                                 <div class="col-sm-9">
                                     <select class="form-control" name="role" id="role">
@@ -75,10 +67,6 @@ $this->start('main_content');
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <p class="card-description">Địa chỉ</p>
-
-                    <div class="col-md-12">
                         <div class="col-md-6">
                             <div class="form-group row">
                                 <label class="col-sm-4 col-form-label">Trạng thái</label>
@@ -91,6 +79,10 @@ $this->start('main_content');
                                 </div>
                             </div>
                         </div>
+                    </div>
+
+
+                        
                         <div class="row justify-content-end">
                             <button type="submit" class="btn btn-primary" id="submitUserBtn" >Sửa</button>
                         </div>
