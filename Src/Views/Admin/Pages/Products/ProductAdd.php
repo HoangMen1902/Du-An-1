@@ -97,6 +97,7 @@ if (isset($_GET['status']) && $_GET['status'] === 'success') {
                 <div class="form-group">
                     <label for="thumbnail">Hình ảnh sản phẩm</label>
                     <input type="file" class="form-control" name="thumbnail[]" accept="image/*" multiple>
+                    <div id="imagesPreview" style="display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap;"></div>
                     <small id="thumbnail-required" class="text-danger" style="display:none">Vui lòng chọn hình ảnh sản phẩm</small>
                 </div>
 
@@ -222,9 +223,9 @@ function updateDisabledOptions(changedSelect = null, skuIndex) {
             const optionValue = $(this).attr('value');
             if (optionValue) {
                 if (selectedValues.includes(optionValue) && optionValue !== currentValue) {
-                    $(this).attr('disabled', 'disabled');
+                    $(this).hide();
                 } else {
-                    $(this).removeAttr('disabled');
+                    $(this).show();
                 }
             }
         });
@@ -240,6 +241,8 @@ function updateDisabledOptions(changedSelect = null, skuIndex) {
         $('#sku-item-' + skuIndex).remove();
         skuIndex--;
     }
+
+    
 </script>
 <script src="<?= $_ENV['APP_URL'] ?>/public\Assets\Admin\js\Pages\ProductValidate.js"></script>
 <?php
