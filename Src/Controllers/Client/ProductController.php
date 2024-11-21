@@ -4,6 +4,7 @@ namespace Src\Controllers\Client;
 
 use Src\Controllers\BaseController;
 use Src\Models\Client\ProductModel;
+use Src\Models\Client\CommentModel;
 
 class ProductController extends BaseController
 {
@@ -18,7 +19,11 @@ class ProductController extends BaseController
 
         $productModel = new ProductModel();
         $productData = $productModel->getProductById($productId);
-    
+        $commentModel = new commentModel();
+        $commentData = $commentModel->getAllCommentByProductId($productId);
+        $commentReply = $commentModel->getAllCommentByParentId($productId);
+     
+
         // echo '<pre>';
         // var_dump($productData);
 
@@ -28,7 +33,11 @@ class ProductController extends BaseController
         }
 
         echo $this->view->render('Client/Pages/Product/Detail', [
-            'productData' => $productData
+            'productData' => $productData,
+            'commentData' => $commentData,
+            'commentReply' => $commentReply,
+            'commentModel' => $commentModel
+
         ]);
     }
 }

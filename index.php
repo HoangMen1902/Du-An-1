@@ -14,6 +14,7 @@ use Src\Controllers\Admin\DashboardController;
 use Src\Controllers\Client\ProductListController;
 use Src\Controllers\Client\SearchController;
 use Src\Controllers\Client\UserInfoController;
+use Src\Controllers\Client\CommentController as ClientComment;
 
 
 use Src\Controllers\Admin\VouchersController;
@@ -71,6 +72,11 @@ $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
 
 
     $r->addRoute('POST', '/add-to-cart', [CartController::class, 'store']);
+    $r->addRoute('POST', '/comment', [ClientComment::class, 'store']);
+    $r->addRoute('POST', '/reply', [ClientComment::class, 'reply']);
+    $r->addRoute('POST', '/edit', [ClientComment::class, 'update']);
+    $r->addRoute('POST', '/editReply', [ClientComment::class, 'updateReply']);
+
 
     $r->addRoute('GET', '/register', [AuthController::class, 'register']);
     $r->get('/reset-password', [AuthController::class, 'loadResetPage']);

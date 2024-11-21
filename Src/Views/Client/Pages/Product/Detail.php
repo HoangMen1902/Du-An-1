@@ -1,5 +1,7 @@
 <?php $this->layout('Client/Components/Layout'); ?>
-<?php $this->start('main_content') ?>
+<?php $this->start('main_content');
+
+?>
 <!-- Insert nội dung vào đây -->
 <div class="product-detal__container">
     <div class="product__carousel">
@@ -10,8 +12,7 @@
             ?>
             <?php foreach ($thumbnail as $image): ?>
                 <button onclick="changeImage1('<?= $_ENV['APP_URL'] ?>/public/Uploads/Products/<?= $image ?>')">
-                    <img src="<?= $_ENV['APP_URL'] ?>/public/Uploads/Products/<?= $image ?>"
-                        alt="">
+                    <img src="<?= $_ENV['APP_URL'] ?>/public/Uploads/Products/<?= $image ?>" alt="">
                 </button>
                 <!-- <?= $_ENV['APP_URL'] ?>/public/Uploads/Products/<?= $image ?> -->
             <?php endforeach; ?>
@@ -23,8 +24,7 @@
                 <?php
                 $thumbnail = explode(',', $productData['thumbnail']);
                 ?>
-                <img id="mainImage" src="<?= $_ENV['APP_URL'] ?>/public/Uploads/Products/<?= $thumbnail[0] ?>"
-                    alt="">
+                <img id="mainImage" src="<?= $_ENV['APP_URL'] ?>/public/Uploads/Products/<?= $thumbnail[0] ?>" alt="">
             </div>
 
             <div class="product__carousel-wrapper__slide">
@@ -66,11 +66,13 @@
         </form> -->
 
         <p class="product__info__text">
-            <span id="old-price-<?= $productData['product_id'] ?>" class="related-card__sub-price__delete" style="color: black;">
+            <span id="old-price-<?= $productData['product_id'] ?>" class="related-card__sub-price__delete"
+                style="color: black;">
                 <?= isset($firstSku['original_price']) ? number_format($firstSku['original_price']) : 'Giá liên hệ' ?> đ
             </span>
             <span id="current-price-<?= $productData['product_id'] ?>">
-                <?= isset($firstSku['discounted_price']) ? number_format($firstSku['discounted_price']) : 'Giá liên hệ' ?> đ
+                <?= isset($firstSku['discounted_price']) ? number_format($firstSku['discounted_price']) : 'Giá liên hệ' ?>
+                đ
             </span>
         </p>
 
@@ -92,17 +94,11 @@
                 <div class="col-4 p-1">
                     <div class="border border-secondary rounded p-1">
                         <label class="w-100">
-                            <input
-                                form="add-to-cart"
-                                class="hidden"
-                                type="radio"
-                                value="<?= $sku['sku_id']   ?> "
+                            <input form="add-to-cart" class="hidden" type="radio" value="<?= $sku['sku_id'] ?> "
                                 name="sku_options"
                                 data-image="<?= $_ENV['APP_URL'] ?>/public/Uploads/Products/<?= htmlspecialchars($sku['images']) ?>"
-                                data-price="<?= $sku['discounted_price'] ?>"
-                                data-old-price="<?= $sku['original_price'] ?>"
-                                product-name="<?= $sku['sku'] ?>"
-                                onclick="onSkuSelect(this)">
+                                data-price="<?= $sku['discounted_price'] ?>" data-old-price="<?= $sku['original_price'] ?>"
+                                product-name="<?= $sku['sku'] ?>" onclick="onSkuSelect(this)">
                             <?php foreach ($sku['options'] as $option): ?>
                                 <div>
                                     <?= htmlspecialchars($option['option_name']) . ': ' . htmlspecialchars($option['option_value']) ?>
@@ -116,8 +112,10 @@
 
 
 
-        <p><svg style="width: 20px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--!Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
-                <path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM144 256a144 144 0 1 1 288 0 144 144 0 1 1 -288 0zm144-64c0 35.3-28.7 64-64 64c-7.1 0-13.9-1.2-20.3-3.3c-5.5-1.8-11.9 1.6-11.7 7.4c.3 6.9 1.3 13.8 3.2 20.7c13.7 51.2 66.4 81.6 117.6 67.9s81.6-66.4 67.9-117.6c-11.1-41.5-47.8-69.4-88.6-71.1c-5.8-.2-9.2 6.1-7.4 11.7c2.1 6.4 3.3 13.2 3.3 20.3z" />
+        <p><svg style="width: 20px;" xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 576 512"><!--!Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                <path
+                    d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM144 256a144 144 0 1 1 288 0 144 144 0 1 1 -288 0zm144-64c0 35.3-28.7 64-64 64c-7.1 0-13.9-1.2-20.3-3.3c-5.5-1.8-11.9 1.6-11.7 7.4c.3 6.9 1.3 13.8 3.2 20.7c13.7 51.2 66.4 81.6 117.6 67.9s81.6-66.4 67.9-117.6c-11.1-41.5-47.8-69.4-88.6-71.1c-5.8-.2-9.2 6.1-7.4 11.7c2.1 6.4 3.3 13.2 3.3 20.3z" />
             </svg> lượt xem:</p>
         <p>Số lượng:</p>
         <div class="product__info__buy__quantity">
@@ -540,26 +538,40 @@
             <div class="row mt-3 d-flex justify-content-between">
                 <div class="col-md-4 mb-4  col-xxl-3">
                     <div class="card position-relative" id="card-1">
-                        <img class="product-img" id="main-img-1" src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800" class="card-img-top" alt="ảnh sản phẩm">
+                        <img class="product-img" id="main-img-1"
+                            src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800"
+                            class="card-img-top" alt="ảnh sản phẩm">
                         <div class="card-body">
                             <h5 class="card-title mb-2 text-limit">Lót chuột Lethal Gaming Gear Jupiter PRO (V2)</h5>
-                            <p class="card-text mb-2 text-limit">Thuộc phân loại Control - Slow, chậm nhất trong các dòng PRO của Lethal Gaming.</p>
+                            <p class="card-text mb-2 text-limit">Thuộc phân loại Control - Slow, chậm nhất trong các
+                                dòng PRO của Lethal Gaming.</p>
 
                             <div class="d-flex justify-content-star align-items-center">
                                 <span class="price text-muted mb-2 text-decoration-line-through">1.500.000đ</span>
                                 <span class="price mb-2 ms-2">1.000.000đ</span>
                             </div>
-                            <button class="btn btn-mainColor button-hover button-add text-white rounded-5 position-absolute ">Mua ngay</button>
+                            <button
+                                class="btn btn-mainColor button-hover button-add text-white rounded-5 position-absolute ">Mua
+                                ngay</button>
 
                             <div class="d-flex mt-3">
-                                <button class="img-thumbnail col-3  me-1 product-thumbnail  " onclick="changeImage('main-img-1', 'https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800')">
-                                    <img class="col-12 " src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800" alt="thumbnail">
+                                <button class="img-thumbnail col-3  me-1 product-thumbnail  "
+                                    onclick="changeImage('main-img-1', 'https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800')">
+                                    <img class="col-12 "
+                                        src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800"
+                                        alt="thumbnail">
                                 </button>
-                                <button class="img-thumbnail col-3 me-1 product-thumbnail" onclick="changeImage('main-img-1', 'https://www.phongcachxanh.vn/cdn/shop/files/lot-chu-t-lethal-gaming-gear-jupiter-pro-v2-41227243946229.jpg?v=1726313363&width=800')">
-                                    <img class="col-12" src="https://www.phongcachxanh.vn/cdn/shop/files/lot-chu-t-lethal-gaming-gear-jupiter-pro-v2-41227243946229.jpg?v=1726313363&width=800" alt="thumbnail">
+                                <button class="img-thumbnail col-3 me-1 product-thumbnail"
+                                    onclick="changeImage('main-img-1', 'https://www.phongcachxanh.vn/cdn/shop/files/lot-chu-t-lethal-gaming-gear-jupiter-pro-v2-41227243946229.jpg?v=1726313363&width=800')">
+                                    <img class="col-12"
+                                        src="https://www.phongcachxanh.vn/cdn/shop/files/lot-chu-t-lethal-gaming-gear-jupiter-pro-v2-41227243946229.jpg?v=1726313363&width=800"
+                                        alt="thumbnail">
                                 </button>
-                                <button class="img-thumbnail col-3 me-1 product-thumbnail" onclick="changeImage('main-img-1', 'https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800')">
-                                    <img class="col-12" src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800" alt="thumbnail">
+                                <button class="img-thumbnail col-3 me-1 product-thumbnail"
+                                    onclick="changeImage('main-img-1', 'https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800')">
+                                    <img class="col-12"
+                                        src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800"
+                                        alt="thumbnail">
                                 </button>
                             </div>
                         </div>
@@ -568,26 +580,40 @@
 
                 <div class="col-md-4 mb-4  col-xxl-3">
                     <div class="card position-relative" id="card-2">
-                        <img class="product-img" id="main-img-2" src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800" class="card-img-top" alt="ảnh sản phẩm">
+                        <img class="product-img" id="main-img-2"
+                            src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800"
+                            class="card-img-top" alt="ảnh sản phẩm">
                         <div class="card-body">
                             <h5 class="card-title mb-2 text-limit">Lót chuột Lethal Gaming Gear Jupiter PRO (V2)</h5>
-                            <p class="card-text mb-2 text-limit">Thuộc phân loại Control - Slow, chậm nhất trong các dòng PRO của Lethal Gaming.</p>
+                            <p class="card-text mb-2 text-limit">Thuộc phân loại Control - Slow, chậm nhất trong các
+                                dòng PRO của Lethal Gaming.</p>
 
                             <div class="d-flex justify-content-star align-items-center">
                                 <span class="price text-muted mb-2 text-decoration-line-through">1.500.000đ</span>
                                 <span class="price mb-2 ms-2">1.000.000đ</span>
                             </div>
-                            <button class="btn btn-mainColor button-hover button-add  text-white rounded-5 position-absolute">Mua ngay</button>
+                            <button
+                                class="btn btn-mainColor button-hover button-add  text-white rounded-5 position-absolute">Mua
+                                ngay</button>
 
                             <div class="d-flex mt-3">
-                                <button class="img-thumbnail col-3 me-1 product-thumbnail" onclick="changeImage('main-img-2', 'https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800')">
-                                    <img class="col-12" src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800" alt="thumbnail">
+                                <button class="img-thumbnail col-3 me-1 product-thumbnail"
+                                    onclick="changeImage('main-img-2', 'https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800')">
+                                    <img class="col-12"
+                                        src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800"
+                                        alt="thumbnail">
                                 </button>
-                                <button class="img-thumbnail col-3 me-1 product-thumbnail" onclick="changeImage('main-img-2', 'https://www.phongcachxanh.vn/cdn/shop/files/lot-chu-t-lethal-gaming-gear-jupiter-pro-v2-41227243946229.jpg?v=1726313363&width=800')">
-                                    <img class="col-12" src="https://www.phongcachxanh.vn/cdn/shop/files/lot-chu-t-lethal-gaming-gear-jupiter-pro-v2-41227243946229.jpg?v=1726313363&width=800" alt="thumbnail">
+                                <button class="img-thumbnail col-3 me-1 product-thumbnail"
+                                    onclick="changeImage('main-img-2', 'https://www.phongcachxanh.vn/cdn/shop/files/lot-chu-t-lethal-gaming-gear-jupiter-pro-v2-41227243946229.jpg?v=1726313363&width=800')">
+                                    <img class="col-12"
+                                        src="https://www.phongcachxanh.vn/cdn/shop/files/lot-chu-t-lethal-gaming-gear-jupiter-pro-v2-41227243946229.jpg?v=1726313363&width=800"
+                                        alt="thumbnail">
                                 </button>
-                                <button class="img-thumbnail col-3 me-1 product-thumbnail" onclick="changeImage('main-img-2', 'https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800')">
-                                    <img class="col-12" src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800" alt="thumbnail">
+                                <button class="img-thumbnail col-3 me-1 product-thumbnail"
+                                    onclick="changeImage('main-img-2', 'https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800')">
+                                    <img class="col-12"
+                                        src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800"
+                                        alt="thumbnail">
                                 </button>
                             </div>
                         </div>
@@ -595,26 +621,40 @@
                 </div>
                 <div class="col-md-4 mb-4  col-xxl-3">
                     <div class="card position-relative" id="card-2">
-                        <img class="product-img" id="main-img-2 product-img" src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800" class="card-img-top" alt="ảnh sản phẩm">
+                        <img class="product-img" id="main-img-2 product-img"
+                            src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800"
+                            class="card-img-top" alt="ảnh sản phẩm">
                         <div class="card-body">
                             <h5 class="card-title mb-2 text-limit">Lót chuột Lethal Gaming Gear Jupiter PRO (V2)</h5>
-                            <p class="card-text mb-2 text-limit">Thuộc phân loại Control - Slow, chậm nhất trong các dòng PRO của Lethal Gaming.</p>
+                            <p class="card-text mb-2 text-limit">Thuộc phân loại Control - Slow, chậm nhất trong các
+                                dòng PRO của Lethal Gaming.</p>
 
                             <div class="d-flex justify-content-star align-items-center">
                                 <span class="price text-muted mb-2 text-decoration-line-through">1.500.000đ</span>
                                 <span class="price mb-2 ms-2">1.000.000đ</span>
                             </div>
-                            <button class="btn btn-mainColor button-hover button-add  text-white rounded-5 position-absolute">Mua ngay</button>
+                            <button
+                                class="btn btn-mainColor button-hover button-add  text-white rounded-5 position-absolute">Mua
+                                ngay</button>
 
                             <div class="d-flex mt-3">
-                                <button class="img-thumbnail col-3 me-1 product-thumbnail" onclick="changeImage('main-img-2', 'https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800')">
-                                    <img class="col-12" src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800" alt="thumbnail">
+                                <button class="img-thumbnail col-3 me-1 product-thumbnail"
+                                    onclick="changeImage('main-img-2', 'https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800')">
+                                    <img class="col-12"
+                                        src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800"
+                                        alt="thumbnail">
                                 </button>
-                                <button class="img-thumbnail col-3 me-1 product-thumbnail" onclick="changeImage('main-img-2', 'https://www.phongcachxanh.vn/cdn/shop/files/lot-chu-t-lethal-gaming-gear-jupiter-pro-v2-41227243946229.jpg?v=1726313363&width=800')">
-                                    <img class="col-12" src="https://www.phongcachxanh.vn/cdn/shop/files/lot-chu-t-lethal-gaming-gear-jupiter-pro-v2-41227243946229.jpg?v=1726313363&width=800" alt="thumbnail">
+                                <button class="img-thumbnail col-3 me-1 product-thumbnail"
+                                    onclick="changeImage('main-img-2', 'https://www.phongcachxanh.vn/cdn/shop/files/lot-chu-t-lethal-gaming-gear-jupiter-pro-v2-41227243946229.jpg?v=1726313363&width=800')">
+                                    <img class="col-12"
+                                        src="https://www.phongcachxanh.vn/cdn/shop/files/lot-chu-t-lethal-gaming-gear-jupiter-pro-v2-41227243946229.jpg?v=1726313363&width=800"
+                                        alt="thumbnail">
                                 </button>
-                                <button class="img-thumbnail col-3 me-1 product-thumbnail" onclick="changeImage('main-img-2', 'https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800')">
-                                    <img class="col-12" src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800" alt="thumbnail">
+                                <button class="img-thumbnail col-3 me-1 product-thumbnail"
+                                    onclick="changeImage('main-img-2', 'https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800')">
+                                    <img class="col-12"
+                                        src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800"
+                                        alt="thumbnail">
                                 </button>
                             </div>
                         </div>
@@ -622,26 +662,40 @@
                 </div>
                 <div class="col-md-4 mb-4  col-xxl-3">
                     <div class="card position-relative" id="card-2">
-                        <img class="product-img" id="main-img-2" src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800" class="card-img-top" alt="ảnh sản phẩm">
+                        <img class="product-img" id="main-img-2"
+                            src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800"
+                            class="card-img-top" alt="ảnh sản phẩm">
                         <div class="card-body">
                             <h5 class="card-title mb-2 text-limit">Lót chuột Lethal Gaming Gear Jupiter PRO (V2)</h5>
-                            <p class="card-text mb-2 text-limit">Thuộc phân loại Control - Slow, chậm nhất trong các dòng PRO của Lethal Gaming.</p>
+                            <p class="card-text mb-2 text-limit">Thuộc phân loại Control - Slow, chậm nhất trong các
+                                dòng PRO của Lethal Gaming.</p>
 
                             <div class="d-flex justify-content-star align-items-center">
                                 <span class="price text-muted mb-2 text-decoration-line-through">1.500.000đ</span>
                                 <span class="price mb-2 ms-2">1.000.000đ</span>
                             </div>
-                            <button class="btn btn-mainColor button-hover button-add  text-white rounded-5 position-absolute">Mua ngay</button>
+                            <button
+                                class="btn btn-mainColor button-hover button-add  text-white rounded-5 position-absolute">Mua
+                                ngay</button>
 
                             <div class="d-flex mt-3">
-                                <button class="img-thumbnail col-3 me-1 product-thumbnail" onclick="changeImage('main-img-2', 'https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800')">
-                                    <img class="col-12" src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800" alt="thumbnail">
+                                <button class="img-thumbnail col-3 me-1 product-thumbnail"
+                                    onclick="changeImage('main-img-2', 'https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800')">
+                                    <img class="col-12"
+                                        src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800"
+                                        alt="thumbnail">
                                 </button>
-                                <button class="img-thumbnail col-3 me-1 product-thumbnail" onclick="changeImage('main-img-2', 'https://www.phongcachxanh.vn/cdn/shop/files/lot-chu-t-lethal-gaming-gear-jupiter-pro-v2-41227243946229.jpg?v=1726313363&width=800')">
-                                    <img class="col-12" src="https://www.phongcachxanh.vn/cdn/shop/files/lot-chu-t-lethal-gaming-gear-jupiter-pro-v2-41227243946229.jpg?v=1726313363&width=800" alt="thumbnail">
+                                <button class="img-thumbnail col-3 me-1 product-thumbnail"
+                                    onclick="changeImage('main-img-2', 'https://www.phongcachxanh.vn/cdn/shop/files/lot-chu-t-lethal-gaming-gear-jupiter-pro-v2-41227243946229.jpg?v=1726313363&width=800')">
+                                    <img class="col-12"
+                                        src="https://www.phongcachxanh.vn/cdn/shop/files/lot-chu-t-lethal-gaming-gear-jupiter-pro-v2-41227243946229.jpg?v=1726313363&width=800"
+                                        alt="thumbnail">
                                 </button>
-                                <button class="img-thumbnail col-3 me-1 product-thumbnail" onclick="changeImage('main-img-2', 'https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800')">
-                                    <img class="col-12" src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800" alt="thumbnail">
+                                <button class="img-thumbnail col-3 me-1 product-thumbnail"
+                                    onclick="changeImage('main-img-2', 'https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800')">
+                                    <img class="col-12"
+                                        src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800"
+                                        alt="thumbnail">
                                 </button>
                             </div>
                         </div>
@@ -649,26 +703,40 @@
                 </div>
                 <div class="col-md-4 mb-4  col-xxl-3">
                     <div class="card position-relative" id="card-2">
-                        <img class="product-img" id="main-img-2" src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800" class="card-img-top" alt="ảnh sản phẩm">
+                        <img class="product-img" id="main-img-2"
+                            src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800"
+                            class="card-img-top" alt="ảnh sản phẩm">
                         <div class="card-body">
                             <h5 class="card-title mb-2 text-limit">Lót chuột Lethal Gaming Gear Jupiter PRO (V2)</h5>
-                            <p class="card-text mb-2 text-limit">Thuộc phân loại Control - Slow, chậm nhất trong các dòng PRO của Lethal Gaming.</p>
+                            <p class="card-text mb-2 text-limit">Thuộc phân loại Control - Slow, chậm nhất trong các
+                                dòng PRO của Lethal Gaming.</p>
 
                             <div class="d-flex justify-content-star align-items-center">
                                 <span class="price text-muted mb-2 text-decoration-line-through">1.500.000đ</span>
                                 <span class="price mb-2 ms-2">1.000.000đ</span>
                             </div>
-                            <button class="btn btn-mainColor button-hover button-add  text-white rounded-5 position-absolute">Mua ngay</button>
+                            <button
+                                class="btn btn-mainColor button-hover button-add  text-white rounded-5 position-absolute">Mua
+                                ngay</button>
 
                             <div class="d-flex mt-3">
-                                <button class="img-thumbnail col-3 me-1 product-thumbnail" onclick="changeImage('main-img-2', 'https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800')">
-                                    <img class="col-12" src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800" alt="thumbnail">
+                                <button class="img-thumbnail col-3 me-1 product-thumbnail"
+                                    onclick="changeImage('main-img-2', 'https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800')">
+                                    <img class="col-12"
+                                        src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800"
+                                        alt="thumbnail">
                                 </button>
-                                <button class="img-thumbnail col-3 me-1 product-thumbnail" onclick="changeImage('main-img-2', 'https://www.phongcachxanh.vn/cdn/shop/files/lot-chu-t-lethal-gaming-gear-jupiter-pro-v2-41227243946229.jpg?v=1726313363&width=800')">
-                                    <img class="col-12" src="https://www.phongcachxanh.vn/cdn/shop/files/lot-chu-t-lethal-gaming-gear-jupiter-pro-v2-41227243946229.jpg?v=1726313363&width=800" alt="thumbnail">
+                                <button class="img-thumbnail col-3 me-1 product-thumbnail"
+                                    onclick="changeImage('main-img-2', 'https://www.phongcachxanh.vn/cdn/shop/files/lot-chu-t-lethal-gaming-gear-jupiter-pro-v2-41227243946229.jpg?v=1726313363&width=800')">
+                                    <img class="col-12"
+                                        src="https://www.phongcachxanh.vn/cdn/shop/files/lot-chu-t-lethal-gaming-gear-jupiter-pro-v2-41227243946229.jpg?v=1726313363&width=800"
+                                        alt="thumbnail">
                                 </button>
-                                <button class="img-thumbnail col-3 me-1 product-thumbnail" onclick="changeImage('main-img-2', 'https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800')">
-                                    <img class="col-12" src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800" alt="thumbnail">
+                                <button class="img-thumbnail col-3 me-1 product-thumbnail"
+                                    onclick="changeImage('main-img-2', 'https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800')">
+                                    <img class="col-12"
+                                        src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800"
+                                        alt="thumbnail">
                                 </button>
                             </div>
                         </div>
@@ -683,6 +751,7 @@
     </div>
 </div>
 
+
 <section class="gradient-custom">
     <div class="container my-5 py-5">
         <div class="row d-flex justify-content-center">
@@ -690,26 +759,16 @@
                 <form action="/comment" method="post">
                     <input type="hidden" name="method" value="POST">
 
-                    <!-- Star Rating Section -->
                     <div class="mb-3">
                         <label for="rating" class="form-label">Đánh giá:</label>
-                        <div class="star-rating">
-                            <input type="radio" name="rating" id="star5" value="5" class="rating-input">
-                            <label for="star5" class="star">&#9733;</label>
-                            <input type="radio" name="rating" id="star4" value="4" class="rating-input">
-                            <label for="star4" class="star">&#9733;</label>
-                            <input type="radio" name="rating" id="star3" value="3" class="rating-input" checked>
-                            <label for="star3" class="star">&#9733;</label>
-                            <input type="radio" name="rating" id="star2" value="2" class="rating-input">
-                            <label for="star2" class="star">&#9734;</label>
-                            <input type="radio" name="rating" id="star1" value="1" class="rating-input">
-                            <label for="star1" class="star">&#9734;</label>
-                        </div>
+
                     </div>
 
-                    <!-- Comment Section -->
+
                     <textarea class="form-control mb-3" rows="5" placeholder="Hãy viết vào bình luận của bạn"
                         name="content"></textarea>
+                    <input type="hidden" name="product_id" value="<?= htmlspecialchars($productData['product_id']) ?>">
+
                     <div class="d-flex justify-content-end">
                         <button class="btn btn-info text-white">Bình luận</button>
                     </div>
@@ -723,83 +782,19 @@
                 <div class="card">
                     <div class="card-body p-4">
                         <h4 class="text-center mb-4 pb-2">Comments</h4>
-                        <!-- Comment Item -->
-                        <div class="d-flex flex-start mb-4 comment-item">
-                            <img class="rounded-circle shadow-1-strong me-3"
-                                src="https://sinpo.id/storage/gambar/foto/wartawan/default_photo.jpg" alt="avatar"
-                                width="65" height="65" />
-                            <div class="flex-grow-1 flex-shrink-1">
-                                <div>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <p class="mb-1">
-                                            Username
-                                            <span class="separator">•</span>
-                                            <span class="small">3 hours ago</span>
-                                        </p>
-                                        <div>
-                                            <button type="button" class="btn btn-link btn-edit"><i
-                                                    class="fas fa-edit fa-xs"></i><span
-                                                    class="small">edit</span></button>
-                                            <button type="button" class="btn btn-link btn-delete"><i
-                                                    class="fas fa-trash fa-xs"></i><span
-                                                    class="small">delete</span></button>
-                                            <button type="button" class="btn btn-link btn-reply"><i
-                                                    class="fas fa-reply fa-xs"></i><span
-                                                    class="small">reply</span></button>
-                                        </div>
-                                    </div>
-
-                                    <!-- Display Rating -->
-                                    <div class="star-rating">
-                                        <span>&#9733;</span>
-                                        <span>&#9733;</span>
-                                        <span>&#9733;</span>
-                                        <span>&#9734;</span>
-                                        <span>&#9734;</span>
-                                    </div>
-
-                                    <p class="small mb-0">Good product...</p>
-
-                                    <!-- Reply Form -->
-                                    <div class="reply-form mt-3" style="display: none;">
-                                        <form action="/reply" method="post">
-                                            <input type="hidden" name="method" value="POST">
-                                            <textarea class="form-control mb-2" placeholder="Viết phản hồi của bạn"
-                                                name="content"></textarea>
-                                            <div class="d-flex justify-content-end">
-                                                <button class="btn btn-info w-15">Gửi phản hồi</button>
-                                            </div>
-                                        </form>
-                                    </div>
-
-                                    <!-- Edit Form -->
-                                    <div class="edit-form mt-3" style="display: none;">
-                                        <form action="/edit-comment" method="post">
-                                            <input type="hidden" name="method" value="PUT">
-                                            <textarea class="form-control mb-2"
-                                                placeholder="Chỉnh sửa bình luận của bạn"
-                                                name="content">Good product...</textarea>
-                                            <div class="d-flex justify-content-end">
-                                                <button class="btn btn-info w-15">Cập nhật</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-
-                                <!-- Nested Replies -->
-                                <div class="d-flex flex-start mt-4 comment-item">
-                                    <a class="me-3" href="#">
-                                        <img class="rounded-circle shadow-1-strong"
-                                            src="https://sinpo.id/storage/gambar/foto/wartawan/default_photo.jpg"
-                                            alt="avatar" width="65" height="65" />
-                                    </a>
+                        <?php if (!empty($commentData)): ?>
+                            <?php foreach ($commentData as $comment): ?>
+                                <div class="d-flex flex-start mb-4 comment-item">
+                                    <img class="rounded-circle shadow-1-strong me-3"
+                                        src="https://sinpo.id/storage/gambar/foto/wartawan/default_photo.jpg" alt="avatar"
+                                        width="65" height="65" />
                                     <div class="flex-grow-1 flex-shrink-1">
                                         <div>
                                             <div class="d-flex justify-content-between align-items-center">
-                                                <p class="mb-1">
-                                                    Username
+                                                <p class="mb-1"><?= htmlspecialchars($comment['name']) ?>
                                                     <span class="separator">•</span>
-                                                    <span class="small">2 hours ago</span>
+                                                    <span
+                                                        class="small"><?= $commentModel->getTimeAgo($comment['created_at']) ?></span>
                                                 </p>
                                                 <div>
                                                     <button type="button" class="btn btn-link btn-edit"><i
@@ -808,32 +803,116 @@
                                                     <button type="button" class="btn btn-link btn-delete"><i
                                                             class="fas fa-trash fa-xs"></i><span
                                                             class="small">delete</span></button>
+                                                    <button type="button" class="btn btn-link btn-reply"><i
+                                                            class="fas fa-reply fa-xs"></i><span
+                                                            class="small">reply</span></button>
                                                 </div>
                                             </div>
-                                            <p class="small mb-0">Reply content here...</p>
 
-                                            <!-- Edit Form for Reply -->
+                                            <!-- Display Rating -->
+                                            <p class="small mb-0"><?= htmlspecialchars($comment['content']) ?></p>
+
+                                            <!-- Reply Form -->
+                                            <div class="reply-form mt-3" style="display: none;">
+                                                <form action="/reply" method="post">
+                                                    <textarea class="form-control mb-2" placeholder="Viết phản hồi của bạn"
+                                                        name="content"></textarea>
+                                                    <input type="hidden" name="product_id"
+                                                        value="<?= htmlspecialchars($productData['product_id']) ?>">
+                                                    <input type="hidden" name="parent_id"
+                                                        value="<?= htmlspecialchars($comment['id']) ?>">
+                                                    <div class="d-flex justify-content-end">
+                                                        <button type="submit" class="btn btn-info w-15">Gửi phản hồi</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+
+                                            <!-- Edit Form -->
                                             <div class="edit-form mt-3" style="display: none;">
-                                                <form action="/edit-comment" method="post">
+                                                <form action="/edit" method="post">
                                                     <input type="hidden" name="method" value="PUT">
                                                     <textarea class="form-control mb-2"
                                                         placeholder="Chỉnh sửa bình luận của bạn"
-                                                        name="content">Reply content here...</textarea>
+                                                        name="content"><?= htmlspecialchars($comment['content']) ?></textarea>
+                                                    <input type="hidden" name="comment_id"
+                                                        value="<?= htmlspecialchars($comment['id']) ?>">
+
+                                                    <input type="hidden" name="product_id"
+                                                        value="<?= htmlspecialchars($productData['product_id']) ?>">
                                                     <div class="d-flex justify-content-end">
                                                         <button class="btn btn-info w-15">Cập nhật</button>
                                                     </div>
                                                 </form>
                                             </div>
+
+                                            <!-- Display Replies -->
+                                            <div class="replies-section mt-4">
+                                                <?php foreach ($commentReply as $reply): ?>
+                                                    <?php if (($comment['id'] == $reply['parent_id'])): ?>
+                                                        <div class="d-flex flex-start mb-4 comment-item">
+                                                            <img class="rounded-circle shadow-1-strong me-3"
+                                                                src="https://sinpo.id/storage/gambar/foto/wartawan/default_photo.jpg"
+                                                                alt="avatar" width="50" height="50" />
+                                                            <div class="flex-grow-1 flex-shrink-1">
+                                                                <div>
+                                                                    <p class="mb-1"><?= htmlspecialchars($reply['name']) ?>
+                                                                        <span class="separator">•</span>
+                                                                        <span
+                                                                            class="small"><?= $commentModel->getTimeAgo($comment['created_at']) ?></span>
+                                                                    </p>
+                                                                    <p class="small mb-0"><?= htmlspecialchars($reply['content']) ?></p>
+
+                                                                    <!-- Edit and Delete Buttons (Aligned Right) -->
+                                                                    <div class="text-end">
+                                                                        <button type="button" class="btn btn-link btn-edit"
+                                                                            data-reply-id="<?= $reply['id'] ?>">
+                                                                            <i class="fas fa-edit fa-xs"></i><span
+                                                                                class="small">edit</span>
+                                                                        </button>
+                                                                        <button type="button" class="btn btn-link btn-delete"
+                                                                            data-reply-id="<?= $reply['id'] ?>">
+                                                                            <i class="fas fa-trash fa-xs"></i><span
+                                                                                class="small">delete</span>
+                                                                        </button>
+                                                                    </div>
+
+                                                                    <!-- Edit Form (Initially Hidden) -->
+                                                                    <div class="edit-form mt-3" style="display: none;">
+                                                                        <form action="/editReply" method="post">
+                                                                            <input type="hidden" name="reply_id"
+                                                                                value="<?= $reply['id'] ?>">
+                                                                            <textarea class="form-control mb-2"
+                                                                                placeholder="Chỉnh sửa phản hồi của bạn"
+                                                                                name="content"><?= htmlspecialchars($reply['content']) ?></textarea>
+                                                                            <input type="hidden" name="comment_id"
+                                                                                value="<?= htmlspecialchars($reply['id']) ?>">
+
+                                                                            <input type="hidden" name="product_id"
+                                                                                value="<?= htmlspecialchars($productData['product_id']) ?>">
+                                                                            <div class="d-flex justify-content-end">
+                                                                                <button class="btn btn-info">Cập nhật</button>
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    <?php endif; ?>
+                                                <?php endforeach; ?>
+                                            </div>
+
+
                                         </div>
                                     </div>
                                 </div>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <div class="container text-center mt-5">
+                                <h3 class="display-6">Không có bình luận nào</h3>
+                                <p class="lead">Hãy bình luận cho chúng tôi nếu có phản hồi gì về sản phẩm!</p>
                             </div>
-                        </div>
-
-                        <div class="container text-center mt-5">
-                            <h3 class="display-6">Không có bình luận nào</h3>
-                            <p class="lead">Hãy bình luận cho chúng tôi nếu có phản hồi gì về sản phẩm!</p>
-                        </div>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
@@ -841,11 +920,12 @@
     </div>
 </section>
 
+
 <script>
     function changeImage1(imageSrc) {
         const mainImage = document.getElementById('mainImage');
         mainImage.style.opacity = 0;
-        setTimeout(function() {
+        setTimeout(function () {
             mainImage.src = imageSrc;
             mainImage.style.transition = 'opacity 0.2s ease-in-out';
             mainImage.style.opacity = 1;
@@ -917,7 +997,7 @@
         const newImageUrl = radioButton.getAttribute('data-image');
         const mainImage = document.getElementById('mainImage');
         mainImage.style.opacity = 0;
-        setTimeout(function() {
+        setTimeout(function () {
             if (newImageUrl) {
                 mainImage.src = newImageUrl;
                 mainImage.style.transition = 'opacity 0.2s ease-in-out';
@@ -955,11 +1035,11 @@
 
 
 
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         const stars = document.querySelectorAll('.star');
 
         stars.forEach(star => {
-            star.addEventListener('click', function() {
+            star.addEventListener('click', function () {
                 // Xóa lớp 'selected' khỏi tất cả các ngôi sao
                 stars.forEach(s => s.classList.remove('selected'));
 
@@ -977,16 +1057,16 @@
         const labels = group.querySelectorAll(".product__info__buy div div");
 
         labels.forEach(label => {
-            label.addEventListener("click", function() {
+            label.addEventListener("click", function () {
                 labels.forEach(lbl => lbl.classList.remove("active-product"));
                 label.classList.add("active-product");
             });
         });
     });
 
-    document.addEventListener('DOMContentLoaded', function() {
-        document.querySelectorAll('.btn-reply').forEach(function(btn) {
-            btn.addEventListener('click', function() {
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.btn-reply').forEach(function (btn) {
+            btn.addEventListener('click', function () {
                 let commentItem = this.closest('.comment-item');
                 let replyForm = commentItem.querySelector('.reply-form');
                 let editForm = commentItem.querySelector('.edit-form');
@@ -995,8 +1075,8 @@
             });
         });
 
-        document.querySelectorAll('.btn-edit').forEach(function(btn) {
-            btn.addEventListener('click', function() {
+        document.querySelectorAll('.btn-edit').forEach(function (btn) {
+            btn.addEventListener('click', function () {
                 let commentItem = this.closest('.comment-item');
                 let editForm = commentItem.querySelector('.edit-form');
                 let replyForm = commentItem.querySelector('.reply-form');
@@ -1005,8 +1085,8 @@
             });
         });
 
-        document.querySelectorAll('.btn-delete').forEach(function(btn) {
-            btn.addEventListener('click', function() {
+        document.querySelectorAll('.btn-delete').forEach(function (btn) {
+            btn.addEventListener('click', function () {
                 alert('Đã xóa thành công');
             });
         });
