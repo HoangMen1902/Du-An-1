@@ -3,46 +3,6 @@
 <?php
 $this->start('main_content');
 ?>
-<?php
-if (isset($_GET['status'])) {
-    $status = $_GET['status'];
-    $message = '';
-    $alertClass = '';
-
-    switch ($status) {
-        case 'success':
-            $message = 'Thao tác thành công';
-            $alertClass = 'alert-success';
-            break;
-        case 'failed':
-            $message = 'Thao tác thất bại';
-            $alertClass = 'alert-danger';
-            break;
-        case 'added':
-            $message = 'Sản phẩm đã được thêm thành công';
-            $alertClass = 'alert-success';
-            break;
-        case 'updated':
-            $message = 'Sản phẩm đã được cập nhật thành công';
-            $alertClass = 'alert-success';
-            break;
-        case 'deleted':
-            $message = 'Sản phẩm đã được xóa thành công';
-            $alertClass = 'alert-success';
-            break;
-    }
-
-    if ($message) {
-        echo '<div class="alert ' . $alertClass . ' mt-5" id="alert-box">';
-        echo '<p class="m-0">' . $message . '</p>';
-        echo '<button type="button" class="close" aria-label="Close" onclick="closeAlert()">';
-        echo '<span aria-hidden="true">&times;</span>';
-        echo '</button>';
-        echo '</div>';
-    }
-}
-?>
-
 
 <div class="col-lg-12 grid-margin stretch-card">
     <div class="card">
@@ -64,11 +24,12 @@ if (isset($_GET['status'])) {
                         <?php
                         if (isset($data) && !empty($data)):
                             foreach ($data as $product):
+                                $product['thumbnail'] = explode(',', $product['thumbnail']);
                         ?>
                                 <tr>
                                     <td><?= $product['id'] ?></td>
                                     <td><?= $product['name'] ?></td>
-                                    <td><img src="/public/Uploads/Products/<?= $product['thumbnail'] ?>" alt="Hình ảnh sản phẩm" width="100%"></td>
+                                    <td><img src="/public/Uploads/Products/<?= $product['thumbnail'][0] ?>" alt="Hình ảnh sản phẩm" width="100%"></td>
                                     <td><?= $product['status'] == 1 ? 'Hoạt động' : 'Ẩn' ?></td>
                                     <td>
                                         <div class="btn-group">

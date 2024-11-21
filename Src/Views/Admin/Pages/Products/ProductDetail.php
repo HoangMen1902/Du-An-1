@@ -1,10 +1,22 @@
 <?php $this->layout('Admin/Layouts/Layout') ?>
 
-
+<?php
+$this->push('styles')
+?>
+<style>
+    .footer {
+        padding: 0 !important;
+    }
+</style>
+<?php
+$this->end();
+?>
 <?php
 $this->start('main_content');
 ?>
 
+<?php
+?>
 <div class="col-12 grid-margin">
     <div class="card">
     <div class="card-body">
@@ -16,15 +28,19 @@ $this->start('main_content');
         
         <div class="form-group">
             <label for="name">Tên sản phẩm</label>
-            <input type="text" class="form-control" name="name" id="name" value="<?= htmlspecialchars($data['name'] ?? '') ?>" disabled>
+            <input type="text" class="form-control" name="name" id="name" value="<?= htmlspecialchars($data['product_name'] ?? '') ?>" disabled>
         </div>
         <div class="form-group">
             <label for="thumbnail">Hình ảnh sản phẩm</label><br>
-            <?php if (!empty($data['thumbnail'])): ?>
-                <img src="<?=$_ENV['APP_URL'] ?>/public/Uploads/Products/<?= htmlspecialchars($data['thumbnail']) ?>" alt="Thumbnail" style="max-width: 100px; height: auto;">
-            <?php else: ?>
-                <p>Không có hình ảnh</p>
-            <?php endif; ?>
+            <?php if (!empty($data['thumbnail'])): 
+            $data['thumbnail'] = explode(',', $data['thumbnail']);
+                foreach($data['thumbnail'] as $thumbnail):
+                ?>
+                
+                <img src="<?=$_ENV['APP_URL'] ?>/public/Uploads/Products/<?= htmlspecialchars($thumbnail) ?>" alt="Thumbnail" style="max-width: 100px; height: auto;">
+            <?php 
+            endforeach;
+        endif; ?>
         </div>
         <div class="form-group">
             <label for="description">Mô tả sản phẩm</label>
@@ -32,15 +48,15 @@ $this->start('main_content');
         </div>
         <div class="form-group">
             <label for="brand_id">Thương hiệu</label>
-            <input type="text" class="form-control" name="brand_id" id="brand_id" value="<?= htmlspecialchars($data['brand'] ?? '') ?>" disabled>
+            <input type="text" class="form-control" name="brand_id" id="brand_id" value="<?=$data['brand_name'] ?>" disabled>
         </div>
         <div class="form-group">
-            <label for="category_id">Phân loại sản phẩm</label>
-            <input type="text" class="form-control" name="category_id" id="category_id" value="<?= htmlspecialchars($data['category'] ?? '') ?>" disabled>
+            <label for="category_id">Phân loại sản phẩm chung</label>
+            <input type="text" class="form-control" name="category_id" id="category_id" value="<?= htmlspecialchars($data['category_name'] ?? '') ?>" disabled>
         </div>
         <div class="form-group">
-            <label for="price">Giá tiền</label>
-            <input type="number" class="form-control" name="price" id="price" value="<?= htmlspecialchars($data['price'] ?? '') ?>" disabled>
+            <label for="category_id">Phân loại sản phẩm chi tiết</label>
+            <input type="text" class="form-control" name="category_id" id="category_id" value="<?= htmlspecialchars($data['value_name'] ?? '') ?>" disabled>
         </div>
         <div class="form-group">
             <label for="quantity">Số lượng</label>
@@ -57,18 +73,27 @@ $this->start('main_content');
 
     </div>
 </div>
-
+<?php
+$specs = $data['specifications'];
+$specs = json_decode($specs);
+?>
 <div class="col-12 grid-margin">
     <div class="card">
         <div class="card-body">
             <h4 class="card-title">Thông tin kỹ thuật</h4>
             <form class="forms-sample" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="method" value="POST">
+                <?php
+                foreach($specs as $spec):
+                ?>
                 <div class="form-group">
-                    <label for="cpu_technology">Công nghệ CPU</label>
-                    <input type="text" class="form-control" name="cpu_technology" id="cpu_technology" value="" disabled>
+                    <label for="cpu_technology"><?= $spec->spec_name ?></label>
+                    <input type="text" class="form-control" name="technology" id="technology" value="<?=$spec->spec_value?>" disabled>
                 </div>
-                <div class="form-group">
+                <?php
+                endforeach;
+                ?>
+                <!-- <div class="form-group">
                     <label for="cores">Số Nhân</label>
                     <input type="number" class="form-control" name="cores" id="cores" value="" disabled>
                 </div>
@@ -181,7 +206,7 @@ $this->start('main_content');
                 <div class="form-group">
                     <label for="os">Hệ điều hành</label>
                     <input type="text" class="form-control" name="os" id="os" value="" disabled>
-                </div>
+                </div> -->
                 <a href <?php
 
                 $this->stop();

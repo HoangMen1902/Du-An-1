@@ -79,7 +79,7 @@ class ProductsController extends BaseController
         $thumbnail_name = [];
         $thumbnail_tmp = [];
         if (isset($_FILES['thumbnail'])) {
-            $target_dir = 'public/Uploads/Products';
+            $target_dir = 'public/Uploads/Products/';
             for ($i = 0; $i < count($_FILES['thumbnail']['name']); $i++) {
                 $thumbnail_name[] = $_FILES['thumbnail']['name'][$i];
                 $thumbnail_tmp[] = $_FILES['thumbnail']['tmp_name'][$i];
@@ -93,8 +93,9 @@ class ProductsController extends BaseController
                 }
             }
             foreach ($thumbnail_name as $index => $value) {
+                $bin2hex = bin2hex(random_bytes(10));
                 $thumbnail_temp = explode(".", $value);
-                $newThumbnail = round(microtime(true)) . '.' . end($thumbnail_temp);
+                $newThumbnail = $bin2hex . '_' . round(microtime(true)) . '.' . end($thumbnail_temp);
                 $thumbnail[] = $newThumbnail;
             }
 
