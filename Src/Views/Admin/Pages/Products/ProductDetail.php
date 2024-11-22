@@ -14,17 +14,11 @@ $this->end();
 <?php
 $this->start('main_content');
 ?>
-<?php
-?>
 <div class="col-12 grid-margin">
     <div class="card">
         <div class="card-body">
             <h4 class="card-title">Thông tin sản phẩm</h4>
             <form class="forms-sample" action="/admin/add-product-detail-action/" method="post" enctype="multipart/form-data">
-                <input type="hidden" name="id" value="<?= htmlspecialchars($data['id'] ?? '') ?>">
-                <input type="hidden" name="method" value="POST">
-
-
                 <div class="form-group">
                     <label for="name">Tên sản phẩm</label>
                     <input type="text" class="form-control" name="name" id="name" value="<?= htmlspecialchars($data['product_name'] ?? '') ?>" disabled>
@@ -65,7 +59,9 @@ $this->start('main_content');
                     <label for="discountRate">Giá giảm (%)</label>
                     <input type="number" class="form-control" name="discountRate" id="discountRate" value="<?= htmlspecialchars($data['discount'] ?? '') ?>" disabled>
                 </div>
-
+                <div class="col-md-12 p-0" style="text-align:end">
+                    <a href="/admin/edit-product/<?=$data['product_id']?>" class="btn btn-primary">Sửa</a>
+                </div>
             </form>
         </div>
 
@@ -92,6 +88,9 @@ $specs = json_decode($specs);
                 <?php
                 endforeach;
                 ?>
+                <div class="col-md-12 p-0" style="text-align:end">
+                    <a href="/admin/edit-specification/<?=$data['id']?>" class="btn btn-primary">Sửa</a>
+                </div>
             </form>
         </div>
     </div>
@@ -164,8 +163,10 @@ foreach ($variant as $index => $item):
 
                                 </div>
                             </div>
-
                         </div>
+                    </div>
+                    <div class="col-md-12 p-0" style="text-align:end">
+                        <a href="/admin/edit-variant/<?=$data['id']?>/<?=$count + 1?>" class="btn btn-primary">Sửa</a>
                     </div>
                 </form>
             </div>

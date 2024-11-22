@@ -112,7 +112,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
         $r->get('/products', [productsController::class, 'index']);
         $r->get('/product/add', [productsController::class, 'add']);
         $r->get('/product/detail/{id}', [productsController::class, 'show']);
-        $r->get('/product/edit/{id}', [productsController::class, 'edit']);
+        $r->get('/edit-product/{id}', [productsController::class, 'edit']);
         $r->get('/allAttribute', [AttributeController::class, 'show']);
         $r->get('/attribute', [AttributeController::class, 'add']);
         $r->get('/attribute-edit/{id}', [AttributeController::class, 'edit']);
@@ -143,7 +143,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
 
         $r->post('/add-user', [UserController::class, 'store']);
         $r->post('/user-search', [UserController::class, 'search']);
-        $r->post('/product/update/{id}', [productsController::class, 'update']);
+        $r->post('/product/update/{id}', [ProductsController::class, 'update']);
         $r->post('/product/store', [ProductsController::class, 'store']);
         $r->post('/edit-user/{id:\d+}', [UserController::class, 'update']);
         $r->post('/lock-user/{id:\d+}', [UserController::class, 'lockUser']);

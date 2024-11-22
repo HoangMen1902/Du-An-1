@@ -2,6 +2,7 @@
 
 namespace Src\Models\Admin;
 
+use Exception;
 use Src\Models\BaseModel;
 
 class CategoryValueModel extends BaseModel
@@ -77,7 +78,7 @@ class CategoryValueModel extends BaseModel
             $categoryId = $_POST['category_id'];
 
             if (is_array($categoryId) && isset($categoryId['id'])) {
-                $categoryId = $categoryId['id']; 
+                $categoryId = $categoryId['id'];
             }
 
             if (is_numeric($categoryId)) {
@@ -96,6 +97,24 @@ class CategoryValueModel extends BaseModel
             }
         } else {
             echo json_encode(['error' => 'Category ID is missing']);
+        }
+    }
+
+    public function getChildCategoriesWithParentId($id)
+    {
+        try {
+            $query = "SELECT id, name FROM $this->table
+            WHERE category_id = ? AND status = 1";
+            $conn = $this->_conn->MySQLi();
+            $stmt = $conn->prepare($query);
+            $stmt->bind_param('i', $id);
+            $stmt->execute();
+            $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+
+            return $result;
+        } catch (Exception $e) {
+            error_log('Lỗi: ' . $e->getMessage());
+            return false;
         }
     }
 }

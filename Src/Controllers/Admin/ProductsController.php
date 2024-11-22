@@ -21,6 +21,7 @@ use Respect\Validation\Validator;
 use Src\Models\Admin\ProductOptionModel;
 use Src\Models\Admin\SkuValuesModel;
 use Src\Notifications\Notification;
+use Symfony\Component\Console\Helper\Dumper;
 
 class ProductsController extends BaseController
 {
@@ -106,7 +107,6 @@ class ProductsController extends BaseController
                     header('location:/admin/product/add');
                     exit();
                 }
-
             }
             $fileName = implode(',', $thumbnail);
             $data['thumbnail'] = $fileName;
@@ -356,67 +356,72 @@ class ProductsController extends BaseController
         $ProductModel = new ProductModel();
         $data = $ProductModel->getOneProduct($id);
         $brandModel = new BrandModel();
+        $CategoryModel = new CategoryModel();
+        $categories = $CategoryModel->getAllActiveCategories();
         $brand_data = $brandModel->getAllActiveBrands();
-        echo $this->view->render('/Admin/Pages/Products/ProductEdit', ['data' => $data, 'brands' => $brand_data]);
+        $productCategory = $ProductModel->getProductCategories($id);
+        $categoryValueModel = new CategoryValueModel();
+        $child_category = $categoryValueModel->getChildCategoriesWithParentId($data['category_id']);
+        echo $this->view->render('/Admin/Pages/Products/ProductEdit', ['data' => $data, 'brands' => $brand_data, 'categories' => $categories, 'product_category' => $productCategory, 'child_category' => $child_category]);
     }
-    public function update($id)
-    {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $id = $id['id'];
+    // public function update($id)
+    // {
+    //     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    //         $id = $id['id'];
 
-            $data = [
-                'name' => $_POST['name'] ?? null,
-                'description' => $_POST['description'] ?? null,
-                'total_quantity' => $_POST['total_quantity'] ?? 0,
-                'brand' => $_POST['brand'] ?? null,
-                'status' => $_POST['status'] ?? null,
-                'discount' => $_POST['discount'] ?? 0
-            ];
+    //         $data = [
+    //             'name' => $_POST['name'] ?? null,
+    //             'description' => $_POST['description'] ?? null,
+    //             'total_quantity' => $_POST['total_quantity'] ?? 0,
+    //             'brand' => $_POST['brand'] ?? null,
+    //             'status' => $_POST['status'] ?? null,
+    //             'discount' => $_POST['discount'] ?? 0
+    //         ];
 
-            if (isset($_FILES['thumbnail']) && $_FILES['thumbnail']['error'] === UPLOAD_ERR_OK) {
-                $thumbnailTmpPath = $_FILES['thumbnail']['tmp_name'];
-                $thumbnailName = uniqid() . '.' . pathinfo($_FILES['thumbnail']['name'], PATHINFO_EXTENSION);
-                $targetDir = 'public/Uploads/Products/';
+    //         if (isset($_FILES['thumbnail']) && $_FILES['thumbnail']['error'] === UPLOAD_ERR_OK) {
+    //             $thumbnailTmpPath = $_FILES['thumbnail']['tmp_name'];
+    //             $thumbnailName = uniqid() . '.' . pathinfo($_FILES['thumbnail']['name'], PATHINFO_EXTENSION);
+    //             $targetDir = 'public/Uploads/Products/';
 
-                if (!is_dir($targetDir)) {
-                    mkdir($targetDir, 0777, true);
-                }
+    //             if (!is_dir($targetDir)) {
+    //                 mkdir($targetDir, 0777, true);
+    //             }
 
-                if (move_uploaded_file($thumbnailTmpPath, $targetDir . $thumbnailName)) {
-                    $data['thumbnail'] = $thumbnailName;
-                } else {
-                    echo "Lỗi khi tải ảnh thumbnail lên!";
-                    return;
-                }
-            }
+    //             if (move_uploaded_file($thumbnailTmpPath, $targetDir . $thumbnailName)) {
+    //                 $data['thumbnail'] = $thumbnailName;
+    //             } else {
+    //                 echo "Lỗi khi tải ảnh thumbnail lên!";
+    //                 return;
+    //             }
+    //         }
 
-            $errors = ProductValidation::productValidation($data, $id);
+    //         $errors = ProductValidation::productValidation($data, $id);
 
-            if ($errors !== true) {
-                $ProductModel = new ProductModel();
-                $data = $ProductModel->getOneProduct($id);
-                echo $this->view->render('/Admin/Pages/Products/ProductEdit', [
-                    'data' => $data,
-                    'errors' => $errors,
-                ]);
-
-
+    //         if ($errors !== true) {
+    //             $ProductModel = new ProductModel();
+    //             $data = $ProductModel->getOneProduct($id);
+    //             echo $this->view->render('/Admin/Pages/Products/ProductEdit', [
+    //                 'data' => $data,
+    //                 'errors' => $errors,
+    //             ]);
 
 
-                return;
-            }
 
-            $ProductModel = new ProductModel();
-            $updateSuccess = $ProductModel->updateProduct($id, $data);
 
-            if ($updateSuccess) {
-                header('Location: /admin/products');
-                exit;
-            } else {
-                echo "Cập nhật sản phẩm thất bại!";
-            }
-        }
-    }
+    //             return;
+    //         }
+
+    //         $ProductModel = new ProductModel();
+    //         $updateSuccess = $ProductModel->updateProduct($id, $data);
+
+    //         if ($updateSuccess) {
+    //             header('Location: /admin/products');
+    //             exit;
+    //         } else {
+    //             echo "Cập nhật sản phẩm thất bại!";
+    //         }
+    //     }
+    // }
 
 
 
@@ -439,5 +444,82 @@ class ProductsController extends BaseController
     {
         $categoryModel = new CategoryValueModel();
         $categoryModel->getChildCategories();
+    }
+    public function update($params)
+    {
+        $database = new Database();
+        $conn = $database->MySQLi();
+        $id = $params['id'];
+        $data = [];
+        $productCategoryData = [];
+        foreach ($_POST as $key => $input) {
+            if ($key === 'child_category') {
+                $productCategoryData['category_values_id'] = $input;
+                continue;
+            }
+            if (empty($input) || $input === null || $key === 'categories') {
+                continue;
+            }
+            $data[$key] = $input;
+        };
+        $conn->begin_transaction();
+        if (isset($_FILES['thumbnail']) && !empty($_FILES['thumbnail'])) {
+            $target_dir = 'public/Uploads/Products/';
+            for ($i = 0; $i < count($_FILES['thumbnail']['name']); $i++) {
+                $thumbnail_name[] = $_FILES['thumbnail']['name'][$i];
+                $thumbnail_tmp[] = $_FILES['thumbnail']['tmp_name'][$i];
+            }
+            if (!empty($thumbnail_tmp[0])) {
+                foreach ($thumbnail_tmp as $tmp_name) {
+                    if (!v::image()->validate($tmp_name)) {
+                        Notification::error('Thêm thất bại', 'Hình ảnh sản phẩm không hợp lệ');
+                        header('location: /admin/product/detail/' . $id);
+                        exit();
+                    }
+                }
+                foreach ($thumbnail_name as $index => $value) {
+                    $bin2hex = bin2hex(random_bytes(10));
+                    $thumbnail_temp = explode(".", $value);
+                    $newThumbnail = $bin2hex . '_' . round(microtime(true)) . '.' . end($thumbnail_temp);
+                    $thumbnail[] = $newThumbnail;
+                }
+                foreach ($thumbnail as $index => $item) {
+                    if (!move_uploaded_file($thumbnail_tmp[$index], $target_dir . $item)) {
+                        Notification::error('Thêm thất bại', 'Lỗi khi upload hình ảnh sản phẩm!');
+                        header('location:/admin/product/add');
+                        exit();
+                    }
+                }
+                $fileName = implode(',', $thumbnail);
+                $data['thumbnail'] = $fileName;
+            }
+        }
+
+        $ProductCategory = new ProductCategoryModel();
+        $fetchProductCategory = $ProductCategory->findCategory($id);
+        $ProductModel = new ProductModel();
+        $updateCategory = $ProductCategory->updateCategory($fetchProductCategory['id'], $productCategoryData);
+        $result = $ProductModel->updateProduct($id, $data);
+
+
+
+
+        if (!$updateCategory) {
+            Notification::error('Thao tác thất bại', 'Có lỗi đã xảy ra trong quá trình update phân loại');
+            header('location: /admin/product/detail/' . $id);
+            exit();
+        }
+
+        if (!$result) {
+            Notification::error('Thao tác thất bại', 'Có lỗi đã xảy ra');
+            header('location: /admin/product/detail/' . $id);
+            $conn->rollback();
+            exit();
+        } else {
+            Notification::success('Thành công', 'Đã cập nhật thông tin sản phẩm');
+            header('location: /admin/product/detail/' . $id);
+            $conn->commit();
+            exit();
+        }
     }
 }

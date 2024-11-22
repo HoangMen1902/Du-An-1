@@ -20,12 +20,13 @@ class ProductModel extends BaseModel
         $result = [];
         try {
             $sql = "SELECT *,
+            $this->table.id as product_id,
             $this->table.name AS product_name, 
             b.name AS brand_name ,
             cv.name AS value_name,
             ct.name as category_name
             FROM 
-            $this->table 
+            $this->table
             JOIN
             brands b ON $this->table.brand_id = b.id 
             JOIN 
@@ -49,6 +50,24 @@ class ProductModel extends BaseModel
         }
     }
 
+    public function getProductCategories($id) {
+        try {
+            $sql = "SELECT * FROM $this->table AS p JOIN product_categories AS pc ON p.id = pc.product_id 
+            JOIN category_values AS cv ON cv.id = pc.category_values_id 
+            JOIN categories AS c on c.id = cv.category_id 
+            WHERE p.$this->id = ?";
+            $conn = $this->_conn->MySQLi();
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param('i', $id);
+            $stmt->execute();
+            $result = $stmt->get_result()->fetch_assoc();
+            return $result;
+        } catch (Exception $e) {
+            error_log('Lỗi khi hiển thị chi tiết dữ liệu: ' . $e->getMessage());
+            return false;
+        }
+
+    }
     public function createProduct($data)
     {
         return $this->create($data);

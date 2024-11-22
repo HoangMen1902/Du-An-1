@@ -4,29 +4,6 @@
 $this->start('main_content');
 ?>
 
-<?php
-if (isset($_GET['status']) && $_GET['status'] === 'success') {
-?>
-    <div class="alert alert-success mt-5">
-        <p class="m-0">Đã thêm thành công</p>
-    </div>
-<?php
-} else if (isset($_GET['status']) && $_GET['status'] === 'failed') {
-?>
-    <div class="alert alert-danger mt-5">
-        <p class="m-0">Đã thêm thất bại</p>
-    </div>
-<?php
-}
-?>
-
-<?php if (!empty($errors)): ?>
-    <div class="alert alert-danger" role="alert">
-        <?php foreach ($errors as $error): ?>
-            <p><?= htmlspecialchars($error) ?></p>
-        <?php endforeach; ?>
-    </div>
-<?php endif; ?>
 
 <div class="col-md-12 grid-margin stretch-card">
     <div class="card">

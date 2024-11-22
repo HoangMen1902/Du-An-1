@@ -37,22 +37,15 @@ $this->start('main_content');
                                                 <i class="bi bi-three-dots"></i>
                                             </button>
                                             <div class="dropdown-menu">
-                                                <a class="dropdown-item d-flex align-items-center" href="/admin/product/edit/<?=$product['id']?>">
-                                                    <span>Sửa</span>
-                                                    <i class="typcn typcn-edit ms-auto"></i>
-                                                </a>
                                                 <a class="dropdown-item d-flex align-items-center" href="/admin/delete-product/<?=$product['id']?>" onclick="return confirm('Bạn chắc chứ?')">
                                                     <span>Xóa</span>
                                                     <i class="typcn typcn-delete-outline ms-auto"></i>
                                                 </a>
                                                 <a class="dropdown-item d-flex align-items-center" href="/admin/product/detail/<?=$product['id']?>">
-                                                    <span>Chi tiết</span>
+                                                    <span>Chi tiết/Sửa</span>
                                                     <i class="typcn typcn-document ms-auto"></i>
                                                 </a>
-                                                <a class="dropdown-item d-flex align-items-center" href="/admin/product/add-specs/<?=$product['id']?>">
-                                                    <span>Thêm thông số kỹ thuật</span>
-                                                    <i class="typcn typcn-cog ms-auto"></i>
-                                                </a>
+
                                             </div>
                                         </div>
                                     </td>
