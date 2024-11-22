@@ -2,6 +2,7 @@
 
 namespace Src\Models\Admin;
 
+use Exception;
 use Src\Models\BaseModel;
 
 class ProductModel extends BaseModel
@@ -94,6 +95,44 @@ class ProductModel extends BaseModel
         } catch (\Throwable $th) {
             error_log('Lỗi khi thêm dữ liệu: ' . $th->getMessage());
             return false;
+        }
+    }
+
+    public function getVariantOfProduct($id)
+    {
+
+        try {
+
+            $sql = "SELECT 
+            p.id AS product_id, 
+            p.name AS product_name, 
+            p.description,
+            p.thumbnail,
+            p.discount,
+            ps.id AS sku_id,
+            ps.sku,
+            ps.images,
+            ps.price AS original_price,
+            ps.price - (ps.price * p.discount / 100) AS discounted_price,
+            ps.quantity,
+            GROUP_CONCAT(ov.value_name SEPARATOR ', ') AS option_values,
+            GROUP_CONCAT(o.name SEPARATOR ', ') AS option_names
+        FROM products AS p 
+        JOIN product_skus AS ps ON p.id = ps.product_id
+        LEFT JOIN sku_values AS sv ON ps.id = sv.sku_id
+        LEFT JOIN option_values AS ov ON sv.value_id = ov.id
+        LEFT JOIN options AS o ON sv.option_id = o.id
+        WHERE p.status = 1 AND p.id = ?
+        GROUP BY ps.id
+        ORDER BY p.id, ps.id";
+        $conn = $this->_conn->MySQLi();
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('i', $id);
+        $stmt->execute();
+        $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        return $result;
+
+        } catch (Exception $e) {
         }
     }
 }

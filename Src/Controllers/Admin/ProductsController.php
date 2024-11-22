@@ -35,9 +35,10 @@ class ProductsController extends BaseController
         $id = $params['id'];
         $ProductModel = new ProductModel();
         $data = $ProductModel->getOneProduct($id);
+        $variant = $ProductModel->getVariantOfProduct($id);
         echo $this->view->render(
             'Admin/Pages/Products/ProductDetail',
-            ['data' => $data,]
+            ['data' => $data, 'variant' => $variant]
         );
     }
 
