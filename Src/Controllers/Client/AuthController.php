@@ -427,7 +427,6 @@ class AuthController extends BaseController {
 
         $UserModel = new UserModel();
         $user = $UserModel->getUserByToken($token);
-        var_dump($user);
         $data = [
             'password' => password_hash($password = $_POST['password'], PASSWORD_DEFAULT)
         ];

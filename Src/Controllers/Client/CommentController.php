@@ -136,7 +136,6 @@ public function update($id)
             exit;
         }
     
-        var_dump($data);
         header("Location: /detail/$productId");
 
     }

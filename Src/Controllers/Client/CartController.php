@@ -15,8 +15,6 @@ class CartController extends BaseController
         $user_id  = $_SESSION['user']['id'];
         $CartModel = new CartModel();
         $Data = $CartModel->getCartByUser($user_id);
-        // echo '<pre>';
-        // var_dump($Data);
         echo $this->view->render('Client/Pages/Cart', ['Data' => $Data]);
     }
     public function store()
@@ -27,7 +25,6 @@ class CartController extends BaseController
                 'quantity' => $_POST['quantity'] ?? null,
                 'user_id ' => $_SESSION['user']['id']
             ];
-            var_dump($data);
             $CartModel = new CartModel();
             $saveResult = $CartModel->createCart($data);
             if ($saveResult) {

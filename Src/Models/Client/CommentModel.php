@@ -33,7 +33,6 @@ class CommentModel extends BaseModel
         JOIN users ON comments.user_id = users.id 
         where product_id = $id  AND comments.status = 1 AND parent_id IS null
         ORDER BY comments.created_at DESC";
-        var_dump($sql);
         $result = $this->_conn->MySQLi()->query($sql);
         return $result->fetch_all(MYSQLI_ASSOC);
     }

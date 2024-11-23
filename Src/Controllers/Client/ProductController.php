@@ -11,7 +11,6 @@ class ProductController extends BaseController
     public function show($id)
     {
         $productId = $id['id'];
-        // var_dump($productId);
         if (!$productId) {
             echo "ID sản phẩm không hợp lệ.";
             return;
@@ -24,8 +23,6 @@ class ProductController extends BaseController
         $commentReply = $commentModel->getAllCommentByParentId($productId);
      
 
-        // echo '<pre>';
-        // var_dump($productData);
 
         if (!$productData) {
             echo "Sản phẩm không tồn tại.";

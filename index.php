@@ -193,7 +193,6 @@ switch ($routeInfo[0]) {
         break;
     case FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
         $allowedMethods = $routeInfo[1];
-        var_dump($_SERVER['REQUEST_METHOD']);
         echo 'Forbidden Method';
         // ... 405 Method Not Allowed
         break;

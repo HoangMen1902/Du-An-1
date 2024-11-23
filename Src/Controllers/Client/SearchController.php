@@ -21,19 +21,14 @@ class SearchController extends BaseController
     public function search()
     {
         if (isset($_GET['search']) && !empty($_GET['search'])) {
-            // echo '<pre>';
             $keyword = $_GET['search'];
-            // echo ' tìm kiếm thành công';`
-            // var_dump($keyword);
             $SearchModel = new SearchModel();
             $searchResult = $SearchModel->search($keyword);
-            // var_dump($results);
             echo $this->view->render('Client/Components/SearchResult', [
                 'searchResult' => $searchResult,
                 'keyword' => $keyword,
 
             ]);
-            // var_dump($this);
         } else {
             echo ' tìm kiếm thành công cốc';
             // header('location: /?url=home');   

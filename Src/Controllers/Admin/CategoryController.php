@@ -103,9 +103,6 @@ class CategoryController extends BaseController
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $categoryModel = new CategoryModel();
             $category = $categoryModel->getOneCategory($id['id']);
-            // var_dump($id);
-            // var_dump($category);
-            // echo'awe';
             if ($category) {
                 $category_id = $category['category_id'];
                 

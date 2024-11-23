@@ -77,8 +77,6 @@ class ProductModel extends BaseModel
     public function getProductById($productId)
     {
         $allProducts = $this->getAllProductWithSkus();
-        // echo '<pre>';
-        // var_dump($allProducts);  
         if (isset($allProducts[$productId])) {
             return $allProducts[$productId];
         }
