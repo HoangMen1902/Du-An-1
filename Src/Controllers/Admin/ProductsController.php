@@ -25,6 +25,15 @@ use Symfony\Component\Console\Helper\Dumper;
 
 class ProductsController extends BaseController
 {
+    public function variantEdit($params) {
+        $variant_id = $params['sku_id'];
+        $product_id = $params['product_id'];
+        $option = new AttributeModel();
+        $options = $option->getAllAttribute();
+        $SkuValues = new SkuValuesModel;
+        $variant_data = $SkuValues->getAllOptionOfSku($variant_id);
+        echo $this->view->render('Admin/Pages/Products/EditVariant', ['variant_data' => $variant_data, 'options' => $options]);
+    }
     public function index()
     {
         $ProductModel = new ProductModel();

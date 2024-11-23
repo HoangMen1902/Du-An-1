@@ -160,13 +160,14 @@ foreach ($variant as $index => $item):
                                 </div>
                                 <div class="col-md-6">
                                     <img src="<?= $_ENV['APP_URL'] ?>/public\Uploads\Products/<?= $item['images'] ?>" style="max-width:20%" alt="">
-
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <?php
+                    ?>
                     <div class="col-md-12 p-0" style="text-align:end">
-                        <a href="/admin/edit-variant/<?=$data['id']?>/<?=$count + 1?>" class="btn btn-primary">Sửa</a>
+                        <a href="/admin/edit-variant/<?=$data['product_id']?>/<?=$item['sku_id']?>" class="btn btn-primary">Sửa</a>
                     </div>
                 </form>
             </div>
