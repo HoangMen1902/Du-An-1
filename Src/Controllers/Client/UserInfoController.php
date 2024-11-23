@@ -11,11 +11,6 @@ class UserInfoController extends BaseController{
     public function changePassword() {
         echo $this->view->render('Client/Pages/UserChangePassword');
     }
-
-    public function address() {
-        echo $this->view->render('Client/Pages/UserAddressManage');
-    }
-
     public function userOrders() {
         echo $this->view->render('Client/Pages/UserOrders');
     }

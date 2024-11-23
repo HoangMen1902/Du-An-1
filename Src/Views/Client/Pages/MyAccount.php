@@ -42,15 +42,12 @@
                                     value="<?= isset($_SESSION['user']['phone']) ? htmlspecialchars($_SESSION['user']['phone']) : '' ?>">
                                 <div id="phone-error" style="display: none;" class="text-danger">Số điện thoại không được để trống *</div>
                             </div>
-
-                            <?php if (empty($_SESSION['user']['google_id'])): ?>
-                                <div class="form-group">
-                                    <label for="email" class="form-label">Địa chỉ Email</label>
-                                    <input type="text" id="email" name="email" class="form-control form-control-lg"
-                                        value="<?= isset($_SESSION['user']['email']) ? htmlspecialchars($_SESSION['user']['email']) : '' ?>">
-                                    <div id="email-error" style="display: none;" class="text-danger">Email không được để trống *</div>
-                                </div>
-                            <?php endif; ?>
+                            <div class="form-group">
+                                <label for="email" class="form-label">Địa chỉ Email</label>
+                                <input type="text" id="email" name="email" class="form-control form-control-lg"
+                                    value="<?= isset($_SESSION['user']['email']) ? htmlspecialchars($_SESSION['user']['email']) : '' ?>">
+                                <div id="email-error" style="display: none;" class="text-danger">Email không được để trống *</div>
+                            </div>
 
 
 

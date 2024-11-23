@@ -14,6 +14,7 @@ use Src\Controllers\Admin\DashboardController;
 use Src\Controllers\Client\ProductListController;
 use Src\Controllers\Client\SearchController;
 use Src\Controllers\Client\UserInfoController;
+use Src\Helpers\Client\ProvinceHelper;
 use Src\Controllers\Client\CommentController as ClientComment;
 
 
@@ -66,6 +67,9 @@ $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
     $r->get('/forgot-password', [AuthController::class, 'forgotPassword']);
     $r->addRoute('POST', '/update-information', [AuthController::class, 'updateUserInfoAction']);
     $r->addRoute('POST', '/change-user-password', [AuthController::class, 'updatePasswordAction']);
+    $r->addRoute('POST', '/new-address', [ProvinceHelper::class, 'createAddress']);
+
+
 
 
 
@@ -88,7 +92,8 @@ $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
     $r->addGroup('/profile', function (FastRoute\RouteCollector $r) {
         $r->get('', [UserInfoController::class, 'myAccount']);
         $r->get('/change-password', [UserInfoController::class, 'changePassword']);
-        $r->get('/address', [UserInfoController::class, 'address']);
+        $r->get('/address', [ProvinceHelper::class, 'showAllAddress']);
+        $r->post('/delete-address/{id}', [ProvinceHelper::class, 'deleteAddress']);
         $r->get('/orders-list', [UserInfoController::class, 'userOrders']);
     });
 
