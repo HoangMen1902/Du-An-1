@@ -24,7 +24,7 @@ class CartModel extends BaseModel
                     FROM Carts 
                     JOIN Users ON Carts.user_id = Users.id 
                     JOIN Product_skus ON Carts.sku_id = Product_skus.id 
-                    JOIN Products ON Product_skus.product_id
+                    JOIN Products ON Product_skus.product_id = Products.id
                     WHERE Carts.user_id = ?";
 
             $conn = $this->_conn->MySQLi();
@@ -37,9 +37,22 @@ class CartModel extends BaseModel
 
             $result = $stmt->get_result();
 
+            error_log($sql);
             $results = $result->fetch_all(MYSQLI_ASSOC);
 
             return $results;
+
+
+
+
+
+
+
+
+
+
+
+
         } catch (\Throwable $th) {
             error_log('Lỗi khi lấy giỏ hàng: ' . $th->getMessage());
             return false;
