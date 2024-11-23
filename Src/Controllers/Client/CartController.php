@@ -31,19 +31,20 @@ class CartController extends BaseController
                 header("Location: /cart");
                 exit();
             } else {
-                $errors[] = "Không thể thêm sản phẩm vui lòng thử lại.";
-                echo ' lỗi rồi nha';
+                Notification::success('BeeTechnova', 'Vui lòng đăng nhập để mua sản phẩm.');
+                header("Location: /login");
             }
         } else {
             header("Location: /");
             exit();
         }
     }
-    
-    public function deleteAllCart() {
+
+    public function deleteAllCart()
+    {
         $CartModel = new CartModel();
         $result = $CartModel->deleteAllCarts($_SESSION['user']['id']);
-        if(!$result) {
+        if (!$result) {
             Notification::error('Xóa thất bại', 'Lỗi khi xóa tất cả sản phẩm khỏi giỏ hàng');
             header('location: /cart');
             exit();

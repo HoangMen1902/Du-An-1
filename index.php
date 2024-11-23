@@ -102,6 +102,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
 
 
     $r->addGroup('/admin', function (FastRoute\RouteCollector $r) {
+        $r->get('/edit-specification/{id}', [ProductsController::class, 'specificationEdit']);
         $r->get('/admin', [DashboardController::class, 'show']);
         $r->get('/admin/dashboard', [DashboardController::class, 'show']);
         $r->get('', [DashboardController::class, 'show']);
@@ -141,6 +142,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
         $r->get('/delete-attribute/{id}', [AttributeController::class, 'delete']);
         $r->get('/edit-brand/{id:\d+}', [BrandController::class, 'edit']);
 
+        $r->post('/edit-specs/{id}', [ProductsController::class, 'updateSpecs']);
         $r->post('/add-user', [UserController::class, 'store']);
         $r->post('/user-search', [UserController::class, 'search']);
         $r->post('/product/update/{id}', [ProductsController::class, 'update']);

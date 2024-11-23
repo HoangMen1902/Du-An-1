@@ -75,7 +75,7 @@ $specs = json_decode($specs);
 <div class="col-12 grid-margin">
     <div class="card">
         <div class="card-body">
-            <h4 class="card-title">Thông tin kỹ thuật</h4>
+            <h4 class="card-title">Thông số kỹ thuật</h4>
             <form class="forms-sample" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="method" value="POST">
                 <?php
@@ -89,7 +89,7 @@ $specs = json_decode($specs);
                 endforeach;
                 ?>
                 <div class="col-md-12 p-0" style="text-align:end">
-                    <a href="/admin/edit-specification/<?=$data['id']?>" class="btn btn-primary">Sửa</a>
+                    <a href="/admin/edit-specification/<?=$data['product_id']?>" class="btn btn-primary">Sửa</a>
                 </div>
             </form>
         </div>

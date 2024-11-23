@@ -76,7 +76,6 @@ class ProductsController extends BaseController
         }
 
         $errors = [];
-        echo "<pre>";
         $thumbnail = [];
         $thumbnail_name = [];
         $thumbnail_tmp = [];
@@ -364,66 +363,6 @@ class ProductsController extends BaseController
         $child_category = $categoryValueModel->getChildCategoriesWithParentId($data['category_id']);
         echo $this->view->render('/Admin/Pages/Products/ProductEdit', ['data' => $data, 'brands' => $brand_data, 'categories' => $categories, 'product_category' => $productCategory, 'child_category' => $child_category]);
     }
-    // public function update($id)
-    // {
-    //     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    //         $id = $id['id'];
-
-    //         $data = [
-    //             'name' => $_POST['name'] ?? null,
-    //             'description' => $_POST['description'] ?? null,
-    //             'total_quantity' => $_POST['total_quantity'] ?? 0,
-    //             'brand' => $_POST['brand'] ?? null,
-    //             'status' => $_POST['status'] ?? null,
-    //             'discount' => $_POST['discount'] ?? 0
-    //         ];
-
-    //         if (isset($_FILES['thumbnail']) && $_FILES['thumbnail']['error'] === UPLOAD_ERR_OK) {
-    //             $thumbnailTmpPath = $_FILES['thumbnail']['tmp_name'];
-    //             $thumbnailName = uniqid() . '.' . pathinfo($_FILES['thumbnail']['name'], PATHINFO_EXTENSION);
-    //             $targetDir = 'public/Uploads/Products/';
-
-    //             if (!is_dir($targetDir)) {
-    //                 mkdir($targetDir, 0777, true);
-    //             }
-
-    //             if (move_uploaded_file($thumbnailTmpPath, $targetDir . $thumbnailName)) {
-    //                 $data['thumbnail'] = $thumbnailName;
-    //             } else {
-    //                 echo "Lỗi khi tải ảnh thumbnail lên!";
-    //                 return;
-    //             }
-    //         }
-
-    //         $errors = ProductValidation::productValidation($data, $id);
-
-    //         if ($errors !== true) {
-    //             $ProductModel = new ProductModel();
-    //             $data = $ProductModel->getOneProduct($id);
-    //             echo $this->view->render('/Admin/Pages/Products/ProductEdit', [
-    //                 'data' => $data,
-    //                 'errors' => $errors,
-    //             ]);
-
-
-
-
-    //             return;
-    //         }
-
-    //         $ProductModel = new ProductModel();
-    //         $updateSuccess = $ProductModel->updateProduct($id, $data);
-
-    //         if ($updateSuccess) {
-    //             header('Location: /admin/products');
-    //             exit;
-    //         } else {
-    //             echo "Cập nhật sản phẩm thất bại!";
-    //         }
-    //     }
-    // }
-
-
 
     public function delete($id)
     {
@@ -522,4 +461,82 @@ class ProductsController extends BaseController
             exit();
         }
     }
+
+
+    public function specificationEdit($params) {
+        $id = $params['id'];
+        $productModel = new ProductModel();
+        $data = $productModel->getOneProduct($id);
+        echo $this->view->render('Admin/Pages/Products/SpecificationsEdit', ['data' => $data]);
+    }
+
+    public function updateSpecs($params) {
+        $id = $params['id'];
+        $data = [
+            'specifications' => []
+        ];
+        if(empty($_FILES['specifications_file']['name'])) {
+            Notification::error('Sửa thất bại', 'Vui lòng tải lên file Excel');
+            header('location: /admin/edit-specification/' . $id);
+            exit();
+        }
+
+        if (isset($_FILES['specifications_file']) && $_FILES['specifications_file']['error'] == 0) {
+            $filePath = $_FILES['specifications_file']['tmp_name'];
+            $fileType = pathinfo($_FILES['specifications_file']['name'], PATHINFO_EXTENSION);
+
+            if (!in_array(strtolower($fileType), ['xls', 'xlsx'])) {
+                $errors[] = 'Bạn cần phải tải lên file excel thông số kỹ thuật (.xls, .xlsx).';
+            }
+
+            if ($_FILES['specifications_file']['size'] > 10485760) { // 10MB max
+                $errors[] = 'File quá lớn. Vui lòng tải lên file dưới 10MB.';
+            }
+
+            if (empty($errors)) {
+                try {
+                    $spreadsheet = IOFactory::load($filePath);
+                    $sheet = $spreadsheet->getActiveSheet();
+                    $specifications = [];
+
+                    // Duyệt qua các dòng của sheet
+                    foreach ($sheet->getRowIterator() as $row) {
+                        $specName = $sheet->getCell('A' . $row->getRowIndex())->getValue();  // Cột A: Tên thuộc tính
+                        $specValue = $sheet->getCell('B' . $row->getRowIndex())->getValue(); // Cột B: Giá trị thuộc tính
+
+                        if (!empty($specName) && !empty($specValue)) {
+                            $specifications[] = [
+                                'spec_name' => $specName,
+                                'spec_value' => $specValue,
+                            ];
+                        }
+                    }
+
+                    if (empty($specifications)) {
+                        $errors[] = 'No valid product specifications found in the Excel file.';
+                    } else {
+                        $data['specifications'] = json_encode($specifications, JSON_UNESCAPED_UNICODE);
+                    }
+                } catch (Exception $e) {
+                    $errors[] = 'Error reading Excel file: ' . $e->getMessage();
+                }
+            }
+        } else {
+            Notification::error('Sửa thất bại', 'Đã xảy ra lỗi khi upload file excel!');
+            header('location: /admin/product/detail/' . $id);
+            exit();
+        }
+        $ProductModel = new ProductModel();
+        $result = $ProductModel->updateProduct($id, $data);
+        if($result) {
+            Notification::success('Cập nhật thành công', 'Đã cập nhật thành công thông số kỹ thuật');
+            header('location: /admin/product/detail/' . $id);
+            exit();
+        } else {
+            Notification::error('Cập nhật thất bại', 'Đã xảy ra lỗi');
+            header('location: /admin/product/detail/' . $id);
+            exit();
+        }
+        
+    } 
 }
