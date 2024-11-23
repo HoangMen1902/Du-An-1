@@ -118,7 +118,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
         $r->get('/attribute-edit/{id}', [AttributeController::class, 'edit']);
         $r->get('/categories', [CategoryController::class, 'show']);
         $r->get('/category/CategoryValueList/{id}', [CategoryController::class, 'showSub']);
-        $r->get('/category/CategoryValueAdd', [CategoryController::class, 'addSub']);
+        $r->get('/category/CategoryValueAdd/{id}', [CategoryController::class, 'addSub']);
         $r->get('/category/add', [CategoryController::class, 'add']);
         $r->get('/category/edit/{id}', [CategoryController::class, 'edit']);
         $r->post('/category/update/{id}', [CategoryController::class, 'update']);

@@ -42,7 +42,7 @@ $this->start('main_content');
                                                 <p>Danh sách loại sản phẩm con</p>
                                                 <i class="typcn typcn-edit btn-icon-append"></i>
                                             </a>
-                                            <a class="dropdown-item d-flex" href="/admin/category/CategoryValueAdd">
+                                            <a class="dropdown-item d-flex" href="/admin/category/CategoryValueAdd/<?= $category['id'] ?>">
                                                 <p>Thêm loại sản phẩm con</p>
                                                 <i class="typcn typcn-edit btn-icon-append"></i>
                                             </a>
@@ -54,7 +54,13 @@ $this->start('main_content');
                             <?php endforeach; ?>
                     </tbody>
                 </table>
+                <?php
+                if(!isset($category) || empty($category)):
+                ?>
                 <h4 class="text-center text-danger">Không có dữ liệu</h4>
+                <?php
+                endif;
+                ?>
             </div>
         </div>
     </div>

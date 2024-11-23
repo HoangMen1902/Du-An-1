@@ -18,12 +18,9 @@ $this->start('main_content');
                 <div class="form-group">
                     <label for="category_id">Danh mục</label>
                     <select class="form-control" name="category_id">
-                        <?php foreach ($categories as $category): ?>
-                            <option value="<?= $category['id'] ?>"
-                            <?= $category['id'] == ($_POST['category_id'] ?? null) ? 'selected' : '' ?>>
-                            <?= htmlspecialchars($category['name']) ?>
+                            <option value="<?= $categories['id'] ?>">
+                            <?= htmlspecialchars($categories['name']) ?>
                             </option>
-                        <?php endforeach; ?>
                     </select>
                 </div>
                 <div class="form-group">

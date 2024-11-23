@@ -135,10 +135,11 @@ class CategoryController extends BaseController
             'categoryValues' => $categoryValues
         ]);
     }
-    public function addSub()
+    public function addSub($params)
     {
+        $id = $params['id'];
         $categoryModel = new CategoryModel();
-        $categories = $categoryModel->getAllCategory();
+        $categories = $categoryModel->getOneCategory($id);
         echo $this->view->render('Admin/Pages/Category/CategoryValueAdd', [
             'categories' => $categories
         ]);
