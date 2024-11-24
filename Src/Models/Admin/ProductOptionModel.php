@@ -6,7 +6,7 @@ use Src\Models\BaseModel;
 
 class ProductOptionModel extends BaseModel {
     protected $table = "option_values";
-    protected $is = 'id';
+    protected $id = 'id';
 
     public function storeReturnId($data) {
         try {
@@ -14,22 +14,13 @@ class ProductOptionModel extends BaseModel {
             foreach ($data as $key => $value) {
                 $sql .= "$key, ";
             }
-            // INSERT INTO $this->table (name, description, status, 
             $sql = rtrim($sql, ", ");
-            // INSERT INTO $this->table (name, description, status
             $sql .= " ) VALUES (";
-            // INSERT INTO $this->table (name, description, status) VALUES (
             foreach ($data as $key => $value) {
                 $sql .= "'$value', ";
             }
-
-            // INSERT INTO $this->table (name, description, status) VALUES ('category test', 'category test description', '1', 
             $sql = rtrim($sql, ", ");
-            // INSERT INTO $this->table (name, description, status) VALUES ('category test', 'category test description', '1'
-
             $sql .= ")";
-            // INSERT INTO $this->table (name, description, status) VALUES ('category test', 'category test description', '1')
-
             $conn = $this->_conn->MySQLi();
             $stmt = $conn->prepare($sql);
             $stmt->execute();
@@ -55,5 +46,12 @@ class ProductOptionModel extends BaseModel {
             error_log('Lỗi khi hiển thị chi tiết dữ liệu: ' . $th->getMessage() . ' ' . $sql);
             return $result;
         }
+    }
+
+    public function deleteOptionValue($id) {
+        return $this->delete($id);
+    }
+    public function updateValue($id, $data) {
+        return $this->update($id, $data);
     }
 }

@@ -34,6 +34,107 @@ class ProductsController extends BaseController
         $variant_data = $SkuValues->getAllOptionOfSku($variant_id);
         echo $this->view->render('Admin/Pages/Products/EditVariant', ['variant_data' => $variant_data, 'options' => $options]);
     }
+
+    public function deleteProperty($params) {
+        $database = new Database;
+
+        $conn = $database->MySQLi();
+        $conn->begin_transaction();
+
+        $optionValModel = new ProductOptionModel();
+
+        $optionVal = $params['option_value'];
+
+        $optionValDel = $optionValModel->deleteOptionValue($optionVal);
+        if($optionValDel) {
+            Notification::success('Xóa thành công', 'Đã xóa thuộc tính');
+        } else {
+            Notification::error('Xóa thất bại', 'Đã xóa thuộc tính thất bại' . $optionValDel);
+        }
+    }
+    public function updateVariant($params) {
+
+        $database = new Database();
+        $conn = $database->MySQLi();
+
+        $SkuValuesModel = new SkuValuesModel();
+        $optionValueModel = new ProductOptionModel();
+
+        $skuId = $params['sku_id'];
+        $productId = $params['product_id']; 
+
+        $allSkuData = $SkuValuesModel->getAllOptionOfSku($skuId);
+
+        $option_values_data = [];
+        $option_values_insert_data = [];
+
+        foreach($_POST['value_name'] as $index => $value) {
+            if(!isset($allSkuData[$index]['value_name'])){
+                $option_values_insert_data[] = [
+                    'product_id' => $productId,
+                    'option_id' => $_POST['option_id'][$index],
+                    'value_name' => $value
+                ];
+                continue;
+            }
+            if(strcmp($allSkuData[$index]['value_name'], $value) != 0) {
+                $option_values_data[] = [
+                    'value_name' => $value
+                ];
+            }
+        }
+        $returnedId = [];
+        $conn->begin_transaction();
+        foreach($option_values_insert_data as $dataInsert) {
+            $returnedId[] = $optionValueModel->storeReturnId($dataInsert);
+        }
+
+        foreach($returnedId as $id) {
+            if(!isset($id) || empty($id) || !$id) {
+                Notification::error('Sửa thất bại', 'Đã xảy ra lỗi ở quá trình thêm values');
+                $conn->rollback();
+                header('location: /admin/edit-variant/' . $productId . '/' . $skuId);
+                exit();
+            }
+        }
+
+        $skuValuesInsertData = [];
+        $indexValue = 0;
+        foreach($_POST['option_id'] as $index => $option_id) {
+            if(!isset($allSkuData[$index]['option_id'])) {
+                $skuValuesInsertData[] = [
+                    'sku_id' => $skuId,
+                    'option_id' => $option_id,
+                    'value_id' => $returnedId[$indexValue]
+                ];
+                $indexValue++;
+                continue;
+            }
+            if($allSkuData[$index]['option_id'] !== (int)$option_id) {
+                $option_values_data[$index]['option_id'] = $option_id;
+            }
+        }
+        $result = [];
+        foreach($option_values_data as $index => $option_value) {
+            $result[] = $optionValueModel->updateValue($allSkuData[$index]['value_id'], $option_value);
+        }
+
+        foreach( $skuValuesInsertData as $skuData) {
+            $result[] = $SkuValuesModel->store($skuData);
+        }
+
+        foreach($result as $query) {
+            if(!$query) {
+                Notification::error('Sửa thất bại', 'Đã xảy ra lỗi ở quá trình sửa biến thể');
+                $conn->rollback();
+                header('location: /admin/edit-variant/' . $productId . '/' . $skuId);
+                exit();
+            }
+        }
+        Notification::success('Sửa thành công', 'Đã cập nhật thông tin');
+        header('location: /admin/edit-variant/' . $productId . '/' . $skuId);
+        $conn->commit();
+    }
     public function index()
     {
         $ProductModel = new ProductModel();
