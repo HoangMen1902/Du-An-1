@@ -155,8 +155,10 @@ $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
         $r->post('/attribute-update/{id}', [AttributeController::class, 'update']);
         $r->post('/update-brand/{id:\d+}', [BrandController::class, 'update']);
         $r->post('/get-child-categories', [ProductsController::class, 'selectResult']);
+        $r->post('/variant/edit/{product_id}/{sku_id}', [ProductsController::class, 'updateVariant']);
 
 
+        $r->delete('/variant/delete/{sku_value}/{option_value}', [ProductsController::class, 'deleteProperty']);
         $r->delete('/delete-brand/{id:\d+}', [BrandController::class, 'delete']);
 
 
