@@ -1,6 +1,16 @@
 <?php $this->layout('Admin/Layouts/Layout') ?>
 
-
+<?php
+$this->push('styles');
+?>
+<style>
+    .cke_notification {
+        display: none !important;
+    }
+</style>
+<?php
+$this->end();
+?>
 <?php
 $this->start('main_content');
 $thumbnail = explode(',', $data['thumbnail']);
@@ -20,7 +30,7 @@ $thumbnail = explode(',', $data['thumbnail']);
 
                 <div class="form-group">
                     <label for="description">Mô tả sản phẩm</label>
-                    <textarea class="form-control" name="description" rows="4" placeholder="Mô tả sản phẩm"><?= htmlspecialchars($data['description'] ?? '') ?></textarea>
+                    <textarea class="form-control" name="description" rows="4" placeholder="Mô tả sản phẩm"><?= $data['product_description'] ?></textarea>
                     <small id="description-required" class="text-danger" style="display:none">Vui lòng nhập mô tả sản phẩm</small>
                 </div>
 
@@ -120,8 +130,12 @@ $this->stop();
 $this->push('scripts');
 
 ?>
+<script src="<?= $_ENV['APP_URL'] ?>/node_modules\ckeditor4\ckeditor.js"></script>
 
 <script>
+    CKEDITOR.replace('description', {
+        height: 300,
+    });
     thumbnail.onchange = evt => {
         let [file] = thumbnail.files
         if (file) {

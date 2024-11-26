@@ -1,5 +1,17 @@
 <?php $this->layout('Admin/Layouts/Layout') ?>
 
+
+<?php
+$this->push('styles');
+?>
+<style>
+    .cke_notification {
+    display: none !important;
+}
+</style>
+<?php
+$this->end();
+?>
 <?php
 $this->start('main_content');
 ?>
@@ -20,7 +32,7 @@ $this->start('main_content');
 
                 <div class="form-group">
                     <label for="description">Mô tả sản phẩm</label>
-                    <textarea class="form-control" name="description" rows="4" placeholder="Mô tả sản phẩm"><?= htmlspecialchars($data['description'] ?? '') ?></textarea>
+                    <textarea class="form-control" name="description" id="description" rows="4" placeholder="Mô tả sản phẩm"><?= htmlspecialchars($data['description'] ?? '') ?></textarea>
                     <small id="description-required" class="text-danger" style="display:none">Vui lòng nhập mô tả sản phẩm</small>
                 </div>
 
@@ -113,6 +125,7 @@ $this->start('main_content');
 
 $this->push('scripts');
 ?>
+<script src="<?=$_ENV['APP_URL']?>/node_modules\ckeditor4\ckeditor.js"></script>
 <script>
 let skuIndex = 0;
 
@@ -218,8 +231,9 @@ function updateDisabledOptions(changedSelect = null, skuIndex) {
         $('#sku-item-' + skuIndex).remove();
         skuIndex--;
     }
-
-    
+    CKEDITOR.replace('description', {
+    height: 300,
+});
 </script>
 <script src="<?= $_ENV['APP_URL'] ?>/public\Assets\Admin\js\Pages\ProductValidate.js"></script>
 <?php

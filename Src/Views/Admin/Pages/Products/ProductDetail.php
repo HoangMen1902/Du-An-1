@@ -37,7 +37,9 @@ $this->start('main_content');
                 </div>
                 <div class="form-group">
                     <label for="description">Mô tả sản phẩm</label>
-                    <input type="text" class="form-control" name="description" id="description" value="<?= htmlspecialchars($data['description'] ?? '') ?>" disabled>
+                    <div  class="form-control" name="description" id="description" disabled>
+                        <?=$data['product_description']?>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="brand_id">Thương hiệu</label>

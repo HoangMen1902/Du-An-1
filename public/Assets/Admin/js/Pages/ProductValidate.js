@@ -1,7 +1,6 @@
 function getProductInput() {
     return {
         name: $('input[name="name"]').val().trim(),
-        description: $('textarea[name="description"]').val().trim(),
         brand: $('select[name="brand"]').val().trim(),
         discount: $('input[name="discount"]').val().trim(),
         status: $('select[name="status"]').val(),

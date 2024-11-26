@@ -22,6 +22,7 @@ class ProductModel extends BaseModel
             $sql = "SELECT *,
             $this->table.id as product_id,
             $this->table.name AS product_name, 
+            $this->table.description AS product_description,
             b.name AS brand_name ,
             cv.name AS value_name,
             ct.name as category_name
@@ -40,6 +41,7 @@ class ProductModel extends BaseModel
             $this->table.$this->id = ?";
             $conn = $this->_conn->MySQLi();
             $stmt = $conn->prepare($sql);
+            error_log($sql);
 
             $stmt->bind_param('i', $id);
             $stmt->execute();
