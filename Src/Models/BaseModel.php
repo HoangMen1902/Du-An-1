@@ -189,7 +189,7 @@ abstract class BaseModel implements CrudInterface
         }
     }
 
-    public function findByColumn(int $product_id)
+    public function findByColumn($product_id)
     {
         try {
             $sql = "SELECT * FROM product_skus WHERE product_id = ?";

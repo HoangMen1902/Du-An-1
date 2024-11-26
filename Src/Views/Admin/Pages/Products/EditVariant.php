@@ -11,7 +11,7 @@ $this->start('main_content');
 <div class="col-md-12 grid-margin stretch-card">
     <div class="card">
         <div class="card-body">
-            <h4 class="card-title">Thêm sản phẩm</h4>
+            <h4 class="card-title">Sửa SKU</h4>
             <form action="/admin/variant/edit/<?= $variant_data[0]['product_id'] ?>/<?= $variant_data[0]['sku_id'] ?>" id="variantEditForm" method="post" enctype="multipart/form-data" data-product="<?= $variant_data[0]['product_id'] ?>" data-sku="<?= $variant_data[0]['sku_id'] ?>">
 
                 <div class="sku-item row mb-3" id="sku-item-1" class="sku-form" data-sku-index="1">
@@ -78,7 +78,7 @@ $this->start('main_content');
                     <span class="text-danger" style="display:none" id="propertyCheck-<?= $index ?>">Vui lòng nhập thuộc tính</span>
                     <div class="col-12 mt-3">
                         <a href="javascript:void(0)" onclick="addProperty(this)" class="btn btn-primary">Thêm Thuộc tính</a>
-                        <a href="javascript:void(0)" onclick="" class="btn btn-danger">Xóa SKU</a>
+                        <a onclick="confirmDelete(event)" href="/admin/delete-sku/<?=$variant_data[0]['sku_id']?>/<?=$variant_data[0]['product_id']?>" class="btn btn-danger">Xóa SKU</a>
                     </div>
                 </div>
                 <div class="col-md-12 px-0" style="text-align: right;">
@@ -149,6 +149,11 @@ $this->push('scripts');
             $(this).find('input').attr('name', `value_name[${index}]`);
         });
     }
+    function confirmDelete(event) {
+    if (!confirm('Bạn chắc chứ?')) {
+        event.preventDefault(); 
+    }
+}
 </script>
 <script src="<?= $_ENV['APP_URL'] ?>/public\Assets\Admin\js\Pages\VariantEdit.js"></script>
 <?php

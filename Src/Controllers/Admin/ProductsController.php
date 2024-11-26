@@ -25,11 +25,34 @@ use Symfony\Component\Console\Helper\Dumper;
 
 class ProductsController extends BaseController
 {
+
+    public function deleteSku($params) {
+        $product_id = $params['product_id'];
+        $sku_id = $params['sku_id'];
+        
+        $SkuModel = new ProductSkuModel();
+        
+        $variant_data = $SkuModel->getAllSkuByProduct($product_id);
+        if(count($variant_data) < 2) {
+            Notification::error('Xóa thất bại', 'Không thể xóa sản phẩm chỉ có 1 SKU');
+            header('location:/admin/product/detail/' . $product_id);
+            exit();
+        }
+
+        $result = $SkuModel->deleteSku($sku_id);
+        if($result) {
+            Notification::success('Xóa thành công', 'Đã xóa thành công SKU');
+            header('location:/admin/product/detail/' . $product_id);
+            exit();
+        }
+    }
     public function variantEdit($params) {
         $variant_id = $params['sku_id'];
         $product_id = $params['product_id'];
+
         $option = new AttributeModel();
         $options = $option->getAllAttribute();
+
         $SkuValues = new SkuValuesModel;
         $variant_data = $SkuValues->getAllOptionOfSku($variant_id);
         echo $this->view->render('Admin/Pages/Products/EditVariant', ['variant_data' => $variant_data, 'options' => $options]);
@@ -65,9 +88,10 @@ class ProductsController extends BaseController
 
         $allSkuData = $SkuValuesModel->getAllOptionOfSku($skuId);
 
+        $option_values_id = [];
         $option_values_data = [];
         $option_values_insert_data = [];
-
+        echo '<pre>';
         foreach($_POST['value_name'] as $index => $value) {
             if(!isset($allSkuData[$index]['value_name'])){
                 $option_values_insert_data[] = [
@@ -77,17 +101,24 @@ class ProductsController extends BaseController
                 ];
                 continue;
             }
+
+
+
             if(strcmp($allSkuData[$index]['value_name'], $value) != 0) {
                 $option_values_data[] = [
                     'value_name' => $value
                 ];
+                $option_values_id[] = [$allSkuData[$index]['value_id']];
             }
         }
+
+
         $returnedId = [];
         $conn->begin_transaction();
-        foreach($option_values_insert_data as $dataInsert) {
-            $returnedId[] = $optionValueModel->storeReturnId($dataInsert);
-        }
+            foreach($option_values_insert_data as $dataInsert) {
+                $returnedId[] = $optionValueModel->storeReturnId($dataInsert);
+            }
+
 
         foreach($returnedId as $id) {
             if(!isset($id) || empty($id) || !$id) {
@@ -116,7 +147,7 @@ class ProductsController extends BaseController
         }
         $result = [];
         foreach($option_values_data as $index => $option_value) {
-            $result[] = $optionValueModel->updateValue($allSkuData[$index]['value_id'], $option_value);
+            $result[] = $optionValueModel->updateValue($option_values_id[$index][0], $option_value);
         }
 
         foreach( $skuValuesInsertData as $skuData) {
