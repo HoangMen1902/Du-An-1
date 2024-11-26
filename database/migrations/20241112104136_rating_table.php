@@ -22,9 +22,17 @@ final class RatingTable extends AbstractMigration
     {
         $table = $this->table('ratings');
         $table->addColumn('rating','integer', ['limit' => MysqlAdapter::INT_TINY])
-        ->addColumn('order_id', 'integer', ['signed' => false])
         ->addColumn('user_id', 'integer', ['signed' => false])
-        ->addForeignKey('order_id', 'orders', 'id', [                'delete' => 'CASCADE', 
+        ->addColumn('product_id', 'integer', ['signed' => false])
+        ->addColumn('preview', 'string', ['limit' => 255])
+        ->addColumn('status', 'integer', ['limit' => MysqlAdapter::INT_TINY, 'default' => 1])
+
+        ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
+        ->addColumn('updated_at', 'timestamp', [
+            'default' => 'CURRENT_TIMESTAMP',
+            'update' => 'CURRENT_TIMESTAMP'
+        ])
+        ->addForeignKey('product_id', 'products', 'id', [                'delete' => 'CASCADE', 
         'update' => 'NO_ACTION'])
         ->addForeignKey('user_id', 'users','id', [                'delete' => 'CASCADE', 
         'update' => 'NO_ACTION'])

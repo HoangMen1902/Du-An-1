@@ -756,13 +756,137 @@
     <div class="container my-5 py-5">
         <div class="row d-flex justify-content-center">
             <div class="col-md-12 col-lg-10 col-xl-8 py-5">
+                <?php if (isset($allowRating[0]['total']) && $allowRating[0]['total'] == 1): ?>
+                    <form action="/preview" method="post">
+                        <input type="hidden" name="method" value="POST">
+                        <div class="mb-3">
+                            <label for="rating" class="form-label">Đánh giá:</label>
+                            <div class="rating">
+                                <span class="star" data-value="1">&#9733;</span>
+                                <span class="star" data-value="2">&#9733;</span>
+                                <span class="star" data-value="3">&#9733;</span>
+                                <span class="star" data-value="4">&#9733;</span>
+                                <span class="star" data-value="5">&#9733;</span>
+                            </div>
+                            <input type="hidden" name="rating_value" id="rating_value" value="0">
+                        </div>
+                        <textarea class="form-control mb-3" rows="5" placeholder="Hãy viết vào bình luận của bạn"
+                            name="preview"></textarea>
+                        <input type="hidden" name="product_id" value="<?= htmlspecialchars($productData['product_id']) ?>">
+                        <div class="d-flex justify-content-end">
+                            <button class="btn btn-info text-white">Đánh giá</button>
+                        </div>
+                    </form>
+                <?php endif; ?>
+            </div>
+        </div>
+
+        <!-- Comments Display Section -->
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-12 col-lg-10 col-xl-8">
+                <div class="card">
+                    <div class="card-body p-4">
+                        <h4 class="text-center mb-4 pb-2">Comments</h4>
+                        <?php if (!empty($ratingData)): ?>
+                            <?php foreach ($ratingData as $rating): ?>
+                                <div class="d-flex flex-start mb-4 comment-item">
+                                    <img class="rounded-circle shadow-1-strong me-3"
+                                        src="https://sinpo.id/storage/gambar/foto/wartawan/default_photo.jpg" alt="avatar"
+                                        width="65" height="65" />
+                                    <div class="flex-grow-1 flex-shrink-1">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <p class="mb-1"><?= htmlspecialchars($rating['name']) ?>
+                                                <span class="separator">•</span>
+                                                <span
+                                                    class="small"><?= $ratingModel->getTimeAgo($rating['created_at']) ?></span>
+                                            </p>
+                                            <div>
+                                                <?php if (isset($_SESSION['user']) && ($_SESSION['user']['id'] == $rating['user_id'] || $_SESSION['user']['role'] == 2)): ?>
+                                                    <div>
+                                                        <button type="button" class="btn btn-link btn-edit">
+                                                            <i class="fas fa-edit fa-xs"></i><span class="small">Edit</span>
+                                                        </button>
+                                                        <form action="/deleteRating" method="POST" style="display: inline;">
+                                                            <input type="hidden" name="rating_id"
+                                                                value="<?= htmlspecialchars($rating['id']) ?>">
+                                                            <input type="hidden" name="product_id"
+                                                                value="<?= htmlspecialchars($productData['product_id']) ?>">
+                                                            <button type="submit" class="btn btn-link btn-delete">
+                                                                <i class="fas fa-trash fa-xs"></i><span class="small">Delete</span>
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                <?php endif; ?>
+
+
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center">
+                                            <?php if (isset($rating['rating']) && is_numeric($rating['rating']) && $rating['rating'] > 0): ?>
+                                                <div class="rating">
+                                                    <?php for ($i = 0; $i < $rating['rating']; $i++): ?>
+                                                        <span class="star-filled">&#9733;</span>
+                                                    <?php endfor; ?>
+                                                    <?php for ($i = $rating['rating']; $i < 5; $i++): ?>
+                                                        <span class="stared">&#9734;</span>
+                                                    <?php endfor; ?>
+                                                </div>
+                                            <?php endif; ?>
+                                        </div>
+                                        <p class="small mb-0"><?= htmlspecialchars($rating['preview']) ?></p>
+                                        <div class="edit-form mt-3" style="display: none;">
+                                            <form action="/edit-preview" method="post">
+                                                <input type="hidden" name="method" value="PUT">
+                                                <div class="mb-3">
+                                                    <label for="edit_rating_<?= htmlspecialchars($rating['id']) ?>"
+                                                        class="form-label">Chỉnh sửa đánh giá:</label>
+                                                    <div class="rating edit-rating">
+                                                        <?php for ($i = 1; $i <= 5; $i++): ?>
+                                                            <span
+                                                                class="stars <?= $i <= $rating['rating'] ? 'star-filled' : 'stared' ?>"
+                                                                data-value="<?= $i ?>">&#9733;</span>
+                                                        <?php endfor; ?>
+                                                    </div>
+                                                    <input type="hidden" name="rating_value"
+                                                        id="edit_rating_<?= htmlspecialchars($rating['id']) ?>"
+                                                        value="<?= htmlspecialchars($rating['rating']) ?>">
+                                                </div>
+                                                <textarea class="form-control mb-2" placeholder="Chỉnh sửa bình luận của bạn"
+                                                    name="preview"><?= htmlspecialchars($rating['preview']) ?></textarea>
+                                                <input type="hidden" name="rating_id"
+                                                    value="<?= htmlspecialchars($rating['id']) ?>">
+                                                <input type="hidden" name="product_id"
+                                                    value="<?= htmlspecialchars($productData['product_id']) ?>">
+                                                <div class="d-flex justify-content-end">
+                                                    <button class="btn btn-info w-15">Cập nhật</button>
+                                                </div>
+                                            </form>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <div class="container text-center mt-5">
+                                <h3 class="display-6">Không có bình luận nào</h3>
+                                <p class="lead">Hãy bình luận cho chúng tôi nếu có phản hồi gì về sản phẩm!</p>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="gradient-custom">
+    <div class="container my-5 py-5">
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-12 col-lg-10 col-xl-8 py-5">
                 <form action="/comment" method="post">
                     <input type="hidden" name="method" value="POST">
 
-                    <div class="mb-3">
-                        <label for="rating" class="form-label">Đánh giá:</label>
-
-                    </div>
 
 
                     <textarea class="form-control mb-3" rows="5" placeholder="Hãy viết vào bình luận của bạn"
@@ -797,22 +921,30 @@
                                                         class="small"><?= $commentModel->getTimeAgo($comment['created_at']) ?></span>
                                                 </p>
                                                 <div>
+                                                <?php if (isset($_SESSION['user']) && ($_SESSION['user']['id'] == $comment['user_id'] || $_SESSION['user']['role'] == 2)): ?>
+
                                                     <button type="button" class="btn btn-link btn-edit"><i
                                                             class="fas fa-edit fa-xs"></i><span
                                                             class="small">edit</span></button>
-                                                    <button type="button" class="btn btn-link btn-delete"><i
-                                                            class="fas fa-trash fa-xs"></i><span
-                                                            class="small">delete</span></button>
+                                                    <form action="/deleteComment" method="POST" style="display: inline;">
+                                                        <input type="hidden" name="rating_id" value="<?= $comment['id'] ?>">
+                                                        <input type="hidden" name="product_id"
+                                                            value="<?= $productData['product_id'] ?>">
+                                                        <button type="submit" class="btn btn-link btn-delete">
+                                                            <i class="fas fa-trash fa-xs"></i><span class="small">Delete</span>
+                                                        </button>
+                                                    </form>
+                                                <?php endif; ?>
                                                     <button type="button" class="btn btn-link btn-reply"><i
                                                             class="fas fa-reply fa-xs"></i><span
                                                             class="small">reply</span></button>
                                                 </div>
                                             </div>
 
-                                            <!-- Display Rating -->
+
+
                                             <p class="small mb-0"><?= htmlspecialchars($comment['content']) ?></p>
 
-                                            <!-- Reply Form -->
                                             <div class="reply-form mt-3" style="display: none;">
                                                 <form action="/reply" method="post">
                                                     <textarea class="form-control mb-2" placeholder="Viết phản hồi của bạn"
@@ -827,7 +959,6 @@
                                                 </form>
                                             </div>
 
-                                            <!-- Edit Form -->
                                             <div class="edit-form mt-3" style="display: none;">
                                                 <form action="/edit" method="post">
                                                     <input type="hidden" name="method" value="PUT">
@@ -836,7 +967,6 @@
                                                         name="content"><?= htmlspecialchars($comment['content']) ?></textarea>
                                                     <input type="hidden" name="comment_id"
                                                         value="<?= htmlspecialchars($comment['id']) ?>">
-
                                                     <input type="hidden" name="product_id"
                                                         value="<?= htmlspecialchars($productData['product_id']) ?>">
                                                     <div class="d-flex justify-content-end">
@@ -845,7 +975,6 @@
                                                 </form>
                                             </div>
 
-                                            <!-- Display Replies -->
                                             <div class="replies-section mt-4">
                                                 <?php foreach ($commentReply as $reply): ?>
                                                     <?php if (($comment['id'] == $reply['parent_id'])): ?>
@@ -862,7 +991,6 @@
                                                                     </p>
                                                                     <p class="small mb-0"><?= htmlspecialchars($reply['content']) ?></p>
 
-                                                                    <!-- Edit and Delete Buttons (Aligned Right) -->
                                                                     <div class="text-end">
                                                                         <button type="button" class="btn btn-link btn-edit"
                                                                             data-reply-id="<?= $reply['id'] ?>">
@@ -876,7 +1004,6 @@
                                                                         </button>
                                                                     </div>
 
-                                                                    <!-- Edit Form (Initially Hidden) -->
                                                                     <div class="edit-form mt-3" style="display: none;">
                                                                         <form action="/editReply" method="post">
                                                                             <input type="hidden" name="reply_id"
@@ -901,8 +1028,6 @@
                                                     <?php endif; ?>
                                                 <?php endforeach; ?>
                                             </div>
-
-
                                         </div>
                                     </div>
                                 </div>
@@ -919,6 +1044,7 @@
         </div>
     </div>
 </section>
+
 
 
 <script>
@@ -969,21 +1095,20 @@
 
 
     function changePriceAndImage(radioButton) {
-        // Lấy giá giảm và giá gốc từ radio button
-        const newPrice = parseFloat(radioButton.getAttribute('data-price')); // Giá giảm
-        const oldPrice = parseFloat(radioButton.getAttribute('data-old-price')); // Giá gốc
 
-        // Lấy các phần tử hiển thị giá
+        const newPrice = parseFloat(radioButton.getAttribute('data-price'));
+        const oldPrice = parseFloat(radioButton.getAttribute('data-old-price'));
+
+
         const currentPriceElement = document.getElementById('current-price-<?= $productData['product_id'] ?>');
         const oldPriceElement = document.getElementById('old-price-<?= $productData['product_id'] ?>');
 
-        // Cập nhật giá giảm
+
         currentPriceElement.innerText = newPrice.toLocaleString('de-DE', {
             minimumFractionDigits: 0,
             maximumFractionDigits: 0
         }) + " đ";
 
-        // Cập nhật giá gốc nếu giá gốc cao hơn giá giảm
         if (oldPrice > newPrice) {
             oldPriceElement.innerText = oldPrice.toLocaleString('de-DE', {
                 minimumFractionDigits: 0,
@@ -993,7 +1118,7 @@
             oldPriceElement.innerText = '';
         }
 
-        // Cập nhật hình ảnh sản phẩm
+
         const newImageUrl = radioButton.getAttribute('data-image');
         const mainImage = document.getElementById('mainImage');
         mainImage.style.opacity = 0;
@@ -1007,64 +1132,169 @@
     }
 
     function onSkuSelect(radioButton) {
-        // Gọi hàm cập nhật giá và ảnh
+
         changePriceAndImage(radioButton);
 
-        // Cập nhật tên sản phẩm với mã SKU
+
         const skuName = radioButton.getAttribute('product-name');
         const productNameElement = document.getElementById('product-name-<?= $productData['product_id'] ?>');
 
-        // Lấy tên sản phẩm gốc và cập nhật với mã SKU
+
         const originalProductName = productNameElement.textContent.split(' - ')[0];
         productNameElement.textContent = `${originalProductName} - ${skuName}`;
     }
 
 
     function changeImage(radio) {
-        // Lấy URL ảnh từ thuộc tính `data-image` của radio button được chọn
+
         const newImageUrl = radio.getAttribute('data-image');
-        // Lấy phần tử ảnh chính
+
         const mainImage = document.getElementById('mainImage');
-        // Thay đổi ảnh hiển thị
+
         if (newImageUrl) {
             mainImage.src = newImageUrl;
         }
     }
 
 
-
-
-
     document.addEventListener('DOMContentLoaded', function () {
-        const stars = document.querySelectorAll('.star');
 
-        stars.forEach(star => {
+        document.querySelectorAll('.edit-rating .stars').forEach(function (star) {
             star.addEventListener('click', function () {
-                // Xóa lớp 'selected' khỏi tất cả các ngôi sao
-                stars.forEach(s => s.classList.remove('selected'));
+                const ratingValue = this.getAttribute('data-value');
+                const ratingInput = document.getElementById('edit_rating_' + this.closest('form').querySelector('input[name="rating_id"]').value);
 
-                // Đánh dấu ngôi sao đã chọn
-                this.classList.add('selected');
 
-                // Cập nhật input radio tương ứng
-                const ratingInput = this.previousElementSibling; // Lấy radio input tương ứng
-                ratingInput.checked = true; // Đánh dấu là đã chọn
+                ratingInput.value = ratingValue;
+
+
+                document.querySelectorAll('.edit-rating .stars').forEach(function (s) {
+                    if (s.getAttribute('data-value') <= ratingValue) {
+                        s.classList.add('star-filled');
+                        s.classList.remove('stared');
+                    } else {
+                        s.classList.remove('star-filled');
+                        s.classList.add('stared');
+                    }
+                });
+            });
+        });
+
+        document.querySelectorAll('.edit-rating .star').forEach(function (star) {
+            star.addEventListener('mouseover', function () {
+                const value = parseInt(star.getAttribute('data-value'));
+                document.querySelectorAll('.edit-rating .star').forEach(function (s) {
+                    const sValue = parseInt(s.getAttribute('data-value'));
+                    s.style.color = sValue <= value ? 'gold' : '#d3d3d3';
+                });
+            });
+
+            star.addEventListener('mouseout', function () {
+                document.querySelectorAll('.edit-rating .star').forEach(function (s) {
+                    s.style.color = s.classList.contains('star-filled') ? 'gold' : '#d3d3d3';
+                });
             });
         });
     });
 
-    document.querySelectorAll(".product__info__buy").forEach(group => {
-        const labels = group.querySelectorAll(".product__info__buy div div");
 
-        labels.forEach(label => {
-            label.addEventListener("click", function () {
-                labels.forEach(lbl => lbl.classList.remove("active-product"));
-                label.classList.add("active-product");
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const editRatings = document.querySelectorAll(".edit-rating .star");
+
+        editRatings.forEach(star => {
+            star.addEventListener("click", function () {
+                const parent = this.parentNode;
+                const value = this.getAttribute("data-value");
+
+
+                const hiddenInput = parent.nextElementSibling;
+                hiddenInput.value = value;
+
+
+                const stars = parent.querySelectorAll(".star");
+                stars.forEach((s, index) => {
+                    if (index < value) {
+                        s.classList.add("star-filled");
+                        s.classList.remove("stared");
+                    } else {
+                        s.classList.add("stared");
+                        s.classList.remove("star-filled");
+                    }
+                });
             });
         });
     });
+
 
     document.addEventListener('DOMContentLoaded', function () {
+
+        // Xử lý sự kiện click vào các ngôi sao đánh giá
+        document.querySelectorAll('.star').forEach(function (star) {
+            star.addEventListener('click', function () {
+                let rating = this.getAttribute('data-value');
+                document.getElementById('rating_value').value = rating;
+
+                // Cập nhật giao diện sao đã chọn
+                document.querySelectorAll('.star').forEach(function (s) {
+                    if (s.getAttribute('data-value') <= rating) {
+                        s.classList.add('star-filled');
+                    } else {
+                        s.classList.remove('star-filled');
+                    }
+                });
+            });
+        });
+
+        // Xử lý hiệu ứng hover cho các ngôi sao
+        document.querySelectorAll('.rating .star').forEach((star) => {
+            star.addEventListener('mouseover', () => {
+                const value = parseInt(star.getAttribute('data-value'));
+                document.querySelectorAll('.rating .star').forEach((s) => {
+                    const sValue = parseInt(s.getAttribute('data-value'));
+                    if (sValue <= value) {
+                        s.style.color = 'gold';
+                    } else {
+                        s.style.color = '#d3d3d3';
+                    }
+                });
+            });
+
+            star.addEventListener('mouseout', () => {
+                document.querySelectorAll('.rating .star').forEach((s) => {
+                    if (!s.classList.contains('selected')) {
+                        s.style.color = '#d3d3d3';
+                    }
+                });
+            });
+
+            star.addEventListener('click', () => {
+                const value = parseInt(star.getAttribute('data-value'));
+                document.getElementById('rating_value').value = value;
+
+                document.querySelectorAll('.rating .star').forEach((s, index) => {
+                    if (index < value) {
+                        s.classList.add('selected');
+                    } else {
+                        s.classList.remove('selected');
+                    }
+                });
+            });
+        });
+
+        // Xử lý sự kiện click cho các sản phẩm trong mục "Mua"
+        document.querySelectorAll(".product__info__buy").forEach(group => {
+            const labels = group.querySelectorAll(".product__info__buy div div");
+
+            labels.forEach(label => {
+                label.addEventListener("click", function () {
+                    labels.forEach(lbl => lbl.classList.remove("active-product"));
+                    label.classList.add("active-product");
+                });
+            });
+        });
+
+        // Xử lý sự kiện cho nút trả lời trong bình luận
         document.querySelectorAll('.btn-reply').forEach(function (btn) {
             btn.addEventListener('click', function () {
                 let commentItem = this.closest('.comment-item');
@@ -1075,6 +1305,7 @@
             });
         });
 
+        // Xử lý sự kiện cho nút chỉnh sửa trong bình luận
         document.querySelectorAll('.btn-edit').forEach(function (btn) {
             btn.addEventListener('click', function () {
                 let commentItem = this.closest('.comment-item');
@@ -1085,12 +1316,14 @@
             });
         });
 
+        // Xử lý sự kiện cho nút xóa trong bình luận
         document.querySelectorAll('.btn-delete').forEach(function (btn) {
             btn.addEventListener('click', function () {
                 alert('Đã xóa thành công');
             });
         });
     });
+
 </script>
 
 <?php $this->stop() ?>

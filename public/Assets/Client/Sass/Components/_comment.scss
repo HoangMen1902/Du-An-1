@@ -1,26 +1,35 @@
-.star-rating {
-    direction: rtl;
-    display: inline-block;
+/* Cỡ chữ sao */
+.rating {
+    font-size: 24px;
 }
 
+/* Cài đặt màu sắc mặc định cho sao */
 .star {
-    font-size: 30px;
-    color: #ccc; /* Màu ngôi sao chưa chọn */
+    color: #d3d3d3;
     cursor: pointer;
+    transition: color 0.2s; /* Hiệu ứng chuyển màu mượt mà */
 }
 
-.rating-input:checked ~ .star {
-    color: #f39c12; /* Màu ngôi sao đã chọn */
+/* Khi di chuột qua sao, sao sẽ chuyển thành vàng */
+.star:hover,
+.star.selected {
+    color: gold;
 }
 
-.rating-input {
-    display: none; /* Ẩn radio input */
+/* Sao chưa chọn - màu xám */
+.stared {
+    color: gray;
 }
 
+/* Sao đã được chọn - màu vàng */
+.star-filled {
+    color: gold;
+}
+
+/* Đảm bảo sao có kích thước hợp lý trên mobile */
 @media screen and (max-width: 768px) {
-    .avatar {
-        width: 40px;
-        height: 40px;
+    .star {
+        font-size: 20px; /* Giảm kích thước sao cho phù hợp trên thiết bị nhỏ */
     }
 }
 

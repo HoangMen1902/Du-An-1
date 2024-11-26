@@ -24,24 +24,26 @@ $this->start('main_content');
                         </tr>
                     </thead>
                     <tbody>
-                        <?php if (!empty($commentData)): ?>
-                            <?php foreach ($commentData as $comment): ?>
+                        <?php if (!empty($ratingData)): ?>
+                            <?php foreach ($ratingData as $rating): ?>
                                 <tr>
-                                    <td><?= htmlspecialchars($comment['id']) ?></td>
-                                    <td><?= htmlspecialchars($comment['content']) ?></td>
-                                    <td><?= htmlspecialchars($comment['created_at']) ?></td>
+                                    <td><?= htmlspecialchars($rating['id']) ?></td>
+                                    <td><?= htmlspecialchars($rating['preview']) ?></td>
+                                    <td><?= htmlspecialchars($rating['created_at']) ?></td>
                                     <td>
                                         <?php
                                         // Hiển thị trạng thái
-                                        echo ($comment['status'] == '1') ? 'Hoạt động' : 'Không hoạt động';
+                                        echo ($rating['status'] == '1') ? 'Hoạt động' : 'Không hoạt động';
                                         ?>
                                     </td>
-                                    <td><?= htmlspecialchars($comment['product_id']) ?></td>
-                                    <td><?= htmlspecialchars($comment['user_id']) ?></td>
+                                    <td><?= htmlspecialchars($rating['product_id']) ?></td>
+                                    <td><?= htmlspecialchars($rating['user_id']) ?></td>
                                     <td>
                                         <div class="d-flex align-items-center">
 
-                                            <a href="/admin/delete-comment/<?= htmlspecialchars($comment['id']) ?>" onclick="return confirm('Bạn chắc chứ?')" class="btn btn-danger btn-sm btn-icon-text">
+                                            <a href="/admin/delete-rating/<?= htmlspecialchars($rating['id']) ?>"
+                                                onclick="return confirm('Bạn chắc chứ?')"
+                                                class="btn btn-danger btn-sm btn-icon-text">
                                                 Xóa
                                                 <i class="typcn typcn-delete-outline btn-icon-append"></i>
                                             </a>
@@ -55,6 +57,9 @@ $this->start('main_content');
                                 <td colspan="7" class="text-center">Không có bình luận nào</td>
                             </tr>
                         <?php endif; ?>
+
+
+
 
                     </tbody>
                 </table>

@@ -6,6 +6,7 @@ use Src\Controllers\BaseController;
 use Src\Models\Client\CommentModel;
 use Src\Validations\Client\CommentValidation;
 use Src\Notifications\Notification;
+use Src\Models\Client\RatingModel;
 
 class CommentController extends BaseController
 {
@@ -19,10 +20,9 @@ class CommentController extends BaseController
         // return $this->view->render('Client/Pages/Comment/Create', []);
     }
 
-   public function store()
+    public function store()
 {
     $productId = $_POST['product_id'] ?? null;
-
 
     if (!$productId || !is_numeric($productId)) {
         Notification::error('Lỗi', 'ID sản phẩm không hợp lệ');
@@ -30,34 +30,39 @@ class CommentController extends BaseController
         exit;
     }
 
-    // Validate comment
+  
     $validationResult = CommentValidation::commentValidation($_POST);
 
     if ($validationResult === true) {
-   
+        
         $data = [
             'content' => $_POST['content'],
             'user_id' => $_SESSION['user']['id'],
             'product_id' => (int)$productId
         ];
 
+      
         $commentModel = new CommentModel();
-        $result = $commentModel->createComment($data);
+        $commentResult = $commentModel->createComment($data);
 
-        if ($result) {
+        if ($commentResult) {
             Notification::success('Bình luận thành công', 'Đã thêm bình luận thành công');
         } else {
             Notification::error('Bình luận thất bại', 'Có lỗi xảy ra khi lưu bình luận');
         }
 
+       
         header("Location: /detail/$productId");
         exit;
     } else {
-
+   
+        Notification::error('Lỗi', 'Dữ liệu nhập vào không hợp lệ');
         header("Location: /detail/$productId");
         exit;
     }
 }
+
+    
 
 
 public function update($id)
@@ -182,17 +187,25 @@ public function update($id)
     public function delete($id)
     {
         $productId = $_POST['product_id'] ?? null;
-
+        $id = $_POST['rating_id'];
+    
         if (!$productId || !is_numeric($productId)) {
-            return $this->renderError('ID sản phẩm không hợp lệ.');
+            Notification::error('Lỗi', 'ID sản phẩm không hợp lệ');
+            header("Location: /detail/$productId");
+            exit;
         }
-
-        $commentModel = new CommentModel();
-        $result = $commentModel->deleteComment($id);
-
-        $message = $result ? 'Xoá thành công' : 'Xoá thất bại';
-
-        return $this->redirect("/product-detail/$productId", $message);
+    
+        $CommentModel = new CommentModel();
+        $result = $CommentModel->deleteComment($id);
+    
+        if ($result) {
+            Notification::success('Xóa thành công', 'Bình luận đã được xóa.');
+        } else {
+            Notification::error('Xóa thất bại', 'Có lỗi xảy ra khi xóa bình luận.');
+        }
+    
+        header("Location: /detail/$productId");
+        exit;
     }
 
     private function renderError($errorMessage)

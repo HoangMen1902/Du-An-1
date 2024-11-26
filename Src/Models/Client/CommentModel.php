@@ -25,6 +25,32 @@ class CommentModel extends BaseModel
         return $this->create($data);
     }
 
+    public function allowRating($userId, $productId)
+    {
+       
+         
+            var_dump($userId, $productId);
+    
+            $sql = "SELECT COUNT(*) AS total 
+                    FROM orders
+                    JOIN order_details ON orders.id = order_details.order_id
+                    JOIN product_skus ON order_details.sku_id = product_skus.id
+                    WHERE orders.user_id = $userId
+                      AND product_skus.product_id = $productId
+                      AND orders.status = 5
+                    GROUP BY product_skus.product_id";
+    
+           $result = $this->_conn->MySQLi()->query($sql);
+            return $result->fetch_all(MYSQLI_ASSOC);
+      
+    }
+    
+
+
+
+
+
+
     public function getAllCommentByProductId($id)
     {
         $sql = "SELECT comments.*,concat(users.firstname, ' ' , users.lastname ) AS name, products.id as product_id  
@@ -36,7 +62,8 @@ class CommentModel extends BaseModel
         $result = $this->_conn->MySQLi()->query($sql);
         return $result->fetch_all(MYSQLI_ASSOC);
     }
-    public function getAllCommentByParentId($id){
+    public function getAllCommentByParentId($id)
+    {
         $sql = "SELECT comments.*,concat(users.firstname, ' ' , users.lastname ) AS name, products.id as product_id  
         FROM $this->table 
         JOIN products on comments.product_id = products.id 
@@ -49,10 +76,13 @@ class CommentModel extends BaseModel
     public function getTimeAgo($date)
     {
         try {
+            date_default_timezone_set('Asia/Ho_Chi_Minh'); // Thiết lập múi giờ
+    
             $currentDateTime = new DateTime();
             $commentDateTime = new DateTime($date);
             $interval = $currentDateTime->diff($commentDateTime);
             $timeAgo = '';
+    
             if ($interval->y > 0) {
                 $timeAgo = $interval->y . ' năm trước';
             } elseif ($interval->m > 0) {
@@ -71,6 +101,7 @@ class CommentModel extends BaseModel
         }
         return $timeAgo;
     }
+    
     public function findDuplicateCommentsByColumn($column, $value)
     {
         return $this->findDuplicateByColumn($column, $value);

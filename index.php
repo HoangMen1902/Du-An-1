@@ -16,8 +16,9 @@ use Src\Controllers\Client\SearchController;
 use Src\Controllers\Client\UserInfoController;
 use Src\Helpers\Client\ProvinceHelper;
 use Src\Controllers\Client\CommentController as ClientComment;
+use Src\Controllers\Client\RatingController;
 
-
+use Src\Controllers\Admin\RatingController as AdminRating;
 use Src\Controllers\Admin\VouchersController;
 use Src\Controllers\Admin\UserController;
 use Src\Controllers\Admin\ProductsController;
@@ -79,8 +80,11 @@ $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
     $r->addRoute('POST', '/comment', [ClientComment::class, 'store']);
     $r->addRoute('POST', '/reply', [ClientComment::class, 'reply']);
     $r->addRoute('POST', '/edit', [ClientComment::class, 'update']);
+    $r->addRoute('POST', '/deleteComment', [ClientComment::class, 'delete']);
     $r->addRoute('POST', '/editReply', [ClientComment::class, 'updateReply']);
-
+    $r->addRoute('POST', '/preview', [RatingController::class, 'store']);
+    $r->addRoute('POST', '/edit-preview', [RatingController::class, 'update']);
+    $r->addRoute('POST', '/deleteRating', [RatingController::class, 'delete']);
 
     $r->addRoute('GET', '/register', [AuthController::class, 'register']);
     $r->get('/reset-password', [AuthController::class, 'loadResetPage']);
@@ -139,6 +143,9 @@ $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
         $r->get('/brands', [BrandController::class, 'show']);
         $r->get('/brand/add', [BrandController::class, 'add']);
         $r->get('/comments', [CommentController::class, 'show']);
+        $r->get('/ratings', [AdminRating::class, 'show']);
+        
+
         $r->get('/orders', [OrdersController::class, 'show']);
         $r->get('/tragop', [InstallmentsController::class, 'show']);
         $r->get('/tragop/add', [InstallmentsController::class, 'add']);
@@ -147,6 +154,8 @@ $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
         $r->get('/locked-account', [UserController::class, 'locked']);
         $r->get('/delete-product/{id}', [productsController::class, 'delete']);
         $r->get('/delete-attribute/{id}', [AttributeController::class, 'delete']);
+        $r->get('/delete-comment/{id}', [CommentController::class, 'delete']);
+        $r->get('/delete-rating/{id}', [AdminRating::class, 'delete']);
         $r->get('/edit-brand/{id:\d+}', [BrandController::class, 'edit']);
 
         $r->post('/edit-specs/{id}', [ProductsController::class, 'updateSpecs']);
