@@ -82,16 +82,77 @@ class ProductsController extends BaseController
 
         $SkuValuesModel = new SkuValuesModel();
         $optionValueModel = new ProductOptionModel();
+        $skuModel = new ProductSkuModel();
+        $productModel = new ProductModel();
+
 
         $skuId = $params['sku_id'];
         $productId = $params['product_id']; 
 
+        $productData = $productModel->getOneNormal($productId);
+        $currSku = $skuModel->getOne($skuId);
         $allSkuData = $SkuValuesModel->getAllOptionOfSku($skuId);
 
         $option_values_id = [];
         $option_values_data = [];
         $option_values_insert_data = [];
+        $product_sku_data = [
+            'sku' => $_POST['sku'],
+            'price' => $_POST['price'],
+            'quantity' => $_POST['quantity'],
+        ];
+
+        if(!empty($_FILES['images']['name'])) {
+            $target_dir = 'public/Uploads/Products/';
+            if (!v::image()->validate($_FILES['images']['tmp_name'])) {
+                Notification::error('Thêm thất bại', 'Hình ảnh sản phẩm không hợp lệ');
+                header('location: /admin/edit-variant/' . $productId . '/' . $skuId);
+
+                exit();
+            }
+            $bin2hex = bin2hex(random_bytes(10));
+            $name_temp = explode(".", $_FILES['images']['name']);
+            $newName = $bin2hex . '_' . round(microtime(true)) . '.' . end($name_temp);
+            if (!move_uploaded_file($_FILES['images']['tmp_name'], $target_dir . $newName)) {
+                Notification::error('Sửa thất bại', 'Lỗi khi upload hình ảnh sản phẩm!');
+                header('location: /admin/edit-variant/' . $productId . '/' . $skuId);
+
+                exit();
+            }
+            $product_sku_data['images'] = $newName;
+        }
+
+        $SkuUpdate = $skuModel->updateSku($skuId, $product_sku_data);
+        if(!$SkuUpdate) {
+            Notification::error('Sửa thất bại', 'Lỗi khi update SKU!');
+                 header('location: /admin/edit-variant/' . $productId . '/' . $skuId);
+
+            exit();
+        }
+
+        $totalQuantity = $productData['total_quantity'];
+        $tmp = 0;
         echo '<pre>';
+
+        if($currSku['quantity'] < $_POST['quantity']) {
+            $tmp = $_POST['quantity'] - $currSku['quantity'];
+            $totalQuantity += $tmp;
+        } else if($currSku['quantity'] === $_POST['quantity']) {
+            $totalQuantity = $productData['total_quantity'];
+        } else {
+            $tmp = $currSku['quantity'] - $_POST['quantity'] ;
+            $totalQuantity -= $tmp;
+        }
+
+        $updateTotalQuantity = $productModel->update($productId, ['total_quantity' => $totalQuantity]);
+        if(!$updateTotalQuantity) {
+            $conn->rollback();
+            Notification::error('Sửa thất bại', 'Đã xảy ra lỗi ở quá trình sửa số lượng sản phẩm');
+
+                header('location: /admin/edit-variant/' . $productId . '/' . $skuId);
+                exit();
+        }
+
         foreach($_POST['value_name'] as $index => $value) {
             if(!isset($allSkuData[$index]['value_name'])){
                 $option_values_insert_data[] = [
@@ -467,7 +528,20 @@ class ProductsController extends BaseController
                         }
                     }
                 }
+                var_dump($skuPost);
+                $totalQuantity = 0;
+                foreach($skuPost as $sku) {
+                    $totalQuantity += $sku['quantity'];
+                }
 
+                $quantityInsert = $productModel->updateProduct($product_insert, ['total_quantity' => $totalQuantity]);
+
+                if(!$quantityInsert) {
+                    Notification::error('Thêm thất bại', 'Đã xảy ra lỗi khi thêm!');
+                    $conn->rollback();
+                    header('location:/admin/product/add');
+                    exit();
+                }
                 $result = [];
                 foreach ($SkuValuesResult as $skuValue) {
 

@@ -46,5 +46,9 @@ class ProductSkuModel extends BaseModel {
     public function saveSku($skus, $productId){
         return $this->saveSku($skus, $productId);
     }
+
+    public function getOneSku($id) {
+        return $this->getOne($id);
+    }
 }
 ?>

@@ -15,6 +15,10 @@ class ProductModel extends BaseModel
         return $this->getAll();
     }
 
+    public function getOneNormal($id)  {
+        return $this->getOne($id);
+    }
+
     public function getOneProduct($id)
     {
         $result = [];
