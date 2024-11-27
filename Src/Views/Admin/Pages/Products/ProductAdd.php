@@ -31,6 +31,12 @@ $this->start('main_content');
                 </div>
 
                 <div class="form-group">
+                    <label for="description">Mô tả ngắn</label>
+                    <textarea class="form-control" name="short_description" id="short_description" rows="2" placeholder="Mô tả sản phẩm"><?= htmlspecialchars($data['description'] ?? '') ?></textarea>
+                    <small id="description-required" class="text-danger" style="display:none">Vui lòng nhập mô tả sản phẩm</small>
+                </div>
+
+                <div class="form-group">
                     <label for="description">Mô tả sản phẩm</label>
                     <textarea class="form-control" name="description" id="description" rows="4" placeholder="Mô tả sản phẩm"><?= htmlspecialchars($data['description'] ?? '') ?></textarea>
                     <small id="description-required" class="text-danger" style="display:none">Vui lòng nhập mô tả sản phẩm</small>
@@ -233,6 +239,9 @@ function updateDisabledOptions(changedSelect = null, skuIndex) {
     }
     CKEDITOR.replace('description', {
     height: 300,
+});
+CKEDITOR.replace('short_description', {
+    height: 100,
 });
 </script>
 <script src="<?= $_ENV['APP_URL'] ?>/public\Assets\Admin\js\Pages\ProductValidate.js"></script>

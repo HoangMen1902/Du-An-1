@@ -263,6 +263,7 @@ class ProductsController extends BaseController
             'brand_id' => $_POST['brand'] ?? null,
             'status' => $_POST['status'] ?? null,
             'discount' => $_POST['discount'] ?? 0,
+            'short_description' => $_POST['short_description'] ?? null,
             'specifications' => []
         ];
 

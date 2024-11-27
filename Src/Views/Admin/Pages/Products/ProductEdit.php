@@ -27,6 +27,11 @@ $thumbnail = explode(',', $data['thumbnail']);
                     <input type="text" class="form-control" name="name" placeholder="Tên sản phẩm" value="<?= htmlspecialchars($data['product_name'] ?? '') ?>">
                     <small id="name-required" class="text-danger" style="display:none">Vui lòng nhập tên sản phẩm</small>
                 </div>
+                <div class="form-group">
+                    <label for="description">Mô tả ngắn</label>
+                    <textarea class="form-control" name="short_description" id="short_description" rows="2" placeholder="Mô tả sản phẩm"><?= htmlspecialchars($data['description'] ?? '') ?></textarea>
+                    <small id="description-required" class="text-danger" style="display:none">Vui lòng nhập mô tả sản phẩm</small>
+                </div>
 
                 <div class="form-group">
                     <label for="description">Mô tả sản phẩm</label>
@@ -136,6 +141,9 @@ $this->push('scripts');
     CKEDITOR.replace('description', {
         height: 300,
     });
+    CKEDITOR.replace('short_description', {
+    height: 100,
+});
     thumbnail.onchange = evt => {
         let [file] = thumbnail.files
         if (file) {

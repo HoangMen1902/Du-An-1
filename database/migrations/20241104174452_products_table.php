@@ -24,6 +24,7 @@ final class ProductsTable extends AbstractMigration
         $table = $this->table('products');
         $table->addColumn('name', 'string', ['limit' => 255])
               ->addColumn('description', 'text')
+              ->addColumn('short_description', 'text')
               ->addColumn('total_quantity', 'integer', ['default' => 0])
               ->addColumn('discount', 'decimal', ['precision' => 5, 'scale' => 2, 'default' => 0.00])
               ->addColumn('thumbnail', 'text')
