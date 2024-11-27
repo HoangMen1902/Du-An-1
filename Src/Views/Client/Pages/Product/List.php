@@ -5,7 +5,6 @@
 <?php $this->start('main_content') ?>
 <!-- Insert nội dung vào đây -->
 
-
 <div class="container dssp">
 
     <div class="row pt-3 ">
@@ -132,8 +131,7 @@
                                         <?= $product['product_name'] ?>
                                         <span id="sku-attributes-<?= $product['product_id'] ?>"></span> <!-- Đây là nơi hiển thị thuộc tính SKU -->
                                     </h5>
-
-                                    <p class="card-text mb-2 text-limit"><?= $product['description'] ?></p>
+                                    <?=$product['short_description']?>
 
                                     <div class="price">
                                         <?php if ($product['skus']) :

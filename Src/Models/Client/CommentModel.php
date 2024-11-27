@@ -29,7 +29,6 @@ class CommentModel extends BaseModel
     {
        
          
-            var_dump($userId, $productId);
     
             $sql = "SELECT COUNT(*) AS total 
                     FROM orders

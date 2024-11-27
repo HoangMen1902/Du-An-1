@@ -529,7 +529,6 @@ class ProductsController extends BaseController
                         }
                     }
                 }
-                var_dump($skuPost);
                 $totalQuantity = 0;
                 foreach($skuPost as $sku) {
                     $totalQuantity += $sku['quantity'];

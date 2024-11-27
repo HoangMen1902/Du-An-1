@@ -23,6 +23,7 @@ class ProductModel extends BaseModel
         $sql = "SELECT 
                     p.id AS product_id, 
                     p.name AS product_name, 
+                    p.short_description AS short_description,
                     p.description,
                     p.thumbnail,
                     p.discount,
@@ -55,6 +56,7 @@ class ProductModel extends BaseModel
                     'product_id' => $row['product_id'],
                     'product_name' => $row['product_name'],
                     'description' => $row['description'],
+                    'short_description' => $row['short_description'],
                     'thumbnail' => $row['thumbnail'],
                     'discount' => $row['discount'],
                     'skus' => []
