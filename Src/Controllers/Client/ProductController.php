@@ -9,6 +9,12 @@ use Src\Models\Client\RatingModel;
 
 class ProductController extends BaseController
 {
+    public function loadDescription($params) {
+        $id = $params['id'];
+        $ProductModel = new ProductModel();
+        $data = $ProductModel->getOneProduct($id);
+        echo $this->view->render('Admin/Pages/Products/Description', ['data' => $data]);
+    }
     public function show($id)
     {
         $productId = $id['id'];

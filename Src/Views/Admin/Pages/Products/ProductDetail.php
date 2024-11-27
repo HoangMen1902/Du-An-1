@@ -38,7 +38,7 @@ $this->start('main_content');
                 <div class="form-group">
                     <label for="description">Mô tả sản phẩm</label>
                     <div  class="form-control" name="description" id="description" disabled>
-                        <?=$data['product_description']?>
+                        <a href="/admin/product/detail/description/<?=$data['product_id']?>">Xem mô tả sản phẩm</a>
                     </div>
                 </div>
                 <div class="form-group">

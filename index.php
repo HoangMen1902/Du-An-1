@@ -111,6 +111,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
 
 
     $r->addGroup('/admin', function (FastRoute\RouteCollector $r) {
+        $r->get('/product/detail/description/{id}', [ProductController::class, 'loadDescription']);
         $r->get('/delete-sku/{sku_id}/{product_id}', [ProductsController::class, 'deleteSku']);
         $r->get('/edit-variant/{product_id}/{sku_id}', [ProductsController::class, 'variantEdit']);
         $r->get('/edit-specification/{id}', [ProductsController::class, 'specificationEdit']);
