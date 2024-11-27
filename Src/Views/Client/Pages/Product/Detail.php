@@ -1,9 +1,11 @@
 <?php $this->layout('Client/Components/Layout'); ?>
 <?php $this->start('main_content');
 
+$specs = json_decode($desc_specs['specifications']);
 ?>
+
 <!-- Insert nội dung vào đây -->
-<div class="product-detal__container">
+<div class="product-detal__container" >
     <div class="product__carousel">
         <div class="product__main-carousel-ids">
 
@@ -77,7 +79,7 @@
         </p>
 
         <hr>
-        <p><?= $productData['description'] ?></p>
+        <p><?= $productData['short_description'] ?></p>
 
         <!-- <p>Mô tả</p> -->
         <!-- <div class="product__info__ultext">
@@ -87,7 +89,6 @@
             </ul>
         </div> -->
         <hr>
-
 
         <div class="product__info__buy row">
             <?php foreach ($productData['skus'] as $sku): ?>
@@ -136,82 +137,38 @@
 
 </div>
 
+<ul class="nav nav-pills mb-3 align-items-center justify-content-center" id="pills-tab" role="tablist">
+    <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Thông số kỹ thuật</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Mô tả</button>
+    </li>
+</ul>
 
-<section class="container container-des" style="margin: auto">
-    <div class="feature-chart">
+
+
+<section class="container container-des tab-content" id="pills-tabContent" style="margin: auto">
+    <div class="feature-chart tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
         <h2>Thông số kỹ thuật</h2>
+        <?php
+        foreach($specs as $spec):
+        ?>
         <div class="table-row">
             <div class="table-row__title">
-                <p>Công nghệ CPU</p>
+                <p><?=$spec->spec_name?></p>
             </div>
             <div class="table-row__text">
                 <p>
                     <span>
-
+                        <?=$spec->spec_value?>
                     </span>
                 </p>
             </div>
         </div>
-        <div class="table-row">
-            <div class="table-row__title">
-                <p>Số Nhân</p>
-            </div>
-            <div class="table-row__text">
-                <p>
-                    <span>
-
-                    </span>
-                </p>
-            </div>
-        </div>
-        <div class="table-row">
-            <div class="table-row__title">
-                <p>Số luồng</p>
-            </div>
-            <div class="table-row__text">
-                <p>
-                    <span>
-
-                    </span>
-                </p>
-            </div>
-        </div>
-        <div class="table-row">
-            <div class="table-row__title">
-                <p>Tốc độ CPU</p>
-            </div>
-            <div class="table-row__text">
-                <p>
-                    <span>
-
-                    </span>
-                </p>
-            </div>
-        </div>
-        <div class="table-row">
-            <div class="table-row__title">
-                <p>Tốc độ tối đa</p>
-            </div>
-            <div class="table-row__text">
-                <p>
-                    <span>
-
-                    </span>
-                </p>
-            </div>
-        </div>
-        <div class="table-row">
-            <div class="table-row__title">
-                <p>Bộ nhớ đệm</p>
-            </div>
-            <div class="table-row__text">
-                <p>
-                    <span>
-
-                    </span>
-                </p>
-            </div>
-        </div>
+        <?php
+        endforeach;
+        ?>
         <p class="feature-chart__more" id="moreButton">
             <a role="button" aria-expanded="false" aria-controls="collapseExample">
                 <span>Xem thêm</span>
@@ -220,7 +177,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
                 </svg>
             </a>
-        </p>
+        </p> 
         <div class="collapse" id="collapseExample">
             <div class="table-row">
                 <div class="table-row__title">
@@ -497,26 +454,12 @@
             </p>
         </div>
     </div>
-</section>
-
-
-<section class="container container-des" style="margin: auto">
-    <div class="feature-chart">
-        <h2>Thông số kỹ thuật</h2>
-        <div class="table-row">
-            <div class="table-row__title">
-                <p>Thông báo:</p>
-            </div>
-            <div class="table-row__text">
-                <p>
-                    <span>
-                        Sản phẩm đang cập nhật thông số kỹ thuật vui lòng quay lại sau!
-                    </span>
-                </p>
-            </div>
-        </div>
+    <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" style="max-width: 70%;">
+        <?=$desc_specs['description']?>
     </div>
 </section>
+
+
 
 <div class="container related">
     <div class="related-title">
@@ -921,20 +864,20 @@
                                                         class="small"><?= $commentModel->getTimeAgo($comment['created_at']) ?></span>
                                                 </p>
                                                 <div>
-                                                <?php if (isset($_SESSION['user']) && ($_SESSION['user']['id'] == $comment['user_id'] || $_SESSION['user']['role'] == 2)): ?>
+                                                    <?php if (isset($_SESSION['user']) && ($_SESSION['user']['id'] == $comment['user_id'] || $_SESSION['user']['role'] == 2)): ?>
 
-                                                    <button type="button" class="btn btn-link btn-edit"><i
-                                                            class="fas fa-edit fa-xs"></i><span
-                                                            class="small">edit</span></button>
-                                                    <form action="/deleteComment" method="POST" style="display: inline;">
-                                                        <input type="hidden" name="rating_id" value="<?= $comment['id'] ?>">
-                                                        <input type="hidden" name="product_id"
-                                                            value="<?= $productData['product_id'] ?>">
-                                                        <button type="submit" class="btn btn-link btn-delete">
-                                                            <i class="fas fa-trash fa-xs"></i><span class="small">Delete</span>
-                                                        </button>
-                                                    </form>
-                                                <?php endif; ?>
+                                                        <button type="button" class="btn btn-link btn-edit"><i
+                                                                class="fas fa-edit fa-xs"></i><span
+                                                                class="small">edit</span></button>
+                                                        <form action="/deleteComment" method="POST" style="display: inline;">
+                                                            <input type="hidden" name="rating_id" value="<?= $comment['id'] ?>">
+                                                            <input type="hidden" name="product_id"
+                                                                value="<?= $productData['product_id'] ?>">
+                                                            <button type="submit" class="btn btn-link btn-delete">
+                                                                <i class="fas fa-trash fa-xs"></i><span class="small">Delete</span>
+                                                            </button>
+                                                        </form>
+                                                    <?php endif; ?>
                                                     <button type="button" class="btn btn-link btn-reply"><i
                                                             class="fas fa-reply fa-xs"></i><span
                                                             class="small">reply</span></button>
@@ -1051,7 +994,7 @@
     function changeImage1(imageSrc) {
         const mainImage = document.getElementById('mainImage');
         mainImage.style.opacity = 0;
-        setTimeout(function () {
+        setTimeout(function() {
             mainImage.src = imageSrc;
             mainImage.style.transition = 'opacity 0.2s ease-in-out';
             mainImage.style.opacity = 1;
@@ -1122,7 +1065,7 @@
         const newImageUrl = radioButton.getAttribute('data-image');
         const mainImage = document.getElementById('mainImage');
         mainImage.style.opacity = 0;
-        setTimeout(function () {
+        setTimeout(function() {
             if (newImageUrl) {
                 mainImage.src = newImageUrl;
                 mainImage.style.transition = 'opacity 0.2s ease-in-out';
@@ -1157,10 +1100,10 @@
     }
 
 
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
 
-        document.querySelectorAll('.edit-rating .stars').forEach(function (star) {
-            star.addEventListener('click', function () {
+        document.querySelectorAll('.edit-rating .stars').forEach(function(star) {
+            star.addEventListener('click', function() {
                 const ratingValue = this.getAttribute('data-value');
                 const ratingInput = document.getElementById('edit_rating_' + this.closest('form').querySelector('input[name="rating_id"]').value);
 
@@ -1168,7 +1111,7 @@
                 ratingInput.value = ratingValue;
 
 
-                document.querySelectorAll('.edit-rating .stars').forEach(function (s) {
+                document.querySelectorAll('.edit-rating .stars').forEach(function(s) {
                     if (s.getAttribute('data-value') <= ratingValue) {
                         s.classList.add('star-filled');
                         s.classList.remove('stared');
@@ -1180,17 +1123,17 @@
             });
         });
 
-        document.querySelectorAll('.edit-rating .star').forEach(function (star) {
-            star.addEventListener('mouseover', function () {
+        document.querySelectorAll('.edit-rating .star').forEach(function(star) {
+            star.addEventListener('mouseover', function() {
                 const value = parseInt(star.getAttribute('data-value'));
-                document.querySelectorAll('.edit-rating .star').forEach(function (s) {
+                document.querySelectorAll('.edit-rating .star').forEach(function(s) {
                     const sValue = parseInt(s.getAttribute('data-value'));
                     s.style.color = sValue <= value ? 'gold' : '#d3d3d3';
                 });
             });
 
-            star.addEventListener('mouseout', function () {
-                document.querySelectorAll('.edit-rating .star').forEach(function (s) {
+            star.addEventListener('mouseout', function() {
+                document.querySelectorAll('.edit-rating .star').forEach(function(s) {
                     s.style.color = s.classList.contains('star-filled') ? 'gold' : '#d3d3d3';
                 });
             });
@@ -1198,12 +1141,12 @@
     });
 
 
-    document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function() {
 
         const editRatings = document.querySelectorAll(".edit-rating .star");
 
         editRatings.forEach(star => {
-            star.addEventListener("click", function () {
+            star.addEventListener("click", function() {
                 const parent = this.parentNode;
                 const value = this.getAttribute("data-value");
 
@@ -1227,16 +1170,16 @@
     });
 
 
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
 
         // Xử lý sự kiện click vào các ngôi sao đánh giá
-        document.querySelectorAll('.star').forEach(function (star) {
-            star.addEventListener('click', function () {
+        document.querySelectorAll('.star').forEach(function(star) {
+            star.addEventListener('click', function() {
                 let rating = this.getAttribute('data-value');
                 document.getElementById('rating_value').value = rating;
 
                 // Cập nhật giao diện sao đã chọn
-                document.querySelectorAll('.star').forEach(function (s) {
+                document.querySelectorAll('.star').forEach(function(s) {
                     if (s.getAttribute('data-value') <= rating) {
                         s.classList.add('star-filled');
                     } else {
@@ -1287,7 +1230,7 @@
             const labels = group.querySelectorAll(".product__info__buy div div");
 
             labels.forEach(label => {
-                label.addEventListener("click", function () {
+                label.addEventListener("click", function() {
                     labels.forEach(lbl => lbl.classList.remove("active-product"));
                     label.classList.add("active-product");
                 });
@@ -1295,8 +1238,8 @@
         });
 
         // Xử lý sự kiện cho nút trả lời trong bình luận
-        document.querySelectorAll('.btn-reply').forEach(function (btn) {
-            btn.addEventListener('click', function () {
+        document.querySelectorAll('.btn-reply').forEach(function(btn) {
+            btn.addEventListener('click', function() {
                 let commentItem = this.closest('.comment-item');
                 let replyForm = commentItem.querySelector('.reply-form');
                 let editForm = commentItem.querySelector('.edit-form');
@@ -1306,8 +1249,8 @@
         });
 
         // Xử lý sự kiện cho nút chỉnh sửa trong bình luận
-        document.querySelectorAll('.btn-edit').forEach(function (btn) {
-            btn.addEventListener('click', function () {
+        document.querySelectorAll('.btn-edit').forEach(function(btn) {
+            btn.addEventListener('click', function() {
                 let commentItem = this.closest('.comment-item');
                 let editForm = commentItem.querySelector('.edit-form');
                 let replyForm = commentItem.querySelector('.reply-form');
@@ -1317,13 +1260,12 @@
         });
 
         // Xử lý sự kiện cho nút xóa trong bình luận
-        document.querySelectorAll('.btn-delete').forEach(function (btn) {
-            btn.addEventListener('click', function () {
+        document.querySelectorAll('.btn-delete').forEach(function(btn) {
+            btn.addEventListener('click', function() {
                 alert('Đã xóa thành công');
             });
         });
     });
-
 </script>
 
 <?php $this->stop() ?>

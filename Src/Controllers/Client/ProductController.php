@@ -28,6 +28,7 @@ class ProductController extends BaseController
     
         $productModel = new ProductModel();
         $productData = $productModel->getProductById($productId);
+        $productDescAndSpecs = $productModel->getProductSpecsAndDesc($productId);
         $commentModel = new CommentModel();
         $commentData = $commentModel->getAllCommentByProductId($productId);
         $commentReply = $commentModel->getAllCommentByParentId($productId);
@@ -35,6 +36,7 @@ class ProductController extends BaseController
         $ratingModel = new ratingModel();
         $ratingData = $ratingModel->getAllRatingByProductId($productId);
         $userRating = $ratingModel->getUserRating($userId, $productId);
+
 
         if (!$productData) {
             echo "Sản phẩm không tồn tại.";
@@ -55,6 +57,7 @@ class ProductController extends BaseController
             'ratingData' => $ratingData,
             'userRating' => $userRating, 
             'userId' => $userId,
+            'desc_specs' => $productDescAndSpecs
         ]);
     }
     

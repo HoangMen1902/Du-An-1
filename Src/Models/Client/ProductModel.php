@@ -2,6 +2,7 @@
 
 namespace Src\Models\Client;
 
+use Exception;
 use Src\Models\BaseModel;
 
 class ProductModel extends BaseModel
@@ -85,8 +86,8 @@ class ProductModel extends BaseModel
         return null;
     }
     public function getAllRandomProductWithSkus()
-{
-    $sql = "SELECT 
+    {
+        $sql = "SELECT 
                 p.id AS product_id, 
                 p.name AS product_name, 
                 p.description,
@@ -109,37 +110,50 @@ class ProductModel extends BaseModel
             ORDER BY RAND() 
             LIMIT 10";
 
-    $conn = $this->_conn->MySQLi();
-    $result = $conn->query($sql);
-    $products = [];
+        $conn = $this->_conn->MySQLi();
+        $result = $conn->query($sql);
+        $products = [];
 
-    while ($row = $result->fetch_assoc()) {
-        $productId = $row['product_id'];
-        $skuId = $row['sku_id'];
+        while ($row = $result->fetch_assoc()) {
+            $productId = $row['product_id'];
+            $skuId = $row['sku_id'];
 
-        if (!isset($products[$productId])) {
-            $products[$productId] = [
-                'product_id' => $row['product_id'],
-                'product_name' => $row['product_name'],
-                'description' => $row['description'],
-                'thumbnail' => $row['thumbnail'],
-                'discount' => $row['discount'],
-                'skus' => []
+            if (!isset($products[$productId])) {
+                $products[$productId] = [
+                    'product_id' => $row['product_id'],
+                    'product_name' => $row['product_name'],
+                    'description' => $row['description'],
+                    'thumbnail' => $row['thumbnail'],
+                    'discount' => $row['discount'],
+                    'skus' => []
+                ];
+            }
+
+            $products[$productId]['skus'][$skuId]['sku_id'] = $skuId;
+            $products[$productId]['skus'][$skuId]['sku'] = $row['sku'];
+            $products[$productId]['skus'][$skuId]['images'] = $row['images'];
+            $products[$productId]['skus'][$skuId]['original_price'] = $row['original_price'];
+            $products[$productId]['skus'][$skuId]['discounted_price'] = $row['discounted_price'];
+            $products[$productId]['skus'][$skuId]['quantity'] = $row['quantity'];
+            $products[$productId]['skus'][$skuId]['options'][] = [
+                'option_name' => $row['option_name'],
+                'option_value' => $row['option_value']
             ];
         }
-
-        $products[$productId]['skus'][$skuId]['sku_id'] = $skuId;
-        $products[$productId]['skus'][$skuId]['sku'] = $row['sku'];
-        $products[$productId]['skus'][$skuId]['images'] = $row['images'];
-        $products[$productId]['skus'][$skuId]['original_price'] = $row['original_price'];
-        $products[$productId]['skus'][$skuId]['discounted_price'] = $row['discounted_price'];
-        $products[$productId]['skus'][$skuId]['quantity'] = $row['quantity'];
-        $products[$productId]['skus'][$skuId]['options'][] = [
-            'option_name' => $row['option_name'],
-            'option_value' => $row['option_value']
-        ];
+        return $products;
     }
-    return $products;
-}
-
+    public function getProductSpecsAndDesc($productId)
+    {
+        try {
+            $sql = "SELECT p.short_description, p.description, p.specifications FROM $this->table AS p WHERE id = ?";
+            $conn = $this->_conn->MySQLi();
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param('i', $productId);
+            $stmt->execute();
+            return $stmt->get_result()->fetch_assoc();
+        } catch (Exception $e) {
+            error_log('Lỗi: '.  $e->getMessage() . $sql);
+            return false;
+        }
+    }
 }
