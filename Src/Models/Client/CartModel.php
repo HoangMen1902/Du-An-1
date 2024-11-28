@@ -37,7 +37,6 @@ class CartModel extends BaseModel
 
             $result = $stmt->get_result();
 
-            error_log($sql);
             $results = $result->fetch_all(MYSQLI_ASSOC);
 
             return $results;
@@ -77,6 +76,20 @@ class CartModel extends BaseModel
     public function deleteCart($id)
     {
         return $this->delete($id);
+    }
+
+    public function findExistedSkuInCart($user_id, $sku_id) {
+        try {
+            $sql = "SELECT * FROM $this->table WHERE user_id = ? AND sku_id = ?";
+            $conn = $this->_conn->MySQLi();
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param('ii', $user_id, $sku_id);
+            $stmt->execute();
+            return $stmt->get_result()->fetch_assoc();
+        } catch (Exception $e) {
+            error_log('Loi khi tim cart' . $e->getMessage() . $sql);
+            return false;
+        }
     }
 
     public function deleteAllCarts($userId)

@@ -25,7 +25,20 @@ class CartController extends BaseController
                 'quantity' => $_POST['quantity'] ?? null,
                 'user_id ' => $_SESSION['user']['id']
             ];
+            if(!isset($_SESSION['user']['id'])) {
+                Notification::success('BeeTechnova', 'Vui lòng đăng nhập để mua sản phẩm.');
+                header("Location: /login");
+                exit();
+            }
+            
             $CartModel = new CartModel();
+            $findExisted = $CartModel->findExistedSkuInCart($_SESSION['user']['id'], $_POST['sku_options']);
+            var_dump($findExisted);
+            if(isset($findExisted)  && count($findExisted) > 0) {
+                $result = $CartModel->updateCart($findExisted['id'], ['quantity' => $findExisted['quantity'] + $_POST['quantity']]);
+                header("Location: /cart");
+                exit();
+            }
             $saveResult = $CartModel->createCart($data);
             if ($saveResult) {
                 header("Location: /cart");
