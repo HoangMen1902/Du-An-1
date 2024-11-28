@@ -1,4 +1,22 @@
 <?php $this->layout('Client/Components/Layout'); ?>
+
+
+<?php
+$this->push('styles');
+?>
+<style>
+p {
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    margin: 0; 
+}
+
+</style>
+
+<?php
+$this->end();
+?>
 <?php $this->start('main_content');
 
 $specs = json_decode($desc_specs['specifications']);
@@ -89,9 +107,8 @@ $specs = json_decode($desc_specs['specifications']);
             </ul>
         </div> -->
         <hr>
-
         <div class="product__info__buy row">
-            <?php foreach ($productData['skus'] as $sku): ?>
+            <?php foreach ($productData['skus'] as $index => $sku): ?>
                 <div class="col-4 p-1">
                     <div class="border border-secondary rounded p-1">
                         <label class="w-100">
@@ -99,7 +116,7 @@ $specs = json_decode($desc_specs['specifications']);
                                 name="sku_options"
                                 data-image="<?= $_ENV['APP_URL'] ?>/public/Uploads/Products/<?= htmlspecialchars($sku['images']) ?>"
                                 data-price="<?= $sku['discounted_price'] ?>" data-old-price="<?= $sku['original_price'] ?>"
-                                product-name="<?= $sku['sku'] ?>" onclick="onSkuSelect(this)">
+                                product-name="<?= $sku['sku'] ?>" onclick="onSkuSelect(this)" <?= $index === array_key_first($productData['skus']) ? 'checked' : ''?>>
                             <?php foreach ($sku['options'] as $option): ?>
                                 <div>
                                     <?= htmlspecialchars($option['option_name']) . ': ' . htmlspecialchars($option['option_value']) ?>

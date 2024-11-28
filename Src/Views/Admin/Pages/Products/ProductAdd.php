@@ -242,6 +242,13 @@ function updateDisabledOptions(changedSelect = null, skuIndex) {
 });
 CKEDITOR.replace('short_description', {
     height: 100,
+    allowedContent: 'ul li; strong em u s',
+    toolbar: [
+        { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline', 'Strike'] },
+        { name: 'paragraph', items: ['BulletedList'] },
+        { name: 'styles', items: ['Format'] },
+        { name: 'clipboard', items: ['Undo', 'Redo'] },
+    ]
 });
 </script>
 <script src="<?= $_ENV['APP_URL'] ?>/public\Assets\Admin\js\Pages\ProductValidate.js"></script>

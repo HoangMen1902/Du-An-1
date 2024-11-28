@@ -143,6 +143,13 @@ $this->push('scripts');
     });
     CKEDITOR.replace('short_description', {
     height: 100,
+    allowedContent: 'ul li; strong em u s',
+    toolbar: [
+        { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline', 'Strike'] },
+        { name: 'paragraph', items: ['BulletedList'] },
+        { name: 'styles', items: ['Format'] },
+        { name: 'clipboard', items: ['Undo', 'Redo'] },
+    ]
 });
     thumbnail.onchange = evt => {
         let [file] = thumbnail.files
