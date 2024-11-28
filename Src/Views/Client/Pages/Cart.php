@@ -1,7 +1,10 @@
 <?php $this->layout('Client/Components/Layout'); ?>
 
 
-<?php $this->start('main_content') ?>
+<?php 
+$this->start('main_content');
+$totalPrice = 0;
+?>
 <!-- Insert nội dung vào đây -->
 <div class="cart-container">
     <div class="cart">
@@ -23,7 +26,10 @@
                 </div>
                 <table class="cart__table">
 
-                    <?php foreach ($Data as $cart): ?>
+                    <?php foreach ($Data as $cart): 
+                        $totalPrice += $cart['total_price'];
+                        ?>
+                        
                         <tr class="cart__product">
                             <td style="width: 15%;">
                                 <img class="cart__product-image" src="<?= $_ENV['APP_URL'] ?>/public/Uploads/Products/<?= $cart['product_images'] ?>" alt="<?= htmlspecialchars($cart['product_sku']) ?>">
@@ -74,11 +80,11 @@
                 <div class="cart__summary-details">
                     <div class="cart__summary-item">
                         <span class="cart__summary-label">Tổng phụ</span>
-                        <span class="cart__summary-price">1.240.000₫ </span>
+                        <span class="cart__summary-price">0₫ </span>
                     </div>
                     <div class="cart__summary-item">
                         <h3 class="cart__summary-total">Tổng
-                            <span class="cart__summary-amount">1.240.000₫
+                            <span class="cart__summary-amount"><?=number_format($totalPrice, 0 , ',',  '.')?>₫
                             </span>
                         </h3>
                     </div>
