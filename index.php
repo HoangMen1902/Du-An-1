@@ -69,6 +69,9 @@ $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
     $r->addRoute('POST', '/update-information', [AuthController::class, 'updateUserInfoAction']);
     $r->addRoute('POST', '/change-user-password', [AuthController::class, 'updatePasswordAction']);
     $r->addRoute('POST', '/new-address', [ProvinceHelper::class, 'createAddress']);
+    $r->addRoute('POST','/get-child-categories', [ProductListController::class, 'selectResult']);
+    $r->addRoute('GET','/filter-products', [ProductListController::class, 'filterResult']);
+
 
 
 
