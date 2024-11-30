@@ -96,6 +96,8 @@ $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
     $r->addRoute('GET', '/register', [AuthController::class, 'register']);
     $r->get('/reset-password', [AuthController::class, 'loadResetPage']);
     $r->post('/delete-cart-item',[CartController::class, 'deleteOneCart']);
+    $r->get('/international-cancel', [CheckoutController::class, 'visaCancel']);
+    $r->get('/international-success/{session_id}/{address_id}', [CheckoutController::class, 'visaSuccess']);
 
     $r->post('/reset-password/{token}', [AuthController::class, 'resetPassword']);
     $r->post('/send-mail', [AuthController::class, 'forgotPasswordSubmit']);
@@ -109,6 +111,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
         $r->get('/orders-list', [UserInfoController::class, 'userOrders']);
     });
 
+    $r->post('/proceed-checkout', [CheckoutController::class, 'checkOut']);
 
 
     $r->addRoute('GET', '/searchResult', [SearchController::class, 'show']);
