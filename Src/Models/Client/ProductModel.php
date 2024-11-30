@@ -164,7 +164,8 @@ class ProductModel extends BaseModel
         $brandId = $_GET['brand'] ?? null;
         $minPrice = $_GET['min_price'] ?? null;
         $maxPrice = $_GET['max_price'] ?? null;
-        $sortByPrice = $_GET['sort_by_price'] ?? null;
+        $isNewest = $_GET['newest'] ?? null;
+
     
         $sql = "SELECT 
             p.id AS product_id, 
@@ -208,10 +209,10 @@ class ProductModel extends BaseModel
         if (!empty($maxPrice)) {
             $sql .= " AND ps.price <= " . (int)$maxPrice;
         }
-    
-        if (!empty($sortByPrice)) {
-            $sql .= " ORDER BY ps.price " . $sortByPrice;
+        if (!empty($isNewest)) {
+            $sql .= " ORDER BY p.id DESC"; 
         }
+    
     
         $conn = $this->_conn->MySQLi();
         $result = $conn->query($sql);
@@ -243,7 +244,6 @@ class ProductModel extends BaseModel
                 'option_value' => $row['option_value']
             ];
         }
- 
         echo json_encode($products);
     }
     

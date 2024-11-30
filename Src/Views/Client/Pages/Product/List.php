@@ -36,6 +36,10 @@
                     <label for="in-stock">Còn hàng</label>
                     <input type="checkbox" id="in-stock" data-filter="in-stock">
                 </div>
+                <div class="filter-section stock">
+                    <label for="newest">Mới nhất</label>
+                    <input type="checkbox" id="newest" data-filter="newest">
+                </div>
 
                 <div class="filter-section">
                     <label for="brand-filter">Thương hiệu</label>
@@ -67,19 +71,13 @@
                         </select>
                     </div>
                 </div>
-                <div class="filter-section">
-                    <select id="sort-by-price" data-filter="sort" style="height: 40px;">
-                        <option value="">Giá</option>
-                        <option value="asc">Giá thấp đến cao</option>
-                        <option value="desc">Giá cao xuống thấp</option>
-                    </select>
-                </div>
 
                 <div class="filter-section">
                     <label for="price-range">Giá</label>
                     <input type="range" id="price-range" min="0" max="100000000" step="1000000" value="0" data-filter="price" oninput="updatePriceDisplay(this.value)">
                     <div class="price-display">0 đ</div>
                 </div>
+
                 <button class="btn btn-warning" onclick="clearFilters()">Về mặc định</button>
 
             </div>
@@ -89,7 +87,7 @@
 
             <div class="col-12 d-flex justify-content-between p-0">
                 <div class="col-xxl-7 col-md-9 ">
-                    <button class="col-xxl-2 btn  border me-1 col-md-3" style="height: 40px; background-color: #1C61E7; color: white; ">Mới nhất</button>
+
                     <button class="col-xxl-2 btn  border mx-1 col-md-3" style="height: 40px; ">Liên quan</button>
                     <button class="col-xxl-2 btn  border mx-1 col-md-3" style="height: 40px; ">Bán chạy</button>
                 </div>
@@ -132,7 +130,7 @@
                                         <?= $product['product_name'] ?>
                                         <span id="sku-attributes-<?= $product['product_id'] ?>"></span> <!-- Đây là nơi hiển thị thuộc tính SKU -->
                                     </h5>
-                                    <?=$product['short_description']?>
+                                    <?= $product['short_description'] ?>
 
                                     <div class="price">
                                         <?php if ($product['skus']) :
@@ -181,30 +179,64 @@ $this->push('scripts')
 ?>
 <script>
     function changeVariant(productId, imageUrl, newPrice, oldPrice) {
-        document.getElementById('main-image-' + productId).src = imageUrl;
+        let mainImage = document.getElementById('main-image-' + productId);
+        if (mainImage) {
+            mainImage.src = imageUrl;
+        }
 
-        document.getElementById('current-price-' + productId).innerText = newPrice.toLocaleString() + ' đ';
+        if (newPrice !== undefined && newPrice !== null) {
+            let currentPriceElement = document.getElementById('current-price-' + productId);
+            if (currentPriceElement) {
+                currentPriceElement.innerText = newPrice.toLocaleString() + ' đ';
+            }
+        }
 
-        if (oldPrice > newPrice) {
-            document.getElementById('old-price-' + productId).innerText = oldPrice.toLocaleString() + ' đ';
+        if (oldPrice !== undefined && oldPrice !== null && oldPrice > newPrice) {
+            let oldPriceElement = document.getElementById('old-price-' + productId);
+            if (oldPriceElement) {
+                oldPriceElement.innerText = oldPrice.toLocaleString() + ' đ';
+            }
+        }
+    }
+
+    function changeVariant2(productId, imageUrl, newPrice, oldPrice) {
+
+        let mainImage = document.getElementById('main-image-' + productId);
+        if (mainImage) {
+            mainImage.src = imageUrl;
+        }
+
+        if (newPrice !== undefined && newPrice !== null) {
+            let currentPriceElement = document.querySelector(`#product-${productId} .current-price`);
+            if (currentPriceElement) {
+                const formattedNewPrice = Math.round(parseFloat(newPrice)).toLocaleString();
+                currentPriceElement.innerText = `${formattedNewPrice} đ`;
+            }
+        }
+
+        if (oldPrice !== undefined && oldPrice !== null && oldPrice > newPrice) {
+            let oldPriceElement = document.querySelector(`#product-${productId} .old-price`);
+            if (oldPriceElement) {
+                const formattedOldPrice = Math.round(parseFloat(oldPrice)).toLocaleString();
+                oldPriceElement.innerText = `${formattedOldPrice} đ`;
+            }
         }
     }
 
 
-    $(document).ready(function() {
-        $('.product-thumbnail').on('click', function() {
-            const productId = $(this).closest('.card').attr('id').replace('card-', '');
-            const variantImage = $(this).find('.variant-image').attr('src');
-            const discountedPrice = $(this).find('.variant-image').data('discounted-price');
-            const originalPrice = $(this).find('.variant-image').data('original-price');
+    $(document).on('click', '.variant-image', function() {
+        const productId = $(this).data('product-id');
+        const variantImage = $(this).data('variant-image');
+        const discountedPrice = $(this).data('discounted-price');
+        const originalPrice = $(this).data('original-price');
 
-            changeVariant(productId, variantImage, discountedPrice, originalPrice);
-        });
+        changeVariant2(productId, variantImage, discountedPrice, originalPrice);
     });
 
 
+
     function clearFilters() {
-        window.location.href = '/list'; // URL không chứa tham số lọc
+        window.location.href = '/list';
     }
 
     $(document).ready(function() {
@@ -214,7 +246,7 @@ $this->push('scripts')
                 brand: $('.brand-filter').val() || null,
                 child_category: $('#child_category_select').val() || null,
                 min_price: $('#price-range').val() || null,
-                sort_by_price: $('#sort-by-price').val() || null,
+                newest: $('#newest').is(':checked') ? 1 : null,
             };
         }
 
@@ -247,71 +279,86 @@ $this->push('scripts')
             });
         }
 
-        function updateProductList(products) {
+        function updateProductList(products, filterOptions = {}) {
             const productList = $('#product-filter');
             productList.empty();
 
-            if (products && Object.keys(products).length > 0) {
-                Object.entries(products).forEach(([index, value]) => {
+            let filteredProducts = Object.values(products).map(product => {
+                product.skus = Object.values(product.skus);
+                return product;
+            });
+
+            if (filterOptions.inStock) {
+                filteredProducts = filteredProducts.filter(product => {
+                    return product.skus.some(sku => parseInt(sku.quantity) > 0);
+                });
+            }
+
+            if ($('#newest').is(':checked')) {
+                filteredProducts.sort((a, b) => b.product_id - a.product_id);
+            }
+
+            if (filteredProducts.length > 0) {
+                filteredProducts.forEach((value) => {
                     const thumbnails = value.thumbnail.split(',');
                     const firstThumbnail = thumbnails[0];
-                    const firstSku = value.skus[Object.keys(value.skus)[0]];
+                    const firstSku = value.skus[0];
                     let variantHTML = '';
 
-                    Object.entries(value.skus).forEach(([key, variant]) => {
+                    value.skus.forEach((variant) => {
                         if (variant.images) {
                             variantHTML += `
-                         <button class="img-thumbnail me-1 product-thumbnail">
-                             <img class="col-12 variant-image"
-                                  src="<?= $_ENV['APP_URL'] ?>/public/Uploads/Products/${variant.images}"
-                                  alt="Variant Image"
-                                  data-product-id="${value.product_id}"
-                                  data-variant-image="<?= $_ENV['APP_URL'] ?>/public/Uploads/Products/${variant.images}"
-                                  data-discounted-price="${variant.discounted_price}"
-                                  data-original-price="${variant.original_price}">
-                         </button>`;
+                            <button class="img-thumbnail me-1 product-thumbnail">
+                                <img class="col-12 variant-image"
+                                    src="<?= $_ENV['APP_URL'] ?>/public/Uploads/Products/${variant.images}"
+                                    alt="Variant Image"
+                                    data-product-id="${value.product_id}"
+                                    data-variant-image="<?= $_ENV['APP_URL'] ?>/public/Uploads/Products/${variant.images}"
+                                    data-discounted-price="${variant.discounted_price}"
+                                    data-original-price="${variant.original_price}">
+                            </button>`;
                         }
                     });
 
                     productList.append(`
-                 <div class="col-md-4 mb-4 col-xxl-3 card-list" id="product-${value.product_id}">
-                     <div class="card position-relative h-100">
-                         <div class="w-100 ratio ratio-1x1">
-                             <img class="product-img p-3" style="object-fit: contain;"
-                                  src="<?= $_ENV['APP_URL'] ?>/public/Uploads/Products/${firstThumbnail}"
-                                  alt="${value.product_name}" id="main-image-${value.product_id}" />
-                         </div>
-                         <div class="card-body">
-                             <h5 class="card-title">${value.product_name}</h5>
-                             <p class="card-text">${value.description}</p>
-                             <div class="price">
-                                 ${value.discount ? `<span class="old-price text-muted text-decoration-line-through">${parseInt(firstSku.original_price).toLocaleString()} đ</span>` : ''}
-                                 <span class="current-price">${parseInt(firstSku.discounted_price).toLocaleString()} đ</span>
-                             </div>
-                             <a href="detail/${value.product_id}" class="btn btn-mainColor button-hover button-add text-white rounded-5 position-absolute">
-                                 Mua ngay
-                             </a>
-                             <div style="margin-top: auto;" class="variant-holder">
-                                 ${variantHTML}
-                             </div>
-                         </div>
-                     </div>
-                 </div>`);
+                    <div class="col-md-4 mb-4 col-xxl-3 card-list" id="product-${value.product_id}">
+                        <div class="card position-relative h-100">
+                            <div class="w-100 ratio ratio-1x1">
+                                <img class="product-img p-3" style="object-fit: contain;"
+                                    src="<?= $_ENV['APP_URL'] ?>/public/Uploads/Products/${firstThumbnail}"
+                                    alt="${value.product_name}" id="main-image-${value.product_id}" />
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">${value.product_name}</h5>
+                                <p class="card-text">${value.description}</p>
+                                <div class="price">
+                                    ${value.discount ? `<span class="old-price text-muted text-decoration-line-through">${parseInt(firstSku.original_price).toLocaleString()} đ</span>` : ''}
+                                    <span class="current-price">${parseInt(firstSku.discounted_price).toLocaleString()} đ</span>
+                                </div>
+                                <a href="detail/${value.product_id}" class="btn btn-mainColor button-hover button-add text-white rounded-5 position-absolute">
+                                    Mua ngay
+                                </a>
+                                <div style="margin-top: auto;" class="variant-holder loi123">
+                                    ${variantHTML}
+                                </div>
+                            </div>
+                        </div>
+                    </div>`);
 
                     $('#product-' + value.product_id + ' .variant-image').on('click', function() {
-                        changeVariant(
+                        changeVariant2(
                             value.product_id,
                             $(this).data('variant-image'),
                             $(this).data('discounted-price'),
                             $(this).data('original-price')
                         );
                     });
+
                 });
             } else {
                 productList.append('<p>Không tìm thấy sản phẩm nào.</p>');
             }
         }
-
 
         $('.filter [data-filter]').on('change', applyFilters);
     });
