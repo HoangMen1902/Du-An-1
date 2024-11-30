@@ -23,7 +23,8 @@
         "phpoffice/phpspreadsheet": "^3.4",
         "psr/cache": "^2.0",
         "guzzlehttp/guzzle": "^7.0",
-        "phpmailer/phpmailer": "*"
+        "phpmailer/phpmailer": "*",
+        "stripe/stripe-php": "^16.3"
     },
     "scripts": {
         "phinx-create": "vendor/bin/phinx create",

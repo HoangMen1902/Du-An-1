@@ -87,6 +87,46 @@ abstract class BaseModel implements CrudInterface
             return false;
         }
     }
+
+    public function createReturnId(array $data)
+    {
+        // $sql ="INSERT INTO $this->table (name, description, status) VALUES ('category test', 'category test description', '1')";
+
+        // $result = $this->_conn->connect()->query($sql);
+        // return $result;
+
+        try {
+            $sql = "INSERT INTO $this->table (";
+            foreach ($data as $key => $value) {
+                $sql .= "$key, ";
+            }
+            // INSERT INTO $this->table (name, description, status, 
+            $sql = rtrim($sql, ", ");
+            // INSERT INTO $this->table (name, description, status
+            $sql .= " ) VALUES (";
+            // INSERT INTO $this->table (name, description, status) VALUES (
+            foreach ($data as $key => $value) {
+                $sql .= "'$value', ";
+            }
+
+            // INSERT INTO $this->table (name, description, status) VALUES ('category test', 'category test description', '1', 
+            $sql = rtrim($sql, ", ");
+            // INSERT INTO $this->table (name, description, status) VALUES ('category test', 'category test description', '1'
+
+            $sql .= ")";
+            // INSERT INTO $this->table (name, description, status) VALUES ('category test', 'category test description', '1')
+
+            $conn = $this->_conn->MySQLi();
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+            return $conn->insert_id;
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi thêm dữ liệu: ' . $th->getMessage());
+            return false;
+        }
+    }
+
+
     public function update(int $id, array $data)
     {
         try {

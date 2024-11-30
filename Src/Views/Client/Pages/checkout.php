@@ -17,15 +17,17 @@
                     <input form="paymentForm" type="text" id="fullname" name="fullname" class="form-control form-control-lg"
                         value="<?= isset($_SESSION['user']['fullname']) ? htmlspecialchars($_SESSION['user']['fullname']) : '' ?>"
                         placeholder="Ex: NguyenVanA, ....">
+                    <span class="text-danger" style="display:none" id="fullname-required">* Vui lòng nhập tên</span>
                 </div>
 
                 <div class="">
                     <label for="van_chuyen">Phương thức vận chuyển</label>
-                    <select id="van_chuyen" class="form-select cnvc " aria-label="Default select example">
+                    <select id="van_chuyen" name="shipping_method" class="form-select cnvc " aria-label="Default select example" form="paymentForm">
                         <option value="none">Chọn phương thức vận chuyển</option>
                         <option class="option" value="home">Giao hàng tận nhà <span class="icon">&#128663;</span></option>
                         <option class="option" value="store">Nhận hàng tại cửa hàng<span class="icon">&#127970;</span></option>
                     </select>
+                    <span class="text-danger" style="display:none" id="method_required">* Vui lòng chọn phương thức vận chuyển</span>
                 </div>
 
 
@@ -121,19 +123,18 @@
                     foreach ($addressUser as $item):
                     ?>
 
-                        <div class="border-bottom" >
+                        <div class="border-bottom">
                             <label class="w-100">
-                                <!-- chỗ này truyền ra id của tỉnh thành mới đúng -->
-                                <input form="paymentForm" type="radio" class="address my-3" name="address" value="<?= $item['address'] . ' ' . $item['ward_name'] . ' ' . $item['district_name']  . ' ' . $item['province_name'] ?>">
+                                <input form="paymentForm" type="radio" class="address my-3" name="address" id="userAddress" value="<?= $item['id'] ?>">
                                 <p>SĐT: <?= $item['phone'] ?></p>
-                                </p>
                                 <p><?= $item['address'] . ', ' . $item['ward_name'] . ', ' . $item['district_name'] . ', ' . $item['province_name'] ?></p>
-                                </input>
+                            </label>
                         </div>
-                        </label>
+
                     <?php
                     endforeach;
                     ?>
+                    <span class="text-danger" id="address-required" style="display: none;">* Vui lòng chọn địa chỉ cần giao</span>
 
                 </div>
 
@@ -143,7 +144,8 @@
                 <div class="atStore" id="atStore" style="display:none;">
 
                     <div>
-                        <p>chỗ này là thông tin cửa hàng</p>
+                        <p>Nhận tại chi nhánh BeeTechNova TP Cần Thơ:</p>
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3929.4204309707616!2d105.75564711161697!3d9.9820867732995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31a08906415c355f%3A0x416815a99ebd841e!2sFPT%20Polytechnic%20College!5e0!3m2!1sen!2s!4v1732997578750!5m2!1sen!2s" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                     </div>
 
                 </div>
@@ -162,7 +164,7 @@
                 <!-- Phương thức thanh toán -->
                 <div class="payment-methods">
                     <h3>Phương thức thanh toán</h3>
-                    <select class="cnvc" name="payment-method" id="paymentMethodSelect">
+                    <select class="cnvc" name="payment-method" id="paymentMethodSelect" form="paymentForm">
                         <option value="cash" selected>Tiền mặt khi nhận hàng</option>
                         <option value="international">Thanh toán quốc tế <i class="fab fa-cc-visa"></i> <i
                                 class="fab fa-cc-mastercard"></i></option>
@@ -170,7 +172,7 @@
 
                 </div>
                 <!-- Thông tin thanh toán quốc tế -->
-                <div class="international-payment" id="internationalPayment" style="display: none;">
+                <!-- <div class="international-payment" id="internationalPayment" style="display: none;">
                     <div class="form-group col-12">
                         <input type="text" id="cardNumber" class="form-control" placeholder="Số thẻ" />
                     </div>
@@ -186,11 +188,11 @@
                     <div class="form-group col-12">
                         <input type="text" id="cardholderName" class="form-control" placeholder="Tên chủ thẻ" />
                     </div>
-                </div>
+                </div> -->
 
 
 
-                <form action="/orders" method="POST" id="paymentForm" name="paymentForm">
+                <form action="/proceed-checkout" method="POST" id="paymentForm" name="paymentForm">
                     <button type="submit" class="button_thanhtoan">THANH TOÁN NGAY</button>
                 </form>
 
@@ -233,7 +235,6 @@
                     </div>
                 <?php endforeach; ?>
 
-                <input type="hidden" name="price" value="<?= $totalPrice; ?>" form="paymentForm">
 
                 <div class="order-summary">
                     <div class="totals">
@@ -247,11 +248,10 @@
                 </div>
             </div>
         </div>
-
     </div>
 </section>
 
-<script>
+<!-- <script>
     document.addEventListener("DOMContentLoaded", function() {
         const paymentMethodSelect = document.getElementById("paymentMethodSelect");
         const internationalPaymentSection = document.getElementById("internationalPayment");
@@ -264,7 +264,7 @@
             }
         });
     });
-</script>
+</script> -->
 
 <script>
     document.getElementById('van_chuyen').addEventListener('change', function() {
@@ -287,11 +287,34 @@
     });
 </script>
 
+<script>
+    $('#paymentForm').on('submit', (e) => {
+        if ($('#van_chuyen').val() != 'home' && 'store') {
+            e.preventDefault();
+            $('#method_required').show();
+        } else {
+            console.log($('#van_chuyen').val());
+            $('#method_required').hide();
+        }
 
+        if ($('#fullname').val() == '') {
+            e.preventDefault();
+            $('#fullname-required').show();
+        } else {
+            $('#fullname-required').hide();
+        }
 
-
-
-
+        if ($('#van_chuyen').val() === 'home') {
+            if (!$('input[name="address"]:checked').length) {
+                console.log($('input[name="address"]:checked').val());
+                e.preventDefault();
+                $('#address-required').show();
+            } else {
+                $('#address-required').hide();
+            }
+        }
+    })
+</script>
 <?php $this->stop() ?>
 
 <?php $this->push('scripts') ?>
