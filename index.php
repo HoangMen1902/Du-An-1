@@ -70,8 +70,8 @@ $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
     $r->addRoute('POST', '/update-information', [AuthController::class, 'updateUserInfoAction']);
     $r->addRoute('POST', '/change-user-password', [AuthController::class, 'updatePasswordAction']);
     $r->addRoute('POST', '/new-address', [ProvinceHelper::class, 'createAddress']);
-    $r->addRoute('POST','/get-child-categories', [ProductListController::class, 'selectResult']);
-    $r->addRoute('GET','/filter-products', [ProductListController::class, 'filterResult']);
+    $r->addRoute('POST', '/get-child-categories', [ProductListController::class, 'selectResult']);
+    $r->addRoute('GET', '/filter-products', [ProductListController::class, 'filterResult']);
 
 
 
@@ -93,6 +93,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
 
     $r->addRoute('GET', '/register', [AuthController::class, 'register']);
     $r->get('/reset-password', [AuthController::class, 'loadResetPage']);
+    $r->post('/delete-cart-item',[CartController::class, 'deleteOneCart']);
 
     $r->post('/reset-password/{token}', [AuthController::class, 'resetPassword']);
     $r->post('/send-mail', [AuthController::class, 'forgotPasswordSubmit']);
@@ -150,7 +151,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
         $r->get('/brand/add', [BrandController::class, 'add']);
         $r->get('/comments', [CommentController::class, 'show']);
         $r->get('/ratings', [AdminRating::class, 'show']);
-        
+
 
         $r->get('/orders', [OrdersController::class, 'show']);
         $r->get('/order-detail/{id}', [OrdersController::class, 'detail']);

@@ -10,6 +10,20 @@ use Src\Notifications\Notification;
 class CartController extends BaseController
 {
 
+    public function deleteOneCart() {
+        $CartModel = new CartModel();
+        $id = $_POST['id'];
+        $result = $CartModel->deleteCart($id);
+        if($result) {
+            Notification::success('Đã xóa sản phẩm', 'Đã xóa sản phẩm ra khỏi giỏ hàng');
+            header('location: /cart');
+            exit();
+        } 
+        Notification::error('Xóa sản phẩm thất bại', 'Không thể xóa sản phẩm ra khỏi giỏ hàng');
+        header('location: /cart');
+        exit();
+    }
+
     public function show()
     {
         $user_id  = $_SESSION['user']['id'];
