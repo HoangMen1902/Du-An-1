@@ -42,11 +42,18 @@
                                     value="<?= isset($_SESSION['user']['phone']) ? htmlspecialchars($_SESSION['user']['phone']) : '' ?>">
                                 <div id="phone-error" style="display: none;" class="text-danger">Số điện thoại không được để trống *</div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" id="email-group"
+                                style="display: <?= isset($_SESSION['user']['google_id']) && !empty($_SESSION['user']['google_id']) ? 'none' : 'block'; ?>;">
                                 <label for="email" class="form-label">Địa chỉ Email</label>
-                                <input type="text" id="email" name="email" class="form-control form-control-lg"
-                                    value="<?= isset($_SESSION['user']['email']) ? htmlspecialchars($_SESSION['user']['email']) : '' ?>">
-                                <div id="email-error" style="display: none;" class="text-danger">Email không được để trống *</div>
+                                <?php if (isset($_SESSION['user']['google_id']) && !empty($_SESSION['user']['google_id'])): ?>
+                                    <input type="text" id="email" name="email" class="form-control form-control-lg"
+                                        value="<?= htmlspecialchars($_SESSION['user']['email']) ?>" readonly>
+                                    <small class="text-muted">Email được liên kết với Google, không thể chỉnh sửa.</small>
+                                <?php else: ?>
+                                    <input type="text" id="email" name="email" class="form-control form-control-lg"
+                                        value="<?= isset($_SESSION['user']['email']) ? htmlspecialchars($_SESSION['user']['email']) : '' ?>">
+                                    <div id="email-error" style="display: none;" class="text-danger">Email không được để trống *</div>
+                                <?php endif; ?>
                             </div>
 
 

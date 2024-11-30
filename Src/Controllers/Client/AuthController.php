@@ -365,7 +365,9 @@ class AuthController extends BaseController {
             header('location: /profile');
             exit();
         }
-
+        if (isset($_SESSION['user']['google_id']) && !empty($_SESSION['user']['google_id'])) {
+            $data['email'] = $_SESSION['user']['email'];
+        }
         AuthHelper::update($data);
         header('location: /profile');
     }
