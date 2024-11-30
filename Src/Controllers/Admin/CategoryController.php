@@ -6,6 +6,7 @@ use Src\Controllers\BaseController;
 use Src\Validations\Admin\CategoryValidation;
 use Src\Models\Admin\CategoryModel;
 use Src\Models\Admin\CategoryValueModel;
+use Src\Notifications\Notification;
 
 class CategoryController extends BaseController
 {
@@ -38,9 +39,13 @@ class CategoryController extends BaseController
                 $saveResult = $categoryModel->createCategory($data);
 
                 if ($saveResult) {
+                    Notification::success('Thành công', 'đã thêm thành công');
+
                     header("Location: /admin/categories");
                     exit();
                 } else {
+                    Notification::error('Lỗi', 'có lỗi xảy ra khi thêm');
+
                     $errors[] = "Không thể lưu phân loại. Vui lòng thử lại.";
                 }
             } else {
@@ -61,7 +66,7 @@ class CategoryController extends BaseController
     public function edit($id)
     {
         $categoryModel = new CategoryModel();
-        
+
 
         $category = $categoryModel->getOneCategory($id['id']);
         echo $this->view->render('Admin/Pages/Category/CategoryEdit', [
@@ -87,13 +92,16 @@ class CategoryController extends BaseController
 
                 $saveResult = $categoryModel->updateCategory($id, $data);
                 if ($saveResult) {
+                    Notification::success('Thành công', 'đã sửa thành công');
                     header("Location: /admin/categories");
+
                     exit();
                 } else {
                     $errors[] = "Không thể lưu phân loại. Vui lòng thử lại.";
+                    Notification::error('Lỗi', 'có lỗi xảy ra khi sửa');
                 }
             } else {
-                // $errors = $validationResult;
+                Notification::error('Lỗi', 'có lỗi xảy ra khi thêm');
                 header("Location: /admin/categories");
             }
         }
@@ -105,13 +113,15 @@ class CategoryController extends BaseController
             $category = $categoryModel->getOneCategory($id['id']);
             if ($category) {
                 $category_id = $category['category_id'];
-                
+
                 $deleteSuccess = $categoryModel->deleteCategory($id['id']);
-    
+
                 if ($deleteSuccess) {
+                    Notification::success('Thành công', 'đã xóa thành công');
                     header("Location: /admin/category/CategoryValueList/$category_id?status=success");
                     exit;
                 } else {
+                    Notification::error('Lỗi', 'có lỗi xảy ra khi xóa');
                     header("Location: /admin/category/CategoryValueList/$category_id?status=failed");
                 }
             } else {
@@ -126,7 +136,7 @@ class CategoryController extends BaseController
     {
 
         $categoryValueModel = new CategoryValueModel();
-        $categoryValues = $categoryValueModel->getCategoryValuesWithParent($id ['id']);
+        $categoryValues = $categoryValueModel->getCategoryValuesWithParent($id['id']);
 
         echo $this->view->render('Admin/Pages/Category/CategoryValueList', [
             'categoryValues' => $categoryValues
@@ -150,7 +160,7 @@ class CategoryController extends BaseController
                 'status' => $_POST['status'] ?? null,
                 'category_id' => $_POST['category_id'] ?? null
             ];
-    
+
             $validationResult = CategoryValidation::categoryValueValidation($data);
 
             if ($validationResult === true) {
@@ -159,23 +169,30 @@ class CategoryController extends BaseController
 
 
                 if ($saveResult) {
+                    Notification::success('Thành công', 'đã thêm thành công');
                     header("Location: /admin/category/CategoryValueList/{$data['category_id']}");
                     exit();
                 } else {
+                    Notification::error('Lỗi', 'có lỗi xảy ra khi thêm');
+
                     $errors[] = "Không thể lưu phân loại. Vui lòng thử lại.";
                 }
             } else {
+                Notification::error('Lỗi', 'có lỗi xảy ra khi thêm');
+
                 $errors = $validationResult;
             }
             $categoryModel = new CategoryModel();
             $categories = $categoryModel->getAllCategory();
-          
+
             echo $this->view->render('Admin/Pages/Category/CategoryValueAdd/', [
                 'categories' => $categories,
                 'data' => $data,
                 'errors' => $errors ?? []
             ]);
         } else {
+            Notification::error('Lỗi', 'có lỗi xảy ra khi thêm');
+
             // header("Location: /category/add");
             exit();
         }
@@ -226,14 +243,17 @@ class CategoryController extends BaseController
 
             if ($updateSuccess) {
                 if ($updateSuccess) {
+                    Notification::success('Thành công', 'đã sửa thành công');
                     header("location: /admin/category/CategoryValueList/{$data['category_id']}?status=success");
                     exit();
                 } else {
-                    header("location: /admin/category/CategoryValueList/{$data['category_id']}?status=failed");
+                    Notification::error('Lỗi', 'có lỗi xảy ra khi sửa');
 
+                    header("location: /admin/category/CategoryValueList/{$data['category_id']}?status=failed");
                 }
-                
             } else {
+                Notification::error('Lỗi', 'có lỗi xảy ra khi sửa');
+
                 echo "Cập nhật thất bại!";
             }
         }
@@ -245,22 +265,24 @@ class CategoryController extends BaseController
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $categoryValueModel = new CategoryValueModel();
             $categoryValue = $categoryValueModel->getOneCategoryValue($id['id']);
-            
+
             if ($categoryValue) {
                 $category_id = $categoryValue['category_id'];
-                
                 $deleteSuccess = $categoryValueModel->deleteCategoryValue($id['id']);
-    
                 if ($deleteSuccess) {
+                    Notification::success('Thành công', 'đã xóa thành công');
+
                     header("Location: /admin/category/CategoryValueList/$category_id?status=success");
                     exit;
                 } else {
+                    Notification::error('Lỗi', 'có lỗi xảy ra khi xóa');
+
                     header("Location: /admin/category/CategoryValueList/$category_id?status=failed");
                 }
             } else {
+                Notification::error('Lỗi', 'có lỗi xảy ra khi xóa');
                 echo "Không tìm thấy danh mục!";
             }
         }
     }
-    
 }

@@ -587,8 +587,10 @@ class ProductsController extends BaseController
             $deleteSuccess = $ProductModel->deleteProduct($id['id']);
 
             if ($deleteSuccess) {
+                Notification::success('Thành công', 'đã xóa thành công');
                 header('Location: /admin/products?status=success ');
             } else {
+                Notification::error('Lỗi', 'có lỗi xảy ra khi xóa');
                 header('Location: /admin/products?status=failed ');
             }
         }

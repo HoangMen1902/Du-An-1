@@ -1,0 +1,164 @@
+<?php
+
+namespace Src\Models\Client;
+
+use Src\Models\BaseModel;
+use Throwable;
+use Exception;
+
+class OrderModel extends BaseModel
+{
+
+    protected $table = 'orders';
+    protected $id = 'id';
+
+    public function getAllOrderByUser($userId)
+{
+    try {
+        $sql = "SELECT o.*, 
+                        p.name AS product_name, 
+                        p.thumbnail AS image_name, 
+                        o.total_price AS order_price, 
+                        od.quantity,
+                        ca.phone,
+                        ca.address,
+                        o.status AS order_status, 
+                        c.name AS category_name
+                    FROM orders o
+                    JOIN checkout_addresses ca ON o.address_id = ca.id
+                    JOIN order_details od ON o.id = od.order_id
+                    JOIN product_skus ps ON od.sku_id = ps.id
+                    JOIN products p ON ps.product_id = p.id
+                    JOIN product_categories pc ON p.id = pc.product_id
+                    JOIN category_values cv ON pc.category_values_id = cv.id
+                    JOIN categories c ON cv.category_id = c.id
+                    WHERE o.user_id = ?";
+    
+        $conn = $this->_conn->MySQLi();
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('i', $userId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        if ($result->num_rows > 0) {
+            return $result->fetch_all(MYSQLI_ASSOC);
+        } else {
+            return []; 
+        }
+    } catch (Throwable $e) {
+        error_log('Error fetching order data for user ' . $userId . ': ' . $e->getMessage());
+        return false;
+    }
+}
+public function getAllOrderByUserAndOrderId($orderId, $userId)
+{
+    try {
+        $sql = "SELECT o.*, 
+                       p.name AS product_name, 
+                       p.thumbnail AS image_name, 
+                       o.total_price AS order_price, 
+                       od.quantity,
+                       ca.phone,
+                       ca.address,
+                       o.status AS order_status, 
+                       c.name AS category_name
+                FROM orders o
+                JOIN checkout_addresses ca ON o.address_id = ca.id
+                JOIN order_details od ON o.id = od.order_id
+                JOIN product_skus ps ON od.sku_id = ps.id
+                JOIN products p ON ps.product_id = p.id
+                JOIN product_categories pc ON p.id = pc.product_id
+                JOIN category_values cv ON pc.category_values_id = cv.id
+                JOIN categories c ON cv.category_id = c.id
+                WHERE o.user_id = ? AND o.id = ?";
+    
+        $conn = $this->_conn->MySQLi();
+        $stmt = $conn->prepare($sql);
+
+        if (!$stmt) {
+            throw new Exception("Failed to prepare statement: " . $conn->error);
+        }
+
+        $stmt->bind_param('ii', $userId, $orderId);
+
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        if ($result->num_rows > 0) {
+            return $result->fetch_all(MYSQLI_ASSOC);
+        } else {
+            return []; 
+        }
+    } catch (Throwable $e) {
+        error_log('Error fetching order data for user ' . $userId . ': ' . $e->getMessage());
+        return false;
+    }
+}
+
+
+
+
+
+public function cancelOrder($id)
+{
+    try {
+        $conn = $this->_conn->MySQLi();
+        $conn->begin_transaction();
+
+
+        $sqlUpdateOrder = "UPDATE $this->table SET status = 4 WHERE id = ?";
+        $stmtUpdateOrder = $conn->prepare($sqlUpdateOrder);
+        $stmtUpdateOrder->bind_param('i', $id);
+        $stmtUpdateOrder->execute();
+
+        error_log('Updated order status affected rows: ' . $stmtUpdateOrder->affected_rows);
+
+        if ($stmtUpdateOrder->affected_rows === 0) {
+            throw new Exception("Không tìm thấy đơn hàng hoặc không thể cập nhật trạng thái.");
+        }
+
+
+        $sqlGetOrderDetails = "SELECT sku_id, quantity FROM order_details WHERE order_id = ?";
+        $stmtGetOrderDetails = $conn->prepare($sqlGetOrderDetails);
+        $stmtGetOrderDetails->bind_param('i', $id);
+        $stmtGetOrderDetails->execute();
+        $result = $stmtGetOrderDetails->get_result();
+        $orderDetails = $result->fetch_all(MYSQLI_ASSOC);
+
+        if (empty($orderDetails)) {
+            throw new Exception("Không tìm thấy chi tiết đơn hàng.");
+        }
+
+
+        error_log('Order details: ' . print_r($orderDetails, true));
+
+
+        $sqlUpdateQuantity = "UPDATE product_skus SET quantity = quantity + ? WHERE id = ?";
+        $stmtUpdateQuantity = $conn->prepare($sqlUpdateQuantity);
+
+        foreach ($orderDetails as $item) {
+            $stmtUpdateQuantity->bind_param('ii', $item['quantity'], $item['sku_id']);
+            $stmtUpdateQuantity->execute();
+
+
+            error_log("Updated SKU quantity affected rows for SKU {$item['sku_id']}: " . $stmtUpdateQuantity->affected_rows);
+
+            if ($stmtUpdateQuantity->affected_rows === 0) {
+                throw new Exception("Không thể cập nhật số lượng sản phẩm cho SKU: {$item['sku_id']}");
+            }
+        }
+
+
+        $conn->commit();
+        return true;
+
+    } catch (Throwable $th) {
+        if (isset($conn)) {
+            $conn->rollback();
+        }
+        error_log('Lỗi khi hủy đơn hàng: ' . $th->getMessage());
+        return false;
+    }
+}
+
+}

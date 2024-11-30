@@ -1,6 +1,5 @@
 <?php $this->layout('Admin/Layouts/Layout') ?>
 
-
 <?php 
 $this->start('main_content');
 ?>
@@ -22,27 +21,49 @@ $this->start('main_content');
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>
-                                <!-- <div class="d-flex align-items-center">
-                                    <a href="/admin/order-detail/">
-                                        <button type="button" class="btn btn-info btn-sm btn-icon-text mr-3">
-                                            Chi tiết
-                                            <i class="typcn typcn-edit btn-icon-append"></i>
-                                        </button>
-                                    </a>
-                                </div> -->
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="7" class="text-center">Không có đơn hàng.</td>
-                        </tr>
+                        <?php if (!empty($orderData)): ?>
+                            <?php foreach ($orderData as $order): ?>
+                                <tr>
+                                    <td><?= htmlspecialchars($order['id']) ?></td>
+                                    <td><?= htmlspecialchars($order['product_name']) ?></td>
+                                    <td><?= htmlspecialchars($order['phone']) ?></td>
+                                    <td><?= htmlspecialchars($order['address']) ?></td>
+                                    <td><?= number_format($order['total_price'], 0, ',', '.') ?> VND</td>
+                                    <td>
+                                        <?php
+                                            switch ($order['order_status']) {
+                                                case 1:
+                                                    echo 'Đang xử lý';
+                                                    break;
+                                                case 2:
+                                                    echo 'Đã thanh toán';
+                                                    break;
+                                                case 3:
+                                                    echo 'Đã giao';
+                                                    break;
+                                                default:
+                                                    echo 'Đã hủy';
+                                                    break;
+                                            }
+                                        ?>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <a href="/admin/order-detail/<?= htmlspecialchars($order['id']) ?>">
+                                                <button type="button" class="btn btn-info btn-sm btn-icon-text mr-3">
+                                                    Chi tiết
+                                                    <i class="typcn typcn-edit btn-icon-append"></i>
+                                                </button>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <tr>
+                                <td colspan="7" class="text-center">Không có đơn hàng.</td>
+                            </tr>
+                        <?php endif; ?>
                     </tbody>
                 </table>
             </div>
@@ -53,4 +74,4 @@ $this->start('main_content');
 <?php
 
 $this->stop();
-?>v
+?>

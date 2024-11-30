@@ -49,13 +49,18 @@ class UserController extends BaseController
             $UserModel = new UserModel();
             $result = $UserModel->store($data);
             if ($result) {
+                Notification::success('Thành công', 'đã thêm thành công');
                 header('location: /admin/create-user?status=success');
                 exit();
             } else {
+                Notification::error('Lỗi', 'có lỗi xảy ra khi thêm');
+
                 header('location: /admin/create-user?status=failed&code=' . $result['code'] . '&error=' . $result['name']);
                 exit();
             }
         } else {
+            Notification::error('Lỗi', 'có lỗi xảy ra khi thêm');
+
             header('location: /admin/create-user?status=failed&error=' . $data_validate['code'] . '&name=' . $data_validate['name']);
             exit();
         }
@@ -88,13 +93,19 @@ class UserController extends BaseController
             $UserModel = new UserModel();
             $result = $UserModel->update($id, $data);
             if ($result) {
+                Notification::success('Thành công', 'đã sửa thành công');
+
                 header('location: /admin/users?status=success');
                 exit();
             } else {
+                Notification::error('Lỗi', 'có lỗi xảy ra khi sửa');
+
                 header('location: /admin/users?status=failed&');
                 exit();
             }
         } else {
+            Notification::error('Lỗi', 'có lỗi xảy ra khi sửa');
+
             header('location: /admin/users?status=failed&error=' . $data_validate['code'] . '&name=' . $data_validate['name']);
             exit();
         }
@@ -119,6 +130,7 @@ class UserController extends BaseController
             $data = json_encode($data);
             echo $data;
         } else {
+            Notification::error('Lỗi', 'có lỗi xảy ra khi sửa');
             header('location: /admin/locked-account?action=delete&status=failed');
         }
     }

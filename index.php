@@ -18,6 +18,7 @@ use Src\Helpers\Client\ProvinceHelper;
 use Src\Controllers\Client\CommentController as ClientComment;
 use Src\Controllers\Client\RatingController;
 
+
 use Src\Controllers\Admin\RatingController as AdminRating;
 use Src\Controllers\Admin\VouchersController;
 use Src\Controllers\Admin\UserController;
@@ -88,6 +89,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
     $r->addRoute('POST', '/preview', [RatingController::class, 'store']);
     $r->addRoute('POST', '/edit-preview', [RatingController::class, 'update']);
     $r->addRoute('POST', '/deleteRating', [RatingController::class, 'delete']);
+    $r->addRoute('POST', '/cancelOrder/{id}', [UserInfoController::class, 'cancelOrder']);
 
     $r->addRoute('GET', '/register', [AuthController::class, 'register']);
     $r->get('/reset-password', [AuthController::class, 'loadResetPage']);
@@ -151,6 +153,8 @@ $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
         
 
         $r->get('/orders', [OrdersController::class, 'show']);
+        $r->get('/order-detail/{id}', [OrdersController::class, 'detail']);
+
         $r->get('/tragop', [InstallmentsController::class, 'show']);
         $r->get('/tragop/add', [InstallmentsController::class, 'add']);
         $r->get('/tragop/detail', [InstallmentsController::class, 'detail']);
