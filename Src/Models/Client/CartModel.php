@@ -19,8 +19,10 @@ class CartModel extends BaseModel
     public function getCartByUser($user_id)
     {
         try {
-            $sql = "SELECT Carts.id AS cart_id, Products.name AS product_name, Products.description  AS product_description , Users.email AS user_email, Product_skus.sku AS product_sku, Product_skus.price AS product_price, Product_skus.images  AS product_images, 
-                    Carts.quantity AS quantity, (Product_skus.price * Carts.quantity) AS total_price 
+            $sql = "SELECT Carts.id AS cart_id,Product_skus.price - (Product_skus.price * Products.discount / 100) AS discounted_price,
+                    Products.name AS product_name, Products.description  AS product_description , Users.email AS user_email, Product_skus.sku AS product_sku, 
+                    Product_skus.price AS product_price, Product_skus.images  AS product_images, 
+                    Carts.quantity AS quantity, ((Product_skus.price - (Product_skus.price * Products.discount / 100)) * Carts.quantity) AS total_price 
                     FROM Carts 
                     JOIN Users ON Carts.user_id = Users.id 
                     JOIN Product_skus ON Carts.sku_id = Product_skus.id 
@@ -40,18 +42,6 @@ class CartModel extends BaseModel
             $results = $result->fetch_all(MYSQLI_ASSOC);
 
             return $results;
-
-
-
-
-
-
-
-
-
-
-
-
         } catch (\Throwable $th) {
             error_log('Lỗi khi lấy giỏ hàng: ' . $th->getMessage());
             return false;

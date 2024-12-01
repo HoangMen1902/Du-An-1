@@ -3,7 +3,6 @@
 
 <?php 
 $this->start('main_content');
-$totalPrice = 0;
 ?>
 <!-- Insert nội dung vào đây -->
 <div class="cart-container">
@@ -26,10 +25,8 @@ $totalPrice = 0;
                 </div>
                 <table class="cart__table">
 
-                    <?php foreach ($Data as $cart): 
-                        $totalPrice += $cart['total_price'];
-                        ?>
-                        
+                <?php foreach ($data as $cart): ?>
+                    
                         <tr class="cart__product">
                             <td style="width: 15%;">
                                 <img class="cart__product-image" src="<?= $_ENV['APP_URL'] ?>/public/Uploads/Products/<?= $cart['product_images'] ?>" alt="<?= htmlspecialchars($cart['product_sku']) ?>">
@@ -37,11 +34,11 @@ $totalPrice = 0;
 
                             <td style="width: 55%; ">
                                 <div class="cart__product-details">
-                                    <h2 class="cart__product-name"><?= htmlspecialchars($cart['product_name'] . ''. $cart['product_sku']) ?></h2>
-                                    <p class="cart__product-price"><?= number_format($cart['product_price'], 0, ',', '.') ?>₫</p>
+                                    <h2 class="cart__product-name"><?= htmlspecialchars($cart['product_name'] . '' . $cart['product_sku']) ?></h2>
+                                    <p class="cart__product-price"><?= number_format($cart['discounted_price'], 0, ',', '.') ?>₫</p>
                                     <div class="cart__product-description ">
                                         <ul class="cart__product-description-fix">
-                                            <li class=" text-limit" ><?= htmlspecialchars($cart['product_description']) ?>.</li>
+                                            <li class=" text-limit"><?= htmlspecialchars($cart['product_description']) ?>.</li>
                                         </ul>
                                     </div>
                                 </div>
@@ -83,8 +80,10 @@ $totalPrice = 0;
                         <span class="cart__summary-price">0₫ </span>
                     </div>
                     <div class="cart__summary-item">
-                        <h3 class="cart__summary-total">Tổng
-                            <span class="cart__summary-amount"><?=number_format($totalPrice, 0 , ',',  '.')?>₫
+                        <?php $total = array_sum(array_column($data, 'total_price'));;
+                        ?>
+                        <h3 class="cart__summary-total"> <?= number_format($total, 0, ',', '.') ?>₫ 
+                            <span class="cart__summary-amount">
                             </span>
                         </h3>
                     </div>

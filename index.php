@@ -8,6 +8,7 @@ use Src\Controllers\Client\ContactController;
 use Src\Controllers\Client\AuthController;
 use Src\Controllers\Client\AboutController;
 use Src\Controllers\Client\CartController;
+use Src\Controllers\Client\OrderController;
 use Src\Controllers\Client\ProductController;
 use Src\Controllers\Client\CheckoutController;
 use Src\Controllers\Admin\DashboardController;
@@ -54,6 +55,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
     $r->addRoute('GET', '/detail/{id}', [ProductController::class, 'show']);
     $r->addRoute('GET', '/list', [ProductListController::class, 'show']);
     $r->addRoute('GET', '/checkout', [CheckoutController::class, 'show']);
+    $r->addRoute('POST', '/orders', [OrderController::class, 'show']);
     $r->addRoute('GET', '/about', [AboutController::class, 'show']);
     $r->addRoute('GET', '/', [HomeController::class, 'show']);
     $r->addRoute('GET', '/Contact', [ContactController::class, 'show']);
