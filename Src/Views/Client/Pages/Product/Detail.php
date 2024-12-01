@@ -5,13 +5,12 @@
 $this->push('styles');
 ?>
 <style>
-p {
-    white-space: normal;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    margin: 0; 
-}
-
+    p {
+        white-space: normal;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        margin: 0;
+    }
 </style>
 
 <?php
@@ -23,7 +22,7 @@ $specs = json_decode($desc_specs['specifications']);
 ?>
 
 <!-- Insert nội dung vào đây -->
-<div class="product-detal__container" >
+<div class="product-detal__container">
     <div class="product__carousel">
         <div class="product__main-carousel-ids">
 
@@ -116,7 +115,7 @@ $specs = json_decode($desc_specs['specifications']);
                                 name="sku_options"
                                 data-image="<?= $_ENV['APP_URL'] ?>/public/Uploads/Products/<?= htmlspecialchars($sku['images']) ?>"
                                 data-price="<?= $sku['discounted_price'] ?>" data-old-price="<?= $sku['original_price'] ?>"
-                                product-name="<?= $sku['sku'] ?>" onclick="onSkuSelect(this)" <?= $index === array_key_first($productData['skus']) ? 'checked' : ''?>>
+                                product-name="<?= $sku['sku'] ?>" onclick="onSkuSelect(this)" <?= $index === array_key_first($productData['skus']) ? 'checked' : '' ?>>
                             <?php foreach ($sku['options'] as $option): ?>
                                 <div>
                                     <?= htmlspecialchars($option['option_name']) . ': ' . htmlspecialchars($option['option_value']) ?>
@@ -164,317 +163,47 @@ $specs = json_decode($desc_specs['specifications']);
 </ul>
 
 
-
 <section class="container container-des tab-content" id="pills-tabContent" style="margin: auto">
     <div class="feature-chart tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
         <h2>Thông số kỹ thuật</h2>
-        <?php
-        foreach($specs as $spec):
-        ?>
-        <div class="table-row">
-            <div class="table-row__title">
-                <p><?=$spec->spec_name?></p>
-            </div>
-            <div class="table-row__text">
-                <p>
-                    <span>
-                        <?=$spec->spec_value?>
-                    </span>
-                </p>
-            </div>
+        <div id="specContainer">
+            <?php foreach ($specs as $index => $spec): ?>
+                <div class="row table-row <?= $index >= 7 ? 'd-none' : '' ?>">
+                    <div class="col-4 table-row__title">
+                        <p><?= $spec->spec_name ?></p>
+                    </div>
+                    <div class="col-8 table-row__text">
+                        <p>
+                            <span><?= $spec->spec_value ?></span>
+                        </p>
+                    </div>
+                </div>
+            <?php endforeach; ?>
         </div>
-        <?php
-        endforeach;
-        ?>
         <p class="feature-chart__more" id="moreButton">
-            <a role="button" aria-expanded="false" aria-controls="collapseExample">
+            <a role="button" aria-expanded="false">
                 <span>Xem thêm</span>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="w-6 h-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
                 </svg>
             </a>
-        </p> 
-        <div class="collapse" id="collapseExample">
-            <div class="table-row">
-                <div class="table-row__title">
-                    <p>Ram</p>
-                </div>
-                <div class="table-row__text">
-                    <p>
-                        <span>
-
-                        </span>
-                    </p>
-                </div>
-            </div>
-            <div class="table-row">
-                <div class="table-row__title">
-                    <p>Loại RAM</p>
-                </div>
-                <div class="table-row__text">
-                    <p>
-                        <span>
-
-                        </span>
-                    </p>
-                </div>
-            </div>
-            <div class="table-row">
-                <div class="table-row__title">
-                    <p>Tốc độ Bus RAM</p>
-                </div>
-                <div class="table-row__text">
-                    <p>
-                        <span>
-
-                        </span>
-                    </p>
-                </div>
-            </div>
-            <div class="table-row">
-                <div class="table-row__title">
-                    <p>Hỗ trợ RAM tối đa</p>
-                </div>
-                <div class="table-row__text">
-                    <p>
-                        <span>
-
-                        </span>
-                    </p>
-                </div>
-            </div>
-            <div class="table-row">
-                <div class="table-row__title">
-                    <p>Ổ cứng</p>
-                </div>
-                <div class="table-row__text">
-                    <p>
-                        <span>
-
-                        </span>
-                    </p>
-                </div>
-            </div>
-            <div class="table-row">
-                <div class="table-row__title">
-                    <p>Màn hình</p>
-                </div>
-                <div class="table-row__text">
-                    <p>
-                        <span>
-
-                        </span>
-                    </p>
-                </div>
-            </div>
-            <div class="table-row">
-                <div class="table-row__title">
-                    <p>Độ phân giải</p>
-                </div>
-                <div class="table-row__text">
-                    <p>
-                        <span>
-
-                        </span>
-                    </p>
-                </div>
-            </div>
-            <div class="table-row">
-                <div class="table-row__title">
-                    <p>Tần số quét</p>
-                </div>
-                <div class="table-row__text">
-                    <p>
-                        <span>
-
-                        </span>
-                    </p>
-                </div>
-            </div>
-            <div class="table-row">
-                <div class="table-row__title">
-                    <p>Công nghệ màn hình</p>
-                </div>
-                <div class="table-row__text">
-                    <p>
-                        <span>
-
-                        </span>
-                    </p>
-                </div>
-            </div>
-            <div class="table-row">
-                <div class="table-row__title">
-                    <p>Card màn hình</p>
-                </div>
-                <div class="table-row__text">
-                    <p>
-                        <span>
-
-                        </span>
-                    </p>
-                </div>
-            </div>
-            <div class="table-row">
-                <div class="table-row__title">
-                    <p>Công nghệ âm thanh</p>
-                </div>
-                <div class="table-row__text">
-                    <p>
-                        <span>
-
-                        </span>
-                    </p>
-                </div>
-            </div>
-            <div class="table-row">
-                <div class="table-row__title">
-                    <p>Kết nối không dây</p>
-                </div>
-                <div class="table-row__text">
-                    <p>
-                        <span>
-
-                        </span>
-                    </p>
-                </div>
-            </div>
-            <div class="table-row">
-                <div class="table-row__title">
-                    <p>Khe đọc thẻ nhớ</p>
-                </div>
-                <div class="table-row__text">
-                    <p>
-                        <span>
-
-                        </span>
-                    </p>
-                </div>
-            </div>
-            <div class="table-row">
-                <div class="table-row__title">
-                    <p>Webcam</p>
-                </div>
-                <div class="table-row__text">
-                    <p>
-                        <span>
-
-                        </span>
-                    </p>
-                </div>
-            </div>
-            <div class="table-row">
-                <div class="table-row__title">
-                    <p>Tính năng khác</p>
-                </div>
-                <div class="table-row__text">
-                    <p>
-                        <span>
-
-                        </span>
-                    </p>
-                </div>
-            </div>
-            <div class="table-row">
-                <div class="table-row__title">
-                    <p>Đèn bàn phím</p>
-                </div>
-                <div class="table-row__text">
-                    <p>
-                        <span>
-
-                        </span>
-                    </p>
-                </div>
-            </div>
-            <div class="table-row">
-                <div class="table-row__title">
-                    <p>Kích thước</p>
-                </div>
-                <div class="table-row__text">
-                    <p>
-                        <span>
-
-                        </span>
-                    </p>
-                </div>
-            </div>
-            <div class="table-row">
-                <div class="table-row__title">
-                    <p>Khối lượng tịnh</p>
-                </div>
-                <div class="table-row__text">
-                    <p>
-                        <span>
-
-                        </span>
-                    </p>
-                </div>
-            </div>
-            <div class="table-row">
-                <div class="table-row__title">
-                    <p>Chất liệu</p>
-                </div>
-                <div class="table-row__text">
-                    <p>
-                        <span>
-
-                        </span>
-                    </p>
-                </div>
-            </div>
-            <div class="table-row">
-                <div class="table-row__title">
-                    <p>Thông tin Pin</p>
-                </div>
-                <div class="table-row__text">
-                    <p>
-                        <span>
-
-                        </span>
-                    </p>
-                </div>
-            </div>
-            <div class="table-row">
-                <div class="table-row__title">
-                    <p>Công suất bộ sạc</p>
-                </div>
-                <div class="table-row__text">
-                    <p>
-                        <span>
-
-                        </span>
-                    </p>
-                </div>
-            </div>
-            <div class="table-row">
-                <div class="table-row__title">
-                    <p>Hệ điều hành</p>
-                </div>
-                <div class="table-row__text">
-                    <p>
-                        <span>
-
-                        </span>
-                    </p>
-                </div>
-            </div>
-            <p class="feature-chart__more" id="lessButton">
-                <a role="button" aria-expanded="false" aria-controls="collapseExample">
-                    <span>Ẩn bớt</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="currentColor" class="w-6 h-6">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5" />
-                    </svg>
-                </a>
-            </p>
-        </div>
+        </p>
+        <p class="feature-chart__more" id="lessButton" style="display: none;">
+            <a role="button" aria-expanded="false">
+                <span>Ẩn bớt</span>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5" />
+                </svg>
+            </a>
+        </p>
     </div>
     <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" style="max-width: 70%;">
-        <?=$desc_specs['description']?>
+        <?= $desc_specs['description'] ?>
     </div>
 </section>
+
 
 
 
@@ -1286,3 +1015,10 @@ $specs = json_decode($desc_specs['specifications']);
 </script>
 
 <?php $this->stop() ?>
+<?php
+$this->push('scripts')
+?>
+<script src="<?= $_ENV['APP_URL'] ?>/public/Assets/Client/js/productScroll.js"></script>
+<?php
+$this->end();
+?>
