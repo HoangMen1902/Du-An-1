@@ -12,7 +12,7 @@ class OrdersController extends BaseController {
 
     public function detail($id)
     {
-        $orderId = $id;
+        $orderId = $id['id'];
         if ($id <= 0) {
             die("Invalid order ID.");
         }

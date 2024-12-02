@@ -81,9 +81,15 @@ $this->start('main_content');
                                                             echo 'Đang xử lý';
                                                             break;
                                                         case 2:
-                                                            echo 'Đã thanh toán';
+                                                            echo 'Chờ thanh toán';
                                                             break;
                                                         case 3:
+                                                            echo 'Đã thanh toán';
+                                                            break;
+                                                        case 4:
+                                                            echo 'Đang vận chuyển';
+                                                            break;
+                                                        case 5:
                                                             echo 'Đã giao';
                                                             break;
                                                         default:
@@ -130,9 +136,9 @@ $this->start('main_content');
                                 </tbody>
                             </table>
                         </div>
+                        <div class="d-flex align-items-center justify-content-end mt-3">
+                            <a href="/admin/orders" class="btn btn-primary ">Trở về</a>
 
-                        <div class="row justify-content-end">
-                            <a href="/admin/orders" class="btn btn-primary">Trở về</a>
                         </div>
                     </div>
                 </div>

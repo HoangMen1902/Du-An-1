@@ -1,6 +1,6 @@
 <?php $this->layout('Admin/Layouts/Layout') ?>
 
-<?php 
+<?php
 $this->start('main_content');
 ?>
 
@@ -31,20 +31,26 @@ $this->start('main_content');
                                     <td><?= number_format($order['total_price'], 0, ',', '.') ?> VND</td>
                                     <td>
                                         <?php
-                                            switch ($order['order_status']) {
-                                                case 1:
-                                                    echo 'Đang xử lý';
-                                                    break;
-                                                case 2:
-                                                    echo 'Đã thanh toán';
-                                                    break;
-                                                case 3:
-                                                    echo 'Đã giao';
-                                                    break;
-                                                default:
-                                                    echo 'Đã hủy';
-                                                    break;
-                                            }
+                                        switch ($order['order_status']) {
+                                            case 1:
+                                                echo 'Đang xử lý';
+                                                break;
+                                            case 2:
+                                                echo 'Chờ thanh toán';
+                                                break;
+                                            case 3:
+                                                echo 'Đã thanh toán';
+                                                break;
+                                            case 4:
+                                                echo 'Đang vận chuyển';
+                                                break;
+                                            case 5:
+                                                echo 'Đã giao';
+                                                break;
+                                            default:
+                                                echo 'Đã hủy';
+                                                break;
+                                        }
                                         ?>
                                     </td>
                                     <td>
