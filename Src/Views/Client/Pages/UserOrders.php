@@ -67,11 +67,11 @@ $this->start('main_content');
                                                             <div class="status-order col-6"><span>
                                                                     <?php
                                                                     if ($r['order_status'] == 1) {
-                                                                        echo 'Đang chờ thanh toán';
+                                                                        echo 'Đã đặt';
                                                                     } else if ($r['order_status'] == 2) {
-                                                                        echo 'Đã thanh toán';
+                                                                        echo 'Chờ thanh toán';
                                                                     } else if ($r['order_status'] == 3) {
-                                                                        echo 'Thanh công ';
+                                                                        echo 'Đã thanh toán';
                                                                     } else {
                                                                         echo 'Đã hủy';
                                                                     }
