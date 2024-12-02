@@ -168,6 +168,7 @@
                         <option value="cash" selected>Tiền mặt khi nhận hàng</option>
                         <option value="international">Thanh toán quốc tế <i class="fab fa-cc-visa"></i> <i
                                 class="fab fa-cc-mastercard"></i></option>
+                        <option value="vnpay" >Thanh toán VNPay</option>
                     </select>
 
                 </div>
@@ -289,7 +290,8 @@
 
 <script>
     $('#paymentForm').on('submit', (e) => {
-        if ($('#van_chuyen').val() != 'home' && 'store') {
+        if ($('#van_chuyen').val() != 'home' && $('#van_chuyen').val() != 'store') {
+        console.log($('#van_chuyen').val());
             e.preventDefault();
             $('#method_required').show();
         } else {

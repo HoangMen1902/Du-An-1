@@ -98,6 +98,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
     $r->post('/delete-cart-item',[CartController::class, 'deleteOneCart']);
     $r->get('/international-cancel', [CheckoutController::class, 'visaCancel']);
     $r->get('/international-success/{session_id}/{address_id}', [CheckoutController::class, 'visaSuccess']);
+    $r->get('/vnpay-response', [CheckoutController::class, 'response']);
 
     $r->post('/reset-password/{token}', [AuthController::class, 'resetPassword']);
     $r->post('/send-mail', [AuthController::class, 'forgotPasswordSubmit']);

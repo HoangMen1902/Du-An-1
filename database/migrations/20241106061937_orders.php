@@ -25,7 +25,7 @@ final class Orders extends AbstractMigration
         $table->addColumn('total_price', 'integer')
             ->addColumn('user_id', 'integer', ['signed' => false, 'null' => false])
             ->addColumn('status', 'integer', ['limit' => MysqlAdapter::INT_TINY, 'default' => 1])
-            ->addColumn('address_id', 'integer', ['signed' => false])
+            ->addColumn('address_id', 'integer', ['signed' => false, 'null' => true])
             ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
             ->addColumn('updated_at', 'timestamp', [
                 'default' => 'CURRENT_TIMESTAMP',

@@ -6,3 +6,4 @@ package-lock.json
 composer.lock
 logs/php-errors.log
 /.idea/
+test.txt

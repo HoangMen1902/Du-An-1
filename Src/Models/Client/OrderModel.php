@@ -162,4 +162,15 @@ class OrderModel extends BaseModel
             return false;
         }
     }
+
+    public function getOneOrder($id) {
+        return $this->getOne($id);
+    }
+    public function updateOrder($id, $data) {
+        return $this->update($id, $data);
+    }
+
+    public function deleteOrder($id) {
+        return $this->deleteOrder($id);
+    }
 }
