@@ -190,7 +190,7 @@ class CheckoutController extends BaseController
             if ($result === false) {
                 Notification::error('Đặt hàng thất bại', 'Đã xảy ra lỗi trong quá trình đặt hàng');
                 $conn->rollback();
-                header('location: /cart');
+                header('location: /checkout');
                 exit();
             }
 
