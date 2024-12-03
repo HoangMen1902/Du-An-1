@@ -101,16 +101,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
                     <h4 class="address__name d-flex gap-1  align-items-center justified-content-between">
                         <div>Địa chỉ</div>
                         <button type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="border: none; ">
@@ -130,15 +120,11 @@
                                 <p><?= $item['address'] . ', ' . $item['ward_name'] . ', ' . $item['district_name'] . ', ' . $item['province_name'] ?></p>
                             </label>
                         </div>
-
                     <?php
                     endforeach;
                     ?>
                     <span class="text-danger" id="address-required" style="display: none;">* Vui lòng chọn địa chỉ cần giao</span>
-
                 </div>
-
-
 
 
                 <div class="atStore" id="atStore" style="display:none;">
@@ -172,6 +158,7 @@
                     </select>
 
                 </div>
+
                 <!-- Thông tin thanh toán quốc tế -->
                 <!-- <div class="international-payment" id="internationalPayment" style="display: none;">
                     <div class="form-group col-12">
@@ -241,6 +228,7 @@
                     <div class="totals">
                         <p>Vận chuyển: MIỄN PHÍ</p>
                         <h3>Tổng: <span id="price"><?= number_format($totalPrice, 0, ',', '.'); ?></span> ₫</h3>
+                        <input form="paymentForm" type="hidden" name="totalPrice" value="<?= $totalPrice ?>">
                         <p>Phương thức thanh toán: Tiền mặt</p>
                     </div>
                 </div>

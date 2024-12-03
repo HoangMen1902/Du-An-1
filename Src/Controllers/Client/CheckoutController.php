@@ -4,6 +4,7 @@ namespace Src\Controllers\Client;
 
 use Exception;
 use Google\Service\Adsense\Header;
+use Google_Service_VMMigrationService_DiskImageDefaults;
 use Src\Controllers\BaseController;
 use Src\Helpers\Client\VNPayHelper;
 use Src\Models\Database;
@@ -27,11 +28,6 @@ class CheckoutController extends BaseController
         $user_id  = $_SESSION['user']['id'];
         $CartModel = new CartModel();
         $data = $CartModel->getCartByUser($user_id);
-
-        // echo '<pre>';
-        // $userModel = new UserModel();
-        // $dataUser = $userModel->showAll();
-
         $id = $_SESSION['user']['id'];
         $addressModel = new AddressModel();
         $addressUser = $addressModel->getUserAddress($id);
@@ -39,7 +35,6 @@ class CheckoutController extends BaseController
 
         echo $this->view->render('Client/Pages/Checkout', [
             'data' => $data,
-            // 'dataUser' => $dataUser,
             'addressUser' => $addressUser,
         ]);
     }
@@ -162,6 +157,80 @@ class CheckoutController extends BaseController
                 exit();
             }
         }
+        if ($method === 'cash') {
+            $UserCart = $CartModel->getCartByUser($_SESSION['user']['id']);
+            $lineItems = array_map(function ($products) {
+                return [
+                    'price_data' => [
+                        'currency' => 'VND',
+                        'product_data' => [
+                            'name' => $products['product_name'],
+                            'description' => $products['product_sku'],
+                        ],
+                        'unit_amount' => (int)$products['total_price'],
+                    ],
+                    'quantity' => $products['quantity']
+                ];
+            }, $UserCart);
+
+            $user_id = $_SESSION['user']['id'];
+            $address_id = $_POST['address'];
+            $total_price = $_POST['totalPrice'];
+
+            $insertOrder = $this->createOrder($user_id, $address_id, $total_price);
+
+            $conn = (new Database())->MySQLi();
+            $conn->begin_transaction();
+
+            $OrderModel = new OrderModel;
+            $OrderDetailModel = new OrderDetailsModel;
+            $result = $OrderModel->createOrderReturnId($insertOrder);
+
+            if ($result === false) {
+                Notification::error('Đặt hàng thất bại', 'Đã xảy ra lỗi trong quá trình đặt hàng');
+                $conn->rollback();
+                header('location: /checkout');
+                exit();
+            }
+
+            $orderDetailInsert = $this->prepareOrderDetails($result, $UserCart);
+
+            foreach ($orderDetailInsert as $index => $dataInsert) {
+                if (!$OrderDetailModel->createDetail($dataInsert)) {
+                    Notification::error('Tạo đơn hàng thất bại', 'Tạo đơn hàng thất bại, vui lòng báo cáo với quản trị viên');
+                    $conn->rollback();
+                    header('location: /checkout');
+                    exit();
+                }
+            }
+
+            $conn->commit();
+            Notification::success('Đã đặt hàng', 'Bạn đã đặt hàng thành công');
+            $CartModel->deleteAllCarts($user_id);
+            header('location: /cart');
+            exit();
+        }
+    }
+    private function prepareOrderDetails($order_id, $cartItems)
+    {
+        return array_map(function ($cartItem) use ($order_id) {
+            $price = explode('.', $cartItem['total_price'])[0];
+            return [
+                'order_id' => $order_id,
+                'sku_id' => $cartItem['sku_id'],
+                'price' => $price,
+                'quantity' => $cartItem['quantity']
+            ];
+        }, $cartItems);
+    }
+    private function createOrder($user_id, $address_id, $total_price)
+    {
+        return [
+            'user_id' => $user_id,
+            'address_id' => $address_id,
+            'total_price' => $total_price,
+            'status' => 1
+        ];
     }
 
     public function createCheckoutSession($lineItems, $additionalData)
