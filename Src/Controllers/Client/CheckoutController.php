@@ -56,7 +56,7 @@ class CheckoutController extends BaseController
             try {
                 $UserCart = $CartModel->getCartByUser($_SESSION['user']['id']);
                 $lineItems = array_map(function ($products) {
-                    $price = explode('.', $products['total_price'])[0];
+                    $price = explode('.', $products['discounted_price'])[0];
                     return [
                         'price_data' => [
                             'currency' => 'VND',
@@ -70,6 +70,7 @@ class CheckoutController extends BaseController
                     ];
                 }, $UserCart);
                 $additionalData['address'] = $_POST['address'];
+
                 $this->createCheckoutSession($lineItems, $additionalData);
             } catch (Exception $e) {
                 error_log('Lỗi khi thanh toán bằng visa' . $e->getMessage());
@@ -189,7 +190,7 @@ class CheckoutController extends BaseController
             if ($result === false) {
                 Notification::error('Đặt hàng thất bại', 'Đã xảy ra lỗi trong quá trình đặt hàng');
                 $conn->rollback();
-                header('location: /checkout');
+                header('location: /cart');
                 exit();
             }
 
@@ -207,7 +208,7 @@ class CheckoutController extends BaseController
             $conn->commit();
             Notification::success('Đã đặt hàng', 'Bạn đã đặt hàng thành công');
             $CartModel->deleteAllCarts($user_id);
-            header('location: /cart');
+            header('location: /thanks?order_id=' . $result . '&method=cash');
             exit();
         }
     }
@@ -320,7 +321,7 @@ class CheckoutController extends BaseController
             $conn->commit();
             Notification::success('Đã đặt hàng', 'Bạn đã đặt hàng thành công');
             $CartModel->deleteAllCarts($user_id);
-            header('location: /cart');
+            header('location: /thanks?order_id=' . $result . '&method=international');
             exit();
         } catch (Exception $e) {
             Notification::error('Không thể truy cập', 'Bạn không thể truy cập trang này');
@@ -341,6 +342,8 @@ class CheckoutController extends BaseController
         $CartModel = new CartModel();
         $OrderModel = new OrderModel();
 
+        $id = $_GET['vnp_TxnRef	'];
+
         $result = $VNPayHelper->response();
 
         if (isset($result['error']) && $result['error'] === 1) {
@@ -359,7 +362,7 @@ class CheckoutController extends BaseController
             $UpdateStatus = $OrderModel->updateOrder($result['order_id'], ['status' => 3]); // 3 là đã thanh toán
             if ($deleteCart !== false && $UpdateStatus !== false) {
                 Notification::success('Giao dịch thành công', 'Đơn hàng đã được đặt');
-                header('location: /cart');
+                header('location: /thanks?order_id=' . $result . '&method=vnpay');
                 exit();
             } else {
                 Notification::error('Lỗi khi update dữ liệu', 'Đơn hàng đã được đặt nhưng chưa được cập nhật thông tin, vui lòng liên hệ quản trị viên');

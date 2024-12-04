@@ -12,7 +12,8 @@ class OrderModel extends BaseModel
     protected $table = 'orders';
     protected $id = 'id';
 
-    public function createOrderReturnId($data) {
+    public function createOrderReturnId($data)
+    {
         return $this->createReturnId($data);
     }
     public function getAllOrderByUser($userId)
@@ -99,6 +100,51 @@ class OrderModel extends BaseModel
     }
 
 
+    public function getOneOrderByOrderId($orderId)
+    {
+        try {
+            $sql = "SELECT o.*, 
+                        o.id AS order_id,
+                       p.name AS product_name, 
+                       p.thumbnail AS image_name, 
+                       o.total_price AS order_price, 
+                       od.quantity,
+                       ca.phone,
+                       ca.address,
+                       o.status AS order_status, 
+                       c.name AS category_name
+                FROM orders o
+                JOIN checkout_addresses ca ON o.address_id = ca.id
+                JOIN order_details od ON o.id = od.order_id
+                JOIN product_skus ps ON od.sku_id = ps.id
+                JOIN products p ON ps.product_id = p.id
+                JOIN product_categories pc ON p.id = pc.product_id
+                JOIN category_values cv ON pc.category_values_id = cv.id
+                JOIN categories c ON cv.category_id = c.id
+                WHERE o.id = ?";
+
+            $conn = $this->_conn->MySQLi();
+            $stmt = $conn->prepare($sql);
+
+            if (!$stmt) {
+                throw new Exception("Failed to prepare statement: " . $conn->error);
+            }
+
+            $stmt->bind_param('i', $orderId);
+
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            if ($result->num_rows > 0) {
+                return $result->fetch_assoc();
+            } else {
+                return [];
+            }
+        } catch (Throwable $e) {
+            error_log('Error fetching order data ' . $e->getMessage());
+            return false;
+        }
+    }
 
 
 
@@ -163,14 +209,17 @@ class OrderModel extends BaseModel
         }
     }
 
-    public function getOneOrder($id) {
+    public function getOneOrder($id)
+    {
         return $this->getOne($id);
     }
-    public function updateOrder($id, $data) {
+    public function updateOrder($id, $data)
+    {
         return $this->update($id, $data);
     }
 
-    public function deleteOrder($id) {
+    public function deleteOrder($id)
+    {
         return $this->deleteOrder($id);
     }
 }
