@@ -170,7 +170,7 @@ class ProductModel extends BaseModel
         $sql = "SELECT 
             p.id AS product_id, 
             p.name AS product_name, 
-            p.description,
+            p.short_description as description,
             p.thumbnail,
             p.discount,
             ps.id AS sku_id,

@@ -130,7 +130,7 @@
                                         <?= $product['product_name'] ?>
                                         <span id="sku-attributes-<?= $product['product_id'] ?>"></span> <!-- Đây là nơi hiển thị thuộc tính SKU -->
                                     </h5>
-                                    <?= $product['short_description'] ?>
+                                    <p class="clamp-text "><?= $product['short_description'] ?></p>
 
                                     <div class="price">
                                         <?php if ($product['skus']) :
@@ -300,6 +300,7 @@ $this->push('scripts')
 
             if (filteredProducts.length > 0) {
                 filteredProducts.forEach((value) => {
+                    
                     const thumbnails = value.thumbnail.split(',');
                     const firstThumbnail = thumbnails[0];
                     const firstSku = value.skus[0];
@@ -330,7 +331,7 @@ $this->push('scripts')
                             </div>
                             <div class="card-body">
                                 <h5 class="card-title">${value.product_name}</h5>
-                                <p class="card-text">${value.description}</p>
+                                <p class="clamp-text ">${value.description}</p>
                                 <div class="price">
                                     ${value.discount ? `<span class="old-price text-muted text-decoration-line-through">${parseInt(firstSku.original_price).toLocaleString()} đ</span>` : ''}
                                     <span class="current-price">${parseInt(firstSku.discounted_price).toLocaleString()} đ</span>

@@ -166,9 +166,12 @@ class ProductsController extends BaseController
 
 
             if(strcmp($allSkuData[$index]['value_name'], $value) != 0) {
+
                 $option_values_data[] = [
                     'value_name' => $value
                 ];
+                $option_values_id[] = [$allSkuData[$index]['value_id']];
+            } else {
                 $option_values_id[] = [$allSkuData[$index]['value_id']];
             }
         }
