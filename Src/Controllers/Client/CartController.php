@@ -83,4 +83,26 @@ class CartController extends BaseController
             exit();
         }
     }
+
+    public function updateCart($params) {
+        $id = $params['id'];
+        if(!isset($_POST['quantity']) && is_numeric($_POST['quantity'])) {
+            echo json_encode('No change');
+            exit();
+        }
+
+        $quantity = $_POST['quantity'];
+
+
+        $cartModel = new CartModel();
+        $result = $cartModel->updateCart($id, ['quantity' => $quantity]);
+
+        if($result) {
+            echo json_encode($result);
+            exit();
+        }
+ 
+        echo json_decode('failed');
+        exit();
+    }
 }

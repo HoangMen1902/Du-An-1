@@ -1,7 +1,7 @@
 <?php $this->layout('Client/Components/Layout'); ?>
 
 
-<?php 
+<?php
 $this->start('main_content');
 ?>
 <!-- Insert nội dung vào đây -->
@@ -25,8 +25,8 @@ $this->start('main_content');
                 </div>
                 <table class="cart__table">
 
-                <?php foreach ($data as $cart): ?>
-                    
+                    <?php foreach ($data as $cart): ?>
+
                         <tr class="cart__product">
                             <td style="width: 15%;">
                                 <img class="cart__product-image" src="<?= $_ENV['APP_URL'] ?>/public/Uploads/Products/<?= $cart['product_images'] ?>" alt="<?= htmlspecialchars($cart['product_sku']) ?>">
@@ -45,11 +45,8 @@ $this->start('main_content');
                             </td>
 
                             <td style="width: 15%;">
-                                <form action="/update-cart" method="post" class="quantity-form">
-                                    <input type="hidden" name="method" value="POST">
-                                    <input type="hidden" name="id" value="<?= htmlspecialchars($cart['cart_id']) ?>">
-                                    <input class="cart__product-quantity" type="text" name="quantity" value="<?= htmlspecialchars($cart['quantity']) ?>" onchange="this.form.submit()">
-                                    <input type="hidden" name="update-cart-item">
+                                <form action="/update-cart" method="post" class="quantity-form" id="quantityForm">
+                                    <input class="cart__product-quantity" type="text" name="quantity[<?= $cart['cart_id'] ?>]" value="<?= htmlspecialchars($cart['quantity']) ?>" data-id="<?= $cart['cart_id'] ?>">
                                 </form>
 
                                 <form action="/delete-cart-item" method="post" class="delete-form">
@@ -82,7 +79,7 @@ $this->start('main_content');
                     <div class="cart__summary-item">
                         <?php $total = array_sum(array_column($data, 'total_price'));;
                         ?>
-                        <h3 class="cart__summary-total"> <?= number_format($total, 0, ',', '.') ?>₫ 
+                        <h3 class="cart__summary-total"> <?= number_format($total, 0, ',', '.') ?>₫
                             <span class="cart__summary-amount">
                             </span>
                         </h3>
@@ -100,9 +97,33 @@ $this->start('main_content');
 <?php $this->stop() ?>
 
 <?php
-$this->push('scripts')
+$this->push('scripts');
 ?>
+<script>
+    $('#quantityForm').on('submit', function(e) {
+        e.preventDefault(); 
+    });
 
+    $('.cart__product-quantity').on('change', function() {
+        let cartId = $(this).data('id'); 
+        let quantity = $(this).val(); 
+
+        $.ajax({
+            type: "POST",
+            url: `/update-cart/${cartId}`, 
+            data: {
+                quantity: quantity
+            }, 
+            dataType: "json",
+            success: function(response) {
+                console.log(response); 
+            },
+            error: function(xhr, status, error) {
+                console.log(error); 
+            }
+        });
+    });
+</script>
 <?php
 $this->end();
 ?>
