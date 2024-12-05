@@ -18,6 +18,7 @@ use Src\Controllers\Client\UserInfoController;
 use Src\Helpers\Client\ProvinceHelper;
 use Src\Controllers\Client\CommentController as ClientComment;
 use Src\Controllers\Client\RatingController;
+use Src\Controllers\Client\ShippingController;
 
 
 use Src\Controllers\Admin\RatingController as AdminRating;
@@ -75,6 +76,8 @@ $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
     $r->addRoute('POST', '/new-address', [ProvinceHelper::class, 'createAddress']);
     $r->addRoute('POST', '/get-child-categories', [ProductListController::class, 'selectResult']);
     $r->addRoute('GET', '/filter-products', [ProductListController::class, 'filterResult']);
+    $r->addRoute('POST', '/shipping/calculate-shipping-fee', [ShippingController::class, 'getGHTKFee']);
+
 
 
 

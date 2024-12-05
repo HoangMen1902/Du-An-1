@@ -109,20 +109,18 @@
                             </a>
                         </button>
                     </h4>
-                    <?php
-                    foreach ($addressUser as $item):
-                    ?>
-
+                    <?php foreach ($addressUser as $item): ?>
                         <div class="border-bottom">
-                            <label class="w-100">
+                            <label class="w-100"
+                                data-province_name="<?= $item['province_name'] ?>"
+                                data-district_name="<?= $item['district_name'] ?>">
                                 <input form="paymentForm" type="radio" class="address my-3" name="address" id="userAddress" value="<?= $item['id'] ?>">
                                 <p>SĐT: <?= $item['phone'] ?></p>
                                 <p><?= $item['address'] . ', ' . $item['ward_name'] . ', ' . $item['district_name'] . ', ' . $item['province_name'] ?></p>
                             </label>
                         </div>
-                    <?php
-                    endforeach;
-                    ?>
+                    <?php endforeach; ?>
+
                     <span class="text-danger" id="address-required" style="display: none;">* Vui lòng chọn địa chỉ cần giao</span>
                 </div>
 
@@ -154,7 +152,7 @@
                         <option value="cash" selected>Tiền mặt khi nhận hàng</option>
                         <option value="international">Thanh toán quốc tế <i class="fab fa-cc-visa"></i> <i
                                 class="fab fa-cc-mastercard"></i></option>
-                        <option value="vnpay" >Thanh toán VNPay</option>
+                        <option value="vnpay">Thanh toán VNPay</option>
                     </select>
 
                 </div>
@@ -217,18 +215,21 @@
                                 </ul>
                             </div> -->
                         </div>
+                        
                         <div class="payment__section__right-pcire">
                             <p><?= number_format($item['total_price'], 0, ',', '.'); ?> ₫</p>
                         </div>
                     </div>
-                <?php endforeach; ?>
+                <?php endforeach;
+                $shippingFee = isset($shippingFee) ? $shippingFee : 0;
+                $totalPriceWithShipping = $totalPrice + $shippingFee; ?>
 
 
                 <div class="order-summary">
                     <div class="totals">
-                        <p>Vận chuyển: MIỄN PHÍ</p>
-                        <h3>Tổng: <span id="price"><?= number_format($totalPrice, 0, ',', '.'); ?></span> ₫</h3>
-                        <input form="paymentForm" type="hidden" name="totalPrice" value="<?= $totalPrice ?>">
+                        <p>Vận chuyển: <span id="shippingFee">MIỄN PHÍ</span></p>
+                        <h3>Tổng: <span id="price"><?= number_format($totalPriceWithShipping, 0, ',', '.'); ?></span> </h3>
+                        <input form="paymentForm" type="hidden" name="totalPrice" value="<?= $totalPriceWithShipping?>">
                         <p>Phương thức thanh toán: Tiền mặt</p>
                     </div>
                 </div>
@@ -279,7 +280,7 @@
 <script>
     $('#paymentForm').on('submit', (e) => {
         if ($('#van_chuyen').val() != 'home' && $('#van_chuyen').val() != 'store') {
-        console.log($('#van_chuyen').val());
+            console.log($('#van_chuyen').val());
             e.preventDefault();
             $('#method_required').show();
         } else {
@@ -304,6 +305,44 @@
             }
         }
     })
+</script>
+
+<script>
+    $('.address').on('change', function() {
+        var $label = $(this).closest('label');
+        var provinceName = $label.data('province_name');
+        var districtName = $label.data('district_name');
+        var itemId = Number($(this).val());
+
+        $.ajax({
+            url: '/shipping/calculate-shipping-fee',
+            method: 'POST',
+            data: {
+                item_id: itemId,
+                province_name: provinceName,
+                district_name: districtName
+            },
+            success: function(response) {
+                console.log(response);
+
+                var shippingFee = 0; 
+
+                if (response.fee) {
+                    shippingFee = Number(response.fee);
+                    $('#shippingFee').text(shippingFee.toLocaleString() + ' ₫'); 
+                } else {
+                    $('#shippingFee').text('MIỄN PHÍ'); 
+                }
+
+                var totalPriceWithShipping = <?= $totalPrice ?> + shippingFee;
+
+                $('#price').text(totalPriceWithShipping.toLocaleString() + ' ₫');
+            },
+
+
+
+        });
+    });
 </script>
 <?php $this->stop() ?>
 
