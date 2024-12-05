@@ -92,7 +92,7 @@ class CheckoutController extends BaseController
 
             $userId = $_SESSION['user']['id'];
 
-            if($_POST['shipping_method'] === 'store') {
+            if ($_POST['shipping_method'] === 'store') {
                 $addressId = NULL;
             } else {
                 $addressId = $_POST['address'];
@@ -210,6 +210,10 @@ class CheckoutController extends BaseController
             $CartModel->deleteAllCarts($user_id);
             header('location: /thanks?order_id=' . $result . '&method=cash');
             exit();
+        }
+
+        if ($method === 'installment') {
+            echo 'Đặt hàng thành công rồi nha';
         }
     }
     private function prepareOrderDetails($order_id, $cartItems)

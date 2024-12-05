@@ -136,6 +136,7 @@
 
 
 
+
                 <!-- <div class="shipping-methods">
                         <h3>Phương thức vận chuyển</h3>
                         <select class="cnvc" name="delivery-method">
@@ -153,32 +154,104 @@
                         <option value="international">Thanh toán quốc tế <i class="fab fa-cc-visa"></i> <i
                                 class="fab fa-cc-mastercard"></i></option>
                         <option value="vnpay">Thanh toán VNPay</option>
+                        <option value="installment">Trả góp <i class="fab fa-cc-visa"></i> <i
+                                class="fab fa-cc-mastercard"></i></option>
                     </select>
 
                 </div>
-
-                <!-- Thông tin thanh toán quốc tế -->
-                <!-- <div class="international-payment" id="internationalPayment" style="display: none;">
-                    <div class="form-group col-12">
-                        <input type="text" id="cardNumber" class="form-control" placeholder="Số thẻ" />
-                    </div>
-                    <div class="row">
-                        <div class="form-group col-6">
-                            <input type="text" id="expiryDate" class="form-control"
-                                placeholder="Ngày hết hạn (MM/YY)" />
+                <div id="installment" style="display:none;">
+                    <div class="card">
+                        <div class="card-header btn-mainColor text-white">
+                            <h5 class="mb-0">Chọn số tháng trả góp:</h5>
                         </div>
-                        <div class="form-group col-6">
-                            <input type="text" id="cvv" class="form-control" placeholder="Mã bảo vệ (CVV)" />
+                        <div class="card-body">
+                            <div class="d-flex mb-3">
+                                <button class="btn btn-outline-primary me-2" data-term="3">3 Tháng</button>
+                                <button class="btn btn-outline-primary me-2" data-term="6">6 Tháng</button>
+                                <button class="btn btn-outline-primary me-2" data-term="9">9 Tháng</button>
+                                <button class="btn btn-outline-primary me-2 active" data-term="12">12 Tháng</button>
+                            </div>
+
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <tbody>
+                                        <tr>
+                                            <?php
+                                            $totalPrice = 0;
+                                            foreach ($data as $item):
+                                                $totalPrice += $item['total_price'];
+                                            endforeach;
+                                            ?>
+
+                                            <th scope="row">Giá sản phẩm</th>
+                                            <td id="product-price"><?= number_format($totalPrice, 0, ',', '.'); ?> ₫</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Trả trước từ</th>
+                                            <td>
+                                                <select class="form-select" id="down-payment-select">
+                                                    <option value="50">50%</option>
+                                                    <option value="30">30%</option>
+                                                    <option value="20">20%</option>
+                                                </select>
+                                                <span class="d-block mt-2" id="down-payment-amount">0 ₫</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Lãi suất</th>
+                                            <td id="interest-rate">10%</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Tổng lãi</th>
+                                            <td id="total-interest">0 ₫</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Góp tháng 1</th>
+                                            <td id="monthly-payment-first">0 ₫</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Tổng gốc + lãi</th>
+                                            <td id="principal-interest" class="text-danger fw-bold">0 ₫</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Tổng tiền phải trả</th>
+                                            <td id="actual-total-payment" class="text-danger fw-bold">0 ₫</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="mt-3 text-center">
+                                <button class="btn btn-info" id="view-details">Xem chi tiết lãi</button>
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group col-12">
-                        <input type="text" id="cardholderName" class="form-control" placeholder="Tên chủ thẻ" />
+
+                    <div class="modal fade" id="interest-details-modal" tabindex="-1" aria-labelledby="interestDetailsLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="interestDetailsLabel">Chi tiết lãi suất giảm dần</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <ul id="interest-details-list" class="list-group"></ul>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div> -->
 
 
 
-                <form action="/proceed-checkout" method="POST" id="paymentForm" name="paymentForm">
+                </div>
+                <style>
+                    .btn.active {
+                        background-color: #007bff !important;
+                        color: white !important;
+                    }
+                </style>
+
+                <form class="mt-3" action="/proceed-checkout" method="POST" id="paymentForm" name="paymentForm">
                     <button type="submit" class="button_thanhtoan">THANH TOÁN NGAY</button>
                 </form>
 
@@ -240,21 +313,77 @@
         </div>
     </div>
 </section>
+<script>
+    const productPrice = <?= $totalPrice; ?>;
+    const interestRate = 10 / 100;
 
-<!-- <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const paymentMethodSelect = document.getElementById("paymentMethodSelect");
-        const internationalPaymentSection = document.getElementById("internationalPayment");
+    const termButtons = document.querySelectorAll('.d-flex button');
+    const downPaymentSelect = document.querySelector('#down-payment-select');
+    const downPaymentAmount = document.querySelector('#down-payment-amount');
+    const totalInterestField = document.querySelector('#total-interest');
+    const monthlyPaymentFirstField = document.querySelector('#monthly-payment-first');
+    const principalInterestField = document.querySelector('#principal-interest');
+    const interestDetailsList = document.querySelector('#interest-details-list');
+    const viewDetailsButton = document.querySelector('#view-details');
+    const actualTotalPaymentP = document.querySelector('#actual-total-payment');
 
-        paymentMethodSelect.addEventListener("change", function() {
-            if (this.value === "international") {
-                internationalPaymentSection.style.display = "block";
-            } else {
-                internationalPaymentSection.style.display = "none";
-            }
+    let selectedTerm = 12;
+    let downPaymentRate = parseFloat(downPaymentSelect.value) / 100;
+
+    function updateInstallment() {
+        const downPayment = productPrice * downPaymentRate; // Tiền trả trước
+        const remainingPrincipal = productPrice - downPayment; // Tiền nợ gốc ban đầu
+        let totalInterest = 0; // Tổng tiền lãi
+        let totalPayment = 0; // Tổng tiền phải trả (gốc + lãi)
+
+        const actualTotalPaymentP = document.querySelector('#actual-total-payment');
+        interestDetailsList.innerHTML = '';
+
+        let currentPrincipal = remainingPrincipal;
+        const monthlyPrincipal = remainingPrincipal / selectedTerm;
+
+        for (let i = 1; i <= selectedTerm; i++) {
+            const monthlyInterest = currentPrincipal * interestRate;
+            const monthlyPayment = monthlyPrincipal + monthlyInterest;
+
+            totalInterest += monthlyInterest;
+            totalPayment += monthlyPayment;
+
+            const listItem = document.createElement('li');
+            listItem.className = 'list-group-item';
+            listItem.innerHTML = `Tháng ${i}:<br> Gốc: ${monthlyPrincipal.toLocaleString()} ₫<br> Lãi: ${monthlyInterest.toLocaleString()} ₫<br> Tổng: ${monthlyPayment.toLocaleString()} ₫`;
+            interestDetailsList.appendChild(listItem);
+
+            currentPrincipal -= monthlyPrincipal;
+        }
+
+        downPaymentAmount.innerText = `${downPayment.toLocaleString()} ₫`; // Tiền trả trước
+        totalInterestField.innerText = `${totalInterest.toLocaleString()} ₫`; // Tổng tiền lãi
+        monthlyPaymentFirstField.innerText = `${(monthlyPrincipal + (remainingPrincipal * interestRate)).toLocaleString()} ₫`; // Góp tháng 1 
+        principalInterestField.innerText = `${totalPayment.toLocaleString()} ₫`; // Tổng gốc + lãi
+        actualTotalPaymentP.innerText = `${(totalPayment + downPayment).toLocaleString()} ₫`; // Tổng tiền phải trả 
+    }
+    termButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            termButtons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+            selectedTerm = parseInt(button.getAttribute('data-term'), 10);
+            updateInstallment();
         });
     });
-</script> -->
+
+    downPaymentSelect.addEventListener('change', () => {
+        downPaymentRate = parseFloat(downPaymentSelect.value) / 100;
+        updateInstallment();
+    });
+
+    viewDetailsButton.addEventListener('click', () => {
+        const modal = new bootstrap.Modal(document.getElementById('interest-details-modal'));
+        modal.show();
+    });
+
+    updateInstallment();
+</script>
 
 <script>
     document.getElementById('van_chuyen').addEventListener('change', function() {
@@ -273,11 +402,23 @@
         } else {
             atStore.style.display = 'none';
         }
-
     });
-</script>
 
-<script>
+
+    document.addEventListener("DOMContentLoaded", function() {
+        const paymentMethodSelect = document.getElementById("paymentMethodSelect");
+        const installment = document.getElementById("installment");
+
+        paymentMethodSelect.addEventListener("change", function() {
+            if (this.value === "installment") {
+                installment.style.display = "block";
+            } else {
+                installment.style.display = "none";
+            }
+        });
+    });
+
+
     $('#paymentForm').on('submit', (e) => {
         if ($('#van_chuyen').val() != 'home' && $('#van_chuyen').val() != 'store') {
             console.log($('#van_chuyen').val());
