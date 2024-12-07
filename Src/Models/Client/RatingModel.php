@@ -48,6 +48,12 @@ class RatingModel extends BaseModel
         $result = $this->_conn->MySQLi()->query($sql);
         return $result->fetch_all(MYSQLI_ASSOC);
     }
+    public function analyticRatingByProductId($id)
+    {
+        $sql = "SELECT AVG(r.rating) as rating FROM $this->table r JOIN products p ON p.id = r.product_id WHERE p.id = $id;";
+        $result = $this->_conn->MySQLi()->query($sql);
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
     public function getUserRating($userId, $productId)
     {
         $sql = "SELECT * FROM $this->table

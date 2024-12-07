@@ -27,10 +27,10 @@ class CommentModel extends BaseModel
 
     public function allowRating($userId, $productId)
     {
-       
-         
-    
-            $sql = "SELECT COUNT(*) AS total 
+
+
+
+        $sql = "SELECT COUNT(*) AS total 
                     FROM orders
                     JOIN order_details ON orders.id = order_details.order_id
                     JOIN product_skus ON order_details.sku_id = product_skus.id
@@ -38,12 +38,11 @@ class CommentModel extends BaseModel
                       AND product_skus.product_id = $productId
                       AND orders.status = 5
                     GROUP BY product_skus.product_id";
-    
-           $result = $this->_conn->MySQLi()->query($sql);
-            return $result->fetch_all(MYSQLI_ASSOC);
-      
+
+        $result = $this->_conn->MySQLi()->query($sql);
+        return $result->fetch_all(MYSQLI_ASSOC);
     }
-    
+
 
 
 
@@ -56,6 +55,7 @@ class CommentModel extends BaseModel
         FROM $this->table 
         JOIN products on comments.product_id = products.id 
         JOIN users ON comments.user_id = users.id 
+      
         where product_id = $id  AND comments.status = 1 AND parent_id IS null
         ORDER BY comments.created_at DESC";
         $result = $this->_conn->MySQLi()->query($sql);
@@ -76,12 +76,12 @@ class CommentModel extends BaseModel
     {
         try {
             date_default_timezone_set('Asia/Ho_Chi_Minh'); // Thiết lập múi giờ
-    
+
             $currentDateTime = new DateTime();
             $commentDateTime = new DateTime($date);
             $interval = $currentDateTime->diff($commentDateTime);
             $timeAgo = '';
-    
+
             if ($interval->y > 0) {
                 $timeAgo = $interval->y . ' năm trước';
             } elseif ($interval->m > 0) {
@@ -100,7 +100,7 @@ class CommentModel extends BaseModel
         }
         return $timeAgo;
     }
-    
+
     public function findDuplicateCommentsByColumn($column, $value)
     {
         return $this->findDuplicateByColumn($column, $value);

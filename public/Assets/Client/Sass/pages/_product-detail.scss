@@ -5,6 +5,20 @@
   padding: 0;
   text-decoration: none;
 }
+.rating-container {
+  display: inline-flex;
+  align-items: center;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  padding: 10px 0 0 0;
+  text-align: center;
+  color: #333;
+}
+
+.rating-icon {
+  margin-left: 8px; /* Khoảng cách giữa chữ và icon */
+  vertical-align: middle;
+}
 
 .product__carousel-wrapper__slide {
   display: none;

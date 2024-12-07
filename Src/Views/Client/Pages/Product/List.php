@@ -110,11 +110,16 @@
 
 
             <div class="col-12">
-
+                <?php
+                // echo '<pre>';
+                // var_dump($productData)
+                ?>
                 <div class="row mt-3 d-flex" id="product-filter">
                     <?php foreach ($productData as $product):
                         $thumbnail = explode(',', $product['thumbnail']);
+
                     ?>
+
                         <div class="col-md-4 mb-4 col-xxl-3 card-list ">
                             <div class="card position-relative h-100" id="card-<?= $product['product_id'] ?>">
                                 <div class="w-100 ratio ratio-1x1 ">
@@ -144,6 +149,30 @@
                                             <span class="price mb-2 ms-2 current-price" id="current-price-<?= $product['product_id'] ?>"><?= number_format($currentPrice) ?> đ</span>
                                         <?php endif; ?>
                                     </div>
+                                    <?php if (!empty($product['avg_rating']) && !empty($product['total_reviews'])): ?>
+                                        <div class="d-flex align-items-center">
+                                            <div class="rating text-warning">
+                                                <span class="me-1">
+                                                    <?php
+                                                    $avgRating = $product['avg_rating']; // Điểm trung bình
+                                                    $totalReviews = $product['total_reviews']; // Số lượng đánh giá
+                                                    for ($i = 1; $i <= 5; $i++) {
+                                                        if ($i <= floor($avgRating)) {
+                                                            echo '<i class="bi bi-star-fill"></i>'; // Sao đầy
+                                                        } elseif ($i == ceil($avgRating) && $avgRating - floor($avgRating) >= 0.5) {
+                                                            echo '<i class="bi bi-star-half"></i>'; // Sao nửa
+                                                        } else {
+                                                            echo '<i class="bi bi-star"></i>'; // Sao trống
+                                                        }
+                                                    }
+                                                    ?>
+                                                </span>
+                                            </div>
+                                            <small class="text-muted ms-2">(<?= $totalReviews ?> đánh giá)</small>
+                                        </div>
+
+
+                                    <?php endif; ?>
                                     <a href="detail/<?= $product['product_id'] ?>" class="btn btn-mainColor button-hover button-add text-white rounded-5 position-absolute">
                                         Mua ngay
                                     </a>

@@ -66,15 +66,26 @@ $this->start('main_content');
                                                                     <b><?= $r['id'] ?></b></a></h4>
                                                             <div class="status-order col-6"><span>
                                                                     <?php
-                                                                    if ($r['order_status'] == 1) {
-                                                                        echo 'Đã đặt';
-                                                                    } else if ($r['order_status'] == 2) {
+                                                                 switch ($r['order_status']) {
+                                                                    case 1:
+                                                                        echo 'Đang xử lý';
+                                                                        break;
+                                                                    case 2:
                                                                         echo 'Chờ thanh toán';
-                                                                    } else if ($r['order_status'] == 3) {
+                                                                        break;
+                                                                    case 3:
                                                                         echo 'Đã thanh toán';
-                                                                    } else {
+                                                                        break;
+                                                                    case 4:
+                                                                        echo 'Đang vận chuyển';
+                                                                        break;
+                                                                    case 5:
+                                                                        echo 'Đã giao';
+                                                                        break;
+                                                                    default:
                                                                         echo 'Đã hủy';
-                                                                    }
+                                                                        break;
+                                                                }
                                                                     ?>
                                                                 </span><img
                                                                     src="https://file.hstatic.net/1000284478/file/chevron-right_570ce8b9119e4acf84d88cb705b42a64.svg"

@@ -6,21 +6,27 @@
     use Src\Models\Admin\CategoryValueModel;
     use Src\Models\Admin\CategoryModel;
     use Src\Models\Admin\BrandModel;
+    use Src\Models\client\ratingModel;
 
     class ProductListController extends BaseController {
         public function show() {
+          
             $productModel = new ProductModel();
             $CategoryModel = new CategoryModel;
+            $ratingModel = new ratingModel;
+
             $BrandModel = new BrandModel();
             $categories = $CategoryModel->getAllActiveCategories();
             $brands = $BrandModel->getAllActiveBrands();
             $productData = $productModel->getAllProductWithSkus();
-            
+      
     
             echo $this->view->render('Client/Pages/Product/List', [
                 'productData' => $productData,
                 'categories' => $categories,
-                'brands' => $brands
+                'brands' => $brands,
+             
+
             ]);
         }
 

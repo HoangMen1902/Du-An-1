@@ -18,6 +18,7 @@
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
         crossorigin="anonymous"></script>
     <script src="<?= getenv('APP_URL') ?>/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 </head>
 
@@ -190,7 +191,7 @@
                         </a>
                         <div id="commentsSubmenu" class="collapse submenu">
                             <a class="nav-link" href="/admin/comments">Danh sách Bình luận</a>
-                        
+
                         </div>
                     </li>
                     <li class="nav-item">
@@ -200,7 +201,7 @@
                         </a>
                         <div id="ratingsSubmenu" class="collapse submenu">
                             <a class="nav-link" href="/admin/ratings">Danh sách đánh giá</a>
-                            
+
                         </div>
                     </li>
                     <li class="nav-item">
@@ -250,7 +251,7 @@
                         </div>
                     </div>
                 </footer>
-                
+
             </div>
 
         </div>
