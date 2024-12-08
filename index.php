@@ -162,7 +162,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
         $r->get('/brand/add', [BrandController::class, 'add']);
         $r->get('/comments', [CommentController::class, 'show']);
         $r->get('/ratings', [AdminRating::class, 'show']);
-
+        $r->get('/user-order/{user_id}/{order_id}', [UserController::class, 'showUserOrderDetails']);
 
         $r->get('/orders', [OrdersController::class, 'show']);
         $r->get('/order-detail/{id}', [OrdersController::class, 'detail']);

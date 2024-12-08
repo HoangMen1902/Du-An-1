@@ -4,6 +4,7 @@ namespace Src\Controllers\Admin;
 
 use Laracasts\Flash\Flash;
 use Src\Controllers\BaseController;
+use Src\Models\Admin\OrderModel;
 use Src\Models\Admin\UserModel;
 use Src\Notifications\Notification;
 use Src\Validations\Admin\UserValidation;
@@ -11,6 +12,31 @@ use Src\Validations\Admin\UserValidation;
 class UserController extends BaseController
 {
 
+    public function showUserOrderDetails($params) {
+        $user_id = $params['user_id'];
+        $order_id = $params['order_id'];
+
+        $OrderModel = new OrderModel();
+        $UserModel = new UserModel();
+
+        $order = $OrderModel->getOneOrdersAllDetails($order_id);
+        $user = $UserModel->getUser($user_id);
+
+        if( $order === false || $user === false) {
+            Notification::error('Có lỗi xảy ra', 'Có lỗi khi truy vấn dữ liệu');
+            header('location: /admin/users');
+            exit();
+        }
+
+        if( empty($order) || !isset($order) || empty($user) || !isset($user)) {
+            Notification::error('Không có dữ liệu', 'Không có dữ liệu chi tiết về đơn hàng này');
+            header('location: /admin/users');
+            exit();
+        }
+
+
+        echo $this->view->render('Admin/Pages/Users/UserOrderDetails', ['order' => $order, 'user' => $user]);
+    }
     public function showOrders($params)
     {
         $id = $params['id'];
