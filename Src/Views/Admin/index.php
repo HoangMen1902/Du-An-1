@@ -18,7 +18,9 @@ $this->insert('Admin/Pages/Dashboard/Dashboard' ,
  'analyticProductByYear' => $analyticProductByYear,
  'anaLyticRevenueByDay' => $anaLyticRevenueByDay,
  'anaLyticRevenueByMonth' => $anaLyticRevenueByMonth,
- 'anaLyticRevenueByYear' => $anaLyticRevenueByYear
+ 'anaLyticRevenueByYear' => $anaLyticRevenueByYear,
+ 'anaLyticRevenueBySpecificDate' => $anaLyticRevenueBySpecificDate
+
 
 ]);
 $this->stop();

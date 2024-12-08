@@ -249,6 +249,10 @@
                         <div id="income-chart-legend " class="d-flex flex-wrap mt-1 mt-md-0 w-75">
                             <canvas id="revenue_chart"></canvas>
                         </div>
+                        <div class="d-flex flex-wrap mt-4">
+                            <input type="date" id="datePicker" class="form-control w-25 mr-2">
+                            <button id="filterByDate" class="btn btn-primary">Lọc theo ngày</button>
+                        </div>
 
 
                     </div>
@@ -317,9 +321,9 @@
                     x: {
                         beginAtZero: true,
                         ticks: {
-                            autoSkip: false, 
+                            autoSkip: false,
                             maxRotation: 90,
-                            minRotation: 45 
+                            minRotation: 45
                         }
                     },
                     y: {
@@ -476,5 +480,49 @@
             'Doanh thu 7 ngày gần nhất'
         );
         setActiveRevenueButton('dayRevenue');
+    });
+
+    document.getElementById("filterByDate").addEventListener("click", () => {
+        const selectedDate = document.getElementById("datePicker").value;
+        if (!selectedDate) {
+            alert("Vui lòng chọn một ngày!");
+            return;
+        }
+
+
+        const dailyData = revenueByDay.find(item => item.order_date === selectedDate);
+
+        if (dailyData) {
+            renderRevenueChart(
+                [{
+                    label: selectedDate,
+                    revenue: dailyData.daily_revenue
+                }],
+                `Doanh thu ngày ${selectedDate}`
+            );
+        } else {
+            alert("Không có dữ liệu doanh thu cho ngày này!");
+        }
+    });
+    
+
+
+    document.getElementById("filterByDate").addEventListener("click", () => {
+        const datePicker = document.getElementById("datePicker");
+        datePicker.type = "date"; 
+        datePicker.value = "";
+    });
+
+    document.getElementById("filterByMonth").addEventListener("click", () => {
+        const datePicker = document.getElementById("datePicker");
+        datePicker.type = "month"; 
+        datePicker.value = ""; 
+    });
+
+    document.getElementById("filterByYear").addEventListener("click", () => {
+        const datePicker = document.getElementById("datePicker");
+        datePicker.type = "number";
+        datePicker.placeholder = "Nhập năm"; 
+        datePicker.value = ""; 
     });
 </script>

@@ -248,4 +248,28 @@ class AnalyticModel extends BaseModel
             return $result;
         }
     }
+
+    public function anaLyticRevenueBySpecificDate($date)
+{
+    $result = [];
+    try {
+        $sql = "SELECT DATE(o.created_at) AS order_date, SUM(od.quantity * od.price) AS daily_revenue
+                FROM products p
+                JOIN product_skus ps ON p.id = ps.product_id
+                JOIN order_details od ON ps.id = od.sku_id
+                JOIN orders o ON o.id = od.order_id
+                WHERE o.status = 5 
+                AND DATE(o.created_at) BETWEEN DATE_SUB(?, INTERVAL 5 YEAR) AND ?
+                GROUP BY DATE(o.created_at)";
+        $stmt = $this->_conn->MySQLi()->prepare($sql);
+        $stmt->bind_param('ss', $date, $date);  
+        $stmt->execute();
+        $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    } catch (\Throwable $th) {
+        error_log('Lỗi khi hiển thị dữ liệu theo ngày: ' . $th->getMessage());
+    }
+    return $result;
+}
+
+
 }
