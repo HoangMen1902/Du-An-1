@@ -40,6 +40,21 @@ class UserModel extends BaseModel
 
     }
 
+    public function getUserOrders($id) {
+        try {
+            $sql = "SELECT o.* FROM $this->table AS u JOIN orders AS o ON o.user_id = u.id WHERE u.id = ? ORDER BY o.status ASC";
+            $conn = $this->_conn->MySQLi();
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param('i', $id);
+            $stmt->execute();
+            $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+            return $result;
+        } catch( Exception $e) {
+            error_log('Lỗi khi lấy danh s: ' . $e->getMessage());
+            return false;
+        }
+    }
+
     public function getUser($id) {
         return $this->getOne($id);
     }
@@ -70,7 +85,7 @@ class UserModel extends BaseModel
     {
         try {
             if (empty($data)) {
-                $sql = "SELECT * FROM USERS";
+                $sql = "SELECT * FROM USERS WHERE users.status = 1";
                 $conn = $this->_conn->MySQLi();
                 $result = $conn->query($sql);
                 return $result->fetch_all(MYSQLI_ASSOC);

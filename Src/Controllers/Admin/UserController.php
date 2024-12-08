@@ -10,6 +10,25 @@ use Src\Validations\Admin\UserValidation;
 
 class UserController extends BaseController
 {
+
+    public function showOrders($params)
+    {
+        $id = $params['id'];
+
+        $UserModel = new UserModel();
+        $orders = $UserModel->getUserOrders($id);
+
+        if ($orders !== false) {
+            if (count($orders) > 0) {
+                echo json_encode($orders);
+            } else {
+                echo json_encode('Người dùng chưa có đơn hàng nào tại BeeTechNova');
+            }
+        } else {
+            echo json_encode('Đã có lỗi xảy ra khi lấy đơn hàng của người dùng này');
+            exit();
+        }
+    }
     public function show()
     {
         $userModel = new UserModel();
@@ -88,7 +107,7 @@ class UserController extends BaseController
         unset($data['password']);
 
 
-        $data_validate = UserValidation::updateUserValidation($data,$id);
+        $data_validate = UserValidation::updateUserValidation($data, $id);
         if ($data_validate === true) {
             $UserModel = new UserModel();
             $result = $UserModel->update($id, $data);

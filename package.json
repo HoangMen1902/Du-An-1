@@ -21,6 +21,7 @@
     "codemirror": "5.33.0",
     "colcade": "^0.2.0",
     "compass-mixins": "^0.12.12",
+    "datatables.net-dt": "^2.1.8",
     "del": "2.2.2",
     "font-awesome": "4.7.0",
     "gulp-sourcemaps": "^2.6.3",

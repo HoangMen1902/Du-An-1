@@ -97,7 +97,7 @@ class AnalyticModel extends BaseModel
     {
         $result = [];
         try {
-            $sql = "SELECT COUNT(*) AS order FROM orders";
+            $sql = "SELECT COUNT(*) AS 'order' FROM orders";
             $result = $this->_conn->MySQLi()->query($sql);
             return $result->fetch_all(MYSQLI_ASSOC);
         } catch (\Throwable $th) {
