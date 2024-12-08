@@ -366,7 +366,7 @@ class CheckoutController extends BaseController
             $UpdateStatus = $OrderModel->updateOrder($result['order_id'], ['status' => 3]); // 3 là đã thanh toán
             if ($deleteCart !== false && $UpdateStatus !== false) {
                 Notification::success('Giao dịch thành công', 'Đơn hàng đã được đặt');
-                header('location: /thanks?order_id=' . $result . '&method=vnpay');
+                header('location: /thanks?order_id=' . $result['order_id'] . '&method=vnpay');
                 exit();
             } else {
                 Notification::error('Lỗi khi update dữ liệu', 'Đơn hàng đã được đặt nhưng chưa được cập nhật thông tin, vui lòng liên hệ quản trị viên');

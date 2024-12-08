@@ -46,7 +46,7 @@ class HomeController extends BaseController
 
 
         $OrderModel = new OrderModel;
-        $order = $OrderModel->getOneOrderByOrderId($id);
+        $order = $OrderModel->getOneOrder($id);
 
         if ($order === false) {
             Notification::error('Đã có lỗi xảy ra', 'Không thể in hóa đơn, đơn hàng vẫn được đặt');

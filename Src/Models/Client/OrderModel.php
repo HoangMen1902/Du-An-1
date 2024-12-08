@@ -54,6 +54,8 @@ class OrderModel extends BaseModel
             return false;
         }
     }
+
+
     public function getAllOrderByUserAndOrderId($orderId, $userId)
     {
         try {
@@ -125,6 +127,7 @@ class OrderModel extends BaseModel
 
             $conn = $this->_conn->MySQLi();
             $stmt = $conn->prepare($sql);
+            error_log($sql);
 
             if (!$stmt) {
                 throw new Exception("Failed to prepare statement: " . $conn->error);

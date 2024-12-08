@@ -2,7 +2,8 @@
 
 
 
-<?php $this->start('main_content') ?>
+<?php $this->start('main_content');
+?>
 
 <div style="margin: 0 auto; max-width: 900px; padding: 50px">
     <div class="woocommerce-order">
@@ -12,7 +13,7 @@
         </div>
         <ul class="woocommerce-order-overview woocommerce-thankyou-order-details order_details">
             <li class="woocommerce-order-overview__order order">
-                Mã đơn hàng: <strong><?=$data['order_id']?></strong>
+                Mã đơn hàng: <strong><?=$data['id']?></strong>
             </li>
             <li class="woocommerce-order-overview__date date">
                 Ngày đặt: <strong><?=$data['created_at']?></strong>
