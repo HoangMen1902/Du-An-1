@@ -161,17 +161,31 @@
                 </div>
                 <div id="installment" style="display:none;">
                     <div class="card">
-                        <div class="card-header btn-mainColor text-white">
-                            <h5 class="mb-0">Chọn số tháng trả góp:</h5>
+                        <div class="card-header ">
+                            <h5 class="mb-2">Chọn số tháng trả góp:</h5>
+                            <div class="d-flex mb-3">
+                                <label class="btn btn-outline-primary me-2 ">
+                                    <input class="hidden" form="paymentForm" name="month-payment" type="radio" value="3" data-term="3">
+                                    <div>3 tháng</div>
+                                </label>
+
+                                <label class="btn btn-outline-primary me-2 ">
+                                    <input class="hidden" form="paymentForm" name="month-payment" type="radio" value="6" data-term="6">
+                                    <div>6 tháng</div>
+                                </label>
+
+                                <label class="btn btn-outline-primary me-2 ">
+                                    <input class="hidden" form="paymentForm" name="month-payment" type="radio" value="9" data-term="9">
+                                    <div>9 tháng</div>
+                                </label>
+
+                                <label class="btn btn-outline-primary me-2   ">
+                                    <input class="hidden" form="paymentForm" name="month-payment" type="radio" value="12" data-term="12">
+                                    <div>12 tháng</div>
+                                </label>
+                            </div>
                         </div>
                         <div class="card-body">
-                            <div class="d-flex mb-3">
-                                <button class="btn btn-outline-primary me-2" data-term="3">3 Tháng</button>
-                                <button class="btn btn-outline-primary me-2" data-term="6">6 Tháng</button>
-                                <button class="btn btn-outline-primary me-2" data-term="9">9 Tháng</button>
-                                <button class="btn btn-outline-primary me-2 active" data-term="12">12 Tháng</button>
-                            </div>
-
                             <div class="table-responsive">
                                 <table class="table table-bordered">
                                     <tbody>
@@ -189,7 +203,7 @@
                                         <tr>
                                             <th scope="row">Trả trước từ</th>
                                             <td>
-                                                <select class="form-select" id="down-payment-select">
+                                                <select form="paymentForm" name="down-payment-amount" class="form-select" id="down-payment-select">
                                                     <option value="50">50%</option>
                                                     <option value="30">30%</option>
                                                     <option value="20">20%</option>
@@ -231,11 +245,10 @@
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="interestDetailsLabel">Chi tiết lãi suất giảm dần</h5>
+                                    <h5 class="modal-title" id="interestDetailsLabel">Chi tiết lãi suất</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
-                                <div class="modal-body">
-                                    <ul id="interest-details-list" class="list-group"></ul>
+                                <div class="modal-body  " style="width: max-content;">
                                 </div>
                             </div>
                         </div>
@@ -244,12 +257,6 @@
 
 
                 </div>
-                <style>
-                    .btn.active {
-                        background-color: #007bff !important;
-                        color: white !important;
-                    }
-                </style>
 
                 <form class="mt-3" action="/proceed-checkout" method="POST" id="paymentForm" name="paymentForm">
                     <button type="submit" class="button_thanhtoan">THANH TOÁN NGAY</button>
@@ -263,6 +270,12 @@
 
 
 
+        <style>
+            .bold-button {
+                background-color: #007bff !important;
+                color: white !important;
+            }
+        </style>
 
 
 
@@ -288,7 +301,6 @@
                                 </ul>
                             </div> -->
                         </div>
-                        
                         <div class="payment__section__right-pcire">
                             <p><?= number_format($item['total_price'], 0, ',', '.'); ?> ₫</p>
                         </div>
@@ -302,7 +314,7 @@
                     <div class="totals">
                         <p>Vận chuyển: <span id="shippingFee">MIỄN PHÍ</span></p>
                         <h3>Tổng: <span id="price"><?= number_format($totalPriceWithShipping, 0, ',', '.'); ?></span> </h3>
-                        <input form="paymentForm" type="hidden" name="totalPrice" value="<?= $totalPriceWithShipping?>">
+                        <input form="paymentForm" type="hidden" name="totalPrice" value="<?= $totalPriceWithShipping ?>">
                         <p>Phương thức thanh toán: Tiền mặt</p>
                     </div>
                 </div>
@@ -317,13 +329,12 @@
     const productPrice = <?= $totalPrice; ?>;
     const interestRate = 10 / 100;
 
-    const termButtons = document.querySelectorAll('.d-flex button');
+    const termInputs = document.querySelectorAll('.d-flex input[type="radio"]');
     const downPaymentSelect = document.querySelector('#down-payment-select');
     const downPaymentAmount = document.querySelector('#down-payment-amount');
     const totalInterestField = document.querySelector('#total-interest');
     const monthlyPaymentFirstField = document.querySelector('#monthly-payment-first');
     const principalInterestField = document.querySelector('#principal-interest');
-    const interestDetailsList = document.querySelector('#interest-details-list');
     const viewDetailsButton = document.querySelector('#view-details');
     const actualTotalPaymentP = document.querySelector('#actual-total-payment');
 
@@ -331,17 +342,29 @@
     let downPaymentRate = parseFloat(downPaymentSelect.value) / 100;
 
     function updateInstallment() {
-        const downPayment = productPrice * downPaymentRate; // Tiền trả trước
-        const remainingPrincipal = productPrice - downPayment; // Tiền nợ gốc ban đầu
-        let totalInterest = 0; // Tổng tiền lãi
-        let totalPayment = 0; // Tổng tiền phải trả (gốc + lãi)
-
-        const actualTotalPaymentP = document.querySelector('#actual-total-payment');
-        interestDetailsList.innerHTML = '';
+        const downPayment = productPrice * downPaymentRate;
+        const remainingPrincipal = productPrice - downPayment;
+        let totalInterest = 0;
+        let totalPayment = 0;
 
         let currentPrincipal = remainingPrincipal;
         const monthlyPrincipal = remainingPrincipal / selectedTerm;
 
+        const table = document.createElement('table');
+        table.className = 'table table-bordered';
+
+        table.innerHTML = `
+    <thead>
+        <tr>
+            <th>Tháng</th>
+            <th>Gốc</th>
+            <th>Lãi</th>
+            <th>Tổng</th>
+        </tr>
+    </thead>
+    `;
+
+        const tbody = document.createElement('tbody');
         for (let i = 1; i <= selectedTerm; i++) {
             const monthlyInterest = currentPrincipal * interestRate;
             const monthlyPayment = monthlyPrincipal + monthlyInterest;
@@ -349,25 +372,36 @@
             totalInterest += monthlyInterest;
             totalPayment += monthlyPayment;
 
-            const listItem = document.createElement('li');
-            listItem.className = 'list-group-item';
-            listItem.innerHTML = `Tháng ${i}:<br> Gốc: ${monthlyPrincipal.toLocaleString()} ₫<br> Lãi: ${monthlyInterest.toLocaleString()} ₫<br> Tổng: ${monthlyPayment.toLocaleString()} ₫`;
-            interestDetailsList.appendChild(listItem);
-
+            const row = document.createElement('tr');
+            row.innerHTML = `
+        <td>Tháng ${i}</td>
+        <td>${monthlyPrincipal.toLocaleString()} ₫</td>
+        <td>${monthlyInterest.toLocaleString()} ₫</td>
+        <td>${monthlyPayment.toLocaleString()} ₫</td>
+        `;
+            tbody.appendChild(row);
             currentPrincipal -= monthlyPrincipal;
         }
 
-        downPaymentAmount.innerText = `${downPayment.toLocaleString()} ₫`; // Tiền trả trước
-        totalInterestField.innerText = `${totalInterest.toLocaleString()} ₫`; // Tổng tiền lãi
-        monthlyPaymentFirstField.innerText = `${(monthlyPrincipal + (remainingPrincipal * interestRate)).toLocaleString()} ₫`; // Góp tháng 1 
-        principalInterestField.innerText = `${totalPayment.toLocaleString()} ₫`; // Tổng gốc + lãi
-        actualTotalPaymentP.innerText = `${(totalPayment + downPayment).toLocaleString()} ₫`; // Tổng tiền phải trả 
+        table.appendChild(tbody);
+
+        const modalBody = document.querySelector('#interest-details-modal .modal-body');
+        modalBody.innerHTML = '';
+        modalBody.appendChild(table);
+
+        downPaymentAmount.innerText = `${downPayment.toLocaleString()} ₫`;
+        totalInterestField.innerText = `${totalInterest.toLocaleString()} ₫`;
+        monthlyPaymentFirstField.innerText = `${(monthlyPrincipal + (remainingPrincipal * interestRate)).toLocaleString()} ₫`;
+        principalInterestField.innerText = `${totalPayment.toLocaleString()} ₫`;
+        actualTotalPaymentP.innerText = `${(totalPayment + downPayment).toLocaleString()} ₫`;
     }
-    termButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            termButtons.forEach(btn => btn.classList.remove('active'));
-            button.classList.add('active');
-            selectedTerm = parseInt(button.getAttribute('data-term'), 10);
+
+    termInputs.forEach(input => {
+        input.addEventListener('change', () => {
+            termInputs.forEach(inp => inp.parentElement.querySelector('div').classList.remove('bold-button'));
+            input.parentElement.querySelector('div').classList.add('bold-button');
+
+            selectedTerm = parseInt(input.value, 10);
             updateInstallment();
         });
     });
@@ -466,13 +500,13 @@
             success: function(response) {
                 console.log(response);
 
-                var shippingFee = 0; 
+                var shippingFee = 0;
 
                 if (response.fee) {
                     shippingFee = Number(response.fee);
-                    $('#shippingFee').text(shippingFee.toLocaleString() + ' ₫'); 
+                    $('#shippingFee').text(shippingFee.toLocaleString() + ' ₫');
                 } else {
-                    $('#shippingFee').text('MIỄN PHÍ'); 
+                    $('#shippingFee').text('MIỄN PHÍ');
                 }
 
                 var totalPriceWithShipping = <?= $totalPrice ?> + shippingFee;

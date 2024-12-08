@@ -15,6 +15,7 @@ use Src\Models\Client\UserModel;
 use Src\Models\Client\AddressModel;
 use Src\Models\Client\OrderDetailsModel;
 use Src\Models\Client\OrderModel;
+use Src\Models\Client\InstallmentModel;
 use Stripe\Checkout\Session;
 use Stripe\Stripe;
 
@@ -212,9 +213,93 @@ class CheckoutController extends BaseController
             exit();
         }
 
-        if ($method === 'installment') {
-            echo 'Đặt hàng thành công rồi nha';
-        }
+            
+        
+            if ($method === 'installment') {
+                $data = [
+                    "fullname" => $_POST['fullname'],
+                    "shipping_method" => $_POST['shipping_method'],
+                    "address" => $_POST['address'],
+                    "payment-method" => $_POST['payment-method'],
+                    "month-payment" => $_POST['month-payment'],
+                    "down-payment-amount" => $_POST['down-payment-amount'],
+                    "totalPrice" => $_POST['totalPrice']
+                ];
+                    $totalPrice = (int)$data['totalPrice'];
+                $downPaymentRate = (int)$data['down-payment-amount'] / 100;
+                $installmentMonths = (int)$data['month-payment'];
+        
+                $downPayment = $totalPrice * $downPaymentRate;
+                $remainingAmount = $totalPrice - $downPayment;
+                $monthlyPayment = $remainingAmount / $installmentMonths;
+        
+                try {
+                    $database = new Database();
+                    $conn = $database->MySQLi();
+        
+                    $conn->begin_transaction();
+        
+                    $orderData = [
+                        'status' => 2,
+                        'total_price' => $totalPrice,
+                        'user_id' => $_SESSION['user']['id'], 
+                        'address_id' => $data['address']
+                    ];
+                    $OrderModel = new OrderModel();
+                    $orderId = $OrderModel->createOrderReturnId($orderData);
+        
+                    if (!$orderId) {
+                        throw new Exception('Lỗi tạo hóa đơn.');
+                    }
+        
+                    $installmentData = [
+                        'order_id' => $orderId,
+                        'term' => $installmentMonths,
+                        'interest_rate' => 5.00, 
+                        'down_payment_rate' => $downPaymentRate * 100,
+                        'status' => 1 // Đang trả góp
+                    ];
+                    $InstallmentModel = new InstallmentModel();
+                    $installmentId = $InstallmentModel->createInstallment($installmentData);
+        
+                    if (!$installmentId) {
+                        throw new Exception('Lỗi tạo kế hoạch trả góp.');
+                    }
+        
+                    $CartModel = new CartModel();
+                    $userCart = $CartModel->getCartByUser($_SESSION['user']['id']);
+                    $OrderDetailsModel = new OrderDetailsModel();
+        
+                    foreach ($userCart as $item) {
+                        $orderDetailData = [
+                            'order_id' => $orderId,
+                            'sku_id' => $item['sku_id'],
+                            'price' => $item['total_price'],
+                            'quantity' => $item['quantity']
+                        ];
+                        if (!$OrderDetailsModel->createDetail($orderDetailData)) {
+                            throw new Exception('Lỗi lưu chi tiết hóa đơn.');
+                        }
+                    }
+        
+                    $conn->commit();
+        
+                    $CartModel->deleteAllCarts($_SESSION['user']['id']);
+        
+                    Notification::success('Thanh toán thành công', 'Hóa đơn của bạn đã được tạo.');
+                    header('location: /thanks?order_id=' . $orderId);
+                    exit();
+                } catch (Exception $e) {
+                    $conn->rollback();
+                    error_log($e->getMessage());
+                    Notification::error('Thanh toán thất bại', 'Đã xảy ra lỗi trong quá trình thanh toán.');
+                    header('location: /checkout');
+                    exit();
+                }
+            }
+        
+
+        
     }
     private function prepareOrderDetails($order_id, $cartItems)
     {

@@ -24,8 +24,6 @@ final class Installment extends AbstractMigration
             ->addColumn('term', 'integer', ['null' => false]) // Thời gian trả (số tháng)
             ->addColumn('interest_rate', 'decimal', ['precision' => 5, 'scale' => 2, 'null' => false]) // Lãi suất (%)
             ->addColumn('down_payment_rate', 'decimal', ['precision' => 5, 'scale' => 2, 'null' => false]) // Trả trước bao nhiêu %
-            ->addColumn('monthly_payment', 'decimal', ['precision' => 10, 'scale' => 2, 'null' => false]) // Góp mỗi tháng
-            ->addColumn('end_date', 'date', ['null' => false]) // Ngày kết thúc trả góp
             ->addColumn('status', 'tinyinteger', ['default' => 1, 'null' => false]) // 1: Đang trả góp, 0: Hoàn thành
             ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
             ->addColumn('updated_at', 'timestamp', [
