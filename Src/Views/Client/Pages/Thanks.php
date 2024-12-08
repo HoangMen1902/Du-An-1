@@ -4,10 +4,6 @@
 
 <?php $this->start('main_content') ?>
 
-<?php
-
-var_dump($data, $method);
-?>
 <div style="margin: 0 auto; max-width: 900px; padding: 50px">
     <div class="woocommerce-order">
         <div class="alert alert-success d-flex p-4 rounded-3" role="alert">
