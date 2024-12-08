@@ -13,26 +13,27 @@
         </div>
         <ul class="woocommerce-order-overview woocommerce-thankyou-order-details order_details">
             <li class="woocommerce-order-overview__order order">
-                Mã đơn hàng: <strong><?=$data['id']?></strong>
+                Mã đơn hàng: <strong><?= $data['id'] ?></strong>
             </li>
             <li class="woocommerce-order-overview__date date">
-                Ngày đặt: <strong><?=$data['created_at']?></strong>
+                Ngày đặt: <strong><?= $data['created_at'] ?></strong>
             </li>
             <li class="woocommerce-order-overview__total total">
-                Tổng: <strong><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">VNĐ</span><?=$data['total_price']?></span></strong>
+                Tổng: <strong><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">VNĐ</span><?= $data['total_price'] ?></span></strong>
             </li>
             <li class="woocommerce-order-overview__payment-method method">
-                <?=$method?>
+                <?= $method ?>
             </li>
         </ul>
         <h3 class="text-success text-center">Trên thế giới có rất nhiều sự lựa chọn, cảm ơn bạn đã chọn chúng tôi!</h3>
         <p class="text-center">Đơn hàng sẽ được giao trong thời gian sớm nhất!</p>
+        <p>Bạn có thể xuất hóa đơn trong trang chi tiết đơn hàng!</p>
 
         <div class="w-100 d-flex align-items-end justify-content-end">
-        <a class="btn btn-primary text-end">Quay về</a>
+            <a class="btn btn-primary text-end">Quay về</a>
 
         </div>
-    </div> <!-- woocommerce-order -->
+    </div> 
 </div>
 
 <?php $this->stop() ?>
