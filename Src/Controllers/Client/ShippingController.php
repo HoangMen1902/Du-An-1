@@ -13,7 +13,7 @@ class ShippingController
         $district = $_POST['district_name'];
 
         $apiUrl = "https://services.giaohangtietkiem.vn/services/shipment/fee";
-        $apiKey = "DOC9A1JQHlOHdmQC9HvimdSyMt65ScYFrb3GWd";
+        $apiKey = $_ENV['Token_api'];
         $data = [
             'weight' => 1000,
             'distance' => 15,

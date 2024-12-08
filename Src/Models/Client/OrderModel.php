@@ -222,4 +222,24 @@ class OrderModel extends BaseModel
     {
         return $this->deleteOrder($id);
     }
+
+    public function getOrdersByAddressId($addressId)
+    {
+    $sql = "SELECT * FROM orders WHERE address_id = ?";
+    
+    $conn = $this->_conn->MySQLi();
+    $stmt = $conn->prepare($sql);
+
+    if (!$stmt) {
+        throw new Exception("Lỗi chuẩn bị câu lệnh: " . $conn->error);
+    }
+    $stmt->bind_param("i", $addressId);
+    if (!$stmt->execute()) {
+        throw new Exception("Lỗi thực thi câu lệnh: " . $stmt->error);
+    }
+    $result = $stmt->get_result();
+    return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+
 }

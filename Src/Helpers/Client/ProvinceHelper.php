@@ -5,6 +5,7 @@ namespace Src\Helpers\Client;
 use Src\Models\Client\AddressModel;
 use Src\Controllers\BaseController;
 use Src\Notifications\Notification;
+use Src\Models\Client\OrderModel;
 
 class ProvinceHelper extends BaseController
 {
@@ -74,14 +75,30 @@ class ProvinceHelper extends BaseController
         exit;
     }
 
-    public function deleteAddress($id){
-        $addressModel = new AddressModel();
-        $delete = $addressModel->delete($id['id']);
-        if($delete){
-            Notification::success('Thao tác thành công','Bạn đã xóa thành công địa chỉ này!');
-        }else{
-            Notification::error('Thao tác thất bại','Xóa thất bại!');
-        }
+    public function deleteAddress($id)
+{
+    $addressModel = new AddressModel();
+    $orderModel = new OrderModel();
+
+    $relatedOrders = $orderModel->getOrdersByAddressId($id['id']);
+    
+    if (!empty($relatedOrders)) {
+        Notification::error(
+            'Thao tác thất bại',
+            'Không thể xóa địa chỉ này vì đang được sử dụng trong các đơn hàng.'
+        );
         header('Location: /profile/address');
+        exit;
     }
+
+    $delete = $addressModel->delete($id['id']);
+    if ($delete) {
+        Notification::success('Thao tác thành công', 'Bạn đã xóa thành công địa chỉ này!');
+    } else {
+        Notification::error('Thao tác thất bại', 'Xóa địa chỉ thất bại!');
+    }
+    header('Location: /profile/address');
+    exit;
+}
+
 }
