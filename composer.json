@@ -24,7 +24,8 @@
         "psr/cache": "^2.0",
         "guzzlehttp/guzzle": "^7.0",
         "phpmailer/phpmailer": "*",
-        "stripe/stripe-php": "^16.3"
+        "stripe/stripe-php": "^16.3",
+        "dompdf/dompdf": "^3.0"
     },
     "scripts": {
         "phinx-create": "vendor/bin/phinx create",
