@@ -4,6 +4,7 @@ namespace Src\Controllers\Admin;
 
 use Src\Validations\Admin\InstallmentsValidation;
 use Src\Models\Admin\InstallmentModel;
+use Src\Models\Admin\ProductSkuModel;
 use Src\Notifications\Notification;
 
 use Src\Controllers\BaseController;
@@ -25,8 +26,22 @@ class InstallmentsController extends BaseController
     public function store()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $installmentModel = new ProductSkuModel();
+
+            $skuName = $_POST['sku_name'] ?? null; 
+            $skuId = null;
+
+            if ($skuName) {
+                $skuId = $installmentModel->getSkuIdByName($skuName);
+
+                if (!$skuId) {
+                    Notification::error('Lỗi', 'Không tìm thấy sản phẩm với tên: ' . $skuName);
+                    $errors[] = "Không tìm thấy sản phẩm với tên '$skuName'.";
+                }
+            }
+
             $data = [
-                'sku_id' => $_POST['sku_id'] ?? null,
+                'sku_id' => $skuId,  
                 'interest_rate' => $_POST['interest_rate'] ?? null,
                 'term' => $_POST['term'] ?? null,
                 'down_payment_rate' => $_POST['down_payment_rate'] ?? [],
@@ -36,7 +51,6 @@ class InstallmentsController extends BaseController
                 $data['down_payment_rate'] = implode(',', $data['down_payment_rate']);
             }
 
-   
             $validationResult = InstallmentsValidation::InstallmentsValidation($data);
 
             if ($validationResult === true) {

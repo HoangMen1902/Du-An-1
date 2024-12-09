@@ -6,6 +6,7 @@ use Src\Controllers\BaseController;
 use Src\Models\Client\ProductModel;
 use Src\Models\Client\CommentModel;
 use Src\Models\Client\RatingModel;
+use Src\Models\Client\InstallmentModel;
 
 class ProductController extends BaseController
 {
@@ -28,7 +29,6 @@ class ProductController extends BaseController
 
         $productModel = new ProductModel();
         $productData = $productModel->getProductById($productId);
-      
         if (!$productData) {
             echo "Sản phẩm không tồn tại.";
             return;
@@ -36,11 +36,24 @@ class ProductController extends BaseController
 
         $categoryId = null;
 
-  
         if (!empty($productData['skus'])) {
-            $firstSku = reset($productData['skus']); 
-            $categoryId = $firstSku['category_id'] ?? null; 
+            $firstSku = reset($productData['skus']);
+            $categoryId = $firstSku['category_id'] ?? null;
         }
+
+        $skuIds = [];
+        foreach ($productData['skus'] as $key => $product) {
+            if (isset($product['sku_id'])) {
+                $skuIds[] = $product['sku_id'];
+            }
+        }
+
+        $sku_id = $skuIds;
+        $installmentValue = new InstallmentModel();
+        $installment = $installmentValue->getInstallmentBySku($sku_id);
+
+        // echo '<pre>';
+        // var_dump($installment[0]['sku_id']);
 
         if (!$categoryId) {
             echo "Không tìm thấy category_id.";
@@ -60,6 +73,7 @@ class ProductController extends BaseController
         echo $this->view->render('Client/Pages/Product/Detail', [
             'productData' => $productData,
             'commentData' => $commentData,
+            'installment' => $installment,
             'commentReply' => $commentReply,
             'commentModel' => $commentModel,
             'ratingModel' => $ratingModel,
