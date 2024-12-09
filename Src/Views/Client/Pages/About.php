@@ -28,23 +28,23 @@
                 <h5>Gương mặt đại diện </h5>
 
                 <div class="col-12 d-flex justify-content-between images-gmdt">
-                    <div class="col-3 p-2 ">
+                    <div class="col-3 p-4 ">
                         <img class="rounded" src="public/Uploads/dangnhuttien.jpg" alt="Ảnh Đặng Nhựt Tiến">
                         <h5 class="text-center mt-1">Đặng Nhật Tiến</h5>
                         <p class="text-center" style="font-size: 16px;">PC08464 - Web19303 </p>
                     </div>
-                    <div class="col-3 p-2">
+                    <div class="col-3 p-4">
                         <img class="rounded" src="public/Uploads/duongchihao.jpg" alt="Ảnh Dương Chí Hào">
                         <h5 class="mt-1">ương Chí Hào</h5>
                         <p class="text-center text-center" style="font-size: 16px;">PC08550 - Web19303 </p>
                     </div>
-                    <div class="col-3 p-2">
+                    <div class="col-3 p-4">
                         <img class="rounded" src="" alt="Ảnh Lý Hoàng Mến">
                         <h5 class="text-center mt-1">Lý Hoàng Mến</h5>
                         <p class="text-center" style="font-size: 16px;">PC08626 - Web19303 </p>
                     </div>
-                    <div class="col-3 p-2">
-                        <img class="rounded" src="" alt="Ảnh Nguyễn Hoài Bão">
+                    <div class="col-3 p-4">
+                        <img class="rounded" src="public/Uploads/hoaibao2.png" alt="Ảnh Nguyễn Hoài Bão">
                         <h5 class="text-center mt-1">Nguyễn Hoài Bão</h5>
                         <p class="text-center" style="font-size: 16px;">PC08483 - Web19303 </p>
                     </div>
