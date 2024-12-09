@@ -16,27 +16,29 @@ class OrderModel extends BaseModel
     {
         return $this->createReturnId($data);
     }
-    public function getAllOrderByUser($userId)
+    public function getAllOrdersByUser($userId)
     {
         try {
-            $sql = "SELECT o.*, 
-                        p.name AS product_name, 
-                        p.thumbnail AS image_name, 
-                        o.total_price AS order_price, 
-                        od.quantity,
-                        ca.phone,
-                        ca.address,
-                        o.status AS order_status, 
-                        c.name AS category_name
-                    FROM orders o
-                    JOIN checkout_addresses ca ON o.address_id = ca.id
-                    JOIN order_details od ON o.id = od.order_id
-                    JOIN product_skus ps ON od.sku_id = ps.id
-                    JOIN products p ON ps.product_id = p.id
-                    JOIN product_categories pc ON p.id = pc.product_id
-                    JOIN category_values cv ON pc.category_values_id = cv.id
-                    JOIN categories c ON cv.category_id = c.id
-                    WHERE o.user_id = ?";
+            $sql = "SELECT 
+                    o.id AS order_id, 
+                    o.total_price AS order_price, 
+                    o.status AS order_status, 
+                    ca.phone, 
+                    ca.address, 
+                    GROUP_CONCAT(CONCAT_WS('|', p.name, ps.images, od.quantity) SEPARATOR ';') AS products, 
+                    MAX(c.name) AS category_name
+                FROM orders o
+                JOIN checkout_addresses ca ON o.address_id = ca.id
+                JOIN order_details od ON o.id = od.order_id
+                JOIN product_skus ps ON od.sku_id = ps.id
+                JOIN products p ON ps.product_id = p.id
+                JOIN product_categories pc ON p.id = pc.product_id
+                JOIN category_values cv ON pc.category_values_id = cv.id
+                JOIN categories c ON cv.category_id = c.id
+                WHERE o.user_id = ?  
+                GROUP BY o.id 
+                ORDER BY o.created_at DESC
+                LIMIT 0, 25;";
 
             $conn = $this->_conn->MySQLi();
             $stmt = $conn->prepare($sql);
@@ -44,16 +46,13 @@ class OrderModel extends BaseModel
             $stmt->execute();
             $result = $stmt->get_result();
 
-            if ($result->num_rows > 0) {
-                return $result->fetch_all(MYSQLI_ASSOC);
-            } else {
-                return [];
-            }
-        } catch (Throwable $e) {
-            error_log('Error fetching order data for user ' . $userId . ': ' . $e->getMessage());
-            return false;
+            return $result->fetch_all(MYSQLI_ASSOC);
+        } catch (Throwable $th) {
+            error_log('Lỗi khi lấy dữ liệu: ' . $th->getMessage());
+            return [];
         }
     }
+
 
 
     public function getAllOrderByUserAndOrderId($orderId, $userId)
@@ -158,7 +157,7 @@ class OrderModel extends BaseModel
             $conn->begin_transaction();
 
 
-            $sqlUpdateOrder = "UPDATE $this->table SET status = 4 WHERE id = ?";
+            $sqlUpdateOrder = "UPDATE $this->table SET status = 6 WHERE id = ?";
             $stmtUpdateOrder = $conn->prepare($sqlUpdateOrder);
             $stmtUpdateOrder->bind_param('i', $id);
             $stmtUpdateOrder->execute();

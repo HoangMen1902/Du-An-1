@@ -15,7 +15,7 @@ class UserInfoController extends BaseController{
     public function userOrders($userId) {
         $userId = $_SESSION['user']['id'];
         $orderModel = new OrderModel();
-        $orderData = $orderModel->getAllOrderByUser($userId);
+        $orderData = $orderModel->getAllOrdersByUser($userId);
         echo $this->view->render('Client/Pages/UserOrders', ['orderData' => $orderData]);
     }
     public function cancelOrder()

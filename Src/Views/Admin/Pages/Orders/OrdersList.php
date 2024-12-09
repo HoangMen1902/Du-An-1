@@ -12,7 +12,7 @@ $this->start('main_content');
                     <thead>
                         <tr>
                             <th class="ml-5">ID</th>
-                            <th>Tên người mua</th>
+                            <th>Tên sản phẩm</th>
                             <th>Số điện thoại</th>
                             <th>Địa chỉ</th>
                             <th>Tổng giá sản phẩm</th>
@@ -24,11 +24,30 @@ $this->start('main_content');
                         <?php if (!empty($orderData)): ?>
                             <?php foreach ($orderData as $order): ?>
                                 <tr>
-                                    <td><?= htmlspecialchars($order['id']) ?></td>
-                                    <td><?= htmlspecialchars($order['product_name']) ?></td>
+                                    <td><?= htmlspecialchars($order['order_id']) ?></td>
+                                    <td>
+                                        <?php if (!empty($order['products'])): ?>
+                                            <ul>
+                                                <?php
+                                         
+                                                $products = explode(';', $order['products']);
+                                                foreach ($products as $productData):
+                                       
+                                                    list($productName, $image, $quantity) = explode('|', $productData);
+                                                ?>
+                                                    <li>
+                                                        <img src="<?=$_ENV['APP_URL']?>/public/Uploads/Products/<?= htmlspecialchars($image) ?>" alt="<?= htmlspecialchars($productName) ?>" style="width: 50px; height: 50px;">
+                                                        <?= htmlspecialchars($productName) ?> (Số lượng: <?= htmlspecialchars($quantity) ?>)
+                                                    </li>
+                                                <?php endforeach; ?>
+                                            </ul>
+                                        <?php else: ?>
+                                            Không có sản phẩm.
+                                        <?php endif; ?>
+                                    </td>
                                     <td><?= htmlspecialchars($order['phone']) ?></td>
                                     <td><?= htmlspecialchars($order['address']) ?></td>
-                                    <td><?= number_format($order['total_price'], 0, ',', '.') ?> VND</td>
+                                    <td><?= number_format($order['order_price'], 0, ',', '.') ?> VND</td>
                                     <td>
                                         <?php
                                         switch ($order['order_status']) {
@@ -55,7 +74,7 @@ $this->start('main_content');
                                     </td>
                                     <td>
                                         <div class="d-flex align-items-center">
-                                            <a href="/admin/order-detail/<?= htmlspecialchars($order['id']) ?>">
+                                            <a href="/admin/order-detail/<?= htmlspecialchars($order['order_id']) ?>">
                                                 <button type="button" class="btn btn-info btn-sm btn-icon-text mr-3">
                                                     Chi tiết
                                                     <i class="typcn typcn-edit btn-icon-append"></i>
@@ -70,6 +89,8 @@ $this->start('main_content');
                                 <td colspan="7" class="text-center">Không có đơn hàng.</td>
                             </tr>
                         <?php endif; ?>
+
+
                     </tbody>
                 </table>
             </div>
