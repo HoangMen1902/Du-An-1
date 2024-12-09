@@ -5,6 +5,34 @@
   padding: 0;
   text-decoration: none;
 }
+/* Đảm bảo rằng nút radio SKU có sẵn có thể chọn */
+.sku-radio {
+  cursor: pointer;
+  transition: background-color 0.3s, opacity 0.3s;
+}
+
+/* Khi SKU hết hàng, mờ và không thể chọn */
+.sku-radio.disabled {
+  opacity: 0.5; /* Làm mờ SKU hết hàng */
+  cursor: not-allowed; /* Thay đổi con trỏ thành không thể chọn */
+}
+
+/* Thêm thông báo "Hết hàng" */
+.sku-radio.disabled + span {
+  color: #9e9e9e; /* Màu nhạt cho thông báo hết hàng */
+}
+
+/* SKU được chọn */
+.sku-radio:checked {
+  background-color: #4caf50; /* Viền màu xanh cho SKU được chọn */
+}
+
+/* Thêm màu nền cho SKU hết hàng để làm rõ hơn */
+.sku-radio:disabled {
+  background-color: #f44336; /* Màu nền đỏ nhạt cho SKU hết hàng */
+  border: 1px solid #f44336; /* Viền đỏ cho SKU hết hàng */
+}
+
 .rating-container {
   display: inline-flex;
   align-items: center;
@@ -160,7 +188,7 @@
       margin-bottom: 10px;
       &-fix {
         display: flex;
-        label{ 
+        label {
           font-size: 15px;
         }
       }

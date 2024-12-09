@@ -33,7 +33,7 @@ class UserInfoController extends BaseController{
 
                 $orderDetails = $order[0];
 
-                if ($orderDetails['order_status'] == 1) {
+                if ($orderDetails['order_status'] == 1 || $orderDetails['order_status'] == 2 || $orderDetails['order_status'] == 3) {
                     $isCanceled = $orderModel->cancelOrder($orderId);
 
                     if ($isCanceled) {

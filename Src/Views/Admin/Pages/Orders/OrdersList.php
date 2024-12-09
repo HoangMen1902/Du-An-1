@@ -29,14 +29,14 @@ $this->start('main_content');
                                         <?php if (!empty($order['products'])): ?>
                                             <ul>
                                                 <?php
-                                         
+
                                                 $products = explode(';', $order['products']);
                                                 foreach ($products as $productData):
-                                       
+
                                                     list($productName, $image, $quantity) = explode('|', $productData);
                                                 ?>
                                                     <li>
-                                                        <img src="<?=$_ENV['APP_URL']?>/public/Uploads/Products/<?= htmlspecialchars($image) ?>" alt="<?= htmlspecialchars($productName) ?>" style="width: 50px; height: 50px;">
+                                                        <img src="<?= $_ENV['APP_URL'] ?>/public/Uploads/Products/<?= htmlspecialchars($image) ?>" alt="<?= htmlspecialchars($productName) ?>" style="width: 50px; height: 50px;">
                                                         <?= htmlspecialchars($productName) ?> (Số lượng: <?= htmlspecialchars($quantity) ?>)
                                                     </li>
                                                 <?php endforeach; ?>

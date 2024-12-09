@@ -35,8 +35,6 @@ $specs = json_decode($desc_specs['specifications']);
                 </button>
                 <!-- <?= $_ENV['APP_URL'] ?>/public/Uploads/Products/<?= $image ?> -->
             <?php endforeach; ?>
-
-
         </div>
         <div class="product__carousel-wrapper">
             <div style="display: block;" class="product__carousel-wrapper__slide">
@@ -52,9 +50,6 @@ $specs = json_decode($desc_specs['specifications']);
 
         </div>
     </div>
-
-
-
     <div class="product__info">
 
         <?php
@@ -63,10 +58,6 @@ $specs = json_decode($desc_specs['specifications']);
         <h4 id="product-name-<?= $productData['product_id'] ?>">
             <?= $productData['product_name'] ?> - <?= $firstSku['sku'] ?>
         </h4>
-
-
-
-
         <!--  chức năng voucher phát triển sau -->
         <!-- <form action="/voucher" method="post">
             <input type="hidden" name="method" value="POST">
@@ -111,11 +102,22 @@ $specs = json_decode($desc_specs['specifications']);
                 <div class="col-4 p-1">
                     <div class="border border-secondary rounded p-1">
                         <label class="w-100">
-                            <input form="add-to-cart" class="hidden" type="radio" value="<?= $sku['sku_id'] ?> "
-                                name="sku_options"
-                                data-image="<?= $_ENV['APP_URL'] ?>/public/Uploads/Products/<?= htmlspecialchars($sku['images']) ?>"
-                                data-price="<?= $sku['discounted_price'] ?>" data-old-price="<?= $sku['original_price'] ?>"
-                                product-name="<?= $sku['sku'] ?>" onclick="onSkuSelect(this)" <?= $index === array_key_first($productData['skus']) ? 'checked' : '' ?>>
+                            <?php if ($sku['quantity'] > 0): ?>
+                                <!-- SKU có sẵn -->
+                                <input form="add-to-cart" class="sku-radio hidden" type="radio" value="<?= $sku['sku_id'] ?>"
+                                    name="sku_options"
+                                    data-image="<?= $_ENV['APP_URL'] ?>/public/Uploads/Products/<?= htmlspecialchars($sku['images']) ?>"
+                                    data-price="<?= $sku['discounted_price'] ?>" data-old-price="<?= $sku['original_price'] ?>"
+                                    product-name="<?= $sku['sku'] ?>" onclick="onSkuSelect(this)"
+                                    data-quantity="<?= $sku['quantity'] ?>"
+                                    <?= $index === array_key_first($productData['skus']) ? 'checked' : '' ?>>
+                            <?php else: ?>
+                                <!-- SKU hết hàng -->
+                                <input form="add-to-cart" class="sku-radio hidden disabled" type="radio" value="<?= $sku['sku_id'] ?>"
+                                    name="sku_options" disabled>
+                                <span class="text-muted" style="display: block;">Hết hàng</span>
+                            <?php endif; ?>
+
                             <?php foreach ($sku['options'] as $option): ?>
                                 <div>
                                     <?= htmlspecialchars($option['option_name']) . ': ' . htmlspecialchars($option['option_value']) ?>
@@ -126,6 +128,7 @@ $specs = json_decode($desc_specs['specifications']);
                 </div>
             <?php endforeach; ?>
         </div>
+
         <div class="d-flex align-items-center pt-2 pb-2">
             <?php
             $avgRatingValue = isset($avgRating[0]['rating']) ? round($avgRating[0]['rating'], 1) : 0; // Lấy giá trị rating, mặc định 0
@@ -589,11 +592,12 @@ $specs = json_decode($desc_specs['specifications']);
             mainImage.style.opacity = 1;
         }, 200);
     }
+    document.querySelectorAll('.sku-radio.disabled').forEach(function(radio) {
+        radio.addEventListener('click', function(event) {
+            event.preventDefault();
+        });
+    });
 
-
-
-
-    let value = 0;
 
     function decrementProduct() {
         const quantityElement = document.getElementById('quantityProduct');
@@ -607,6 +611,7 @@ $specs = json_decode($desc_specs['specifications']);
         }
     }
 
+
     function incrementProduct() {
         const quantityElement = document.getElementById('quantityProduct');
         const quantityInput = document.getElementById('quantityInput');
@@ -618,23 +623,13 @@ $specs = json_decode($desc_specs['specifications']);
     }
 
 
-
-
-
-
-
-
-
-
     function changePriceAndImage(radioButton) {
 
         const newPrice = parseFloat(radioButton.getAttribute('data-price'));
         const oldPrice = parseFloat(radioButton.getAttribute('data-old-price'));
 
-
         const currentPriceElement = document.getElementById('current-price-<?= $productData['product_id'] ?>');
         const oldPriceElement = document.getElementById('old-price-<?= $productData['product_id'] ?>');
-
 
         currentPriceElement.innerText = newPrice.toLocaleString('de-DE', {
             minimumFractionDigits: 0,
@@ -650,7 +645,6 @@ $specs = json_decode($desc_specs['specifications']);
             oldPriceElement.innerText = '';
         }
 
-
         const newImageUrl = radioButton.getAttribute('data-image');
         const mainImage = document.getElementById('mainImage');
         mainImage.style.opacity = 0;
@@ -663,14 +657,14 @@ $specs = json_decode($desc_specs['specifications']);
         }, 200);
     }
 
+
     function onSkuSelect(radioButton) {
+        if (radioButton.disabled) return;
 
         changePriceAndImage(radioButton);
 
-
         const skuName = radioButton.getAttribute('product-name');
         const productNameElement = document.getElementById('product-name-<?= $productData['product_id'] ?>');
-
 
         const originalProductName = productNameElement.textContent.split(' - ')[0];
         productNameElement.textContent = `${originalProductName} - ${skuName}`;
@@ -678,15 +672,44 @@ $specs = json_decode($desc_specs['specifications']);
 
 
     function changeImage(radio) {
+        if (radio.disabled) return;
 
         const newImageUrl = radio.getAttribute('data-image');
-
         const mainImage = document.getElementById('mainImage');
 
         if (newImageUrl) {
             mainImage.src = newImageUrl;
         }
     }
+
+
+    function disableOutOfStockSkus() {
+        const radios = document.querySelectorAll('input[type="radio"][name="sku_options"]');
+
+        radios.forEach(radio => {
+            const quantity = parseInt(radio.getAttribute('data-quantity'));
+            const outOfStockMessage = radio.parentElement.querySelector('.text-muted');
+
+            if (quantity === 0) {
+                radio.disabled = true;
+                radio.parentElement.style.pointerEvents = 'none';
+                if (outOfStockMessage) {
+                    outOfStockMessage.style.display = 'block';
+                }
+            } else {
+                if (outOfStockMessage) {
+                    outOfStockMessage.style.display = 'none';
+                }
+                radio.parentElement.style.pointerEvents = 'auto';
+            }
+        });
+    }
+
+    window.onload = function() {
+        disableOutOfStockSkus();
+    };
+
+
 
 
     document.addEventListener('DOMContentLoaded', function() {

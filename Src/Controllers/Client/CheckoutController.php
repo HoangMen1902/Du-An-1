@@ -10,12 +10,14 @@ use Src\Helpers\Client\VNPayHelper;
 use Src\Models\Database;
 use Src\Notifications\Notification;
 use Src\Models\Client\CartModel;
+use Src\Models\Client\ProductSkusModel;
 use Src\Models\Client\CheckoutModel;
 use Src\Models\Client\UserModel;
 use Src\Models\Client\AddressModel;
 use Src\Models\Client\OrderDetailsModel;
 use Src\Models\Client\OrderModel;
 use Src\Models\Client\InstallmentModel;
+
 use Stripe\Checkout\Session;
 use Stripe\Stripe;
 
@@ -48,11 +50,11 @@ class CheckoutController extends BaseController
             header('location: /checkout');
             exit();
         }
-
+    
         $method = $_POST['payment-method'];
-
         $CartModel = new CartModel();
-
+        $ProductSkusModel = new ProductSkusModel(); 
+    
         if ($method === 'international') {
             try {
                 $UserCart = $CartModel->getCartByUser($_SESSION['user']['id']);
@@ -71,147 +73,143 @@ class CheckoutController extends BaseController
                     ];
                 }, $UserCart);
                 $additionalData['address'] = $_POST['address'];
-
+    
                 $this->createCheckoutSession($lineItems, $additionalData);
+    
+                // Giảm số lượng sản phẩm trong kho
+                foreach ($UserCart as $item) {
+                    $updateResult = $ProductSkusModel->decreaseStock($item['sku_id'], $item['quantity']);
+                    if (!$updateResult) {
+                        throw new Exception('Không thể cập nhật số lượng sản phẩm trong kho.');
+                    }
+                }
             } catch (Exception $e) {
-                error_log('Lỗi khi thanh toán bằng visa' . $e->getMessage());
+                error_log('Lỗi khi thanh toán bằng visa: ' . $e->getMessage());
+                Notification::error('Checkout thất bại', 'Có lỗi xảy ra trong quá trình thanh toán.');
+                header('location: /checkout');
                 exit();
             }
         }
-
+    
         if ($method === 'vnpay') {
             $VNPayHelper = new VNPayHelper();
-            $CartModel = new CartModel();
             $OrderModel = new OrderModel();
             $OrderDetailsModel = new OrderDetailsModel();
-
+    
             $database = new Database();
             $conn = $database->MySQLi();
             $conn->begin_transaction();
-
+    
             $totalCost = 0;
-
             $userId = $_SESSION['user']['id'];
-
-            if ($_POST['shipping_method'] === 'store') {
-                $addressId = NULL;
-            } else {
-                $addressId = $_POST['address'];
-            }
-            error_log($addressId);
-
-            $UserCart = $CartModel->getCartByUser($_SESSION['user']['id']);
-            if ($UserCart !== false) {
-
-
-                foreach ($UserCart as $index => $item) {
+            $addressId = $_POST['shipping_method'] === 'store' ? NULL : $_POST['address'];
+    
+            try {
+                $UserCart = $CartModel->getCartByUser($userId);
+                foreach ($UserCart as $item) {
                     $price = explode('.', $item['total_price'])[0];
                     $totalCost += $price;
                 }
-
+    
                 $data = [
-                    'status' => 2, // Ban đàu là chưa thanh toán, 2 là trạng thái chờ thanh toán (noted)
+                    'status' => 2,
                     'total_price' => $totalCost,
                     'user_id' => $userId,
                     'address_id' => $addressId
                 ];
-
-
+    
                 $OrderInsertedId = $OrderModel->createOrderReturnId($data);
-
-                if ($OrderInsertedId === false) {
-                    Notification::error('Đã có lỗi xảy ra', 'Có lỗi xảy ra trong quá trình thanh toán, vui lòng thử lại sau. Mã lỗi: 1');
-                    $conn->rollback();
-                    header('location: /cart');
-                    exit();
+                if (!$OrderInsertedId) {
+                    throw new Exception('Không thể tạo đơn hàng.');
                 }
-
-                $orderDetailData = [];
+    
                 foreach ($UserCart as $item) {
-                    $price = explode('.', $item['total_price'])[0];
-                    $orderDetailData[] = [
+                    $orderDetailData = [
                         'order_id' => $OrderInsertedId,
                         'sku_id' => $item['sku_id'],
-                        'price' => $price,
+                        'price' => explode('.', $item['total_price'])[0],
                         'quantity' => $item['quantity']
                     ];
-                }
-
-                $result = [];
-                foreach ($orderDetailData as $index => $detail) {
-                    $result[] = $OrderDetailsModel->createDetail($detail);
-                    if ($result[$index] === false) {
-                        Notification::error('Đã có lỗi xảy ra', 'Có lỗi xảy ra trong quá trình thanh toán, vui lòng thử lại sau. Mã lỗi: 2');
-                        $conn->rollback();
-                        header('location: /cart');
-                        exit();
+    
+                    if (!$OrderDetailsModel->createDetail($orderDetailData)) {
+                        throw new Exception('Không thể tạo chi tiết đơn hàng.');
+                    }
+    
+                    $updateResult = $ProductSkusModel->decreaseStock($item['sku_id'], $item['quantity']);
+                    if (!$updateResult) {
+                        throw new Exception('Không thể cập nhật số lượng sản phẩm trong kho.');
                     }
                 }
-
+    
                 $OrderInfo = $OrderModel->getOneOrder($OrderInsertedId);
-                $bankContext = "Thanh toan don hang: " . $OrderInsertedId . ' - BeeTechNova'; //CÁI NÀY KHÔNG ĐƯỢC THÊM DẤU, ĐỪNG SỬA NHA
+                $bankContext = "Thanh toan don hang: " . $OrderInsertedId . ' - BeeTechNova';
                 $paymentURL = $VNPayHelper->createPayment($OrderInfo['total_price'], $bankContext, $OrderInsertedId);
                 $conn->commit();
                 header('location: ' . $paymentURL['data']);
-            } else {
-                Notification::error('Đã có lỗi xảy ra', 'Có lỗi xảy ra trong quá trình thanh toán, vui lòng thử lại sau. Mã lỗi: 3');
-                header('location: /cart');
-                exit();
-            }
-        }
-        if ($method === 'cash') {
-            $UserCart = $CartModel->getCartByUser($_SESSION['user']['id']);
-            $lineItems = array_map(function ($products) {
-                return [
-                    'price_data' => [
-                        'currency' => 'VND',
-                        'product_data' => [
-                            'name' => $products['product_name'],
-                            'description' => $products['product_sku'],
-                        ],
-                        'unit_amount' => (int)$products['total_price'],
-                    ],
-                    'quantity' => $products['quantity']
-                ];
-            }, $UserCart);
-
-            $user_id = $_SESSION['user']['id'];
-            $address_id = $_POST['address'];
-            $total_price = $_POST['totalPrice'];
-
-            $insertOrder = $this->createOrder($user_id, $address_id, $total_price);
-
-            $conn = (new Database())->MySQLi();
-            $conn->begin_transaction();
-
-            $OrderModel = new OrderModel;
-            $OrderDetailModel = new OrderDetailsModel;
-            $result = $OrderModel->createOrderReturnId($insertOrder);
-
-            if ($result === false) {
-                Notification::error('Đặt hàng thất bại', 'Đã xảy ra lỗi trong quá trình đặt hàng');
+            } catch (Exception $e) {
                 $conn->rollback();
+                error_log($e->getMessage());
+                Notification::error('Checkout thất bại', 'Có lỗi xảy ra trong quá trình thanh toán.');
                 header('location: /checkout');
                 exit();
             }
-
-            $orderDetailInsert = $this->prepareOrderDetails($result, $UserCart);
-
-            foreach ($orderDetailInsert as $index => $dataInsert) {
-                if (!$OrderDetailModel->createDetail($dataInsert)) {
-                    Notification::error('Tạo đơn hàng thất bại', 'Tạo đơn hàng thất bại, vui lòng báo cáo với quản trị viên');
-                    $conn->rollback();
-                    header('location: /checkout');
-                    exit();
-                }
-            }
-
-            $conn->commit();
-            Notification::success('Đã đặt hàng', 'Bạn đã đặt hàng thành công');
-            $CartModel->deleteAllCarts($user_id);
-            header('location: /thanks?order_id=' . $result . '&method=cash');
-            exit();
         }
+    
+        if ($method === 'cash') {
+            $UserCart = $CartModel->getCartByUser($_SESSION['user']['id']);
+            $userId = $_SESSION['user']['id'];
+            $addressId = $_POST['address'];
+            $totalPrice = $_POST['totalPrice'];
+    
+            $conn = (new Database())->MySQLi();
+            $conn->begin_transaction();
+            $OrderModel = new OrderModel();
+            $OrderDetailsModel = new OrderDetailsModel();
+    
+            try {
+                $insertOrder = [
+                    'status' => 3,
+                    'total_price' => $totalPrice,
+                    'user_id' => $userId,
+                    'address_id' => $addressId
+                ];
+    
+                $OrderInsertedId = $OrderModel->createOrderReturnId($insertOrder);
+                if (!$OrderInsertedId) {
+                    throw new Exception('Không thể tạo đơn hàng.');
+                }
+    
+                foreach ($UserCart as $item) {
+                    $orderDetailData = [
+                        'order_id' => $OrderInsertedId,
+                        'sku_id' => $item['sku_id'],
+                        'price' => $item['total_price'],
+                        'quantity' => $item['quantity']
+                    ];
+    
+                    if (!$OrderDetailsModel->createDetail($orderDetailData)) {
+                        throw new Exception('Không thể tạo chi tiết đơn hàng.');
+                    }
+    
+                    $updateResult = $ProductSkusModel->decreaseStock($item['sku_id'], $item['quantity']);
+                    if (!$updateResult) {
+                        throw new Exception('Không thể cập nhật số lượng sản phẩm trong kho.');
+                    }
+                }
+    
+                $conn->commit();
+                Notification::success('Đặt hàng thành công', 'Bạn đã đặt hàng thành công');
+                $CartModel->deleteAllCarts($userId);
+                header('location: /thanks?order_id=' . $OrderInsertedId . '&method=cash');
+            } catch (Exception $e) {
+                $conn->rollback();
+                error_log($e->getMessage());
+                Notification::error('Checkout thất bại', 'Có lỗi xảy ra trong quá trình thanh toán.');
+                header('location: /checkout');
+                exit();
+            }
+        }
+    
 
             
         
