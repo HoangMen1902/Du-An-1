@@ -1,4 +1,8 @@
-<?php $this->layout('Client/Components/Layout'); ?>
+<?php 
+if(isset($_SESSION['user'])) {
+    header('location: /');
+}
+$this->layout('Client/Components/Layout'); ?>
 
 
 

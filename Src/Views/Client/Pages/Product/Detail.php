@@ -112,9 +112,9 @@ $specs = json_decode($desc_specs['specifications']);
                                     product-name="<?= $sku['sku'] ?>"
                                     onclick="onSkuSelect(this)" <?= $index === array_key_first($productData['skus']) ? 'checked' : '' ?>>
                             <?php else: ?>
+                                <p class="m-0 text-center text-danger">Hết hàng</p>
                                 <input form="add-to-cart" class="sku-radio hidden disabled" type="radio" value="<?= $sku['sku_id'] ?>"
                                     name="sku_options" disabled>
-                                <span class="text-muted" style="display: block;">Hết hàng</span>
                             <?php endif; ?>
                             <?php foreach ($sku['options'] as $option): ?>
                                 <div>
