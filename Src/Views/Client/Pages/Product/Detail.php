@@ -114,8 +114,11 @@ $specs = json_decode($desc_specs['specifications']);
                             <input form="add-to-cart" class="hidden" type="radio" value="<?= $sku['sku_id'] ?> "
                                 name="sku_options"
                                 data-image="<?= $_ENV['APP_URL'] ?>/public/Uploads/Products/<?= htmlspecialchars($sku['images']) ?>"
-                                data-price="<?= $sku['discounted_price'] ?>" data-old-price="<?= $sku['original_price'] ?>"
-                                product-name="<?= $sku['sku'] ?>" onclick="onSkuSelect(this)" <?= $index === array_key_first($productData['skus']) ? 'checked' : '' ?>>
+                                data-price="<?= $sku['discounted_price'] ?>"
+                                data-sku="<?= $sku['sku_id'] ?> "
+                                data-old-price="<?= $sku['original_price'] ?>"
+                                product-name="<?= $sku['sku'] ?>"
+                                onclick="onSkuSelect(this)" <?= $index === array_key_first($productData['skus']) ? 'checked' : '' ?>>
                             <?php foreach ($sku['options'] as $option): ?>
                                 <div>
                                     <?= htmlspecialchars($option['option_name']) . ': ' . htmlspecialchars($option['option_value']) ?>
@@ -146,11 +149,23 @@ $specs = json_decode($desc_specs['specifications']);
         </div>
         <p>Chọn mua:</p>
 
+
         <form id="add-to-cart" action="/add-to-cart" method="post">
             <input type="hidden" id="quantityInput" name="quantity" value="1">
             <input type="hidden" name="product_id" value="<?= $productData['product_id'] ?>">
             <button class="product__info__buy__button text-white" name="add-to-cart">Chọn mua</button>
         </form>
+
+
+
+        <div id="mua" class="collapse mt-2">
+            <form id="add-to-cart" action="/checkout" method="get">
+                <input type="hidden" id="quantityInput" name="quantity" value="1">
+                <input type="hidden" name="product_id" value="<?= $productData['product_id'] ?>">
+                <button class="product__info__buy__button text-white" name="add-to-cart">Mua trả góp</button>
+            </form>
+        </div>
+
 
     </div>
 </div>
@@ -627,10 +642,16 @@ $specs = json_decode($desc_specs['specifications']);
 
 
     function changePriceAndImage(radioButton) {
-
+        let checkSku = <?= json_encode(array_column($installment, 'sku_id')) ?>;
         const newPrice = parseFloat(radioButton.getAttribute('data-price'));
         const oldPrice = parseFloat(radioButton.getAttribute('data-old-price'));
-
+        const newSku = parseFloat(radioButton.getAttribute('data-sku'));
+        const formContainer = document.getElementById('mua');
+        if (checkSku.includes(newSku)) {
+            formContainer.style.display = 'block'; 
+        } else {
+            formContainer.style.display = 'none';
+        }
 
         const currentPriceElement = document.getElementById('current-price-<?= $productData['product_id'] ?>');
         const oldPriceElement = document.getElementById('old-price-<?= $productData['product_id'] ?>');

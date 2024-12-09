@@ -50,5 +50,27 @@ class ProductSkuModel extends BaseModel {
     public function getOneSku($id) {
         return $this->getOne($id);
     }
+    public function getSkuIdByName($name)
+    {
+        $result = [];
+        try {
+            $sql = "SELECT id FROM $this->table WHERE sku = ?";
+            $conn = $this->_conn->MySQLi(); 
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param('s', $name); 
+            $stmt->execute();
+            $res = $stmt->get_result();
+            error_log($sql);
+            if ($res->num_rows > 0) {
+                $row = $res->fetch_assoc();
+                return $row['id'];
+            } else {
+                return null;  
+            }
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi truy vấn theo tên sản phẩm: ' . $th->getMessage());
+            return $result;
+        }
+    }
 }
 ?>

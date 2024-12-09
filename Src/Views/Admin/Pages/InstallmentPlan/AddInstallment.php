@@ -10,8 +10,8 @@ $this->start('main_content');
             <h4 class="card-title">Thêm Kế Hoạch Trả Góp</h4>
             <form class="forms-sample" action="/admin/tragop/store" method="post" enctype="multipart/form-data">
                 <div class="form-group">
-                    <label for="sku_id">Mã sản phẩm</label>
-                    <input type="text" name="sku_id" id="sku_id" class="form-control" placeholder="Nhập SKU">
+                    <label for="sku_name">Mã sản phẩm</label>
+                    <input type="text" name="sku_name" id="sku_name" class="form-control" placeholder="Nhập SKU">
                 </div>
                 <div class="form-group">
                     <label for="interest_rate">Lãi suất (%)</label>
