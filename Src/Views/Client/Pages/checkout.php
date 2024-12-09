@@ -147,18 +147,24 @@
                     </div> -->
 
                 <!-- Phương thức thanh toán -->
-                <div class="payment-methods">
-                    <h3>Phương thức thanh toán</h3>
-                    <select class="cnvc" name="payment-method" id="paymentMethodSelect" form="paymentForm">
-                        <option value="cash" selected>Tiền mặt khi nhận hàng</option>
-                        <option value="international">Thanh toán quốc tế <i class="fab fa-cc-visa"></i> <i
-                                class="fab fa-cc-mastercard"></i></option>
-                        <option value="vnpay">Thanh toán VNPay</option>
-                        <option value="installment">Trả góp <i class="fab fa-cc-visa"></i> <i
-                                class="fab fa-cc-mastercard"></i></option>
-                    </select>
+                <?php if (!isset($installmentsForm)) : ?>
 
-                </div>
+                    <div class="payment-methods">
+                        <h3>Phương thức thanh toán</h3>
+                        <select class="cnvc" name="payment-method" id="paymentMethodSelect" form="paymentForm">
+                            <option value="cash" selected>Tiền mặt khi nhận hàng</option>
+                            <option value="international">Thanh toán quốc tế <i class="fab fa-cc-visa"></i> <i
+                                    class="fab fa-cc-mastercard"></i></option>
+                            <option value="vnpay">Thanh toán VNPay</option>
+                            <option value="installment">Trả góp <i class="fab fa-cc-visa"></i> <i
+                                    class="fab fa-cc-mastercard"></i></option>
+                        </select>
+                    </div>
+
+                <?php else : ?>
+                    <div id="checkFromInstallment"></div>
+                <?php endif ?>
+
                 <div id="installment" style="display:none;">
                     <div class="card">
                         <div class="card-header ">
@@ -191,12 +197,20 @@
                                     <tbody>
                                         <tr>
                                             <?php
-                                            $totalPrice = 0;
-                                            foreach ($data as $item):
-                                                $totalPrice += $item['total_price'];
-                                            endforeach;
-                                            ?>
 
+                                            $totalPrice = 0;
+                                            if (isset($data['skus']) && is_array($data['skus'])) {
+
+                                                foreach ($data['skus'] as $sku):
+                                                    $discountedPrice = isset($sku['discounted_price']) ? (float)$sku['discounted_price'] : 0;
+                                                    $totalPrice += $discountedPrice * $sku['quantity'];
+                                                endforeach;
+                                            } else {
+                                                echo "Không có dữ liệu sản phẩm";
+                                            }
+                                            $shippingFee = isset($shippingFee) ? $shippingFee : 0;
+                                            $totalPriceWithShipping = $totalPrice + $shippingFee;
+                                            ?>
                                             <th scope="row">Giá sản phẩm</th>
                                             <td id="product-price"><?= number_format($totalPrice, 0, ',', '.'); ?> ₫</td>
                                         </tr>
@@ -283,31 +297,37 @@
             <div class="payment__section__right-ttlh">
                 <?php
                 $totalPrice = 0; // Tổng tiền tất cả sản phẩm
-                foreach ($data as $item):
-                    $totalPrice += $item['total_price'];
+
+                // Kiểm tra nếu $data là mảng và có sản phẩm
+                if (isset($data['skus']) && is_array($data['skus'])) {
+                    foreach ($data['skus'] as $sku):
+                        // Tính tổng giá trị của sản phẩm
+                        $totalPrice += isset($sku['discounted_price']) ? (float)$sku['discounted_price'] * $sku['quantity'] : 0;
                 ?>
-                    <div class="payment__section__container">
-                        <div class="payment__section__right-img" style="position: relative;">
-                            <div class="payment__section__right-circle"><span><?= $item['quantity']; ?></span></div>
-                            <img src="<?= $_ENV['APP_URL'] ?>/public/Uploads/Products/<?= $item['product_images']; ?>" alt="<?= $item['product_name']; ?>" style="object-fit:cover; width:100%; height:100%">
+                        <div class="payment__section__container">
+                            <div class="payment__section__right-img" style="position: relative;">
+                                <div class="payment__section__right-circle"><span><?= $quantityA ?></span></div>
+                                <img src="<?= $_ENV['APP_URL'] ?>/public/Uploads/Products/<?= isset($sku['images']) ? $sku['images'] : ''; ?>" alt="<?= isset($sku['sku']) ? $sku['sku'] : ''; ?>" style="object-fit:cover; width:100%; height:100%">
+                            </div>
+                            <div class="payment__section__right-description">
+                                <p class="clamp-text"><?= isset($data['product_name']) ? $data['product_name'] : ''; ?></p>
+                                <p class="clamp-text">SKU: <?= isset($sku['sku']) ? $sku['sku'] : ''; ?></p>
+                            </div>
+                            <div class="payment__section__right-pcire">
+                                <p><?= isset($sku['discounted_price']) ? number_format($sku['discounted_price'], 0, ',', '.') : '0'; ?> ₫</p>
+                            </div>
                         </div>
-                        <div class="payment__section__right-description">
-                            <p class="clamp-text"><?= $item['product_name']; ?></p>
-                            <p class="clamp-text">SKU: <?= $item['product_sku'];  ?></p>
-                            <!-- <div class="cart__product-description">
-                                <ul class="cart__product-description-fix">
-                                    <li>SKU: <?= $item['product_sku']; ?></li>
-                                    <li>Giá: <?= number_format($item['product_price'], 0, ',', '.'); ?> ₫</li>
-                                </ul>
-                            </div> -->
-                        </div>
-                        <div class="payment__section__right-pcire">
-                            <p><?= number_format($item['total_price'], 0, ',', '.'); ?> ₫</p>
-                        </div>
-                    </div>
-                <?php endforeach;
+                <?php
+                    endforeach;
+                } else {
+                    echo "Không có dữ liệu sản phẩm";
+                }
+
+                // Tính phí vận chuyển nếu có
                 $shippingFee = isset($shippingFee) ? $shippingFee : 0;
-                $totalPriceWithShipping = $totalPrice + $shippingFee; ?>
+                $totalPriceWithShipping = $totalPrice + $shippingFee;
+                ?>
+
 
 
                 <div class="order-summary">
@@ -442,7 +462,11 @@
     document.addEventListener("DOMContentLoaded", function() {
         const paymentMethodSelect = document.getElementById("paymentMethodSelect");
         const installment = document.getElementById("installment");
+        const checkFromInstallment = document.getElementById("checkFromInstallment");
 
+        if (checkFromInstallment) {
+            installment.style.display = "block";
+        }
         paymentMethodSelect.addEventListener("change", function() {
             if (this.value === "installment") {
                 installment.style.display = "block";

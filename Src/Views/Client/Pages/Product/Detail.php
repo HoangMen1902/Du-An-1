@@ -157,11 +157,11 @@ $specs = json_decode($desc_specs['specifications']);
         </form>
 
 
-
-        <div id="mua" class="collapse mt-2">
-            <form id="add-to-cart" action="/checkout" method="get">
-                <input type="hidden" id="quantityInput" name="quantity" value="1">
-                <input type="hidden" name="product_id" value="<?= $productData['product_id'] ?>">
+        <div id="buyInstallments" class="collapse mt-2">
+            <form id="add-to-installments" action="/checkout" method="get">
+                <input type="hidden" id="Installments_quantity" name="Installments_quantity" value="1">
+                <input type="hidden" name="sku_id" id="sku_id" value="">
+                <input type="hidden" name="Installments" value="1">
                 <button class="product__info__buy__button text-white" name="add-to-cart">Mua trả góp</button>
             </form>
         </div>
@@ -613,12 +613,14 @@ $specs = json_decode($desc_specs['specifications']);
     function decrementProduct() {
         const quantityElement = document.getElementById('quantityProduct');
         const quantityInput = document.getElementById('quantityInput');
+        const Installments_quantity = document.getElementById('Installments_quantity');
         let quantity = parseInt(quantityElement.innerText);
 
         if (quantity > 1) {
             quantity--;
             quantityElement.innerText = quantity;
             quantityInput.value = quantity;
+            Installments_quantity.value = quantity;
         }
     }
 
@@ -630,6 +632,7 @@ $specs = json_decode($desc_specs['specifications']);
         quantity++;
         quantityElement.innerText = quantity;
         quantityInput.value = quantity;
+        Installments_quantity.value = quantity;
     }
 
 
@@ -646,9 +649,10 @@ $specs = json_decode($desc_specs['specifications']);
         const newPrice = parseFloat(radioButton.getAttribute('data-price'));
         const oldPrice = parseFloat(radioButton.getAttribute('data-old-price'));
         const newSku = parseFloat(radioButton.getAttribute('data-sku'));
-        const formContainer = document.getElementById('mua');
+        const formContainer = document.getElementById('buyInstallments');
         if (checkSku.includes(newSku)) {
-            formContainer.style.display = 'block'; 
+            formContainer.style.display = 'block';
+            document.getElementById("sku_id").value = newSku;
         } else {
             formContainer.style.display = 'none';
         }
