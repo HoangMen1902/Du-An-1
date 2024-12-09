@@ -39,7 +39,7 @@
                         <p class="text-center text-center" style="font-size: 16px;">PC08550 - Web19303 </p>
                     </div>
                     <div class="col-3 p-4">
-                        <img class="rounded" src="" alt="Ảnh Lý Hoàng Mến">
+                        <img class="rounded" src="public\Uploads\hoangmen.png" alt="Ảnh Lý Hoàng Mến">
                         <h5 class="text-center mt-1">Lý Hoàng Mến</h5>
                         <p class="text-center" style="font-size: 16px;">PC08626 - Web19303 </p>
                     </div>
