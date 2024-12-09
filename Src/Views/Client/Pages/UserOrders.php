@@ -12,7 +12,7 @@ $this->start('main_content');
                         <div class="order-info-add-title">
                             <p>Đơn Hàng</p>
                         </div>
-                        <ul class="nav nav-tabs fs">
+                        <ul class="nav nav-tabs fs mb-3">
                             <li class="fw-bold">TẤT CẢ ĐƠN HÀNG</li>
                         </ul>
                         <div class="container-fluid">
@@ -56,7 +56,7 @@ $this->start('main_content');
                                                 <div class="items-orders-list">
                                                     <div class="wrap-head-order">
                                                         <div class="code-order-list">
-                                                            <h4 class="col-6"><a href="./order-detail.php"
+                                                            <h4 class="col-6"><a href="/order-details/<?=$r['order_id']?>"
                                                                     aria-label="Đơn hàng ECO672454N01"
                                                                     title="Đơn hàng ECO672454N01">Đơn hàng
                                                                     <b><?= $r['order_id'] ?></b></a></h4>
