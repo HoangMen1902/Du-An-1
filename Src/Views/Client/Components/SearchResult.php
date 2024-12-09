@@ -1,354 +1,172 @@
 <?php $this->layout('Client/Components/Layout'); ?>
 
-
-
 <?php $this->start('main_content') ?>
 <div class="container">
     <div class="row text-center py-3 pb-0">
         <!-- Dòng kết quả tìm kiếm -->
         <div class="search-result-count">
-            <?php if (count($searchResult) > 0) :
-            ?>
+            <?php if (count($searchResult) > 0) : ?>
                 <h1 style="padding: 20px;">Có <?= count($searchResult) ?> kết quả được tìm thấy cho '<?= $keyword ?>'</h1>
-            <?php
-            else :
-            ?>
+            <?php else : ?>
                 <h1 style="padding: 20px;">Không có kết quả được tìm thấy cho '<?= $keyword ?>'</h1>
-
-            <?php
-            endif;
-            ?>
+            <?php endif; ?>
         </div>
 
-        <!-- Thanh tìm kiếm -->
+
         <div class="search-bar-wrapper ">
             <div class="search-bar">
-                <input type="text" id="search-input" placeholder="Tìm kiếm sản phẩm...">
+                <form class="searchOffCanvas__form" action="/search" method="GET" id="search-form">
+                    <input type="text" id="search-input" name="search" placeholder="Tìm kiếm sản phẩm...">
+
+                    <button type="submit" style="display: none;"></button>
+                </form>
                 <span class="search-icon" onclick="searchProducts()">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="24" height="24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 15.75L19.5 19.5M10.5 15.75a5.25 5.25 0 1 0 0-10.5 5.25 5.25 0 0 0 0 10.5z" />
                     </svg>
                 </span>
             </div>
-        </div>
 
+        </div>
     </div>
 
     <div class="container">
-
-
-
-
-        <div class="row ">
-            <div class="col-xl-2 col-md-3 my-4 px-3 d-none d-lg-block ">
-                <div class="filter">
-                    <h4>
-                        <svg xmlns="http://www.w3.org/2000/svg" height="20px" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
-                        </svg>
-                        Lọc
-                    </h4>
-
-                    <div class="filter-section stock">
-                        <label for="in-stock">Còn hàng</label>
-                        <input type="checkbox" id="in-stock">
-                    </div>
-
-                    <div class="filter-section">
-                        <label for="brand-filter">Thương hiệu</label>
-                        <select id="brand-filter">
-                            <option value="">Tất cả</option>
-                            <option value="Arbiter Studio">Arbiter Studio</option>
-                            <option value="Cherry Xtrfy">Cherry Xtrfy</option>
-                            <option value="DrunkDeer">DrunkDeer</option>
-                            <option value="Glorious">Glorious</option>
-                            <option value="Pulsar">Pulsar</option>
-                            <option value="Vancer">Vancer</option>
-                            <option value="Yuki Aim">Yuki Aim</option>
-                        </select>
-                    </div>
-
-                    <div class="filter-section">
-                        <label for="product-type-filter">Loại sản phẩm</label>
-                        <select id="product-type-filter">
-                            <option value="">Tất cả</option>
-                            <option value="type1">Type 1</option>
-                            <option value="type2">Type 2</option>
-                        </select>
-                    </div>
-
-                    <div class="filter-section">
-                        <label for="size-filter">Size</label>
-                        <select id="size-filter">
-                            <option value="">Tất cả</option>
-                            <option value="small">Nhỏ</option>
-                            <option value="medium">Vừa</option>
-                            <option value="large">Lớn</option>
-                        </select>
-                    </div>
-                    <div class="filter-section">
-                        <label for="price-range">Giá</label>
-                        <input type="range" id="price-range" min="0" max="100000000" step="1000000" value="15000000" oninput="updatePriceDisplay(this.value)">
-                        <div class="price-display">15,000,000 đ</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-xxl-10 col-md-12  my-4 p-0">
-
-
-
-
-
-
-
-
-                <div class="col-12 ">
-
-
-
-                <div class="row mt-3 d-flex">
-                    <?php foreach ($productData as $product):
-                        $thumbnail = explode(',', $product['thumbnail']);
-                    ?>
-                        <div class="col-md-4 mb-4 col-xxl-3 card-list ">
-                            <div class="card position-relative h-100" id="card-<?= $product['product_id'] ?>">
-                                <div class="w-100 ratio ratio-1x1 ">
-                                    <img class="product-img   p-3" style="object-fit: contain; "
-                                        src="<?= $_ENV['APP_URL'] ?>/public/Uploads/Products/<?= $thumbnail[0] ?>"
-                                        alt="<?= $product['product_name'] ?>"
-                                        id="main-image-<?= $product['product_id'] ?>"
-                                        data-product-id="<?= $product['product_id'] ?>">
-                                </div>
-
-                                <div class="card-body  " style="display: flex; flex-direction: column;">
-                                    <h5 class="card-title mb-2 text-limit" id="product-name-<?= $product['product_id'] ?>">
-                                        <?= $product['product_name'] ?>
-                                        <span id="sku-attributes-<?= $product['product_id'] ?>"></span> <!-- Đây là nơi hiển thị thuộc tính SKU -->
-                                    </h5>
-
-                                    <p class="card-text mb-2 text-limit"><?= $product['description'] ?></p>
-
-                                    <div class="price">
-                                        <?php if ($product['skus']) :
-                                            $sku = current($product['skus']);
-                                            $oldPrice = $sku['original_price'];
-                                            $currentPrice = $sku['discounted_price'];
-                                        ?>
-                                            <?php if ($oldPrice > $currentPrice) : ?>
-                                                <span class="price text-muted mb-2 text-decoration-line-through old-price" id="old-price-<?= $product['product_id'] ?>"><?= number_format($oldPrice) ?> đ</span>
-                                            <?php endif; ?>
-                                            <span class="price mb-2 ms-2 current-price" id="current-price-<?= $product['product_id'] ?>"><?= number_format($currentPrice) ?> đ</span>
-                                        <?php endif; ?>
+        <div class="row justify-content-around">
+            <div class="col-xxl-10 col-md-12 my-4 p-0">
+                <div class="col-12">
+                    <div class="row mt-3">
+                        <?php foreach ($searchResult as $product) :
+                            $thumbnail = explode(',', $product['thumbnail']);
+                        ?>
+                            <div class="col-md-4 mb-4 col-xxl-3 card-list">
+                                <div class="card position-relative h-100" id="card-<?= $product['product_id'] ?>">
+                                    <div class="w-100 ratio ratio-1x1">
+                                        <img class="product-img p-3" style="object-fit: contain;"
+                                            src="<?= $_ENV['APP_URL'] ?>/public/Uploads/Products/<?= $thumbnail[0] ?>"
+                                            alt="<?= $product['product_name'] ?>"
+                                            id="main-image-<?= $product['product_id'] ?>"
+                                            data-product-id="<?= $product['product_id'] ?>">
                                     </div>
-                                    <a href="detail/<?= $product['product_id'] ?>" class="btn btn-mainColor button-hover button-add text-white rounded-5 position-absolute">
-                                        Mua ngay
-                                    </a>
-                                    <div style="margin-top: auto;">
-                                        <?php foreach ($product['skus'] as $sku) : ?>
-                                            <button class="img-thumbnail  me-1 product-thumbnail  ">
-                                                <img class="col-12 variant-image "
-                                                    src="<?= $_ENV['APP_URL'] ?>/public/Uploads/Products/<?= $sku['images'] ?>"
-                                                    alt="Variant Image"
-                                                    onclick="changeVariant(<?= $product['product_id'] ?>,
+
+                                    <div class="card-body" style="display: flex; flex-direction: column;">
+                                        <h5 class="card-title mb-2 text-limit" id="product-name-<?= $product['product_id'] ?>">
+                                            <?= $product['product_name'] ?>
+                                            <span id="sku-attributes-<?= $product['product_id'] ?>"></span>
+                                        </h5>
+
+                                        <p class="card-text mb-2 text-limit"><?= $product['description'] ?></p>
+
+                                        <div class="price">
+                                            <?php if ($product['skus']) :
+                                                $sku = current($product['skus']);
+                                                $oldPrice = $sku['original_price'];
+                                                $currentPrice = $sku['discounted_price'];
+                                            ?>
+                                                <?php if ($oldPrice > $currentPrice) : ?>
+                                                    <span class="price text-muted mb-2 text-decoration-line-through old-price" id="old-price-<?= $product['product_id'] ?>"><?= number_format($oldPrice) ?> đ</span>
+                                                <?php endif; ?>
+                                                <span class="price mb-2 ms-2 current-price" id="current-price-<?= $product['product_id'] ?>"><?= number_format($currentPrice) ?> đ</span>
+                                            <?php endif; ?>
+                                        </div>
+                                        <a href="detail/<?= $product['product_id'] ?>" class="btn btn-mainColor button-hover button-add text-white rounded-5 position-absolute">
+                                            Mua ngay
+                                        </a>
+                                        <div style="margin-top: auto;">
+                                            <?php foreach ($product['skus'] as $sku) : ?>
+                                                <button class="img-thumbnail me-1 product-thumbnail">
+                                                    <img class="col-12 variant-image"
+                                                        src="<?= $_ENV['APP_URL'] ?>/public/Uploads/Products/<?= $sku['images'] ?>"
+                                                        alt="Variant Image"
+                                                        onclick="changeVariant(<?= $product['product_id'] ?>,
                                                      '<?= $_ENV['APP_URL'] ?>/public/Uploads/Products/<?= $sku['images'] ?>',
                                                      <?= $sku['discounted_price'] ?>,
                                                       <?= $sku['original_price'] ?>)">
-
-                                            </button>
-                                        <?php endforeach; ?>
+                                                </button>
+                                            <?php endforeach; ?>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    <?php endforeach; ?>
+                        <?php endforeach; ?>
+                    </div>
                 </div>
-
-
-
-
-
-
-
-
-
-
-<!-- 
-                    <div class="row mt-3 d-flex">
-                        <div class="col-md-4 mb-4  col-xxl-3">
-                            <div class="card position-relative" id="card-1">
-                                <img class="product-img" id="main-img-1" src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800" class="card-img-top" alt="ảnh sản phẩm">
-                                <div class="card-body">
-                                    <h5 class="card-title mb-2 text-limit">Lót chuột Lethal Gaming Gear Jupiter PRO (V2)</h5>
-                                    <p class="card-text mb-2 text-limit">Thuộc phân loại Control - Slow, chậm nhất trong các dòng PRO của Lethal Gaming.</p>
-
-                                    <div class="d-flex justify-content-star align-items-center">
-                                        <span class="price text-muted mb-2 text-decoration-line-through">1.500.000đ</span>
-                                        <span class="price mb-2 ms-2">1.000.000đ</span>
-                                    </div>
-                                    <button class="btn btn-mainColor button-hover button-add text-white rounded-5 position-absolute ">Mua ngay</button>
-
-                                    <div class="d-flex mt-3">
-                                        <button class="img-thumbnail col-3  me-1 product-thumbnail  " onclick="changeImage('main-img-1', 'https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800')">
-                                            <img class="col-12 " src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800" alt="thumbnail">
-                                        </button>
-                                        <button class="img-thumbnail col-3 me-1 product-thumbnail" onclick="changeImage('main-img-1', 'https://www.phongcachxanh.vn/cdn/shop/files/lot-chu-t-lethal-gaming-gear-jupiter-pro-v2-41227243946229.jpg?v=1726313363&width=800')">
-                                            <img class="col-12" src="https://www.phongcachxanh.vn/cdn/shop/files/lot-chu-t-lethal-gaming-gear-jupiter-pro-v2-41227243946229.jpg?v=1726313363&width=800" alt="thumbnail">
-                                        </button>
-                                        <button class="img-thumbnail col-3 me-1 product-thumbnail" onclick="changeImage('main-img-1', 'https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800')">
-                                            <img class="col-12" src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800" alt="thumbnail">
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-4 mb-4  col-xxl-3">
-                            <div class="card position-relative" id="card-2">
-                                <img class="product-img" id="main-img-2" src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800" class="card-img-top" alt="ảnh sản phẩm">
-                                <div class="card-body">
-                                    <h5 class="card-title mb-2 text-limit">Lót chuột Lethal Gaming Gear Jupiter PRO (V2)</h5>
-                                    <p class="card-text mb-2 text-limit">Thuộc phân loại Control - Slow, chậm nhất trong các dòng PRO của Lethal Gaming.</p>
-
-                                    <div class="d-flex justify-content-star align-items-center">
-                                        <span class="price text-muted mb-2 text-decoration-line-through">1.500.000đ</span>
-                                        <span class="price mb-2 ms-2">1.000.000đ</span>
-                                    </div>
-                                    <button class="btn btn-mainColor button-hover button-add  text-white rounded-5 position-absolute">Mua ngay</button>
-
-                                    <div class="d-flex mt-3">
-                                        <button class="img-thumbnail col-3 me-1 product-thumbnail" onclick="changeImage('main-img-2', 'https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800')">
-                                            <img class="col-12" src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800" alt="thumbnail">
-                                        </button>
-                                        <button class="img-thumbnail col-3 me-1 product-thumbnail" onclick="changeImage('main-img-2', 'https://www.phongcachxanh.vn/cdn/shop/files/lot-chu-t-lethal-gaming-gear-jupiter-pro-v2-41227243946229.jpg?v=1726313363&width=800')">
-                                            <img class="col-12" src="https://www.phongcachxanh.vn/cdn/shop/files/lot-chu-t-lethal-gaming-gear-jupiter-pro-v2-41227243946229.jpg?v=1726313363&width=800" alt="thumbnail">
-                                        </button>
-                                        <button class="img-thumbnail col-3 me-1 product-thumbnail" onclick="changeImage('main-img-2', 'https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800')">
-                                            <img class="col-12" src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800" alt="thumbnail">
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4 mb-4  col-xxl-3">
-                            <div class="card position-relative" id="card-2">
-                                <img class="product-img" id="main-img-2 product-img" src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800" class="card-img-top" alt="ảnh sản phẩm">
-                                <div class="card-body">
-                                    <h5 class="card-title mb-2 text-limit">Lót chuột Lethal Gaming Gear Jupiter PRO (V2)</h5>
-                                    <p class="card-text mb-2 text-limit">Thuộc phân loại Control - Slow, chậm nhất trong các dòng PRO của Lethal Gaming.</p>
-
-                                    <div class="d-flex justify-content-star align-items-center">
-                                        <span class="price text-muted mb-2 text-decoration-line-through">1.500.000đ</span>
-                                        <span class="price mb-2 ms-2">1.000.000đ</span>
-                                    </div>
-                                    <button class="btn btn-mainColor button-hover button-add  text-white rounded-5 position-absolute">Mua ngay</button>
-
-                                    <div class="d-flex mt-3">
-                                        <button class="img-thumbnail col-3 me-1 product-thumbnail" onclick="changeImage('main-img-2', 'https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800')">
-                                            <img class="col-12" src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800" alt="thumbnail">
-                                        </button>
-                                        <button class="img-thumbnail col-3 me-1 product-thumbnail" onclick="changeImage('main-img-2', 'https://www.phongcachxanh.vn/cdn/shop/files/lot-chu-t-lethal-gaming-gear-jupiter-pro-v2-41227243946229.jpg?v=1726313363&width=800')">
-                                            <img class="col-12" src="https://www.phongcachxanh.vn/cdn/shop/files/lot-chu-t-lethal-gaming-gear-jupiter-pro-v2-41227243946229.jpg?v=1726313363&width=800" alt="thumbnail">
-                                        </button>
-                                        <button class="img-thumbnail col-3 me-1 product-thumbnail" onclick="changeImage('main-img-2', 'https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800')">
-                                            <img class="col-12" src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800" alt="thumbnail">
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4 mb-4  col-xxl-3">
-                            <div class="card position-relative" id="card-2">
-                                <img class="product-img" id="main-img-2" src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800" class="card-img-top" alt="ảnh sản phẩm">
-                                <div class="card-body">
-                                    <h5 class="card-title mb-2 text-limit">Lót chuột Lethal Gaming Gear Jupiter PRO (V2)</h5>
-                                    <p class="card-text mb-2 text-limit">Thuộc phân loại Control - Slow, chậm nhất trong các dòng PRO của Lethal Gaming.</p>
-
-                                    <div class="d-flex justify-content-star align-items-center">
-                                        <span class="price text-muted mb-2 text-decoration-line-through">1.500.000đ</span>
-                                        <span class="price mb-2 ms-2">1.000.000đ</span>
-                                    </div>
-                                    <button class="btn btn-mainColor button-hover button-add  text-white rounded-5 position-absolute">Mua ngay</button>
-
-                                    <div class="d-flex mt-3">
-                                        <button class="img-thumbnail col-3 me-1 product-thumbnail" onclick="changeImage('main-img-2', 'https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800')">
-                                            <img class="col-12" src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800" alt="thumbnail">
-                                        </button>
-                                        <button class="img-thumbnail col-3 me-1 product-thumbnail" onclick="changeImage('main-img-2', 'https://www.phongcachxanh.vn/cdn/shop/files/lot-chu-t-lethal-gaming-gear-jupiter-pro-v2-41227243946229.jpg?v=1726313363&width=800')">
-                                            <img class="col-12" src="https://www.phongcachxanh.vn/cdn/shop/files/lot-chu-t-lethal-gaming-gear-jupiter-pro-v2-41227243946229.jpg?v=1726313363&width=800" alt="thumbnail">
-                                        </button>
-                                        <button class="img-thumbnail col-3 me-1 product-thumbnail" onclick="changeImage('main-img-2', 'https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800')">
-                                            <img class="col-12" src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800" alt="thumbnail">
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4 mb-4  col-xxl-3">
-                            <div class="card position-relative" id="card-2">
-                                <img class="product-img" id="main-img-2" src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800" class="card-img-top" alt="ảnh sản phẩm">
-                                <div class="card-body">
-                                    <h5 class="card-title mb-2 text-limit">Lót chuột Lethal Gaming Gear Jupiter PRO (V2)</h5>
-                                    <p class="card-text mb-2 text-limit">Thuộc phân loại Control - Slow, chậm nhất trong các dòng PRO của Lethal Gaming.</p>
-
-                                    <div class="d-flex justify-content-star align-items-center">
-                                        <span class="price text-muted mb-2 text-decoration-line-through">1.500.000đ</span>
-                                        <span class="price mb-2 ms-2">1.000.000đ</span>
-                                    </div>
-                                    <button class="btn btn-mainColor button-hover button-add  text-white rounded-5 position-absolute">Mua ngay</button>
-
-                                    <div class="d-flex mt-3">
-                                        <button class="img-thumbnail col-3 me-1 product-thumbnail" onclick="changeImage('main-img-2', 'https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800')">
-                                            <img class="col-12" src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800" alt="thumbnail">
-                                        </button>
-                                        <button class="img-thumbnail col-3 me-1 product-thumbnail" onclick="changeImage('main-img-2', 'https://www.phongcachxanh.vn/cdn/shop/files/lot-chu-t-lethal-gaming-gear-jupiter-pro-v2-41227243946229.jpg?v=1726313363&width=800')">
-                                            <img class="col-12" src="https://www.phongcachxanh.vn/cdn/shop/files/lot-chu-t-lethal-gaming-gear-jupiter-pro-v2-41227243946229.jpg?v=1726313363&width=800" alt="thumbnail">
-                                        </button>
-                                        <button class="img-thumbnail col-3 me-1 product-thumbnail" onclick="changeImage('main-img-2', 'https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800')">
-                                            <img class="col-12" src="https://www.phongcachxanh.vn/cdn/shop/files/chu-t-khong-day-sieu-nh-fnatic-x-lamzu-maya-x-8k-di-kem-dongle-8khz-41690680787189.jpg?v=1726324338&width=800" alt="thumbnail">
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                    </div> -->
-
-
-
-                </div>
-
-
             </div>
         </div>
-
-
     </div>
 
 </div>
 
-<script>
-    function changeImage(imageSrc) {
-        const mainImage = document.getElementById('main-img');
-        mainImage.style.opacity = 0;
-        setTimeout(function() {
-            mainImage.src = imageSrc;
-            mainImage.style.transition = 'opacity 0.2s ease-in-out';
-            mainImage.style.opacity = 1;
-        }, 200);
-    }
-</script>
 
 <?php $this->stop() ?>
-
-
-
 
 <?php
 $this->push('scripts')
 ?>
-<script src="<?= $_ENV['APP_URL'] ?>/public/Assets/Client/js/Filter.js"></script>
+<script>
+    function searchProducts() {
+        var keyword = document.getElementById("search-input").value;
+        if (keyword.trim() !== "") {
+
+            document.getElementById("search-form").submit();
+        } else {
+
+            alert("Vui lòng nhập từ khóa tìm kiếm!");
+        }
+    }
+
+    function changeVariant(productId, imageUrl, newPrice, oldPrice) {
+        let mainImage = document.getElementById('main-image-' + productId);
+        if (mainImage) {
+            mainImage.src = imageUrl;
+        }
+
+        if (newPrice !== undefined && newPrice !== null) {
+            let currentPriceElement = document.getElementById('current-price-' + productId);
+            if (currentPriceElement) {
+                currentPriceElement.innerText = newPrice.toLocaleString() + ' đ';
+            }
+        }
+
+        if (oldPrice !== undefined && oldPrice !== null && oldPrice > newPrice) {
+            let oldPriceElement = document.getElementById('old-price-' + productId);
+            if (oldPriceElement) {
+                oldPriceElement.innerText = oldPrice.toLocaleString() + ' đ';
+            }
+        }
+    }
+
+    function changeVariant2(productId, imageUrl, newPrice, oldPrice) {
+        let mainImage = document.getElementById('main-image-' + productId);
+        if (mainImage) {
+            mainImage.src = imageUrl;
+        }
+
+        if (newPrice !== undefined && newPrice !== null) {
+            let currentPriceElement = document.querySelector(`#product-${productId} .current-price`);
+            if (currentPriceElement) {
+                const formattedNewPrice = Math.round(parseFloat(newPrice)).toLocaleString();
+                currentPriceElement.innerText = `${formattedNewPrice} đ`;
+            }
+        }
+
+        if (oldPrice !== undefined && oldPrice !== null && oldPrice > newPrice) {
+            let oldPriceElement = document.querySelector(`#product-${productId} .old-price`);
+            if (oldPriceElement) {
+                const formattedOldPrice = Math.round(parseFloat(oldPrice)).toLocaleString();
+                oldPriceElement.innerText = `${formattedOldPrice} đ`;
+            }
+        }
+    }
+
+    $(document).on('click', '.variant-image', function() {
+        const productId = $(this).data('product-id');
+        const variantImage = $(this).data('variant-image');
+        const discountedPrice = $(this).data('discounted-price');
+        const originalPrice = $(this).data('original-price');
+
+        changeVariant2(productId, variantImage, discountedPrice, originalPrice);
+    });
+</script>
 
 <?php
 $this->end();
