@@ -1,60 +1,67 @@
 <?php $this->layout('Admin/Layouts/Layout') ?>
 
 
-<?php 
+<?php
 $this->start('main_content');
 ?>
 <div class="col-12 grid-margin">
     <div class="card">
         <div class="card-body">
             <h4 class="card-title">Thêm Kế Hoạch Trả Góp</h4>
-            <form class="forms-sample" action="" method="post" enctype="multipart/form-data">
-                <input type="hidden" name="method" value="POST">
-
+            <form class="forms-sample" action="/admin/tragop/store" method="post" enctype="multipart/form-data">
                 <div class="form-group">
-                    <label for="order_id">Mã đơn hàng</label>
-                    <input type="text" class="form-control" name="order_id" id="order_id" placeholder="order_id">
+                    <label for="sku_id">Mã sản phẩm</label>
+                    <input type="text" name="sku_id" id="sku_id" class="form-control" placeholder="Nhập SKU">
                 </div>
-
                 <div class="form-group">
-                    <label for="interestRate">Lãi Suất (%)</label>
-                    <input class="form-control" id="interestRate" rows="4" name="interestRate"></>
+                    <label for="interest_rate">Lãi suất (%)</label>
+                    <input type="number" name="interest_rate" id="interest_rate" class="form-control" placeholder="Nhập lãi suất">
                 </div>
-
                 <div class="form-group">
                     <label for="term">Kỳ Hạn</label>
                     <select class="form-control" id="term" name="term">
-                        <option value="">Chọn thương hiệu</option>
-                        <option value="">6</option>
-                        <option value="">12</option>
+                        <option value="1">3 tháng</option>
+                        <option value="2">6 tháng</option>
+                        <option value="3">1 năm</option>
+                        <option value="4">2 năm</option>
+                        <option value="5">3 năm</option>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="monthlyPayment">Số Tiền Thanh Toán Hàng Tháng:</label>
-                    <input type="text" class="form-control" name="monthlyPayment" id="monthlyPayment" placeholder="monthlyPayment">
-                </div>
-
-                <div class="form-group">
-                    <label for="startDate">Ngày bắt đầu</label>
-                    <input type="date" class="form-control" name="startDate" id="startDate" placeholder="startDate">
-                </div>
-
-                <div class="form-group">
-                    <label for="endDate">Ngày kết thúc</label>
-                    <input type="date" class="form-control" name="endDate" id="endDate" placeholder="Discount Rate">
-                </div>
-
-                <div class="border-top">
-                    <div class="card-body">
-                        <button type="reset" class="btn btn-danger text-white">Làm lại</button>
-                        <button type="submit" class="btn btn-primary">Thêm</button>
+                    <label>Tỷ lệ trả trước (%)</label>
+                    <div class="checkbox-group" style="display: flex; gap: 15px; align-items: center;">
+                        <div>
+                            <input type="checkbox" id="rate_0" name="down_payment_rate[]" value="0">
+                            <label for="rate_0">0%</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" id="rate_1" name="down_payment_rate[]" value="1">
+                            <label for="rate_1">10%</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" id="rate_3" name="down_payment_rate[]" value="3">
+                            <label for="rate_3">30%</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" id="rate_5" name="down_payment_rate[]" value="5">
+                            <label for="rate_5">50%</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" id="rate_7" name="down_payment_rate[]" value="7">
+                            <label for="rate_7">70%</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" id="rate_9" name="down_payment_rate[]" value="9">
+                            <label for="rate_9">90%</label>
+                        </div>
                     </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary mr-2" name="submit">Thêm mới</button>
-                <a href="/admin?url=products" class="btn btn-light">Hủy bỏ</a>
+
+                <button type="submit" class="btn btn-primary">Thêm trả góp</button>
             </form>
+
         </div>
     </div>
 </div>
