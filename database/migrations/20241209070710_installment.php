@@ -19,21 +19,21 @@ final class Installment extends AbstractMigration
      */
     public function change(): void
     {
-        $table = $this->table('Installment_plans');
-        $table->addColumn('order_id', 'integer', ['null' => false, 'signed' => false]) // ID đơn hàng
-            ->addColumn('term', 'integer', ['null' => false]) // Thời gian trả (số tháng)
-            ->addColumn('interest_rate', 'decimal', ['precision' => 5, 'scale' => 2, 'null' => false]) // Lãi suất (%)
-            ->addColumn('down_payment_rate', 'decimal', ['precision' => 5, 'scale' => 2, 'null' => false]) // Trả trước bao nhiêu %
-            ->addColumn('status', 'tinyinteger', ['default' => 1, 'null' => false]) // 1: Đang trả góp, 0: Hoàn thành
+        $table = $this->table('Installments');
+
+        $table->addColumn('sku_id', 'integer', ['null' => false, 'signed' => false]) // Khóa ngoại đến bảng SKU
+            ->addColumn('term', 'integer', ['null' => false]) 
+            ->addColumn('interest_rate', 'decimal', ['precision' => 5, 'scale' => 2, 'null' => false]) 
+            ->addColumn('down_payment_rate', 'text') 
             ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
             ->addColumn('updated_at', 'timestamp', [
                 'default' => 'CURRENT_TIMESTAMP',
                 'update' => 'CURRENT_TIMESTAMP'
-            ]
-            )->addForeignKey('order_id', 'orders', 'id', [
+            ]) // Thời gian cập nhật
+            ->addForeignKey('sku_id', 'Product_skus', 'ID', [
                 'delete' => 'CASCADE',
                 'update' => 'NO_ACTION'
-            ])
+            ]) // Khóa ngoại liên kết với bảng Product_skus
             ->create();
     }
 }

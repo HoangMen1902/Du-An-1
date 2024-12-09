@@ -171,6 +171,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
         $r->get('/tragop', [InstallmentsController::class, 'show']);
         $r->get('/tragop/add', [InstallmentsController::class, 'add']);
         $r->get('/tragop/detail', [InstallmentsController::class, 'detail']);
+        $r->post('/tragop/store', [InstallmentsController::class, 'store']);
         $r->get('/edit-user/{id:\d+}', [UserController::class, 'edit']);
         $r->get('/locked-account', [UserController::class, 'locked']);
         $r->get('/delete-product/{id}', [productsController::class, 'delete']);
