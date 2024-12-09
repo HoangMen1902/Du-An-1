@@ -96,3 +96,32 @@ $('#orderSearch').on('change', (e) => {
         });
     }, 500);
 });
+
+$(document).ready(function() {
+    $('.order-status').on('change', function() {
+        var status = $(this).val();
+        var orderId = $(this).data('order-id');
+        console.log('Order ID: ' + orderId + ', Status: ' + status);
+        $.ajax({
+            url: '/admin/update-order-status', 
+            method: 'POST',
+            data: {
+                order_id: orderId,
+                order_status: status
+            },
+            success: function(response) {
+                if (response.success) {
+                    console.log('Cập nhật trạng thái thành công');
+                } else {
+                    console.log('Cập nhật thất bại');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.log(xhr.responseText); 
+                console.log('Có lỗi xảy ra, vui lòng thử lại');
+            }
+            
+        });
+    });
+});
+

@@ -56,28 +56,17 @@ $this->start('main_content');
                                     <td><?= htmlspecialchars($order['address']) ?></td>
                                     <td><?= number_format($order['order_price'], 0, ',', '.') ?> VND</td>
                                     <td>
-                                        <?php
-                                        switch ($order['order_status']) {
-                                            case 1:
-                                                echo 'Đang xử lý';
-                                                break;
-                                            case 2:
-                                                echo 'Chờ thanh toán';
-                                                break;
-                                            case 3:
-                                                echo 'Đã thanh toán';
-                                                break;
-                                            case 4:
-                                                echo 'Đang vận chuyển';
-                                                break;
-                                            case 5:
-                                                echo 'Đã giao';
-                                                break;
-                                            default:
-                                                echo 'Đã hủy';
-                                                break;
-                                        }
-                                        ?>
+                                        <form action="/admin/update-order-status" method="post" id="statusForm-<?= htmlspecialchars($order['order_id']) ?>">
+                                            <input type="hidden" name="order_id" value="<?= htmlspecialchars($order['order_id']) ?>">
+                                            <select name="order_status" class="form-control order-status" data-order-id="<?= htmlspecialchars($order['order_id']) ?>" style="width: 200px;">
+                                                <option value="1" <?= $order['order_status'] == 1 ? 'selected' : '' ?>>Đang xử lý</option>
+                                                <option value="2" <?= $order['order_status'] == 2 ? 'selected' : '' ?>>Chờ thanh toán</option>
+                                                <option value="3" <?= $order['order_status'] == 3 ? 'selected' : '' ?>>Đã thanh toán</option>
+                                                <option value="4" <?= $order['order_status'] == 4 ? 'selected' : '' ?>>Đang vận chuyển</option>
+                                                <option value="5" <?= $order['order_status'] == 5 ? 'selected' : '' ?>>Đã giao</option>
+                                                <option value="6" <?= $order['order_status'] == 6 ? 'selected' : '' ?>>Đã hủy</option>
+                                            </select>
+                                        </form>
                                     </td>
                                     <td>
                                         <div class="d-flex align-items-center">

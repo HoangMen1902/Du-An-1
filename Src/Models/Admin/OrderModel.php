@@ -248,4 +248,11 @@ class OrderModel extends BaseModel
             return [];
         }
     }
+    public function updateOrder($id, $data)
+    {
+        error_log("Cập nhật order ID: $id, Dữ liệu: " . print_r($data, true));
+    
+        return $this->update($id, $data);
+    }
+    
 }

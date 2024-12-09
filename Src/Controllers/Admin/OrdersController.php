@@ -31,5 +31,29 @@ class OrdersController extends BaseController {
         $result = $orders->searchOrder($order);
         echo json_encode($result);
     }
+    public function changeStatus()
+    {
+        header('Content-Type: application/json');
+        $orderId = $_POST['order_id'];
+        $orderStatus = $_POST['order_status'];
     
+        if (empty($orderId) || empty($orderStatus)) {
+            echo json_encode(['success' => false, 'message' => 'Thiếu thông tin']);
+            return;
+        }
+    
+        if (!in_array($orderStatus, [1, 2, 3, 4, 5, 6])) {
+            echo json_encode(['success' => false, 'message' => 'Trạng thái không hợp lệ']);
+            return;
+        }
+    
+        $orders = new OrderModel();
+        $result = $orders->updateOrder($orderId, ['status' => $orderStatus]);
+    
+        if ($result) {
+            echo json_encode(['success' => true, 'message' => 'Cập nhật trạng thái thành công']);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Cập nhật thất bại']);
+        }
+    }
 }
