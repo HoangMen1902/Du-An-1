@@ -44,13 +44,13 @@ switch ($status_int) {
             <div class="col-lg-12">
                 <div class="order-detail account-info">
                     <div class="order-detail__actions back d-none d-lg-block mb-5">
-                        <a href="./orders.php">
+                        <a href="/profile/orders-list">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path d="M11.4375 18.75L4.6875 12L11.4375 5.25M5.625 12H19.3125" stroke="#2E2E2E"
                                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
                             </svg>
-                            <a class="btn btn-primary" href="/user-profile">Quay về</a>
+                            <a class="btn btn-primary" href="/profile/orders-list">Quay về</a>
                         </a>
                     </div>
                     <div class="order-detail__meta">
