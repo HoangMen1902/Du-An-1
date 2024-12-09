@@ -30,7 +30,7 @@
         <p>Bạn có thể xuất hóa đơn trong trang chi tiết đơn hàng!</p>
 
         <div class="w-100 d-flex align-items-end justify-content-end">
-            <a class="btn btn-primary text-end">Quay về</a>
+            <a href="/" class="btn btn-primary text-end">Quay về</a>
         </div>
     </div> 
 </div>

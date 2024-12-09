@@ -182,4 +182,70 @@ class OrderModel extends BaseModel
             return false;
         }
     }
+    public function searchOrder($data)
+    {
+        try {
+            if (empty($data)) {
+                $sql = "SELECT 
+                o.id AS order_id, 
+                o.total_price AS order_price, 
+                o.status AS order_status, 
+                ca.phone, 
+                ca.address, 
+                GROUP_CONCAT(CONCAT_WS('|', p.name, ps.images, od.quantity) SEPARATOR ';') AS products, 
+                MAX(c.name) AS category_name
+            FROM orders o
+            JOIN checkout_addresses ca ON o.address_id = ca.id
+            JOIN order_details od ON o.id = od.order_id
+            JOIN product_skus ps ON od.sku_id = ps.id
+            JOIN products p ON ps.product_id = p.id
+            JOIN product_categories pc ON p.id = pc.product_id
+            JOIN category_values cv ON pc.category_values_id = cv.id
+            JOIN categories c ON cv.category_id = c.id
+            GROUP BY o.id 
+            ORDER BY o.created_at DESC
+            LIMIT 0, 25;";
+                $conn = $this->_conn->MySQLi();
+                $stmt = $conn->prepare($sql);
+                $stmt->execute();
+                $result = $stmt->get_result();
+                return $result->fetch_all(MYSQLI_ASSOC);
+            } else {
+                $sql = "SELECT 
+                o.id AS order_id, 
+                o.total_price AS order_price, 
+                o.status AS order_status, 
+                ca.phone, 
+                ca.address, 
+                GROUP_CONCAT(CONCAT_WS('|', p.name, ps.images, od.quantity) SEPARATOR ';') AS products, 
+                MAX(c.name) AS category_name
+            FROM orders o
+            JOIN checkout_addresses ca ON o.address_id = ca.id
+            JOIN order_details od ON o.id = od.order_id
+            JOIN product_skus ps ON od.sku_id = ps.id
+            JOIN products p ON ps.product_id = p.id
+            JOIN product_categories pc ON p.id = pc.product_id
+            JOIN category_values cv ON pc.category_values_id = cv.id
+            JOIN categories c ON cv.category_id = c.id
+            WHERE ca.phone LIKE ? 
+            GROUP BY o.id 
+            ORDER BY o.created_at DESC
+            LIMIT 0, 25;";
+                $conn = $this->_conn->MySQLi();
+                $stmt = $conn->prepare($sql);
+
+                $data = '%' . $data . '%'; 
+                $stmt->bind_param('s', $data);  
+                if ($stmt->execute()) {
+                    $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+                    return $result;
+                } else {
+                    return [];
+                }
+            }
+        } catch (Exception $e) {
+            error_log('Lỗi khi tìm kiếm đơn hàng: ' . $e->getMessage());
+            return [];
+        }
+    }
 }

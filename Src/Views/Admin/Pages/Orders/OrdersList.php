@@ -3,7 +3,14 @@
 <?php
 $this->start('main_content');
 ?>
-
+<form action="/admin/order-search" class="mb-3" method="post" id="order-search">
+    <div class="row">
+        <div class="col-lg-12">
+            <label for="order">Tìm kiếm đơn hàng</label>
+            <input type="text" class="form-control" placeholder="Tìm kiếm đơn hàng" name="order" id="orderSearch">
+        </div>
+    </div>
+</form>
 <div class="row">
     <div class="col-md-12">
         <div class="card">
@@ -20,7 +27,7 @@ $this->start('main_content');
                             <th>Action</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="orderTable">
                         <?php if (!empty($orderData)): ?>
                             <?php foreach ($orderData as $order): ?>
                                 <tr>
@@ -101,4 +108,13 @@ $this->start('main_content');
 <?php
 
 $this->stop();
+?>
+
+<?php
+$this->push('scripts');
+?>
+<script src="<?= $_ENV['APP_URL'] ?>/public/Assets/Admin/js/Pages/OrderScript.js"></script>
+<?php
+
+$this->end();
 ?>

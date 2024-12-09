@@ -200,6 +200,8 @@ $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
 
 
         $r->delete('/delete-user/{id:\d+}', [UserController::class, 'delete']);
+        $r->post('/order-search', [OrdersController::class, 'search']);
+
     });
 });
 

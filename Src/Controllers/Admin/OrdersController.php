@@ -23,6 +23,13 @@ class OrdersController extends BaseController {
         }
         echo $this->view->render('Admin/Pages/Orders/OrderDetail', ['orderData' => $orderData]);
     }
-    
+    public function search()
+    {
+        header('Content-Type: application/json');
+        $order = $_POST['order'];
+        $orders = new OrderModel();
+        $result = $orders->searchOrder($order);
+        echo json_encode($result);
+    }
     
 }
