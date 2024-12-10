@@ -29,7 +29,7 @@ $thumbnail = explode(',', $data['thumbnail']);
                 </div>
                 <div class="form-group">
                     <label for="description">Mô tả ngắn</label>
-                    <textarea class="form-control" name="short_description" id="short_description" rows="2" placeholder="Mô tả sản phẩm"><?= htmlspecialchars($data['description'] ?? '') ?></textarea>
+                    <textarea class="form-control" name="short_description" id="short_description" rows="2" placeholder="Mô tả sản phẩm"><?= htmlspecialchars($data['short_description'] ?? '') ?></textarea>
                     <small id="description-required" class="text-danger" style="display:none">Vui lòng nhập mô tả sản phẩm</small>
                 </div>
 
