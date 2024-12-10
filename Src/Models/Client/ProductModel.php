@@ -143,7 +143,7 @@ class ProductModel extends BaseModel
             WHERE status = 1
             GROUP BY product_id
         ) AS rating_data ON p.id = rating_data.product_id
-        WHERE p.status = 1 AND p.id = ?";
+        WHERE p.status = 1 AND ps.id = ?";
     
         $conn = $this->_conn->MySQLi();
         $stmt = $conn->prepare($sql);
@@ -151,7 +151,6 @@ class ProductModel extends BaseModel
         $stmt->execute();
         $result = $stmt->get_result();
         $product = null;
-    
         if ($row = $result->fetch_assoc()) {
             $productId = $row['product_id'];
             $skuId = $row['sku_id'];
@@ -179,7 +178,6 @@ class ProductModel extends BaseModel
                 'options' => []
             ];
     
-            // Thêm tùy chọn (option)
             $product['skus'][$skuId]['options'][] = [
                 'option_name' => $row['option_name'],
                 'option_value' => $row['option_value']

@@ -197,7 +197,6 @@
                                     <tbody>
                                         <tr>
                                             <?php
-
                                             $totalPrice = 0;
                                             if (isset($data['skus']) && is_array($data['skus'])) {
 
@@ -212,7 +211,8 @@
                                             $totalPriceWithShipping = $totalPrice + $shippingFee;
                                             ?>
                                             <th scope="row">Giá sản phẩm</th>
-                                            <td id="product-price"><?= number_format($totalPrice, 0, ',', '.'); ?> ₫</td>
+                                            <td id="product-price"><?= isset($sku['discounted_price']) ? number_format($sku['discounted_price'], 0, ',', '.') : '0'; ?> ₫</td>
+                                            <!-- <td id="product-price"><?= number_format($totalPrice, 0, ',', '.'); ?> ₫</td> -->
                                         </tr>
                                         <tr>
                                             <th scope="row">Trả trước từ</th>
@@ -294,60 +294,103 @@
 
 
         <div class="payment__section__right">
-            <div class="payment__section__right-ttlh">
-                <?php
-                $totalPrice = 0; // Tổng tiền tất cả sản phẩm
 
-                // Kiểm tra nếu $data là mảng và có sản phẩm
-                if (isset($data['skus']) && is_array($data['skus'])) {
-                    foreach ($data['skus'] as $sku):
-                        // Tính tổng giá trị của sản phẩm
-                        $totalPrice += isset($sku['discounted_price']) ? (float)$sku['discounted_price'] * $sku['quantity'] : 0;
-                ?>
+            <?php if (isset($installmentsForm) && $installmentsForm): ?>
+                <div class="payment__section__right-ttlh">
+                    <?php
+                    $totalPrice = 0; // Tổng tiền tất cả sản phẩm
+
+                    // Kiểm tra nếu $data là mảng và có sản phẩm
+                    if (isset($data['skus']) && is_array($data['skus'])) {
+                        foreach ($data['skus'] as $sku):
+                            // Tính tổng giá trị của sản phẩm
+                            $totalPrice += isset($sku['discounted_price']) ? (float)$sku['discounted_price'] * $sku['quantity'] : 0;
+                    ?>
+                            <div class="payment__section__container">
+                                <div class="payment__section__right-img" style="position: relative;">
+                                    <div class="payment__section__right-circle"><span><?= $quantityA ?></span></div>
+                                    <img src="<?= $_ENV['APP_URL'] ?>/public/Uploads/Products/<?= isset($sku['images']) ? $sku['images'] : ''; ?>" alt="<?= isset($sku['sku']) ? $sku['sku'] : ''; ?>" style="object-fit:cover; width:100%; height:100%">
+                                </div>
+                                <div class="payment__section__right-description">
+                                    <p class="clamp-text"><?= isset($data['product_name']) ? $data['product_name'] : ''; ?></p>
+                                    <p class="clamp-text">SKU: <?= isset($sku['sku']) ? $sku['sku'] : ''; ?></p>
+                                </div>
+                                <div class="payment__section__right-pcire">
+                                    <div id="test">
+                                        <p><?= isset($sku['discounted_price']) ? number_format($sku['discounted_price'], 0, ',', '.') : '0'; ?> ₫</p>
+                                    </div>
+                                </div>
+                            </div>
+                    <?php
+                        endforeach;
+                    } else {
+                        echo "Không có dữ liệu sản phẩm";
+                    }
+
+                    // Tính phí vận chuyển nếu có
+                    $shippingFee = isset($shippingFee) ? $shippingFee : 0;
+                    $totalPriceWithShipping = $totalPrice + $shippingFee;
+                    ?>
+
+                    <div class="order-summary">
+                        <div class="totals">
+                            <p>Vận chuyển: <span id="shippingFee">MIỄN PHÍ</span></p>
+                            <!-- <h3>Tổng: <span id="price"><?= number_format($totalPriceWithShipping, 0, ',', '.'); ?></span> </h3> -->
+                            <h3>Tổng: <span id="price"><?= number_format($totalPriceWithShipping, 0, ',', '.'); ?></span> </h3>
+                            <input form="paymentForm" type="hidden" name="totalPrice" value="<?= $totalPriceWithShipping ?>">
+                            <p>Phương thức thanh toán: Tiền mặt</p>
+                        </div>
+                    </div>
+                    <div class="alert alert-danger" role="alert" style="display:none;"></div>
+                </div>
+            <?php else: ?>
+                <div class="payment__section__right-ttlh">
+                    <?php
+                    $totalPrice = 0; // Tổng tiền tất cả sản phẩm
+                    foreach ($data as $item):
+                        $totalPrice += $item['total_price'];
+                    ?>
                         <div class="payment__section__container">
                             <div class="payment__section__right-img" style="position: relative;">
-                                <div class="payment__section__right-circle"><span><?= $quantityA ?></span></div>
-                                <img src="<?= $_ENV['APP_URL'] ?>/public/Uploads/Products/<?= isset($sku['images']) ? $sku['images'] : ''; ?>" alt="<?= isset($sku['sku']) ? $sku['sku'] : ''; ?>" style="object-fit:cover; width:100%; height:100%">
+                                <div class="payment__section__right-circle"><span><?= $item['quantity']; ?></span></div>
+                                <img src="<?= $_ENV['APP_URL'] ?>/public/Uploads/Products/<?= $item['product_images']; ?>" alt="<?= $item['product_name']; ?>" style="object-fit:cover; width:100%; height:100%">
                             </div>
                             <div class="payment__section__right-description">
-                                <p class="clamp-text"><?= isset($data['product_name']) ? $data['product_name'] : ''; ?></p>
-                                <p class="clamp-text">SKU: <?= isset($sku['sku']) ? $sku['sku'] : ''; ?></p>
+                                <p class="clamp-text"><?= $item['product_name']; ?></p>
+                                <p class="clamp-text">SKU: <?= $item['product_sku'];  ?></p>
                             </div>
                             <div class="payment__section__right-pcire">
-                                <p><?= isset($sku['discounted_price']) ? number_format($sku['discounted_price'], 0, ',', '.') : '0'; ?> ₫</p>
+                                <p><?= number_format($item['total_price'], 0, ',', '.'); ?> ₫</p>
                             </div>
                         </div>
-                <?php
-                    endforeach;
-                } else {
-                    echo "Không có dữ liệu sản phẩm";
-                }
-
-                // Tính phí vận chuyển nếu có
-                $shippingFee = isset($shippingFee) ? $shippingFee : 0;
-                $totalPriceWithShipping = $totalPrice + $shippingFee;
-                ?>
-
-
-
-                <div class="order-summary">
-                    <div class="totals">
-                        <p>Vận chuyển: <span id="shippingFee">MIỄN PHÍ</span></p>
-                        <h3>Tổng: <span id="price"><?= number_format($totalPriceWithShipping, 0, ',', '.'); ?></span> </h3>
-                        <input form="paymentForm" type="hidden" name="totalPrice" value="<?= $totalPriceWithShipping ?>">
-                        <p>Phương thức thanh toán: Tiền mặt</p>
-                    </div>
+                    <?php endforeach;
+                    $shippingFee = isset($shippingFee) ? $shippingFee : 0;
+                    $totalPriceWithShipping = $totalPrice + $shippingFee;
+                    ?>
+<!-- 12312312313123 -->
+                    <!-- <div class="order-summary">
+                        <div class="totals">
+                            <p>Vận chuyển: <span id="shippingFee">MIỄN PHÍ</span></p>
+                            <h3>Tổng: <span id="price"><?= number_format($totalPriceWithShipping, 0, ',', '.'); ?></span> </h3>
+                            <input form="paymentForm" type="hidden" name="totalPrice" value="<?= $totalPriceWithShipping ?>">
+                            <p>Phương thức thanh toán: Tiền mặt</p>
+                        </div>
+                    </div> -->
+                    <div class="alert alert-danger" role="alert" style="display:none;"></div>
                 </div>
-                <div class="alert alert-danger" role="alert" style="display:none;">
+            <?php endif; ?>
 
-                </div>
-            </div>
+
+
+
+
+
         </div>
     </div>
 </section>
 <script>
-    const productPrice = <?= $totalPrice; ?>;
-    const interestRate = 10 / 100;
+const productPrice = <?= json_encode($data['skus'][5]['discounted_price']); ?>;
+const interestRate = 10 / 100;
 
     const termInputs = document.querySelectorAll('.d-flex input[type="radio"]');
     const downPaymentSelect = document.querySelector('#down-payment-select');
