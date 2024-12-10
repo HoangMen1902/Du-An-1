@@ -48,7 +48,9 @@ $this->start('main_content');
                                 <form action="/update-cart" method="post" class="quantity-form">
                                     <div class="quantity-wrapper">
                                         <button type="button" class="quantity-decrease" data-id="<?= $cart['cart_id'] ?>">-</button>
-                                        <input class="cart__product-quantity" type="text" name="quantity[<?= $cart['cart_id'] ?>]" value="<?= htmlspecialchars($cart['quantity']) ?>" data-id="<?= $cart['cart_id'] ?>">
+                                        <input class="cart__product-quantity" type="text" name="quantity[<?= $cart['cart_id'] ?>]"
+                                            value="<?= htmlspecialchars($cart['quantity']) ?>"
+                                            data-id="<?= $cart['cart_id'] ?>" readonly>
                                         <button type="button" class="quantity-increase" data-id="<?= $cart['cart_id'] ?>">+</button>
                                     </div>
                                 </form>
