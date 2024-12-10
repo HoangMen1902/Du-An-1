@@ -1,6 +1,7 @@
 <?php $this->layout('Client/Components/Layout');
 
 $this->start('main_content');
+
 ?>
 <section class="account">
     <div class="container-fluid">
@@ -56,7 +57,7 @@ $this->start('main_content');
                                                 <div class="items-orders-list">
                                                     <div class="wrap-head-order">
                                                         <div class="code-order-list">
-                                                            <h4 class="col-6"><a href="/order-details/<?=$r['order_id']?>"
+                                                            <h4 class="col-6"><a href="/order-details/<?= $r['order_id'] ?>"
                                                                     aria-label="Đơn hàng ECO672454N01"
                                                                     title="Đơn hàng ECO672454N01">Đơn hàng
                                                                     <b><?= $r['order_id'] ?></b></a></h4>
@@ -120,7 +121,7 @@ $this->start('main_content');
                                                             </div>
                                                         <?php endforeach; ?>
                                                         <?php
-                                                        if ($r['order_status'] == 1 || $r['order_status'] == 2 || $r['order_status'] == 3 ): 
+                                                        if ($r['order_status'] == 1 || $r['order_status'] == 2 || $r['order_status'] == 3):
                                                         ?>
                                                             <div class="btnInCard d-flex justify-content-end">
                                                                 <form method="POST" action="/cancelOrder/<?= $r['order_id'] ?>">

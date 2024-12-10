@@ -3,6 +3,7 @@
 $this->push('styles');
 
 ?>
+
 <link rel="stylesheet" href="<?= $_ENV['APP_URL'] ?>/node_modules\datatables.net-dt\css\dataTables.dataTables.min.css">
 
 
@@ -98,13 +99,14 @@ switch ($status_int) {
                         <h4>Sản phẩm</h4>
                         <tbody id="orderBody">
                             <?php foreach ($data as $index => $item): ?>
+                                
                                 <tr>
                                     <?php $price = explode('.', $item['sku_price'])[0] ?>
                                     <th><?= $index + 1 ?></th>
                                     <th><?= $item['sku_code'] ?></th>
                                     <th><?= number_format($price, 0, ',', '.') ?> VNĐ</th>
                                     <th><?= $item['sku_quantity'] ?></th>
-                                    <th><?= $item['option_name'] . ': ' . $item['option_value'] ?></th>
+                                    <th><?= $item['option_names'] . ': ' . $item['option_values'] ?></th>
                                     <th>
                                         <img src="<?= $_ENV['APP_URL'] ?>/public\Uploads\Products/<?= $item['sku_images'] ?>" alt="Hình sku" style="max-width: 100px">
                                     </th>

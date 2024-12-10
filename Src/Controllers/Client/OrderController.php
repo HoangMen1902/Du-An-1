@@ -23,13 +23,13 @@ class OrderController extends BaseController
 
         if ($order === false) {
             Notification::error('Đã có lỗi xảy ra', 'Có lỗi xảy ra khi truy vấn đơn hàng');
-            header('location: /user-profile');
+            header('location: /profile/orders-list');
             exit();
         }
 
         if (empty($order) || !isset($order)) {
             Notification::error('Đơn hàng không hợp lệ', 'Đơn hàng này không hợp lệ');
-            header('location: /user-profile');
+            header('location: /profile/orders-list');
             exit();
         }
 
@@ -51,13 +51,13 @@ class OrderController extends BaseController
 
         if ($order === false) {
             Notification::error('Đã có lỗi xảy ra', 'Có lỗi xảy ra khi truy vấn đơn hàng');
-            header('location: /user-profile');
+            header('location: /profile/orders-list');
             exit();
         }
 
         if (empty($order) || !isset($order)) {
             Notification::error('Đơn hàng không hợp lệ', 'Đơn hàng này không hợp lệ');
-            header('location: /user-profile');
+            header('location: /profile/orders-list');
             exit();
         }
 

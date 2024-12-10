@@ -249,37 +249,38 @@ class OrderModel extends BaseModel
     {
         try {
             $sql = "SELECT 
-                ps.id AS sku_id,
-                o.id AS order_id,
-                o.total_price,
-                od.quantity AS sku_quantity,
-                od.price AS sku_price,
-                o.status AS order_status, 
-                p.name AS product_name, 
-                ps.sku AS sku_code,
-                ps.images AS sku_images,  
-                od.quantity AS product_quantity, 
-                ca.phone AS customer_phone, 
-                ca.address AS customer_address, 
-                u.fullname AS customer_name,
-                c.name AS category_name, 
-                cv.name AS category_value_name,
-                o.created_at AS order_date,
-                op.name AS option_name,
-                ov.value_name AS option_value
-                FROM orders o
-                JOIN checkout_addresses ca ON o.address_id = ca.id
-                JOIN users u ON ca.user_id = u.id
-                JOIN order_details od ON o.id = od.order_id
-                JOIN product_skus ps ON od.sku_id = ps.id
-                JOIN products p ON ps.product_id = p.id
-                JOIN product_categories pc ON p.id = pc.product_id
-                JOIN category_values cv ON pc.category_values_id = cv.id
-                JOIN categories c ON cv.category_id = c.id
-                JOIN sku_values sv ON sv.sku_id = ps.id
-                JOIN option_values ov ON ov.id = sv.value_id
-                JOIN options op ON op.id = sv.option_id
-                WHERE o.id = ? AND o.user_id = ?";
+            ps.id AS sku_id,
+            ps.sku AS sku_code,
+            ps.images AS sku_images,
+            p.name AS product_name,
+            od.price AS sku_price,
+            od.quantity AS sku_quantity,
+            o.id AS order_id,
+            o.total_price,
+            o.status AS order_status,
+            ca.phone AS customer_phone,
+            ca.address AS customer_address,
+            u.fullname AS customer_name,
+            c.name AS category_name,
+            cv.name AS category_value_name,
+            o.created_at AS order_date,
+            GROUP_CONCAT(DISTINCT op.name ORDER BY op.name SEPARATOR ', ') AS option_names,
+            GROUP_CONCAT(DISTINCT ov.value_name ORDER BY ov.value_name SEPARATOR ', ') AS option_values
+        FROM orders o
+        JOIN checkout_addresses ca ON o.address_id = ca.id
+        JOIN users u ON ca.user_id = u.id
+        JOIN order_details od ON o.id = od.order_id
+        JOIN product_skus ps ON od.sku_id = ps.id
+        JOIN products p ON ps.product_id = p.id
+        JOIN product_categories pc ON p.id = pc.product_id
+        JOIN category_values cv ON pc.category_values_id = cv.id
+        JOIN categories c ON cv.category_id = c.id
+        JOIN sku_values sv ON sv.sku_id = ps.id
+        JOIN option_values ov ON ov.id = sv.value_id
+        JOIN options op ON op.id = sv.option_id
+        WHERE o.id = ? AND o.user_id = ?
+        GROUP BY ps.id, od.price, od.quantity, o.id, o.total_price, o.status, ca.phone, ca.address, u.fullname, c.name, cv.name, o.created_at;
+        ";
             $conn = $this->_conn->MySQLi();
             $stmt = $conn->prepare($sql);
 
