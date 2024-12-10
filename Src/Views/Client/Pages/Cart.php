@@ -44,10 +44,15 @@ $this->start('main_content');
                                 </div>
                             </td>
 
-                            <td style="width: 15%;">
-                                <form action="/update-cart" method="post" class="quantity-form" id="quantityForm">
-                                    <input class="cart__product-quantity" type="text" name="quantity[<?= $cart['cart_id'] ?>]" value="<?= htmlspecialchars($cart['quantity']) ?>" data-id="<?= $cart['cart_id'] ?>">
+                            <td style="width: 15%;  padding-right: 15px;">
+                                <form action="/update-cart" method="post" class="quantity-form">
+                                    <div class="quantity-wrapper">
+                                        <button type="button" class="quantity-decrease" data-id="<?= $cart['cart_id'] ?>">-</button>
+                                        <input class="cart__product-quantity" type="text" name="quantity[<?= $cart['cart_id'] ?>]" value="<?= htmlspecialchars($cart['quantity']) ?>" data-id="<?= $cart['cart_id'] ?>">
+                                        <button type="button" class="quantity-increase" data-id="<?= $cart['cart_id'] ?>">+</button>
+                                    </div>
                                 </form>
+
 
                                 <form action="/delete-cart-item" method="post" class="delete-form">
                                     <input type="hidden" name="id" value="<?= htmlspecialchars($cart['cart_id']) ?>">
@@ -60,7 +65,7 @@ $this->start('main_content');
                                 </form>
                             </td>
 
-                            <td class="price" style="width: 15%;">
+                            <td class="price" style="width: 15%; ">
                                 <p class="cart__product-total"><?= number_format($cart['total_price'], 0, ',', '.') ?>₫</p>
                             </td>
                         </tr>
@@ -100,26 +105,62 @@ $this->start('main_content');
 $this->push('scripts');
 ?>
 <script>
-    $('#quantityForm').on('submit', function(e) {
-        e.preventDefault(); 
+    // $('#quantityForm').on('submit', function(e) {
+    //     e.preventDefault(); 
+    // });
+
+    // $('.cart__product-quantity').on('change', function() {
+    //     let cartId = $(this).data('id'); 
+    //     let quantity = $(this).val(); 
+
+    //     $.ajax({
+    //         type: "POST",
+    //         url: `/update-cart/${cartId}`, 
+    //         data: {
+    //             quantity: quantity
+    //         }, 
+    //         dataType: "json",
+    //         success: function(response) {
+    //             console.log(response); 
+    //         },
+    //         error: function(xhr, status, error) {
+    //             console.log(error); 
+    //         }
+    //     });
+    // });
+    $(document).on('click', '.quantity-increase', function() {
+        let cartId = $(this).data('id');
+        let quantityInput = $(`.cart__product-quantity[data-id='${cartId}']`);
+        let currentQuantity = parseInt(quantityInput.val()) || 0;
+        quantityInput.val(currentQuantity + 1).trigger('change');
+    });
+
+    $(document).on('click', '.quantity-decrease', function() {
+        let cartId = $(this).data('id');
+        let quantityInput = $(`.cart__product-quantity[data-id='${cartId}']`);
+        let currentQuantity = parseInt(quantityInput.val()) || 0;
+        if (currentQuantity > 1) {
+            quantityInput.val(currentQuantity - 1).trigger('change');
+        }
     });
 
     $('.cart__product-quantity').on('change', function() {
-        let cartId = $(this).data('id'); 
-        let quantity = $(this).val(); 
+        let cartId = $(this).data('id');
+        let quantity = $(this).val();
 
         $.ajax({
             type: "POST",
-            url: `/update-cart/${cartId}`, 
+            url: `/update-cart/${cartId}`,
             data: {
                 quantity: quantity
-            }, 
+            },
             dataType: "json",
             success: function(response) {
-                console.log(response); 
+                console.log(response);
+                location.reload();
             },
             error: function(xhr, status, error) {
-                console.log(error); 
+                console.log(error);
             }
         });
     });
