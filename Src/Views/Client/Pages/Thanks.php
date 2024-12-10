@@ -27,7 +27,7 @@
         </ul>
         <h3 class="text-success text-center">Trên thế giới có rất nhiều sự lựa chọn, cảm ơn bạn đã chọn chúng tôi!</h3>
         <p class="text-center">Đơn hàng sẽ được giao trong thời gian sớm nhất!</p>
-        <p>Bạn có thể xuất hóa đơn trong trang chi tiết đơn hàng!</p>
+        <p class="text-center">Bạn có thể xuất hóa đơn trong trang chi tiết đơn hàng!</p>
 
         <div class="w-100 d-flex align-items-end justify-content-end">
             <a href="/" class="btn btn-primary text-end">Quay về</a>
