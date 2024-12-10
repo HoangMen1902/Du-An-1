@@ -20,7 +20,7 @@ class CartModel extends BaseModel
     {
         try {
             $sql = "SELECT Carts.id AS cart_id, Carts.sku_id, Product_skus.price - (Product_skus.price * Products.discount / 100) AS discounted_price,
-                    Products.name AS product_name, Products.description  AS product_description , Users.email AS user_email, Product_skus.sku AS product_sku, 
+                    Products.name AS product_name, Products.description  AS product_description, Products.short_description AS short_description , Users.email AS user_email, Product_skus.sku AS product_sku, 
                     Product_skus.price AS product_price, Product_skus.images  AS product_images, 
                     Carts.quantity AS quantity, ((Product_skus.price - (Product_skus.price * Products.discount / 100)) * Carts.quantity) AS total_price 
                     FROM Carts 

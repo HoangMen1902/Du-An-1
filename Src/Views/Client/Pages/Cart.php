@@ -38,7 +38,7 @@ $this->start('main_content');
                                     <p class="cart__product-price"><?= number_format($cart['discounted_price'], 0, ',', '.') ?>₫</p>
                                     <div class="cart__product-description ">
                                         <ul class="cart__product-description-fix">
-                                            <li class=" text-limit"><?= htmlspecialchars($cart['product_description']) ?>.</li>
+                                            <li class=" text-limit"><?= htmlspecialchars($cart['short_description']) ?>.</li>
                                         </ul>
                                     </div>
                                 </div>
