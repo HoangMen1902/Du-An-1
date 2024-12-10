@@ -26,22 +26,23 @@ class CommentModel extends BaseModel
     }
 
     public function allowRating($userId, $productId)
-    {
+{
+    $sql = "SELECT COUNT(*) AS total 
+            FROM orders
+            JOIN order_details ON orders.id = order_details.order_id
+            JOIN product_skus ON order_details.sku_id = product_skus.id
+            LEFT JOIN ratings ON ratings.user_id = orders.user_id 
+                              AND ratings.product_id = product_skus.product_id
+            WHERE orders.user_id = $userId
+              AND product_skus.product_id = $productId
+              AND orders.status = 5
+              AND ratings.id IS NULL
+            GROUP BY product_skus.product_id";
 
+    $result = $this->_conn->MySQLi()->query($sql);
+    return $result->fetch_all(MYSQLI_ASSOC);
+}
 
-
-        $sql = "SELECT COUNT(*) AS total 
-                    FROM orders
-                    JOIN order_details ON orders.id = order_details.order_id
-                    JOIN product_skus ON order_details.sku_id = product_skus.id
-                    WHERE orders.user_id = $userId
-                      AND product_skus.product_id = $productId
-                      AND orders.status = 5
-                    GROUP BY product_skus.product_id";
-
-        $result = $this->_conn->MySQLi()->query($sql);
-        return $result->fetch_all(MYSQLI_ASSOC);
-    }
 
 
 
